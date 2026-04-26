@@ -1,0 +1,2 @@
+Hello from MCP test!
+This file was created by the local agent.
