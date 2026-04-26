@@ -1,0 +1,32 @@
+{
+  "mcpServers": {
+    "local-agent": {
+      "type": "stdio",
+      "command": "${workspaceFolder}/local-agent/.venv/bin/python",
+      "args": [
+        "${workspaceFolder}/local-agent/mcp_server.py"
+      ],
+      "env": {
+        "WORKSPACE_ROOT": "${workspaceFolder}",
+        "LM_STUDIO_BASE_URL": "http://127.0.0.1:1234"
+      }
+    },
+    "filesystem-readonly": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${workspaceFolder}"
+      ]
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ]
+    }
+  }
+}
