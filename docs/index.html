@@ -327,6 +327,8 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 .btn-accent{background:var(--grad);color:#fff;border-color:transparent}
 .btn-accent:hover{opacity:.85;transform:translateY(-1px)}
 .header-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:flex-start;padding-top:.3rem}
+
+.btn-current{border-color:var(--accent);color:var(--accent);background:rgba(139,92,246,.1)}
 </style>
 </head>
 <body>
@@ -351,6 +353,12 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
     <div class="progress-bar"><div class="progress-fill" id="fill" style="width:0%"></div></div>
     <div class="stat-sub" id="stat-sub">0 / 39 Projects &bull; 0 / 86 Courses</div>
   <div id="stat-time" class="stat-sub" style="font-size:.65rem;margin-top:.25rem;opacity:.75">⏱ Loading…</div>
+  <div id="current-phase-pill" style="margin-top:.6rem;display:none">
+    <span style="font-size:.6rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);font-weight:600">Currently on</span>
+    <div id="current-phase-label" style="font-size:.78rem;font-weight:600;color:var(--accent);margin-top:.2rem;display:flex;align-items:center;gap:.4rem">
+      <span>📍</span><span id="current-phase-text">—</span>
+    </div>
+  </div>
   </div>
   <div class="nav-label">Phases</div>
   <nav id="nav"></nav>
@@ -427,6 +435,7 @@ const PHASES = [
   ]},
   {platform:'QA Platform',pcolor:'#3b82f6',items:[
     {name:'Intro to Generative AI',url:'https://platform.qa.com/learning-paths/intro-to-generative-ai-13286/',dur:'49min',free:false},
+    {name:'Generative AI Fundamentals of AWS (5 lessons)',url:'https://platform.qa.com/learning-paths/generative-ai-fundamentals-of-aws-13866/',dur:'2h23m',free:false,badge:'AWS'},
     {name:'AI-900 Exam Prep: Azure AI Fundamentals',url:'https://platform.qa.com/learning-paths/ai-900-exam-preparation-microsoft-azure-ai-fundamentals-1968/',dur:'9h46m',free:false}
   ]},
   {platform:'Docs',pcolor:'#3b82f6',items:[
@@ -777,11 +786,17 @@ function renderPhase(ph){
       <button class="btn" onclick="markAllCourses('${ph.id}')" title="Toggle all courses in this phase">✓ All Courses</button>
       <button class="btn" onclick="markAllProjects('${ph.id}')" title="Toggle all projects in this phase">✓ All Projects</button>
       <button class="btn btn-accent" onclick="markPhaseComplete('${ph.id}')" title="Mark entire phase complete">⚡ Complete Phase</button>
+      <button class="btn${state._currentPhase===ph.id?' btn-current':''}" onclick="setCurrentPhase('${ph.id}')" title="Mark this as your current active phase" style="min-width:auto">
+        ${state._currentPhase===ph.id ? '📍 Current' : '📍 Set Current'}
+      </button>
     </div>
   </div>
 
   <div class="section">
-    <div class="section-title">📚 Courses & Resources</div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
+      <span>📚 Courses & Resources</span>
+      <button class="btn" style="font-size:.65rem;padding:.25rem .65rem" onclick="toggleAllPlatforms('${ph.id}', this)">Expand All</button>
+    </div>
     <div class="courses-list">
       ${ph.courses.map(pl=>`
         <div class="platform-group" id="pg-${ph.id}-${pl.platform.replace(/\s/g,'_')}">
@@ -884,6 +899,35 @@ function markPhaseComplete(phId){
   ph.projects.forEach(p=>{ state[p.id]=!already; });
   ph.courses.forEach((pl,pi)=>pl.items.forEach((_,i)=>{ state[courseId(ph.id,pl.platform,i)]=!already; }));
   save(); showPhase(phId); buildNav();
+}
+
+// ---- Current Phase ----
+function setCurrentPhase(id){
+  state._currentPhase = (state._currentPhase === id) ? null : id;
+  save(); showPhase(currentPhase); updateCurrentPill();
+}
+function updateCurrentPill(){
+  const pill=document.getElementById('current-phase-pill');
+  const txt=document.getElementById('current-phase-text');
+  if(!pill||!txt) return;
+  const cpid=state._currentPhase;
+  if(cpid){
+    const ph=PHASES.find(p=>p.id===cpid);
+    if(ph){
+      pill.style.display='block';
+      txt.textContent=ph.label+' — '+ph.name;
+    }
+  } else {
+    pill.style.display='none';
+  }
+}
+
+// ---- Expand All Platforms ----
+function toggleAllPlatforms(phId, btn){
+  const allGroups=document.querySelectorAll('[id^="pg-'+phId+'-"]');
+  const anyOpen=[...allGroups].some(el=>el.classList.contains('open'));
+  allGroups.forEach(el=>{ el.classList.toggle('open', !anyOpen); });
+  btn.textContent = anyOpen ? 'Expand All' : 'Collapse All';
 }
 
 // ---- Export / Import ----
@@ -1094,6 +1138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Init
 refreshSyncPanel();
+updateCurrentPill();
 if (syncPAT && syncGistId) {
   pullFromGist().then(ok => {
     if (ok) { buildNav(); updateSidebar(); showPhase(currentPhase); }
