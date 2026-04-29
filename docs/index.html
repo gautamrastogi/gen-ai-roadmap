@@ -1,736 +1,805 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GenAI Developer Roadmap 2026 | Progress Dashboard</title>
-    <meta name="description" content="Interactive progress tracker for a structured GenAI/Agentic AI learning roadmap — covering LangGraph, RAG, MCP, evals, and local models on Apple Silicon.">
-    <meta name="author" content="Gautam Rastogi">
-    <meta property="og:title" content="GenAI Developer Roadmap 2026">
-    <meta property="og:description" content="Track progress through 33 projects across 12 phases — from Python LLM apps to agentic orchestration.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://gautamrastogi.github.io/gen-ai-roadmap/">
-    <link rel="canonical" href="https://gautamrastogi.github.io/gen-ai-roadmap/">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GenAI Developer Roadmap 2026 | Progress Dashboard</title>
+<meta name="description" content="Interactive progress tracker for a structured GenAI learning roadmap covering LangGraph, RAG, MCP, evals, and local models.">
+<meta property="og:title" content="GenAI Developer Roadmap 2026">
+<meta property="og:description" content="Track 37 projects across 12 phases from Python LLM apps to agentic orchestration.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gautamrastogi.github.io/gen-ai-roadmap/">
+<link rel="canonical" href="https://gautamrastogi.github.io/gen-ai-roadmap/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050b18;
+  --bg-card: rgba(15,23,42,0.75);
+  --bg-sidebar: rgba(2,6,23,0.92);
+  --bg-glass: rgba(255,255,255,0.04);
+  --accent: #8b5cf6;
+  --accent2: #ec4899;
+  --grad: linear-gradient(135deg,#8b5cf6 0%,#ec4899 100%);
+  --text: #f8fafc;
+  --dim: #94a3b8;
+  --border: rgba(255,255,255,0.08);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+  --tr: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  --sidebar-w: 300px;
+  --radius: 16px;
+}
+.light {
+  --bg: #f1f5f9;
+  --bg-card: rgba(255,255,255,0.9);
+  --bg-sidebar: rgba(241,245,249,0.97);
+  --bg-glass: rgba(0,0,0,0.02);
+  --text: #0f172a;
+  --dim: #64748b;
+  --border: rgba(0,0,0,0.08);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',-apple-system,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  transition:background .3s,color .3s;
+  overflow-x:hidden;
+}
 
-        :root {
-            --bg-dark: #050b18;
-            --bg-card: rgba(15, 23, 42, 0.7);
-            --bg-sidebar: rgba(2, 6, 23, 0.8);
-            --accent-primary: #8b5cf6;
-            --accent-secondary: #ec4899;
-            --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+/* Ambient */
+.glow{position:fixed;border-radius:50%;pointer-events:none;z-index:-1}
+.glow1{width:700px;height:700px;background:radial-gradient(circle,rgba(139,92,246,.12) 0%,transparent 70%);top:-200px;right:-200px}
+.glow2{width:500px;height:500px;background:radial-gradient(circle,rgba(236,72,153,.08) 0%,transparent 70%);bottom:-100px;left:-100px}
 
-        .light-mode {
-            --bg-dark: #f8fafc;
-            --bg-card: rgba(255, 255, 255, 0.8);
-            --bg-sidebar: rgba(241, 245, 249, 0.9);
-            --text-main: #0f172a;
-            --text-dim: #64748b;
-            --border-color: rgba(0, 0, 0, 0.1);
-        }
+/* Overlay for mobile */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;backdrop-filter:blur(2px)}
+.overlay.show{display:block}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, sans-serif;
-        }
+/* Sidebar */
+aside{
+  width:var(--sidebar-w);
+  background:var(--bg-sidebar);
+  backdrop-filter:blur(24px);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  height:100vh;position:sticky;top:0;
+  padding:1.5rem 1.25rem;
+  z-index:200;flex-shrink:0;
+  transition:transform .3s ease;
+  overflow-y:auto;
+}
+aside::-webkit-scrollbar{width:4px}
+aside::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            transition: var(--transition);
-            overflow-x: hidden;
-        }
+/* Hamburger */
+.hamburger{
+  display:none;position:fixed;top:1rem;left:1rem;
+  z-index:300;width:40px;height:40px;
+  background:var(--bg-sidebar);border:1px solid var(--border);
+  border-radius:10px;cursor:pointer;
+  flex-direction:column;align-items:center;justify-content:center;gap:5px;
+}
+.hamburger span{display:block;width:18px;height:2px;background:var(--text);border-radius:2px;transition:var(--tr)}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-        /* Ambient Background Glow */
-        .ambient-glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.05) 50%, transparent 100%);
-            top: -200px;
-            right: -200px;
-            z-index: -1;
-            pointer-events: none;
-        }
+/* Brand */
+.brand{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem;flex-shrink:0}
+.brand-icon{width:40px;height:40px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;color:#fff;flex-shrink:0}
+.brand-name{font-weight:800;font-size:1.1rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-        .ambient-glow-2 {
-            position: fixed;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 100%);
-            bottom: -100px;
-            left: -100px;
-            z-index: -1;
-            pointer-events: none;
-        }
+/* Stats card */
+.stats-card{
+  background:var(--bg-glass);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.1rem;margin-bottom:1.25rem;flex-shrink:0;
+}
+.stats-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem}
+.stat-pct{font-size:2rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:.75rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em}
+.progress-bar{height:6px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:.5rem}
+.progress-fill{height:100%;background:var(--grad);border-radius:99px;transition:width .6s ease}
+.stat-sub{font-size:.75rem;color:var(--dim)}
 
-        /* Sidebar */
-        aside {
-            width: 320px;
-            background: var(--bg-sidebar);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            position: sticky;
-            top: 0;
-            padding: 2rem;
-            z-index: 100;
-        }
+/* Nav */
+.nav-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);font-weight:600;margin-bottom:.5rem;padding-left:.25rem}
+nav{display:flex;flex-direction:column;gap:.25rem;overflow-y:auto;flex:1;min-height:0;padding-right:.25rem}
+nav::-webkit-scrollbar{width:4px}
+nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.nav-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.6rem .75rem;border-radius:10px;cursor:pointer;
+  transition:var(--tr);border:1px solid transparent;
+  text-decoration:none;color:var(--text);
+}
+.nav-item:hover{background:var(--bg-glass);border-color:var(--border)}
+.nav-item.active{background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.25)}
+.nav-item-left{display:flex;align-items:center;gap:.6rem}
+.nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.nav-info{display:flex;flex-direction:column}
+.nav-title{font-size:.82rem;font-weight:600}
+.nav-sub{font-size:.7rem;color:var(--dim)}
+.nav-badge{
+  font-size:.65rem;font-weight:700;
+  background:var(--bg-glass);border:1px solid var(--border);
+  border-radius:99px;padding:.15rem .45rem;
+  color:var(--dim);white-space:nowrap;
+}
+.nav-item.active .nav-badge{background:rgba(139,92,246,.15);border-color:rgba(139,92,246,.3);color:var(--accent)}
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
+/* Sidebar footer */
+.sidebar-footer{
+  margin-top:auto;padding-top:1rem;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.version{font-size:.7rem;color:var(--dim);font-family:'JetBrains Mono',monospace}
+.theme-btn{
+  width:32px;height:32px;border-radius:8px;border:1px solid var(--border);
+  background:var(--bg-glass);cursor:pointer;color:var(--text);
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;
+  transition:var(--tr);
+}
+.theme-btn:hover{background:rgba(139,92,246,.15);border-color:var(--accent)}
 
-        .brand-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent-gradient);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 800;
-            font-size: 1.2rem;
-            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
-        }
+/* Main */
+main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 
-        .brand-name h1 {
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: -0.025em;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* Phase Header */
+.phase-header{
+  padding:2.5rem 2.5rem 1.5rem;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(139,92,246,.05) 0%,transparent 100%);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;
+  flex-wrap:wrap;
+}
+.phase-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);font-weight:700;margin-bottom:.35rem}
+.phase-title{font-size:2.25rem;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.phase-meta{display:flex;align-items:center;gap:1rem;margin-top:.75rem;flex-wrap:wrap}
+.phase-stat{font-size:.82rem;color:var(--dim);display:flex;align-items:center;gap:.35rem}
+.phase-stat-dot{width:6px;height:6px;border-radius:50%;background:var(--success)}
+.header-actions{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.btn{
+  display:flex;align-items:center;gap:.4rem;
+  padding:.5rem 1rem;border-radius:10px;
+  border:1px solid var(--border);background:var(--bg-glass);
+  color:var(--text);font-size:.8rem;font-weight:600;cursor:pointer;
+  transition:var(--tr);font-family:'Inter',sans-serif;text-decoration:none;
+}
+.btn:hover{background:rgba(139,92,246,.12);border-color:var(--accent)}
+.btn-primary{background:var(--grad);border:none;color:#fff}
+.btn-primary:hover{opacity:.9;background:var(--grad)}
 
-        .overall-stats {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
+/* Section */
+.section{padding:2rem 2.5rem;border-bottom:1px solid var(--border)}
+.section-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);font-weight:700;margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem}
+.section-title::after{content:"";flex:1;height:1px;background:var(--border)}
 
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 1rem;
-        }
+/* Courses accordion */
+.courses-list{display:flex;flex-direction:column;gap:.75rem}
+.platform-group{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:var(--tr)}
+.platform-group:hover{border-color:rgba(139,92,246,.25)}
+.platform-header{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.9rem 1.1rem;cursor:pointer;
+  background:var(--bg-glass);transition:var(--tr);user-select:none;
+}
+.platform-header:hover{background:rgba(139,92,246,.06)}
+.platform-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.platform-name{font-size:.85rem;font-weight:700;flex:1}
+.platform-meta{font-size:.72rem;color:var(--dim)}
+.platform-chevron{font-size:.7rem;color:var(--dim);transition:transform .25s;margin-left:.5rem}
+.platform-group.open .platform-chevron{transform:rotate(180deg)}
+.platform-body{display:none;padding:.25rem 0}
+.platform-group.open .platform-body{display:block}
+.course-item{
+  display:flex;align-items:flex-start;gap:.75rem;
+  padding:.7rem 1.1rem;border-top:1px solid var(--border);
+  transition:background .2s;
+}
+.course-item:hover{background:var(--bg-glass)}
+.course-check{
+  width:18px;height:18px;border-radius:6px;
+  border:2px solid var(--border);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;margin-top:.1rem;transition:var(--tr);
+}
+.course-check.done{background:var(--success);border-color:var(--success);color:#fff}
+.course-info{flex:1;min-width:0}
+.course-name{font-size:.82rem;font-weight:600;margin-bottom:.2rem}
+.course-name a{color:var(--text);text-decoration:none}
+.course-name a:hover{color:var(--accent)}
+.course-details{display:flex;gap:.5rem;flex-wrap:wrap}
+.tag{
+  font-size:.65rem;font-weight:600;
+  padding:.15rem .45rem;border-radius:99px;
+  border:1px solid var(--border);color:var(--dim);
+  background:var(--bg-glass);
+}
+.tag.free{border-color:rgba(16,185,129,.3);color:var(--success);background:rgba(16,185,129,.08)}
+.tag.paid{border-color:rgba(245,158,11,.3);color:var(--warning);background:rgba(245,158,11,.08)}
+.tag.new{border-color:rgba(139,92,246,.3);color:var(--accent);background:rgba(139,92,246,.08)}
 
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 800;
-        }
+/* Projects grid */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+.card{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:1.4rem;
+  transition:var(--tr);cursor:pointer;
+  position:relative;overflow:hidden;
+  backdrop-filter:blur(10px);
+}
+.card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--grad);opacity:0;transition:opacity .3s;
+}
+.card:hover{border-color:rgba(139,92,246,.3);transform:translateY(-2px);box-shadow:0 8px 32px rgba(139,92,246,.12)}
+.card:hover::before{opacity:1}
+.card.done{background:rgba(16,185,129,.05);border-color:rgba(16,185,129,.2)}
+.card.done::before{background:linear-gradient(90deg,var(--success),#34d399);opacity:1}
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem}
+.card-id{font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--dim);font-weight:500}
+.card-check{
+  width:26px;height:26px;border-radius:50%;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;transition:var(--tr);flex-shrink:0;
+  background:var(--bg-glass);
+}
+.card.done .card-check{background:var(--success);border-color:var(--success);color:#fff}
+.card-title{font-size:1.05rem;font-weight:700;margin-bottom:.5rem;line-height:1.3}
+.card-desc{font-size:.8rem;color:var(--dim);line-height:1.55;margin-bottom:.9rem}
+.card-tags{display:flex;flex-wrap:wrap;gap:.4rem}
 
-        .stat-label {
-            color: var(--text-dim);
-            font-size: 0.875rem;
-        }
+/* Export bar */
+.export-bar{
+  padding:1rem 2.5rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  background:rgba(139,92,246,.04);border-bottom:1px solid var(--border);
+}
+.export-info{font-size:.78rem;color:var(--dim);flex:1}
 
-        .progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--accent-gradient);
-            width: 0%;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        nav {
-            flex: 1;
-            overflow-y: auto;
-            margin: 0 -1rem;
-            padding: 0 1rem;
-        }
-
-        nav::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        nav::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 2px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid transparent;
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .nav-item.active {
-            background: rgba(139, 92, 246, 0.1);
-            border-color: rgba(139, 92, 246, 0.2);
-        }
-
-        .nav-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .nav-title {
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .nav-meta {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-
-        .nav-badge {
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            font-weight: 700;
-        }
-
-        .nav-badge.complete {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
-        }
-
-        .sidebar-footer {
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Main Content */
-        main {
-            flex: 1;
-            padding: 3rem 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header-section {
-            margin-bottom: 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .phase-title-group h2 {
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--accent-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .phase-title-group h3 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -0.04em;
-        }
-
-        .theme-toggle {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--text-dim);
-        }
-
-        .theme-toggle:hover {
-            color: var(--text-main);
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
-        }
-
-        /* Cards Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(139, 92, 246, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--accent-gradient);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .project-card.completed::before {
-            opacity: 1;
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-id {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 4px 10px;
-            border-radius: 6px;
-        }
-
-        .check-wrapper {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .project-card.completed .check-wrapper {
-            background: var(--success);
-            border-color: var(--success);
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-        }
-
-        .check-icon {
-            width: 16px;
-            height: 16px;
-            fill: none;
-            stroke: white;
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: var(--transition);
-        }
-
-        .project-card.completed .check-icon {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .project-name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-        }
-
-        .project-desc {
-            font-size: 0.95rem;
-            color: var(--text-dim);
-            line-height: 1.6;
-            flex: 1;
-            margin-bottom: 1.5rem;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tag {
-            font-size: 0.75rem;
-            padding: 4px 12px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-dim);
-            border: 1px solid var(--border-color);
-        }
-
-        /* Success Animation Overlay */
-        .success-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--success);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            z-index: 5;
-        }
-
-        .celebrate .success-overlay {
-            animation: flash 0.8s ease-out;
-        }
-
-        @keyframes flash {
-            0% { opacity: 0; }
-            30% { opacity: 0.15; }
-            100% { opacity: 0; }
-        }
-
-        /* Floating Notifications */
-        #notification-container {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1000;
-        }
-
-        .notification {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--accent-primary);
-            color: var(--text-main);
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            margin-top: 1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transform: translateX(120%);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        /* Skeleton Loading */
-        .skeleton {
-            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
-            background-size: 200% 100%;
-            animation: skeleton-loading 1.5s infinite;
-        }
-
-        @keyframes skeleton-loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        @media (max-width: 1024px) {
-            aside { width: 80px; padding: 1.5rem 1rem; }
-            .brand-name, .stat-header, .stat-label, .progress-bar-container, .nav-info, .nav-badge, .sidebar-footer { display: none; }
-            main { padding: 2rem; }
-        }
-
-        @media (max-width: 640px) {
-            aside { display: none; }
-            main { padding: 1.5rem; }
-            .header-section { flex-direction: column; align-items: flex-start; gap: 1rem; }
-        }
-    </style>
+/* Responsive */
+@media(max-width:900px){
+  .export-info{display:none}
+  :root{--sidebar-w:280px}
+  aside{position:fixed;top:0;left:0;height:100vh;transform:translateX(-100%)}
+  aside.open{transform:translateX(0)}
+  .hamburger{display:flex}
+  main{margin-left:0}
+  .phase-header{padding:4.5rem 1.25rem 1.25rem}
+  .phase-title{font-size:1.6rem}
+  .section{padding:1.5rem 1.25rem}
+  .export-bar{padding:.75rem 1.25rem}
+  .projects-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .phase-title{font-size:1.35rem}
+  .header-actions{width:100%}
+  .btn{font-size:.75rem;padding:.45rem .8rem}
+}
+</style>
 </head>
 <body>
-    <div class="ambient-glow"></div>
-    <div class="ambient-glow-2"></div>
 
-    <aside>
-        <div class="brand">
-            <div class="brand-icon">G</div>
-            <div class="brand-name">
-                <h1>GenAI 2026</h1>
-            </div>
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+<div class="overlay" id="overlay"></div>
+<button class="hamburger" id="hamburger" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="brand-icon">G</div>
+    <span class="brand-name">GenAI 2026</span>
+  </div>
+  <div class="stats-card">
+    <div class="stats-row">
+      <span class="stat-pct" id="pct">0%</span>
+      <span class="stat-label">Mastery</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="fill" style="width:0%"></div></div>
+    <div class="stat-sub" id="stat-sub">0 / 37 Projects &bull; 0 / 0 Courses</div>
+  </div>
+  <div class="nav-label">Phases</div>
+  <nav id="nav"></nav>
+  <div class="sidebar-footer">
+    <span class="version">V3.0.0 Agentic</span>
+    <button class="theme-btn" id="themeBtn" title="Toggle theme">☀️</button>
+  </div>
+</aside>
+
+<main id="main">
+  <div class="export-bar">
+    <span class="export-info" id="export-info">Progress saved locally. Export to sync across devices.</span>
+    <button class="btn" onclick="exportProgress()">⬇ Export</button>
+    <label class="btn" style="cursor:pointer">⬆ Import<input type="file" accept=".json" style="display:none" onchange="importProgress(event)"></label>
+    <button class="btn" onclick="resetProgress()" style="color:#ef4444">↺ Reset</button>
+  </div>
+  <div id="content"></div>
+</main>
+<script>
+
+const PHASES = [
+{id:'ph0',label:'Phase 0',name:'Software Baseline',color:'#64748b',
+ courses:[
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'FastAPI Official Docs',url:'https://fastapi.tiangolo.com/',dur:'Self-paced',free:true},
+    {name:'Pydantic Docs',url:'https://docs.pydantic.dev/',dur:'Self-paced',free:true},
+    {name:'Docker Getting Started',url:'https://docs.docker.com/get-started/',dur:'Self-paced',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph0-p0',name:'GenAI Python Starter Template',desc:'FastAPI + Pydantic + env config + logging + health check + Dockerfile.',tags:['FastAPI','Pydantic','Docker']}
+ ]
+},
+{id:'ph1',label:'Phase 1',name:'Foundations',color:'#8b5cf6',
+ courses:[
+  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
+    {name:'Generative AI Foundations (4 courses)',url:'https://www.pluralsight.com/paths/generative-ai-foundations',dur:'2h',free:false},
+    {name:'Prompt Engineering (4 courses)',url:'https://www.pluralsight.com/paths/prompt-engineering-and-generative-ai',dur:'5h',free:false},
+    {name:'Large Language Models (4 courses)',url:'https://www.pluralsight.com/paths/large-language-models-llm',dur:'4h',free:false}
+  ]},
+  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
+    {name:'ChatGPT Prompt Engineering for Developers',url:'https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/',dur:'1h',free:true},
+    {name:'Generative AI for Everyone',url:'https://www.deeplearning.ai/courses/generative-ai-for-everyone/',dur:'3h',free:true}
+  ]},
+  {platform:'QA Platform',pcolor:'#3b82f6',items:[
+    {name:'Intro to Generative AI',url:'https://platform.qa.com/learning-paths/intro-to-generative-ai-13286/',dur:'49min',free:false},
+    {name:'AI-900 Exam Prep: Azure AI Fundamentals',url:'https://platform.qa.com/learning-paths/ai-900-exam-preparation-microsoft-azure-ai-fundamentals-1968/',dur:'9h46m',free:false}
+  ]},
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'OpenAI Platform Docs',url:'https://platform.openai.com/docs/',dur:'Reference',free:true},
+    {name:'OpenAI Prompt Engineering Guide',url:'https://platform.openai.com/docs/guides/prompt-engineering',dur:'20min',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph1-p1',name:'Prompt Playground',desc:'Compare zero-shot, few-shot, role/system and chain-of-thought prompting side-by-side.',tags:['Python','OpenAI','Prompting']},
+  {id:'ph1-p2',name:'Summarizer',desc:'Input long text, output summary / bullets / action items via FastAPI.',tags:['FastAPI','OpenAI','NLP']},
+  {id:'ph1-p3',name:'Rewriter',desc:'Rewrite in professional / concise / technical / friendly tone.',tags:['FastAPI','OpenAI','NLP']}
+ ]
+},
+{id:'ph2',label:'Phase 2',name:'Python LLM Apps',color:'#a855f7',
+ courses:[
+  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
+    {name:'OpenAI for Developers (13 courses)',url:'https://www.pluralsight.com/paths/openai-for-developers',dur:'12h',free:false,badge:'MUST DO'},
+    {name:'Generative AI for Developers (7 courses)',url:'https://www.pluralsight.com/paths/generative-ai-for-developers',dur:'6h',free:false},
+    {name:'Generative AI Integration for Developers',url:'https://www.pluralsight.com/paths/generative-ai-integration-for-developers',dur:'4h',free:false}
+  ]},
+  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
+    {name:'LangChain for LLM Application Development',url:'https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/',dur:'1h38m',free:true}
+  ]},
+  {platform:'LangChain Academy',pcolor:'#ec4899',items:[
+    {name:'Introduction to LangChain (Python)',url:'https://academy.langchain.com/courses/foundation-introduction-to-langchain-python',dur:'~1.5h',free:true,badge:'NEW'}
+  ]},
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'OpenAI Responses API vs Chat Completions',url:'https://platform.openai.com/docs/guides/migrate-to-responses',dur:'Reference',free:true},
+    {name:'OpenAI Structured Outputs',url:'https://platform.openai.com/docs/guides/structured-outputs',dur:'Reference',free:true},
+    {name:'OpenAI Cookbook',url:'https://cookbook.openai.com/',dur:'Reference',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph2-p4',name:'CLI Chatbot',desc:'Stateful CLI assistant with session history, persona flag, and transcript save.',tags:['Python','CLI','OpenAI']},
+  {id:'ph2-p5',name:'FastAPI GenAI Service',desc:'Production-ready API: /summarize /rewrite /classify /extract with Pydantic schemas.',tags:['FastAPI','Pydantic','OpenAI']},
+  {id:'ph2-p6',name:'Structured Data Extractor',desc:'Extract typed JSON from messy real-world text using structured outputs.',tags:['Pydantic','OpenAI','JSON']},
+  {id:'ph2-p7',name:'Resume vs JD Analyzer',desc:'Fit score, matching skills, missing skills, and suggestions using structured output.',tags:['NLP','OpenAI','FastAPI']}
+ ]
+},
+{id:'ph3',label:'Phase 3',name:'Embeddings & RAG',color:'#06b6d4',
+ courses:[
+  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
+    {name:'Vector Databases and Embeddings for Developers',url:'https://www.pluralsight.com/courses/developers-vector-databases-embeddings',dur:'43min',free:false},
+    {name:'OpenAI Embeddings API',url:'https://www.pluralsight.com/courses/openai-embeddings-api',dur:'31min',free:false}
+  ]},
+  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
+    {name:'Advanced Retrieval for AI with Chroma',url:'https://www.deeplearning.ai/short-courses/advanced-retrieval-for-ai/',dur:'52min',free:true},
+    {name:'Building and Evaluating Advanced RAG',url:'https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/',dur:'~1h',free:true}
+  ]},
+  {platform:'Hugging Face',pcolor:'#f97316',items:[
+    {name:'sentence-transformers docs (sbert.net)',url:'https://sbert.net/',dur:'Reference',free:true,badge:'MUST DO'},
+    {name:'MTEB Leaderboard — pick best embedding model',url:'https://huggingface.co/spaces/mteb/leaderboard',dur:'Reference',free:true}
+  ]},
+  {platform:'QA Platform',pcolor:'#3b82f6',items:[
+    {name:'Enhancing Generative AI Models with RAG (lab)',url:'https://platform.qa.com/lab/enhancing-generative-ai-models-with-retrieval-augmented-generation-rag/',dur:'30min',free:false}
+  ]},
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'LangChain RAG Tutorial',url:'https://python.langchain.com/docs/tutorials/rag/',dur:'Reference',free:true},
+    {name:'Chroma Docs',url:'https://docs.trychroma.com/',dur:'Reference',free:true},
+    {name:'Qdrant Docs',url:'https://qdrant.tech/documentation/',dur:'Reference',free:true},
+    {name:'OpenAI Embeddings Guide',url:'https://platform.openai.com/docs/guides/embeddings',dur:'Reference',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph3-p8',name:'Semantic Search Prototype',desc:'Embed 20-50 docs into Chroma, CLI query → top-5 ranked results with similarity scores.',tags:['ChromaDB','OpenAI','Embeddings']},
+  {id:'ph3-p9',name:'PDF Q&A Assistant',desc:'Parse PDFs → chunk → embed → retrieve → answer with citations.',tags:['RAG','ChromaDB','LangChain']},
+  {id:'ph3-p10',name:'Docs Knowledge Assistant',desc:'Answer questions over markdown/README files with grounded citations.',tags:['RAG','Embeddings','FastAPI']},
+  {id:'ph3-p11',name:'Support Knowledge Bot',desc:'Answer from support docs only and refuse unsupported answers.',tags:['RAG','Safety','FastAPI']},
+  {id:'ph3-p11a',name:'GraphRAG Document Explorer',desc:'Knowledge graph for multi-hop reasoning over complex text using LightRAG principles.',tags:['GraphRAG','LightRAG','Advanced']}
+ ]
+},
+{id:'ph4',label:'Phase 4',name:'Tool Calling & Workflows',color:'#f59e0b',
+ courses:[
+  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
+    {name:'Function Calling and Tool Use with OpenAI',url:'https://www.pluralsight.com/courses/function-calling-tool-use-openai',dur:'38min',free:false},
+    {name:'OpenAI Responses API and Agents SDK',url:'https://www.pluralsight.com/courses/openai-responses-api-agents-sdk',dur:'45min',free:false}
+  ]},
+  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
+    {name:'Functions, Tools and Agents with LangChain',url:'https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/',dur:'1h44m',free:true}
+  ]},
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'OpenAI Function Calling Guide',url:'https://platform.openai.com/docs/guides/function-calling',dur:'Reference',free:true},
+    {name:'OpenAI Tools Guide',url:'https://platform.openai.com/docs/guides/tools',dur:'Reference',free:true},
+    {name:'OpenAI Agents SDK Docs',url:'https://openai.github.io/openai-agents-python/',dur:'Reference',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph4-p12',name:'Tool-Using Assistant',desc:'Calculator, docs search, notes, file lookup, and mock calendar tools.',tags:['Tool Calling','OpenAI','Python']},
+  {id:'ph4-p13',name:'Research Assistant',desc:'Retrieve web/docs content, synthesize, cite, and decline when unsure.',tags:['Tools','RAG','OpenAI']},
+  {id:'ph4-p14',name:'SQL / Reporting Assistant',desc:'Generate read-only SQL safely with schema awareness.',tags:['SQL','Safety','OpenAI']},
+  {id:'ph4-p15',name:'Ticket Triage Assistant',desc:'Classify, prioritize, route, and draft responses for support tickets.',tags:['NLP','Classification','FastAPI']}
+ ]
+},
+{id:'ph5',label:'Phase 5',name:'Evals & Observability',color:'#ef4444',
+ courses:[
+  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
+    {name:'Testing, Monitoring, and Evaluating OpenAI Models',url:'https://www.pluralsight.com/courses/testing-monitoring-evaluating-openai-models',dur:'59min',free:false},
+    {name:'OpenAI Security and Moderations',url:'https://www.pluralsight.com/courses/openai-security-moderations',dur:'28min',free:false},
+    {name:'Generative AI Data Privacy and Safe Use',url:'https://www.pluralsight.com/courses/safe-use-developers-generative-ai-data-privacy',dur:'54min',free:false}
+  ]},
+  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
+    {name:'Building and Evaluating Advanced RAG',url:'https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/',dur:'~1h',free:true},
+    {name:'Red Teaming LLM Applications',url:'https://www.deeplearning.ai/short-courses/red-teaming-llm-applications/',dur:'~1h',free:true}
+  ]},
+  {platform:'LangChain Academy',pcolor:'#ec4899',items:[
+    {name:'LangSmith Essentials',url:'https://academy.langchain.com/courses/langsmith-essentials',dur:'~1h',free:true},
+    {name:'Introduction to Agent Observability & Evals',url:'https://academy.langchain.com/',dur:'Self-paced',free:true}
+  ]},
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'LangSmith Docs',url:'https://docs.smith.langchain.com/',dur:'Reference',free:true},
+    {name:'Langfuse Docs (open-source observability)',url:'https://langfuse.com/docs',dur:'Reference',free:true},
+    {name:'DeepEval Framework',url:'https://docs.confident-ai.com/',dur:'Reference',free:true},
+    {name:'OWASP LLM Top 10 (2025)',url:'https://owasp.org/www-project-top-10-for-large-language-model-applications/',dur:'Reference',free:true,badge:'CRITICAL'}
+  ]}
+ ],
+ projects:[
+  {id:'ph5-p16',name:'Eval Suite',desc:'30-50 golden test cases, pytest + DeepEval, LLM-as-a-Judge, CI-ready eval pipeline.',tags:['DeepEval','pytest','LangSmith']},
+  {id:'ph5-p17',name:'Productionize One App',desc:'Add logging, retries, timeouts, caching, metrics, prompt versioning, and README.',tags:['Production','Logging','Docker']},
+  {id:'ph5-p17a',name:'DSPy Prompt Optimizer',desc:'Replace manual prompts with programmatically compiled, optimized prompts.',tags:['DSPy','Optimization','Advanced']},
+  {id:'ph5-p17b',name:'CI/CD Pipeline for AI',desc:'GitHub Actions eval suite — quality gate, cost regression check, container pipeline.',tags:['GitHub Actions','CI/CD','Docker']},
+  {id:'ph5-p17c',name:'OWASP LLM Security Scanner',desc:'Implement guardrails for prompt injection, test indirect injection, restrict tool scopes.',tags:['OWASP','Security','Red Teaming']}
+ ]
+},
+{id:'ph6',label:'Phase 6',name:'MCP & Agentic Orchestration',color:'#8b5cf6',
+ courses:[
+  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
+    {name:'Agentic AI for Developers',url:'https://www.pluralsight.com/courses/agentic-ai-developers',dur:'1h24m',free:false},
+    {name:'OpenAI Responses API and Agents SDK',url:'https://www.pluralsight.com/courses/openai-responses-api-agents-sdk',dur:'45min',free:false},
+    {name:'Developing AI Agents with OpenAI AgentKit',url:'https://www.pluralsight.com/courses/developing-ai-agents-openai-agentkit',dur:'1h24m',free:false}
+  ]},
+  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
+    {name:'AI Agents in LangGraph',url:'https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/',dur:'1h32m',free:true,badge:'MUST DO'},
+    {name:'Multi-AI Agent Systems with CrewAI',url:'https://www.deeplearning.ai/short-courses/multi-ai-agent-systems-with-crewai/',dur:'~1h',free:true},
+    {name:'Build AI Apps with MCP Servers',url:'https://www.deeplearning.ai/short-courses/build-ai-apps-with-mcp-server-working-with-box-files/',dur:'~1h',free:true},
+    {name:'A2A: The Agent2Agent Protocol',url:'https://www.deeplearning.ai/short-courses/a2a-the-agent2agent-protocol/',dur:'1h27m',free:true,badge:'NEW 2026'},
+    {name:'Agentic AI by Andrew Ng',url:'https://www.deeplearning.ai/courses/agentic-ai/',dur:'Self-paced',free:true},
+    {name:'Agent Memory: Building Memory-Aware Agents',url:'https://www.deeplearning.ai/short-courses/agent-memory-building-memory-aware-agents/',dur:'~1h',free:true}
+  ]},
+  {platform:'LangChain Academy',pcolor:'#ec4899',items:[
+    {name:'Introduction to LangGraph (55 lessons)',url:'https://academy.langchain.com/courses/intro-to-langgraph',dur:'6h',free:true,badge:'HIGHLY REC'},
+    {name:'LangGraph Essentials Quickstart',url:'https://academy.langchain.com/courses/langgraph-essentials-python',dur:'~1h',free:true}
+  ]},
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'MCP Official Docs',url:'https://modelcontextprotocol.io/docs/',dur:'Reference',free:true},
+    {name:'LangGraph Docs',url:'https://langchain-ai.github.io/langgraph/',dur:'Reference',free:true},
+    {name:'OpenAI Agents SDK',url:'https://openai.github.io/openai-agents-python/',dur:'Reference',free:true},
+    {name:'A2A Python SDK',url:'https://github.com/google-a2a/a2a-python',dur:'Reference',free:true,badge:'NEW 2026'},
+    {name:'Python MCP SDK',url:'https://github.com/modelcontextprotocol/python-sdk',dur:'Reference',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph6-p18',name:'Simple MCP Server',desc:'Expose one tool, one resource, one prompt for a local use case.',tags:['MCP','Python','FastMCP']},
+  {id:'ph6-p19',name:'Python MCP Utility Server',desc:'Local docs search, task tracker, file summarizer, or personal notes lookup.',tags:['MCP','Tools','Python']},
+  {id:'ph6-p20',name:'MCP-Powered Agent Integration',desc:'Connect an agent/client to your MCP server and use it in a real workflow.',tags:['MCP','LangGraph','Agents']},
+  {id:'ph6-p21',name:'HITL SQL Assistant',desc:'Pause before execution, require approve/reject from human.',tags:['HITL','LangGraph','SQL']},
+  {id:'ph6-p22',name:'HITL File Action Agent',desc:'Pause before write/delete/send actions with human approval gate.',tags:['HITL','Safety','LangGraph']},
+  {id:'ph6-p23',name:'Stateful Research Workflow',desc:'Resume after interruption, persist state across sessions.',tags:['LangGraph','Persistence','Agents']},
+  {id:'ph6-p24',name:'Orchestration & Multi-Agent',desc:'Planner + tool-call + approval gate + resume + result synthesis.',tags:['LangGraph','PydanticAI','Multi-Agent']}
+ ]
+},
+{id:'ph7',label:'Phase 7',name:'AI-Native Dev Productivity',color:'#06b6d4',
+ courses:[
+  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
+    {name:'OpenAI Codex',url:'https://www.pluralsight.com/courses/openai-codex',dur:'34min',free:false},
+    {name:'Enhancing Developer Workflows with OpenAI',url:'https://www.pluralsight.com/courses/enhancing-developer-workflows-openai',dur:'33min',free:false}
+  ]},
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'Ollama Tool Calling Docs',url:'https://docs.ollama.com/capabilities/tool-calling',dur:'Reference',free:true},
+    {name:'LM Studio Server Docs',url:'https://lmstudio.ai/docs/developer/core/server',dur:'Reference',free:true},
+    {name:'Continue.dev (open-source AI coding)',url:'https://continue.dev/',dur:'Reference',free:true},
+    {name:'Open WebUI',url:'https://openwebui.com/',dur:'Reference',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph7-p25',name:'Personal Dev Productivity Agent',desc:'Summarize repo, generate TODOs, explain stack traces, search docs, update roadmap.',tags:['Agents','Productivity','MCP']},
+  {id:'ph7-p26',name:'Local AI Coding Utility',desc:'Local code explainer + grep + summarizer using Ollama/LM Studio with tool-calling.',tags:['Ollama','LM Studio','Local AI']}
+ ]
+},
+{id:'ph8',label:'Phase 8',name:'Multimodal, Real-Time & SLMs',color:'#f97316',
+ courses:[
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'OpenAI Realtime API',url:'https://platform.openai.com/docs/guides/realtime',dur:'Reference',free:true},
+    {name:'OpenAI Vision Guide',url:'https://platform.openai.com/docs/guides/vision',dur:'Reference',free:true},
+    {name:'Hugging Face SLM Guide',url:'https://huggingface.co/blog/smollm',dur:'Reference',free:true},
+    {name:'Unsloth Fast Fine-tuning',url:'https://github.com/unslothai/unsloth',dur:'Reference',free:true},
+    {name:'MLX Examples (Apple Silicon)',url:'https://github.com/ml-explore/mlx-examples/tree/main/llms',dur:'Reference',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph8-p27',name:'Vision-Based Data Extractor',desc:'Extract structured JSON (tables, charts, receipts) using GPT-4o vision.',tags:['Vision','GPT-4o','Multimodal']},
+  {id:'ph8-p28',name:'Real-Time Voice Assistant',desc:'OpenAI Realtime API — low-latency voice-in, voice-out assistant.',tags:['Realtime API','WebSockets','Audio']},
+  {id:'ph8-p29',name:'Local SLM Fine-Tuning',desc:'Generate synthetic dataset with large model, fine-tune Llama-3-8B via Unsloth/MLX.',tags:['MLX','Fine-tuning','Apple Silicon']}
+ ]
+},
+{id:'ph9',label:'Phase 9',name:'Portfolio & Job Prep',color:'#10b981',
+ courses:[
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'README Template Generator',url:'https://www.makeareadme.com/',dur:'Reference',free:true},
+    {name:'Architecture Diagram Tool (diagrams.net)',url:'https://app.diagrams.net/',dur:'Reference',free:true},
+    {name:'Loom Demo Recording',url:'https://www.loom.com/',dur:'Reference',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph9-portfolio',name:'Portfolio Cleanup & GitHub Profile',desc:'Pin 4 repos, write profile README, add architecture diagrams, record Loom demos, write resume bullets.',tags:['Portfolio','GitHub','Resume']}
+ ]
+},
+{id:'ph10',label:'Phase 10',name:'Certification',color:'#64748b',
+ courses:[
+  {platform:'QA Platform',pcolor:'#3b82f6',items:[
+    {name:'AI-900 Exam Prep: Azure AI Fundamentals (15 lessons)',url:'https://platform.qa.com/learning-paths/ai-900-exam-preparation-microsoft-azure-ai-fundamentals-1968/',dur:'9h46m',free:false}
+  ]},
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'Microsoft Learn — Azure AI Fundamentals',url:'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/',dur:'Free prep',free:true},
+    {name:'AWS AIF-C01 — Certified AI Practitioner',url:'https://aws.amazon.com/certification/certified-ai-practitioner/',dur:'Reference',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph10-cert',name:'Certification: AI-900 or AWS AIF-C01',desc:'Microsoft Azure AI Fundamentals (AI-900 → AI-901 after Jun 2026) or AWS Certified AI Practitioner.',tags:['Azure','AWS','Certification']}
+ ]
+},
+{id:'ph11',label:'Phase 11',name:'Capstone Projects',color:'#ec4899',
+ courses:[
+  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
+    {name:'AI Agentic Design Patterns with AutoGen',url:'https://www.deeplearning.ai/short-courses/ai-agentic-design-patterns-with-autogen/',dur:'~1h',free:true}
+  ]},
+  {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'LangGraph Advanced Concepts',url:'https://langchain-ai.github.io/langgraph/concepts/',dur:'Reference',free:true},
+    {name:'OpenAI GPT-4o Vision',url:'https://platform.openai.com/docs/guides/vision',dur:'Reference',free:true},
+    {name:'OpenAI Audio/TTS',url:'https://platform.openai.com/docs/guides/text-to-speech',dur:'Reference',free:true},
+    {name:'Tavily Search API',url:'https://docs.tavily.com/',dur:'Reference',free:true}
+  ]}
+ ],
+ projects:[
+  {id:'ph11-p30',name:'Unified AI Assistant',desc:'Full-stack ChatGPT clone: text+memory, voice, vision, file analysis, web search, persistent memory.',tags:['LangGraph','GPT-4o','FastAPI','React']},
+  {id:'ph11-p31',name:'Multi-Agent Research Platform',desc:'Planner + parallel search agents + critic + writer → polished PDF report with HITL checkpoint.',tags:['Multi-Agent','LangGraph','MCP','A2A']},
+  {id:'ph11-p32',name:'Personal AI Dev Copilot',desc:'MCP server + agent for code review, PR descriptions, ticket planning, daily standups.',tags:['MCP','LangGraph','FastAPI','Productivity']}
+ ]
+}
+];
+
+// ---- State ----
+let state = JSON.parse(localStorage.getItem('genai-progress-v3') || '{}');
+let currentPhase = state._lastPhase || 'ph1';
+let theme = localStorage.getItem('genai-theme') || 'dark';
+
+// ---- Helpers ----
+function save(){ localStorage.setItem('genai-progress-v3', JSON.stringify(state)); updateSidebar(); }
+function isDone(id){ return !!state[id]; }
+function toggle(id){ state[id]=!state[id]; save(); }
+function allProjects(){ return PHASES.flatMap(p=>p.projects); }
+function allCourses(){ return PHASES.flatMap(p=>p.courses.flatMap(pl=>pl.items.map((_,i)=>p.id+'-c-'+pl.platform+'-'+i))); }
+function doneProjects(){ return allProjects().filter(p=>isDone(p.id)).length; }
+function doneCourses(){ return allCourses().filter(id=>isDone(id)).length; }
+function totalProjects(){ return allProjects().length; }
+function totalCourses(){ return allCourses().length; }
+function phaseDone(ph){ return ph.projects.filter(p=>isDone(p.id)).length; }
+
+// ---- Apply theme ----
+function applyTheme(){
+  document.body.classList.toggle('light', theme==='light');
+  document.getElementById('themeBtn').textContent = theme==='light' ? '🌙' : '☀️';
+}
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  theme = theme==='light'?'dark':'light';
+  localStorage.setItem('genai-theme',theme);
+  applyTheme();
+});
+
+// ---- Sidebar nav ----
+function updateSidebar(){
+  const dp=doneProjects(), tp=totalProjects(), dc=doneCourses(), tc=totalCourses();
+  const pct=Math.round((dp/tp)*100);
+  document.getElementById('pct').textContent=pct+'%';
+  document.getElementById('fill').style.width=pct+'%';
+  document.getElementById('stat-sub').innerHTML=`${dp} / ${tp} Projects &bull; ${dc} / ${tc} Courses`;
+  document.getElementById('export-info').textContent=`${dp} projects complete &bull; ${dc} courses complete &bull; Saved locally`;
+}
+
+function buildNav(){
+  const nav=document.getElementById('nav');
+  nav.innerHTML=PHASES.map(ph=>`
+    <div class="nav-item${ph.id===currentPhase?' active':''}" data-id="${ph.id}" onclick="showPhase('${ph.id}')">
+      <div class="nav-item-left">
+        <div class="nav-dot" style="background:${ph.color}"></div>
+        <div class="nav-info">
+          <div class="nav-title">${ph.name}</div>
+          <div class="nav-sub">${ph.label}</div>
         </div>
+      </div>
+      <span class="nav-badge">${phaseDone(ph)}/${ph.projects.length}</span>
+    </div>`).join('');
+}
 
-        <div class="overall-stats">
-            <div class="stat-header">
-                <span class="stat-value" id="overall-percent">0%</span>
-                <span class="stat-label">Mastery</span>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar-fill" id="overall-progress-bar"></div>
-            </div>
-            <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-dim);">
-                <span id="overall-completed">0</span> / <span id="overall-total">0</span> Projects Complete
-            </div>
-        </div>
+// ---- Phase content ----
+function courseId(phId,plat,i){ return `${phId}-c-${plat}-${i}`; }
 
-        <nav id="phase-nav">
-            <!-- Nav items injected by JS -->
-        </nav>
+function renderPhase(ph){
+  const done=phaseDone(ph), total=ph.projects.length;
+  const allC=ph.courses.flatMap((pl,pi)=>pl.items.map((_,i)=>courseId(ph.id,pl.platform,i)));
+  const doneC=allC.filter(id=>isDone(id)).length;
+  return `
+  <div class="phase-header">
+    <div>
+      <div class="phase-label">${ph.label}</div>
+      <h1 class="phase-title">${ph.name}</h1>
+      <div class="phase-meta">
+        <span class="phase-stat"><span class="phase-stat-dot" style="background:${ph.color}"></span>${done}/${total} projects complete</span>
+        <span class="phase-stat" style="--phase-stat-dot-bg:#3b82f6"><span class="phase-stat-dot" style="background:#3b82f6"></span>${doneC}/${allC.length} courses done</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn" onclick="markAllProjects('${ph.id}')">✓ All Projects</button>
+    </div>
+  </div>
 
-        <div class="sidebar-footer">
-            <div style="font-size: 0.75rem; color: var(--text-dim);">V2.1.0 Agentic</div>
-            <div id="status-dot" style="width: 8px; height: 8px; border-radius: 50%; background: var(--success);"></div>
-        </div>
-    </aside>
+  <div class="section">
+    <div class="section-title">📚 Courses & Resources</div>
+    <div class="courses-list">
+      ${ph.courses.map(pl=>`
+        <div class="platform-group" id="pg-${ph.id}-${pl.platform.replace(/\s/g,'_')}">
+          <div class="platform-header" onclick="togglePlatform('${ph.id}','${pl.platform.replace(/\s/g,'_')}')">
+            <div class="platform-dot" style="background:${pl.pcolor}"></div>
+            <span class="platform-name">${pl.platform}</span>
+            <span class="platform-meta">${pl.items.length} resource${pl.items.length>1?'s':''}</span>
+            <span class="platform-chevron">▼</span>
+          </div>
+          <div class="platform-body">
+            ${pl.items.map((c,i)=>{
+              const cid=courseId(ph.id,pl.platform,i);
+              return `<div class="course-item">
+                <div class="course-check${isDone(cid)?' done':''}" onclick="toggleCourse('${cid}',this)" title="Mark complete">
+                  ${isDone(cid)?'✓':''}
+                </div>
+                <div class="course-info">
+                  <div class="course-name"><a href="${c.url}" target="_blank" rel="noopener">${c.name}</a></div>
+                  <div class="course-details">
+                    <span class="tag ${c.free?'free':'paid'}">${c.free?'FREE':'PAID'}</span>
+                    <span class="tag">${c.dur}</span>
+                    ${c.badge?`<span class="tag new">${c.badge}</span>`:''}
+                  </div>
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>`).join('')}
+    </div>
+  </div>
 
-    <main>
-        <div class="header-section">
-            <div class="phase-title-group">
-                <h2 id="current-phase-id">Phase X</h2>
-                <h3 id="current-phase-name">Select a Phase</h3>
-            </div>
-            <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
-                <svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                </svg>
-            </div>
-        </div>
+  <div class="section">
+    <div class="section-title">🚀 Projects</div>
+    <div class="projects-grid">
+      ${ph.projects.map(p=>`
+        <div class="card${isDone(p.id)?' done':''}" id="card-${p.id}" onclick="toggleCard('${p.id}')">
+          <div class="card-header">
+            <span class="card-id">${p.id}</span>
+            <div class="card-check">${isDone(p.id)?'✓':''}</div>
+          </div>
+          <div class="card-title">${p.name}</div>
+          <div class="card-desc">${p.desc}</div>
+          <div class="card-tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
 
-        <div class="projects-grid" id="projects-container">
-            <!-- Project cards injected by JS -->
-        </div>
-    </main>
+function showPhase(id){
+  currentPhase=id;
+  state._lastPhase=id;
+  save();
+  document.getElementById('content').innerHTML=renderPhase(PHASES.find(p=>p.id===id));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.toggle('active',el.dataset.id===id));
+  closeSidebar();
+}
 
-    <div id="notification-container"></div>
+function togglePlatform(phId,plat){
+  const el=document.getElementById(`pg-${phId}-${plat}`);
+  if(el) el.classList.toggle('open');
+}
 
-    <script>
-        const STORAGE_KEY = 'genai-roadmap-progress-v2';
-        let currentProgress = {};
-        let currentPhase = 2;
+function toggleCard(id){
+  toggle(id);
+  const card=document.getElementById('card-'+id);
+  if(card){
+    card.classList.toggle('done',isDone(id));
+    card.querySelector('.card-check').textContent=isDone(id)?'✓':'';
+  }
+  buildNav();
+  updateSidebar();
+}
 
-        const phases = [
-            { id: 0,  name: "Software Baseline",         key: "ph0"  },
-            { id: 1,  name: "Foundations",                key: "ph1"  },
-            { id: 2,  name: "Python LLM Apps",            key: "ph2"  },
-            { id: 3,  name: "Embeddings & RAG",           key: "ph3"  },
-            { id: 4,  name: "Tool Calling & Workflows",   key: "ph4"  },
-            { id: 5,  name: "Evals & Observability",      key: "ph5"  },
-            { id: 6,  name: "MCP & Agentic Orchestration",key: "ph6"  },
-            { id: 7,  name: "AI Productivity",            key: "ph7"  },
-            { id: 8,  name: "Multimodal & SLMs",          key: "ph8"  },
-            { id: 11, name: "Capstone Projects",          key: "ph11" }
-        ];
+function toggleCourse(cid,el){
+  state[cid]=!state[cid]; save();
+  el.classList.toggle('done',!!state[cid]);
+  el.textContent=state[cid]?'✓':'';
+  buildNav();
+}
 
-        const projects = [
-            { id: "ph0-p0",   phase: 0,  name: "GenAI Python Starter",       desc: "Standardised template with FastAPI, Pydantic, and Docker.",                     tags: ["Python","FastAPI","Docker"] },
-            { id: "ph1-p1",   phase: 1,  name: "Prompt Playground",          desc: "Compare zero-shot vs few-shot prompting techniques.",                            tags: ["Prompting","OpenAI"] },
-            { id: "ph1-p2",   phase: 1,  name: "Summarizer",                 desc: "Generate bullet points and action items from long text.",                        tags: ["OpenAI","NLP"] },
-            { id: "ph1-p3",   phase: 1,  name: "Rewriter",                   desc: "Multi-tone rewriting engine (Professional, Friendly, etc).",                     tags: ["OpenAI","Prompting"] },
-            { id: "ph2-p4",   phase: 2,  name: "CLI Chatbot",                desc: "Stateful CLI assistant with session history and persona.",                       tags: ["Python","CLI","OpenAI"] },
-            { id: "ph2-p5",   phase: 2,  name: "FastAPI GenAI Service",      desc: "Production-ready API for classification, extraction, summarisation.",            tags: ["FastAPI","Pydantic"] },
-            { id: "ph2-p6",   phase: 2,  name: "Structured Data Extractor",  desc: "JSON schema extraction using Pydantic and LLMs.",                               tags: ["Pydantic","OpenAI"] },
-            { id: "ph2-p7",   phase: 2,  name: "Resume vs JD Analyzer",      desc: "Skill gap analysis and improvement suggestions.",                                tags: ["NLP","OpenAI"] },
-            { id: "ph3-p8",   phase: 3,  name: "Semantic Search Prototype",  desc: "Build a baseline vector search using ChromaDB.",                                tags: ["ChromaDB","Embeddings"] },
-            { id: "ph3-p9",   phase: 3,  name: "PDF Q&A Assistant",          desc: "Complete RAG pipeline for local PDF knowledge bases.",                           tags: ["RAG","LangChain"] },
-            { id: "ph3-p10",  phase: 3,  name: "Docs Knowledge Assistant",   desc: "Markdown-based documentation search and reasoning.",                             tags: ["RAG","ChromaDB"] },
-            { id: "ph3-p11",  phase: 3,  name: "Support Knowledge Bot",      desc: "Guardrailed bot answering only from provided knowledge.",                        tags: ["RAG","Guardrails"] },
-            { id: "ph3-p11a", phase: 3,  name: "GraphRAG Explorer",          desc: "Knowledge graph for multi-hop reasoning over complex texts.",                    tags: ["GraphRAG","Neo4j"] },
-            { id: "ph4-p12",  phase: 4,  name: "Tool-Using Assistant",       desc: "Assistant capable of using local tools (Calculator, Files, APIs).",              tags: ["Tool Calling","OpenAI"] },
-            { id: "ph4-p13",  phase: 4,  name: "Research Assistant",         desc: "Web-enabled agent with synthesis and citation powers.",                          tags: ["Agents","Search"] },
-            { id: "ph4-p14",  phase: 4,  name: "SQL Reporting Assistant",    desc: "Safe natural language to SQL bridge for databases.",                             tags: ["SQL","Tool Calling"] },
-            { id: "ph4-p15",  phase: 4,  name: "Ticket Triage Assistant",    desc: "Automated prioritisation and routing of support tickets.",                       tags: ["Agents","Automation"] },
-            { id: "ph5-p16",  phase: 5,  name: "Eval Suite",                 desc: "Automated evaluation of AI outputs using DeepEval.",                            tags: ["DeepEval","Testing"] },
-            { id: "ph5-p17",  phase: 5,  name: "Productionise One App",      desc: "Full observability stack: LangSmith, tracing, and logging.",                    tags: ["LangSmith","Observability"] },
-            { id: "ph5-p17a", phase: 5,  name: "DSPy Prompt Optimizer",      desc: "Replace manual prompts with programmatic metric-optimised weights.",             tags: ["DSPy","Prompting"] },
-            { id: "ph5-p17b", phase: 5,  name: "CI/CD Pipeline for AI",      desc: "Automate regression evals on PRs via GitHub Actions.",                          tags: ["CI/CD","GitHub Actions"] },
-            { id: "ph5-p17c", phase: 5,  name: "OWASP LLM Scanner",          desc: "Implement security guardrails for prompt injection and scopes.",                 tags: ["Security","OWASP"] },
-            { id: "ph6-p18",  phase: 6,  name: "Simple MCP Server",          desc: "Build and expose your first MCP server (Tools/Resources).",                     tags: ["MCP","Python"] },
-            { id: "ph6-p19",  phase: 6,  name: "Python MCP Utility",         desc: "Utility server for local dev tasks and file operations.",                       tags: ["MCP","FastMCP"] },
-            { id: "ph6-p20",  phase: 6,  name: "MCP Agent Integration",      desc: "Connect an external agent client to your custom server.",                       tags: ["MCP","Agents"] },
-            { id: "ph6-p21",  phase: 6,  name: "HITL SQL Assistant",         desc: "Human-in-the-loop approval gate for sensitive SQL actions.",                    tags: ["HITL","LangGraph"] },
-            { id: "ph6-p22",  phase: 6,  name: "HITL File Agent",            desc: "Agent that asks permission before modifying the disk.",                         tags: ["HITL","LangGraph"] },
-            { id: "ph6-p23",  phase: 6,  name: "Stateful Research Workflow", desc: "Resumable research agent with durable state and checkpointing.",                tags: ["LangGraph","State"] },
-            { id: "ph6-p24",  phase: 6,  name: "Multi-Agent Orchestration",  desc: "Stateful orchestration with PydanticAI, LangGraph, or CrewAI.",                tags: ["LangGraph","PydanticAI"] },
-            { id: "ph7-p25",  phase: 7,  name: "Dev Productivity Agent",     desc: "Assistant that summarises repos and generates TODO lists.",                     tags: ["Agents","Productivity"] },
-            { id: "ph7-p26",  phase: 7,  name: "Local Coding Utility",       desc: "Ollama-powered coding helper running fully on-device.",                         tags: ["Ollama","Local AI"] },
-            { id: "ph8-p27",  phase: 8,  name: "Vision Data Extractor",      desc: "Extract structured JSON from receipts & images using vision models.",           tags: ["Vision","GPT-4o"] },
-            { id: "ph8-p28",  phase: 8,  name: "Real-Time Voice Assistant",  desc: "Low-latency voice assistant via WebSockets or OpenAI Realtime API.",            tags: ["Voice","WebSockets"] },
-            { id: "ph8-p29",  phase: 8,  name: "Local SLM Fine-Tuning",      desc: "Synthetic data generation and MLX/Unsloth LoRA fine-tuning on M1 Mac.",        tags: ["MLX","LoRA","Fine-tuning"] },
-            { id: "ph11-p30", phase: 11, name: "Unified AI Platform",        desc: "ChatGPT clone with Voice, Vision, Files, and persistent Memory.",               tags: ["Capstone","Full-Stack"] },
-            { id: "ph11-p31", phase: 11, name: "Multi-Agent Research Plat.", desc: "Platform for massively parallelised multi-agent research tasks.",               tags: ["Capstone","LangGraph"] },
-            { id: "ph11-p32", phase: 11, name: "Personal AI Dev Copilot",    desc: "Context-aware coding assistant integrated into your full dev workflow.",        tags: ["Capstone","MCP"] }
-        ];
+function markAllProjects(phId){
+  const ph=PHASES.find(p=>p.id===phId);
+  const allDone=ph.projects.every(p=>isDone(p.id));
+  ph.projects.forEach(p=>{ state[p.id]=!allDone; });
+  save(); showPhase(phId); buildNav();
+}
 
-        // ── localStorage persistence ──────────────────────────────────────
-        function loadProgress() {
-            try {
-                return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-            } catch { return {}; }
-        }
+// ---- Export / Import ----
+function exportProgress(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='genai-roadmap-progress.json';
+  a.click();
+}
+function importProgress(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{ try{ state=JSON.parse(ev.target.result); save(); location.reload(); }catch(err){ alert('Invalid file'); } };
+  reader.readAsText(file);
+}
+function resetProgress(){
+  if(!confirm('Reset all progress?')) return;
+  state={}; save(); location.reload();
+}
 
-        function saveProgress() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(currentProgress));
-        }
+// ---- Mobile sidebar ----
+function closeSidebar(){
+  if(window.innerWidth<=900){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+}
+document.getElementById('hamburger').addEventListener('click',()=>{
+  const open=document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show',open);
+  document.getElementById('hamburger').classList.toggle('open',open);
+});
+document.getElementById('overlay').addEventListener('click',closeSidebar);
 
-        // ── Init ──────────────────────────────────────────────────────────
-        function init() {
-            currentProgress = loadProgress();
-            renderSidebar();
-            switchPhase(2);
-            updateOverallProgress();
-        }
-
-        // ── Sidebar ───────────────────────────────────────────────────────
-        function renderSidebar() {
-            const nav = document.getElementById('phase-nav');
-            nav.innerHTML = phases.map(phase => {
-                const phaseProjects = projects.filter(p => p.phase === phase.id);
-                const completed = phaseProjects.filter(p => currentProgress[p.id]).length;
-                const total = phaseProjects.length;
-                const isComplete = completed === total && total > 0;
-                return `
-                    <div class="nav-item ${currentPhase === phase.id ? 'active' : ''}" onclick="switchPhase(${phase.id})">
-                        <div class="nav-info">
-                            <span class="nav-title">${phase.name}</span>
-                            <span class="nav-meta">Phase ${phase.id}</span>
-                        </div>
-                        <span class="nav-badge ${isComplete ? 'complete' : ''}">${completed}/${total}</span>
-                    </div>`;
-            }).join('');
-        }
-
-        // ── Phase switch ──────────────────────────────────────────────────
-        function switchPhase(phaseId) {
-            currentPhase = phaseId;
-            const phase = phases.find(p => p.id === phaseId);
-            document.getElementById('current-phase-id').textContent = `Phase ${phase.id}`;
-            document.getElementById('current-phase-name').textContent = phase.name;
-            renderSidebar();
-            renderProjects();
-        }
-
-        // ── Project cards ─────────────────────────────────────────────────
-        function renderProjects() {
-            const container = document.getElementById('projects-container');
-            const phaseProjects = projects.filter(p => p.phase === currentPhase);
-            container.innerHTML = phaseProjects.map(project => {
-                const isCompleted = !!currentProgress[project.id];
-                const tagsHtml = (project.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
-                return `
-                    <div class="project-card ${isCompleted ? 'completed' : ''}" onclick="toggleProject('${project.id}')" id="card-${project.id}">
-                        <div class="success-overlay"></div>
-                        <div class="card-header">
-                            <span class="project-id">${project.id}</span>
-                            <div class="check-wrapper">
-                                <svg class="check-icon" viewBox="0 0 24 24">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </div>
-                        </div>
-                        <h4 class="project-name">${project.name}</h4>
-                        <p class="project-desc">${project.desc}</p>
-                        <div class="tags">${tagsHtml}</div>
-                    </div>`;
-            }).join('');
-        }
-
-        // ── Toggle complete ───────────────────────────────────────────────
-        function toggleProject(id) {
-            const card = document.getElementById(`card-${id}`);
-            const wasCompleted = !!currentProgress[id];
-            currentProgress[id] = !wasCompleted;
-            saveProgress();
-            if (!wasCompleted) {
-                card.classList.add('celebrate');
-                showNotification(`✅ Completed!`, "success");
-                setTimeout(() => card.classList.remove('celebrate'), 1000);
-            }
-            renderProjects();
-            renderSidebar();
-            updateOverallProgress();
-        }
-
-        // ── Overall progress ──────────────────────────────────────────────
-        function updateOverallProgress() {
-            const total = projects.length;
-            const completed = projects.filter(p => currentProgress[p.id]).length;
-            const percent = Math.round((completed / total) * 100);
-            document.getElementById('overall-percent').textContent = `${percent}%`;
-            document.getElementById('overall-progress-bar').style.width = `${percent}%`;
-            document.getElementById('overall-completed').textContent = completed;
-            document.getElementById('overall-total').textContent = total;
-        }
-
-        // ── Notifications ─────────────────────────────────────────────────
-        function showNotification(message, type) {
-            const container = document.getElementById('notification-container');
-            const note = document.createElement('div');
-            note.className = 'notification';
-            if (type === 'success') note.style.borderColor = 'var(--success)';
-            if (type === 'danger')  note.style.borderColor = 'var(--danger)';
-            note.textContent = message;
-            container.appendChild(note);
-            setTimeout(() => note.classList.add('show'), 10);
-            setTimeout(() => { note.classList.remove('show'); setTimeout(() => note.remove(), 500); }, 3000);
-        }
-
-        // ── Theme toggle ──────────────────────────────────────────────────
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            const icon = document.getElementById('theme-icon');
-            if (document.body.classList.contains('light-mode')) {
-                icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="18.36" x2="5.64" y2="16.94"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
-            } else {
-                icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-            }
-            localStorage.setItem('genai-theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-        }
-
-        // Restore theme preference
-        if (localStorage.getItem('genai-theme') === 'light') {
-            document.body.classList.add('light-mode');
-        }
-
-        init();
-    </script>
+// ---- Init ----
+applyTheme();
+buildNav();
+updateSidebar();
+showPhase(currentPhase);
+</script>
 </body>
 </html>
