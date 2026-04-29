@@ -1,135 +1,157 @@
-# GenAI Roadmap for a Python Developer (2026)
+# 🚀 GenAI Developer Roadmap 2026
 
-> A structured, project-driven roadmap to transition from Python Software Engineer to **GenAI / LLM Application Engineer** — covering foundations through agentic systems, MCP, evals, security, and capstone deployments.
+> A structured, project-driven learning path for building production-grade Generative AI applications — from Python fundamentals through multi-agent orchestration, local model inference, and cloud certification.
 
-[![Last Updated](https://img.shields.io/badge/updated-April%202026-blue)](./genai-roadmap.md)
-[![Stack](https://img.shields.io/badge/stack-Python%20%7C%20OpenAI%20%7C%20LangGraph%20%7C%20MCP-8b5cf6)](./genai-roadmap.md)
-[![License](https://img.shields.io/badge/license-MIT-green)](#)
-
----
-
-## 📖 The Roadmap
-
-See [`genai-roadmap.md`](./genai-roadmap.md) for the full learning path — **10 phases, 29+ projects, 12-week fast-track plan, and a step-by-step action checklist.**
-
-### Roadmap at a Glance
-
-| Phase | Focus | Key Skills |
-|-------|-------|-----------|
-| 1 | GenAI Fundamentals | Prompting, tokens, LLM basics |
-| 2 | Python LLM Dev | OpenAI API, Responses API, structured outputs, reasoning models |
-| 3 | Embeddings & RAG | Vector DBs, Chroma, hybrid search, RAG pipelines |
-| 4 | Tool Calling & Workflows | Function calling, agents SDK, tool schemas |
-| 5 | Evals, Security & CI/CD | EDD, OWASP LLM Top 10, GitHub Actions, LangSmith |
-| 6 | MCP + Agentic Orchestration | MCP, A2A protocol, LangGraph, HITL, persistence |
-| 7 | AI-Native Dev Productivity | Copilot, local models (Ollama/LM Studio), dev agents |
-| 8 | Portfolio & Job Prep | GitHub profile, READMEs, demos, architecture diagrams |
-| 9 | Certifications | Azure AI-900/AI-901, AWS AIF-C01 |
-| 10 | Capstone Projects | Unified AI Assistant, Multi-Agent Research Platform, Personal Copilot |
+[![GitHub Pages](https://img.shields.io/badge/Dashboard-Live-8b5cf6?style=flat-square&logo=github)](https://gautamrastogi.github.io/gen-ai-roadmap/)
+[![Phases](https://img.shields.io/badge/Phases-12-ec4899?style=flat-square)](#roadmap-structure)
+[![Projects](https://img.shields.io/badge/Projects-39-10b981?style=flat-square)](#roadmap-structure)
+[![Courses](https://img.shields.io/badge/Courses-86+-3b82f6?style=flat-square)](#roadmap-structure)
 
 ---
 
-## 🗂 Repository Structure
+## 📊 Interactive Dashboard
+
+**[→ Open Dashboard](https://gautamrastogi.github.io/gen-ai-roadmap/)**
+
+The dashboard is a fully client-side web app (no backend, no login) that lets you:
+
+- ✅ Track progress per project and per course resource
+- ⏱️ See estimated time remaining per phase and overall
+- 📈 Watch your mastery percentage grow as you complete items
+- ☁️ Sync progress across devices via a private GitHub Gist
+- 🌙 Switch between dark and light themes
+- 📤 Export / import progress as JSON backup
+
+> **Tech stack:** Pure HTML + CSS + Vanilla JS — zero dependencies, zero build step.  
+> **Data layer:** `localStorage` (primary) + GitHub Gist API (cloud sync, optional).
+
+---
+
+## 🗺️ Roadmap Structure
+
+| Phase | Name | Projects | Est. Time |
+|-------|------|----------|-----------|
+| 0 | Software Baseline | 1 | ~2h |
+| 1 | Foundations | 3 | ~15h |
+| 2 | Python LLM Apps | 4 | ~20h |
+| 3 | Embeddings & RAG | 5 | ~15h |
+| 4 | Tool Calling & Workflows | 4 | ~12h |
+| 5 | Evals & Observability | 5 | ~10h |
+| 6 | MCP & Agentic Orchestration | 7 | ~20h |
+| 7 | AI-Native Dev Productivity | 2 | ~6h |
+| 8 | Multimodal, Real-Time & SLMs | 3 | ~12h |
+| 9 | Portfolio & Job Prep | 1 | ~8h |
+| 10 | Certification | 1 | ~15h |
+| 11 | Capstone Projects | 3 | ~30h |
+
+**Total: ~165 hours of structured learning + project building**
+
+---
+
+## 📚 Learning Resources
+
+Curated resources from:
+- **Pluralsight** — Structured video courses (paid)
+- **DeepLearning.AI** — Short courses on cutting-edge topics (mostly free)
+- **QA Platform** — Certification exam prep
+- **Official Docs** — OpenAI, LangChain, LangGraph, MCP, Hugging Face, Anthropic
+
+---
+
+## ☁️ Cross-Device Sync Setup
+
+The dashboard supports syncing your progress to a private GitHub Gist so it persists across browsers and devices.
+
+**One-time setup:**
+1. Go to [github.com/settings/tokens](https://github.com/settings/tokens) → **Tokens (classic)**
+2. Generate a new token with only the **`gist`** scope → copy it
+3. Open the dashboard → click **☁ Gist Sync** → paste the token
+4. Leave Gist ID blank on first device (it auto-creates) — paste the returned ID on subsequent devices
+5. Click **Save & Sync**
+
+> The token is stored only in your browser's `localStorage`. It is never committed to this repository or sent anywhere other than the GitHub API.
+
+---
+
+## 🛠️ Local Development
+
+```bash
+# Clone
+git clone https://github.com/gautamrastogi/gen-ai-roadmap.git
+cd gen-ai-roadmap
+
+# Serve locally (any static file server works)
+npx serve docs/
+# or
+python3 -m http.server 8080 --directory docs/
+```
+
+Then open `http://localhost:8080`.
+
+---
+
+## 🤖 Local AI Setup (M1/M2/M3 Mac)
+
+This roadmap is optimized for Apple Silicon. Recommended local model setup:
+
+| Tool | Purpose |
+|------|---------|
+| [LM Studio](https://lmstudio.ai/) | GUI for running local LLMs (Llama, Mistral, Phi) |
+| [Ollama](https://ollama.com/) | CLI-driven local model server |
+| [MLX](https://github.com/ml-explore/mlx-examples) | Apple Silicon optimized fine-tuning |
+
+**Recommended local models (runs well on M1 Max):**
+- `lmstudio-community/Llama-3.2-8B-Instruct` — general assistant
+- `microsoft/phi-3.5-mini-instruct` — fast, efficient
+- `mistralai/Mistral-7B-Instruct-v0.3` — coding tasks
+- `deepseek-ai/deepseek-coder-6.7b-instruct` — code generation
+
+---
+
+## 📁 Repository Structure
 
 ```
 gen-ai-roadmap/
-├── genai-roadmap.md           # Main roadmap — phases, projects, step-by-step plan
-├── README.md                  # This file
+├── docs/
+│   └── index.html        # Dashboard (single-file app, deployed to GitHub Pages)
+├── projects/
+│   └── local-agent/      # FastMCP local Python MCP server
+├── genai-roadmap.md      # Full roadmap content (source of truth)
+├── .env                  # Local secrets (gitignored)
 ├── .gitignore
-└── projects/
-    ├── dashboard/             # Progress tracker dashboard (Python HTTP server + HTML)
-    │   ├── app.py             # Backend: HTTP server + SQLite API
-    │   ├── dashboard.html     # Frontend: dark-mode, glassmorphism UI
-    │   ├── start_dashboard.command    # macOS double-click launcher
-    │   └── install_launch_agent.sh   # Auto-start on login (macOS LaunchAgent)
-    └── local-agent/           # Local Python MCP server for AI tool execution
-        ├── mcp_server.py      # FastMCP server exposing shell/file/git tools
-        ├── requirements.txt
-        └── README.md
+└── README.md
 ```
 
 ---
 
-## 📊 Progress Dashboard
+## 🔧 MCP Local Agent
 
-A self-hosted progress tracker — no cloud dependencies, runs locally.
+The `projects/local-agent/` folder contains a **FastMCP Python server** that runs locally and provides deterministic execution tools to cloud AI assistants (Cursor, GitHub Copilot, Antigravity).
 
-**Start the dashboard:**
+### Available Tools
 
-```bash
-cd projects/dashboard
-python app.py --open-browser
-```
+| Tool | Description |
+|------|-------------|
+| `run_python` | Execute Python code in a sandboxed subprocess |
+| `shell` | Run shell commands with output capture |
+| `read_file` / `write_file` | Safe file I/O |
+| `list_dir` | Directory listing |
+| `lm_studio_chat` | Route prompts to a local LM Studio model |
+| `search_web` | DuckDuckGo search without API key |
 
-Opens at `http://127.0.0.1:8765` — click any checklist item to mark it complete. Progress is persisted in SQLite (`~/Library/Application Support/GenAIRoadmapDashboard/tracker.db`).
-
-**Auto-start on macOS login:**
-
-```bash
-cd projects/dashboard
-bash install_launch_agent.sh
-```
+See `projects/local-agent/README.md` for setup instructions.
 
 ---
 
-## 🤖 Local Agent MCP Server
+## 🎯 Philosophy
 
-A [Model Context Protocol](https://modelcontextprotocol.io) server that gives AI assistants (Antigravity, Cursor, Claude Desktop) safe, local tool access:
-
-- Shell command execution (scoped to workspace)
-- File read/write operations
-- Git status/diff/log tools
-- Roadmap tracker integration
-
-**Start the local agent:**
-
-```bash
-cd projects/local-agent
-source .venv/bin/activate
-python mcp_server.py
-```
+- **Build first, learn second** — every phase culminates in a real, deployable project
+- **Local-first** — run models on your own hardware before paying for APIs
+- **Agentic from day one** — tool-use, memory, and MCP show up early and throughout
+- **Production mindset** — evals, observability, and security are first-class citizens
 
 ---
 
-## 🛠 Tech Stack
+## 📝 License
 
-| Layer | Tools |
-|-------|-------|
-| Language | Python 3.12+ |
-| LLM APIs | OpenAI (Responses API), Anthropic Claude, Azure OpenAI |
-| Local Models | Ollama, LM Studio |
-| Agents | LangGraph, OpenAI Agents SDK, CrewAI |
-| RAG | Chroma, FAISS, pgvector |
-| MCP | Python MCP SDK (FastMCP), A2A Protocol |
-| Evals | DeepEval, LangSmith, Arize Phoenix |
-| Infra | Docker, GitHub Actions, Railway/Render |
-| Dashboard | Python HTTP server, Vanilla HTML/CSS/JS, SQLite |
-
----
-
-## 2026 GenAI Industry Trends Covered
-
-| Trend | Phase |
-|-------|-------|
-| Agentic Systems (LangGraph, CrewAI, OpenAI Agents SDK) | 6 |
-| Model Context Protocol (MCP) | 6 |
-| A2A Agent-to-Agent Protocol | 6 |
-| Reasoning Models (o1/o3, DeepSeek-R1) | 2 |
-| Evals-as-Code (EDD) | 5 |
-| AI Security & OWASP LLM Top 10 | 5 |
-| CI/CD for AI Apps | 5 |
-| Multimodal (Vision, Audio, Video) | 10 |
-| Local Models (Ollama, LM Studio) | 2, 7 |
-
----
-
-## 🚀 Getting Started
-
-1. Read [`genai-roadmap.md`](./genai-roadmap.md) — start at **Step 1** in the action plan
-2. Launch the dashboard to track your progress
-3. Work through each phase in order — each phase builds on the previous
-4. Build the projects — they are the portfolio, not the courses
-
----
-
-*Maintained with Antigravity AI (Google DeepMind). Contributions welcome.*
+MIT — use this roadmap however you like. If you find it useful, ⭐ the repo!

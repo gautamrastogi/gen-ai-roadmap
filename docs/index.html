@@ -321,6 +321,12 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 .modal input:focus{border-color:var(--accent)}
 .modal-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:.5rem;flex-wrap:wrap}
 .modal-note{font-size:.72rem;color:var(--dim);background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.15);border-radius:10px;padding:.75rem;margin-bottom:1rem;line-height:1.6}
+
+.phase-done-badge{display:inline-block;background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3);border-radius:6px;font-size:.6rem;font-weight:700;letter-spacing:.06em;padding:.15rem .5rem;margin-left:.6rem;vertical-align:middle;text-transform:uppercase}
+.nav-badge.done-badge{background:rgba(16,185,129,.2);color:#10b981;font-size:.6rem}
+.btn-accent{background:var(--grad);color:#fff;border-color:transparent}
+.btn-accent:hover{opacity:.85;transform:translateY(-1px)}
+.header-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:flex-start;padding-top:.3rem}
 </style>
 </head>
 <body>
@@ -343,7 +349,8 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
       <span class="stat-label">Mastery</span>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="fill" style="width:0%"></div></div>
-    <div class="stat-sub" id="stat-sub">0 / 37 Projects &bull; 0 / 0 Courses</div>
+    <div class="stat-sub" id="stat-sub">0 / 39 Projects &bull; 0 / 86 Courses</div>
+  <div id="stat-time" class="stat-sub" style="font-size:.65rem;margin-top:.25rem;opacity:.75">⏱ Loading…</div>
   </div>
   <div class="nav-label">Phases</div>
   <nav id="nav"></nav>
@@ -676,6 +683,38 @@ function doneCourses(){ return allCourses().filter(id=>isDone(id)).length; }
 function totalProjects(){ return allProjects().length; }
 function totalCourses(){ return allCourses().length; }
 function phaseDone(ph){ return ph.projects.filter(p=>isDone(p.id)).length; }
+function phaseAllDone(ph){ 
+  const allC=ph.courses.flatMap((pl,pi)=>pl.items.map((_,i)=>courseId(ph.id,pl.platform,i)));
+  return ph.projects.every(p=>isDone(p.id)) && allC.every(id=>isDone(id));
+}
+
+// ---- Time tracking ----
+function parseMins(dur){
+  if(!dur||['Self-paced','Reference','Free prep','~Reference'].includes(dur)) return 0;
+  let m=0;
+  const h=dur.match(/(\d+)h/); if(h) m+=parseInt(h[1])*60;
+  const mn=dur.match(/(\d+)m(?:in)?/); if(mn) m+=parseInt(mn[1]);
+  return m;
+}
+function phaseEstMins(ph){
+  const pHrs=ph.projects.reduce((a,p)=>a+(p.hrs||4),0)*60;
+  const cMins=ph.courses.flatMap(pl=>pl.items).reduce((a,c)=>a+parseMins(c.dur),0);
+  return pHrs+cMins;
+}
+function phaseDoneMins(ph){
+  const pHrs=ph.projects.filter(p=>isDone(p.id)).reduce((a,p)=>a+(p.hrs||4),0)*60;
+  const cMins=ph.courses.flatMap((pl,pi)=>pl.items.map((c,i)=>{
+    return isDone(courseId(ph.id,pl.platform,i))?parseMins(c.dur):0;
+  })).reduce((a,b)=>a+b,0);
+  return pHrs+cMins;
+}
+function totalEstMins(){ return PHASES.reduce((a,ph)=>a+phaseEstMins(ph),0); }
+function totalDoneMins(){ return PHASES.reduce((a,ph)=>a+phaseDoneMins(ph),0); }
+function fmtHrs(mins){ 
+  if(mins===0) return '0h';
+  const h=Math.floor(mins/60), m=mins%60;
+  return m>0?`${h}h ${m}m`:`${h}h`;
+}
 
 // ---- Apply theme ----
 function applyTheme(){
@@ -691,10 +730,13 @@ document.getElementById('themeBtn').addEventListener('click',()=>{
 // ---- Sidebar nav ----
 function updateSidebar(){
   const dp=doneProjects(), tp=totalProjects(), dc=doneCourses(), tc=totalCourses();
-  const pct=Math.round((dp/tp)*100);
+  const pct=Math.round(((dp+dc)/(tp+tc))*100);
   document.getElementById('pct').textContent=pct+'%';
   document.getElementById('fill').style.width=pct+'%';
   document.getElementById('stat-sub').innerHTML=`${dp} / ${tp} Projects &bull; ${dc} / ${tc} Courses`;
+  const dm=totalDoneMins(), tm=totalEstMins();
+  const timeEl=document.getElementById('stat-time');
+  if(timeEl) timeEl.innerHTML=`⏱ ${fmtHrs(dm)} done &bull; ${fmtHrs(tm-dm)} left`;
   document.getElementById('export-info').textContent=`${dp} projects complete &bull; ${dc} courses complete &bull; Saved locally`;
 }
 
@@ -709,7 +751,7 @@ function buildNav(){
           <div class="nav-sub">${ph.label}</div>
         </div>
       </div>
-      <span class="nav-badge">${phaseDone(ph)}/${ph.projects.length}</span>
+      <span class="nav-badge${phaseAllDone(ph)?' done-badge':''}">${phaseAllDone(ph)?'✓ Done':phaseDone(ph)+'/'+ph.projects.length}</span>
     </div>`).join('');
 }
 
@@ -722,16 +764,19 @@ function renderPhase(ph){
   const doneC=allC.filter(id=>isDone(id)).length;
   return `
   <div class="phase-header">
-    <div>
-      <div class="phase-label">${ph.label}</div>
+    <div style="flex:1">
+      <div class="phase-label">${ph.label}${phaseAllDone(ph)?'<span class="phase-done-badge">✓ Complete</span>':''}</div>
       <h1 class="phase-title">${ph.name}</h1>
       <div class="phase-meta">
         <span class="phase-stat"><span class="phase-stat-dot" style="background:${ph.color}"></span>${done}/${total} projects complete</span>
-        <span class="phase-stat" style="--phase-stat-dot-bg:#3b82f6"><span class="phase-stat-dot" style="background:#3b82f6"></span>${doneC}/${allC.length} courses done</span>
+        <span class="phase-stat"><span class="phase-stat-dot" style="background:#3b82f6"></span>${doneC}/${allC.length} courses done</span>
+        <span class="phase-stat" style="color:var(--warning)"><span style="margin-right:.3rem">⏱</span>${fmtHrs(phaseDoneMins(ph))} / ${fmtHrs(phaseEstMins(ph))}</span>
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn" onclick="markAllProjects('${ph.id}')">✓ All Projects</button>
+      <button class="btn" onclick="markAllCourses('${ph.id}')" title="Toggle all courses in this phase">✓ All Courses</button>
+      <button class="btn" onclick="markAllProjects('${ph.id}')" title="Toggle all projects in this phase">✓ All Projects</button>
+      <button class="btn btn-accent" onclick="markPhaseComplete('${ph.id}')" title="Mark entire phase complete">⚡ Complete Phase</button>
     </div>
   </div>
 
@@ -775,7 +820,10 @@ function renderPhase(ph){
         <div class="card${isDone(p.id)?' done':''}" id="card-${p.id}" onclick="toggleCard('${p.id}')">
           <div class="card-header">
             <span class="card-id">${p.id}</span>
-            <div class="card-check">${isDone(p.id)?'✓':''}</div>
+            <div style="display:flex;align-items:center;gap:.4rem">
+              <span style="font-size:.65rem;color:var(--warning);opacity:.8">⏱ ${p.hrs||4}h</span>
+              <div class="card-check">${isDone(p.id)?'✓':''}</div>
+            </div>
           </div>
           <div class="card-title">${p.name}</div>
           <div class="card-desc">${p.desc}</div>
@@ -821,6 +869,20 @@ function markAllProjects(phId){
   const ph=PHASES.find(p=>p.id===phId);
   const allDone=ph.projects.every(p=>isDone(p.id));
   ph.projects.forEach(p=>{ state[p.id]=!allDone; });
+  save(); showPhase(phId); buildNav();
+}
+function markAllCourses(phId){
+  const ph=PHASES.find(p=>p.id===phId);
+  const allC=ph.courses.flatMap((pl,pi)=>pl.items.map((_,i)=>courseId(ph.id,pl.platform,i)));
+  const allDone=allC.every(id=>isDone(id));
+  allC.forEach(id=>{ state[id]=!allDone; });
+  save(); showPhase(phId); buildNav();
+}
+function markPhaseComplete(phId){
+  const ph=PHASES.find(p=>p.id===phId);
+  const already=phaseAllDone(ph);
+  ph.projects.forEach(p=>{ state[p.id]=!already; });
+  ph.courses.forEach((pl,pi)=>pl.items.forEach((_,i)=>{ state[courseId(ph.id,pl.platform,i)]=!already; }));
   save(); showPhase(phId); buildNav();
 }
 
