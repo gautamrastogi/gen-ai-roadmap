@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <style>
 :root {
   --bg: #050b18;
@@ -115,6 +116,12 @@ aside::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 nav{display:flex;flex-direction:column;gap:.25rem;overflow-y:auto;flex:1;min-height:0;padding-right:.25rem}
 nav::-webkit-scrollbar{width:4px}
 nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.nav-progress-outer{width:100%;height:3px;background:var(--border);border-radius:99px;margin-top:.4rem;overflow:hidden}
+.nav-progress-inner{height:100%;background:var(--grad);border-radius:99px;transition:width .4s ease}
+.search-box{position:relative;margin-bottom:1.25rem;flex-shrink:0}
+.search-box input{width:100%;padding:.65rem .85rem .65rem 2.2rem;background:var(--bg-glass);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:.82rem;outline:none;transition:var(--tr)}
+.search-box input:focus{border-color:var(--accent);background:rgba(139,92,246,0.05)}
+.search-box svg{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--dim)}
 .nav-item{
   display:flex;align-items:center;justify-content:space-between;
   padding:.6rem .75rem;border-radius:10px;cursor:pointer;
@@ -329,6 +336,150 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 .header-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:flex-start;padding-top:.3rem}
 
 .btn-current{border-color:var(--accent);color:var(--accent);background:rgba(139,92,246,.1)}
+
+/* Per-item current indicator */
+.item-current-badge{display:inline-flex;align-items:center;gap:.25rem;font-size:.6rem;font-weight:700;color:var(--accent);background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25);border-radius:4px;padding:.1rem .4rem;margin-left:.4rem;vertical-align:middle;letter-spacing:.03em}
+.course-item.is-current{background:rgba(139,92,246,.06);border-left:2px solid var(--accent)}
+.card.is-current{border-color:rgba(139,92,246,.45);box-shadow:0 0 0 1px rgba(139,92,246,.2)}
+.card.is-current::before{opacity:1;background:var(--grad)}
+
+/* Reading guide */
+.reading-guide{margin-top:.6rem;padding:.6rem .75rem;background:rgba(59,130,246,.05);border-left:2px solid rgba(59,130,246,.3);border-radius:0 8px 8px 0;font-size:.72rem;color:var(--dim);line-height:1.7}
+.reading-guide-title{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--info);margin-bottom:.3rem}
+.reading-guide ul{padding-left:1.1rem;margin:0}
+.reading-guide li{margin-bottom:.1rem}
+
+/* Project guide sections */
+.card-guide{margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border)}
+.card-guide-section{margin-bottom:.65rem}
+.guide-label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:.3rem;display:block}
+.guide-text{font-size:.77rem;color:var(--dim);line-height:1.55}
+.skills-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.25rem}
+.skill-chip{font-size:.63rem;padding:.18rem .5rem;border-radius:99px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);color:var(--accent);font-weight:600}
+.deliverable-box{font-size:.75rem;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:8px;padding:.55rem .7rem;color:#34d399;line-height:1.5;margin-top:.25rem}
+
+/* Course set-current btn */
+.course-set-btn{font-size:.6rem;padding:.1rem .4rem;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:var(--tr);white-space:nowrap;flex-shrink:0;font-family:'Inter',sans-serif}
+.course-set-btn:hover{border-color:var(--accent);color:var(--accent)}
+.course-set-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(139,92,246,.1)}
+
+/* Project set-current btn in card */
+.card-current-btn{position:absolute;bottom:.9rem;right:.9rem;font-size:.6rem;padding:.15rem .5rem;border-radius:5px;border:1px solid var(--border);background:var(--bg-glass);color:var(--dim);cursor:pointer;transition:var(--tr);font-family:'Inter',sans-serif;font-weight:600}
+.card-current-btn:hover{border-color:var(--accent);color:var(--accent)}
+.card-current-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(139,92,246,.1)}
+
+/* Collapsed card state */
+.card.collapsed { padding: 1rem; min-height: auto; }
+.card.collapsed .card-desc, 
+.card.collapsed .card-guide, 
+.card.collapsed .card-tags, 
+.card.collapsed .card-current-btn { display: none; }
+.card.collapsed .card-header { margin-bottom: 0.25rem; }
+.card.collapsed .card-title { margin-bottom: 0; font-size: 0.95rem; }
+
+/* Global control bar buttons */
+.btn-success { background: rgba(16,185,129,.1); border-color: rgba(16,185,129,.3); color: #10b981; }
+.btn-success:hover { background: rgba(16,185,129,.2); border-color: var(--success); }
+.btn-info { background: rgba(59,130,246,.1); border-color: rgba(59,130,246,.3); color: #3b82f6; }
+.btn-info:hover { background: rgba(59,130,246,.2); border-color: var(--info); }
+
+#sidebar-current {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.current-task-box {
+  background: rgba(139,92,246,0.08);
+  border: 1px solid rgba(139,92,246,0.2);
+  border-radius: 10px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: var(--tr);
+}
+.current-task-box:hover {
+  border-color: var(--accent);
+  background: rgba(139,92,246,0.12);
+}
+
+/* New Metadata Styles */
+.card-level {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 0.5rem;
+}
+.level-beginner { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+.level-intermediate { background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.2); }
+.level-advanced { background: rgba(236, 72, 153, 0.1); color: #ec4899; border: 1px solid rgba(236, 72, 153, 0.2); }
+
+.business-value-box {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(245, 158, 11, 0.05);
+  border-left: 3px solid rgba(245, 158, 11, 0.4);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+.business-value-title {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--warning);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.tips-list {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(139, 92, 246, 0.04);
+  border-radius: 8px;
+  border: 1px dashed var(--border);
+}
+.tips-title {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.tips-list ul {
+  padding-left: 1.1rem;
+  margin: 0;
+}
+.tips-list li {
+  font-size: 0.72rem;
+  color: var(--dim);
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+.card-share-btn {
+  background: none;
+  border: none;
+  color: var(--dim);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: var(--tr);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-share-btn:hover {
+  color: var(--accent);
+  background: var(--bg-glass);
+}
+
 </style>
 </head>
 <body>
@@ -341,7 +492,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 </button>
 
 <aside id="sidebar">
-  <div class="brand">
+  <div class="brand" onclick="showOverview()" style="cursor:pointer">
     <div class="brand-icon">G</div>
     <span class="brand-name">GenAI 2026</span>
   </div>
@@ -352,13 +503,19 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
     </div>
     <div class="progress-bar"><div class="progress-fill" id="fill" style="width:0%"></div></div>
     <div class="stat-sub" id="stat-sub">0 / 39 Projects &bull; 0 / 86 Courses</div>
-  <div id="stat-time" class="stat-sub" style="font-size:.65rem;margin-top:.25rem;opacity:.75">⏱ Loading…</div>
-  <div id="current-phase-pill" style="margin-top:.6rem;display:none">
-    <span style="font-size:.6rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);font-weight:600">Currently on</span>
-    <div id="current-phase-label" style="font-size:.78rem;font-weight:600;color:var(--accent);margin-top:.2rem;display:flex;align-items:center;gap:.4rem">
-      <span>📍</span><span id="current-phase-text">—</span>
+    <div id="stat-time" class="stat-sub" style="font-size:.65rem;margin-top:.25rem;opacity:.75">⏱ Loading…</div>
+    
+    <div id="sidebar-current" style="display:none">
+      <span class="nav-label">Current Focus</span>
+      <div class="current-task-box" onclick="jumpToCurrent()">
+        <div id="sidebar-current-phase" style="font-size:.6rem; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:.1rem">PHASE</div>
+        <div id="sidebar-current-name" style="font-size:.8rem; font-weight:700; line-height:1.3">Task Name</div>
+      </div>
     </div>
   </div>
+  <div class="search-box">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+    <input type="text" id="search" placeholder="Search roadmap..." oninput="handleSearch(this.value)">
   </div>
   <div class="nav-label">Phases</div>
   <nav id="nav"></nav>
@@ -380,6 +537,10 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
     <span class="export-info" id="export-info">Progress saved locally. Export to sync across devices.</span>
     <button class="btn" onclick="exportProgress()">⬇ Export</button>
     <label class="btn" style="cursor:pointer">⬆ Import<input type="file" accept=".json" style="display:none" onchange="importProgress(event)"></label>
+    <button class="btn btn-info" onclick="masterAllProjects()" title="Mark all PROJECTS as complete">🚀 Master Projects</button>
+    <button class="btn btn-success" onclick="masterAllCourses()" title="Mark all COURSES as complete">📚 Master Courses</button>
+    <button class="btn btn-primary" onclick="masterAll()" title="Mark EVERYTHING as complete">🏆 Master All</button>
+    <button class="btn" onclick="expandEverything()" title="Expand all sections and cards">↔️ Expand All</button>
     <button class="btn" onclick="resetProgress()" style="color:#ef4444">↺ Reset</button>
   </div>
   <div id="content"></div>
@@ -411,267 +572,514 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 
 const PHASES = [
 {id:'ph0',label:'Phase 0',name:'Software Baseline',color:'#64748b',
+ icon:'🐍',
+ desc:'Establishing the Pythonic foundation and containerization skills required for modern AI engineering.',
  courses:[
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'FastAPI Official Docs',url:'https://fastapi.tiangolo.com/',dur:'Self-paced',free:true},
-    {name:'Pydantic Docs',url:'https://docs.pydantic.dev/',dur:'Self-paced',free:true},
-    {name:'Docker Getting Started',url:'https://docs.docker.com/get-started/',dur:'Self-paced',free:true}
+    {name:'FastAPI Official Docs',url:'https://fastapi.tiangolo.com/',dur:'Self-paced',free:true,
+     readSections:['First Steps','Request Body','Query Parameters','Pydantic Models','Dependencies','Middleware','Background Tasks']},
+    {name:'Pydantic Docs',url:'https://docs.pydantic.dev/',dur:'Self-paced',free:true,
+     readSections:['Introduction','BaseModel','Field','Standard Types','Custom Validators','JSON Schema Generation']},
+    {name:'Docker Getting Started',url:'https://docs.docker.com/get-started/',dur:'Self-paced',free:true,
+     readSections:['What is a container?','Build and run your image','Share the app','Docker Compose overview','Multi-stage builds']}
   ]}
  ],
  projects:[
-  {id:'ph0-p0',name:'GenAI Python Starter Template',desc:'FastAPI + Pydantic + env config + logging + health check + Dockerfile.',tags:['FastAPI','Pydantic','Docker']}
+  {id:'ph0-p0',name:'GenAI Python Starter Template',
+   level:'Beginner',
+   desc:'Bootstrap a reusable, production-grade Python service template that every subsequent project will build on top of.',
+   businessValue:'Reduces "Time to Hello World" by 90% for all future AI services. Ensures production-ready logging and monitoring from day one.',
+   guide:'Step-by-step: 1. Initialize git and a virtualenv. 2. Set up FastAPI with Pydantic schemas for request/response validation. 3. Implement .env configuration via python-dotenv. 4. Add structured logging with `structlog`. 5. Create a /health endpoint for monitoring. 6. Write a basic /echo endpoint. 7. Create a multi-stage Dockerfile for optimized production builds. 8. Add a comprehensive README. This template ensures consistency across your entire journey.',
+   tips:['Use `pydantic-settings` for type-safe environment variables.', 'Set up a `Makefile` or `justfile` for common commands.', 'Keep your Docker image small with `python:3.12-slim`.'],
+   skills:['FastAPI','Pydantic','python-dotenv','Docker','structlog','pytest'],
+   deliverable:'A clean GitHub repository that serves as your "clone-and-go" foundation. CI/CD ready, Docker-verified, and well-documented.',
+   hrs:2,tags:['FastAPI','Pydantic','Docker']}
  ]
 },
 {id:'ph1',label:'Phase 1',name:'Foundations',color:'#8b5cf6',
+ icon:'💡',
+ desc:'Mastering the core concepts of Generative AI, Prompt Engineering, and the landscape of Large Language Models.',
  courses:[
   {platform:'Pluralsight',pcolor:'#f59e0b',items:[
-    {name:'Generative AI Foundations (4 courses)',url:'https://www.pluralsight.com/paths/generative-ai-foundations',dur:'2h',free:false},
-    {name:'Prompt Engineering (4 courses)',url:'https://www.pluralsight.com/paths/prompt-engineering-and-generative-ai',dur:'5h',free:false},
-    {name:'Large Language Models (4 courses)',url:'https://www.pluralsight.com/paths/large-language-models-llm',dur:'4h',free:false}
+    {name:'Generative AI Foundations (4 courses)',url:'https://www.pluralsight.com/paths/generative-ai-foundations',dur:'2h',free:false,
+     readSections:['Introduction to Generative AI','How Generative AI Works','The Generative AI Landscape','Ethical Considerations in AI']},
+    {name:'Prompt Engineering (4 courses)',url:'https://www.pluralsight.com/paths/prompt-engineering-and-generative-ai',dur:'5h',free:false,
+     readSections:['Basics of Prompting','Intermediate Prompting Strategies','Advanced Prompting Techniques','Prompt Engineering for Specific Tasks']},
+    {name:'Large Language Models (4 courses)',url:'https://www.pluralsight.com/paths/large-language-models-llm',dur:'4h',free:false,
+     readSections:['Understanding Transformers','Training and Fine-tuning LLMs','LLM Evaluation Metrics','Deploying LLMs in Production']}
   ]},
   {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'ChatGPT Prompt Engineering for Developers',url:'https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/',dur:'1h',free:true},
-    {name:'Generative AI for Everyone',url:'https://www.deeplearning.ai/courses/generative-ai-for-everyone/',dur:'3h',free:true}
+    {name:'ChatGPT Prompt Engineering for Developers',url:'https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/',dur:'1h',free:true,
+     readSections:['The Guidelines','Iterative Prompt Development','Summarizing Content','Inferring Sentiment','Transforming Text','Expanding Ideas']},
+    {name:'Generative AI for Everyone',url:'https://www.deeplearning.ai/courses/generative-ai-for-everyone/',dur:'3h',free:true,
+     readSections:['What is Generative AI?','Generative AI Applications','The Lifecycle of a Generative AI Project','AI and Society']}
   ]},
   {platform:'QA Platform',pcolor:'#3b82f6',items:[
-    {name:'Intro to Generative AI',url:'https://platform.qa.com/learning-paths/intro-to-generative-ai-13286/',dur:'49min',free:false},
-    {name:'Generative AI Fundamentals of AWS (5 lessons)',url:'https://platform.qa.com/learning-paths/generative-ai-fundamentals-of-aws-13866/',dur:'2h23m',free:false,badge:'AWS'},
-    {name:'AI-900 Exam Prep: Azure AI Fundamentals',url:'https://platform.qa.com/learning-paths/ai-900-exam-preparation-microsoft-azure-ai-fundamentals-1968/',dur:'9h46m',free:false}
+    {name:'Intro to Generative AI',url:'https://platform.qa.com/learning-paths/intro-to-generative-ai-13286/',dur:'49min',free:false,
+     readSections:['What is GenAI?','Core Technologies','Business Use Cases']},
+    {name:'Generative AI Fundamentals of AWS (5 lessons)',url:'https://platform.qa.com/learning-paths/generative-ai-fundamentals-of-aws-13866/',dur:'2h23m',free:false,badge:'AWS',
+     readSections:['Introduction to Amazon Bedrock','AWS AI Strategy','Foundation Models on AWS','Building with Amazon Bedrock']},
+    {name:'AI-900 Exam Prep: Azure AI Fundamentals',url:'https://platform.qa.com/learning-paths/ai-900-exam-preparation-microsoft-azure-ai-fundamentals-1968/',dur:'9h46m',free:false,
+     readSections:['Describe AI workloads and considerations','Describe fundamental principles of machine learning on Azure','Describe features of computer vision workloads on Azure','Describe features of Natural Language Processing (NLP) workloads on Azure']}
   ]},
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'OpenAI Platform Docs',url:'https://platform.openai.com/docs/',dur:'Reference',free:true},
-    {name:'OpenAI Prompt Engineering Guide',url:'https://platform.openai.com/docs/guides/prompt-engineering',dur:'20min',free:true}
+    {name:'OpenAI Platform Docs',url:'https://platform.openai.com/docs/',dur:'Reference',free:true,
+     readSections:['Overview','Models','Pricing','Rate Limits','Usage Policies']},
+    {name:'OpenAI Prompt Engineering Guide',url:'https://platform.openai.com/docs/guides/prompt-engineering',dur:'20min',free:true,
+     readSections:['Six strategies for getting better results','Strategy: Write clear instructions','Strategy: Provide reference text','Strategy: Split complex tasks into simpler subtasks','Strategy: Give the model time to "think"']}
   ]}
  ],
  projects:[
-  {id:'ph1-p1',name:'Prompt Playground',desc:'Compare zero-shot, few-shot, role/system and chain-of-thought prompting side-by-side.',tags:['Python','OpenAI','Prompting']},
-  {id:'ph1-p2',name:'Summarizer',desc:'Input long text, output summary / bullets / action items via FastAPI.',tags:['FastAPI','OpenAI','NLP']},
-  {id:'ph1-p3',name:'Rewriter',desc:'Rewrite in professional / concise / technical / friendly tone.',tags:['FastAPI','OpenAI','NLP']}
+  {id:'ph1-p1',name:'Prompt Playground',
+   level:'Beginner',
+   desc:'Build a diagnostic workbench to compare prompting strategies (zero-shot, few-shot, CoT) side-by-side using the OpenAI SDK.',
+   businessValue:'Allows non-technical stakeholders to experiment with prompts and see cost/quality trade-offs before development begins.',
+   guide:'Implementation: 1. Create a Streamlit or Python CLI app. 2. Define a standard set of test questions. 3. Implement 4 tabs/modes: Zero-shot (direct), Few-shot (with examples), Persona-driven, and Chain-of-Thought (think step-by-step). 4. Use the OpenAI SDK to fetch completions for all modes simultaneously. 5. Display a comparison table showing the response text, estimated cost (using token counts), and latency. This project teaches you the variance in LLM outputs based on prompt design.',
+   tips:['Use the `tiktoken` library to calculate exact token usage.', 'Implement a "Side-by-Side" view for easy comparison.', 'Allow users to "Save" high-performing prompts to a file.'],
+   skills:['OpenAI SDK','Prompt Engineering','Streamlit','Token Estimation','Comparative Analysis'],
+   deliverable:'A playground app where you can input a task and instantly see how different prompting techniques affect the quality and cost of the output.',
+   hrs:3,tags:['Python','OpenAI','Prompting']},
+  {id:'ph1-p2',name:'Intelligent Summarizer',
+   level:'Beginner',
+   desc:'A production-ready FastAPI service that transforms long-form text into structured summaries, bullet points, and action items.',
+   businessValue:'Automates information extraction, saving hours of manual reading for research, support, or legal teams.',
+   guide:'Implementation: 1. Build a /summarize POST endpoint. 2. Use a system prompt to define the summarization style. 3. Accept parameters for `length` (short/medium/long) and `focus` (general/technical/executive). 4. Implement basic error handling for empty or excessively long inputs. 5. Return a structured JSON response with the summary and metadata. This project focuses on the "summarization" use case which is fundamental to most AI apps.',
+   tips:['Experiment with "One-Sentence" vs "Bullet Point" formats.', 'Add a "Tone" selector (e.g., Professional vs Friendly).', 'Use the `gpt-4o-mini` model for high-speed, low-cost summarization.'],
+   skills:['FastAPI','Pydantic','System Prompts','JSON API Design','Text Summarization'],
+   deliverable:'A robust API that can take a long article or transcript and return a concise, high-quality summary in multiple formats.',
+   hrs:3,tags:['FastAPI','OpenAI','NLP']},
+  {id:'ph1-p3',name:'Context-Aware Rewriter',
+   level:'Beginner',
+   desc:'An advanced text transformation tool that adapts any input to specific tones, personas, and audience levels (e.g., ELI5, Technical, Executive).',
+   businessValue:'Ensures brand consistency and adapts content for diverse audiences automatically, improving engagement and understanding.',
+   guide:'Implementation: 1. Define a set of "Tone Profiles" in a config file. 2. Build a /rewrite endpoint that takes the text and a profile name. 3. The LLM should not just rewrite, but explain *why* it made certain choices in a separate "RATIONALE" field. 4. Support "Iterative Refinement" where the user can provide feedback to the rewrite. This project explores the "persona" capabilities of LLMs.',
+   tips:['Define personas using clear, descriptive adjectives.', 'Ask the model to output a JSON object including the "Rationale" for changes.', 'Test with varying input lengths to see where the tone breaks.'],
+   skills:['Persona Engineering','Dynamic Prompts','Explainable AI','Iterative Refinement'],
+   deliverable:'A rewriter that can transform a dry technical doc into an engaging blog post or a complex legal paragraph into an ELI5 summary.',
+   hrs:3,tags:['FastAPI','OpenAI','NLP']}
  ]
 },
 {id:'ph2',label:'Phase 2',name:'Python LLM Apps',color:'#a855f7',
+ icon:'🚀',
+ desc:'Moving from simple prompts to sophisticated Python applications with state, streaming, and structured data extraction.',
  courses:[
   {platform:'Pluralsight',pcolor:'#f59e0b',items:[
-    {name:'OpenAI for Developers (13 courses)',url:'https://www.pluralsight.com/paths/openai-for-developers',dur:'12h',free:false,badge:'MUST DO'},
-    {name:'Generative AI for Developers (7 courses)',url:'https://www.pluralsight.com/paths/generative-ai-for-developers',dur:'6h',free:false},
-    {name:'Generative AI Integration for Developers',url:'https://www.pluralsight.com/paths/generative-ai-integration-for-developers',dur:'4h',free:false}
+    {name:'OpenAI for Developers (13 courses)',url:'https://www.pluralsight.com/paths/openai-for-developers',dur:'12h',free:false,badge:'MUST DO',
+     readSections:['Getting Started with the OpenAI API','Working with Chat Completions','Utilizing Function Calling','Implementing Moderation and Safety','Streaming Responses','Using Embeddings']},
+    {name:'Generative AI for Developers (7 courses)',url:'https://www.pluralsight.com/paths/generative-ai-for-developers',dur:'6h',free:false,
+     readSections:['AI Development Workflow','Selecting the Right Model','Optimizing Token Usage','Introduction to LangChain']},
+    {name:'Generative AI Integration for Developers',url:'https://www.pluralsight.com/paths/generative-ai-integration-for-developers',dur:'4h',free:false,
+     readSections:['API Security Best Practices','Cost Management and Monitoring','User Experience Design for AI']}
   ]},
   {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'LangChain for LLM Application Development',url:'https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/',dur:'1h38m',free:true}
+    {name:'LangChain for LLM Application Development',url:'https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/',dur:'1.5h',free:true,
+     readSections:['Models, Prompts and Parsers','Memory','Chains','Question and Answer','Evaluation','Agents']}
   ]},
   {platform:'LangChain Academy',pcolor:'#ec4899',items:[
-    {name:'Introduction to LangChain (Python)',url:'https://academy.langchain.com/courses/foundation-introduction-to-langchain-python',dur:'~1.5h',free:true,badge:'NEW'}
+    {name:'Introduction to LangChain (Python)',url:'https://academy.langchain.com/courses/foundation-introduction-to-langchain-python',dur:'~1.5h',free:true,badge:'NEW',
+     readSections:['What is LangChain?','The Core Abstractions','Building your first Chain','Introduction to LangSmith']}
   ]},
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'OpenAI Responses API vs Chat Completions',url:'https://platform.openai.com/docs/guides/migrate-to-responses',dur:'Reference',free:true},
-    {name:'OpenAI Structured Outputs',url:'https://platform.openai.com/docs/guides/structured-outputs',dur:'Reference',free:true},
-    {name:'OpenAI Cookbook',url:'https://cookbook.openai.com/',dur:'Reference',free:true}
+    {name:'OpenAI Responses API vs Chat Completions',url:'https://platform.openai.com/docs/guides/migrate-to-responses',dur:'Reference',free:true,
+     readSections:['Comparison Table','New Features in Responses API','Step-by-step Migration']},
+    {name:'OpenAI Structured Outputs',url:'https://platform.openai.com/docs/guides/structured-outputs',dur:'Reference',free:true,
+     readSections:['Introduction to Structured Outputs','Using JSON Schema','Defining Pydantic Models for Output','Handling Errors and Refusals']},
+    {name:'OpenAI Cookbook',url:'https://cookbook.openai.com/',dur:'Reference',free:true,
+     readSections:['Techniques to improve reliability','Visualizing embeddings','Question answering using embeddings-based retrieval','How to format inputs for Chat Completions']}
   ]}
  ],
  projects:[
-  {id:'ph2-p4',name:'CLI Chatbot',desc:'Stateful CLI assistant with session history, persona flag, and transcript save.',tags:['Python','CLI','OpenAI']},
-  {id:'ph2-p5',name:'FastAPI GenAI Service',desc:'Production-ready API: /summarize /rewrite /classify /extract with Pydantic schemas.',tags:['FastAPI','Pydantic','OpenAI']},
-  {id:'ph2-p6',name:'Structured Data Extractor',desc:'Extract typed JSON from messy real-world text using structured outputs.',tags:['Pydantic','OpenAI','JSON']},
-  {id:'ph2-p7',name:'Resume vs JD Analyzer',desc:'Fit score, matching skills, missing skills, and suggestions using structured output.',tags:['NLP','OpenAI','FastAPI']}
+  {id:'ph2-p4',name:'Contextual CLI Chatbot',
+   level:'Intermediate',
+   desc:'A sophisticated terminal-based AI assistant with persistent session memory, streaming responses, and transcript management.',
+   businessValue:'Provides a private, secure, and customizable AI assistant that runs entirely within the developer workflow.',
+   guide:'Implementation: 1. Use the `rich` library for a beautiful terminal UI. 2. Implement a local JSON or SQLite store for conversation history. 3. Use the OpenAI SDK with `stream=True` to print tokens as they arrive. 4. Implement "Session Commands" (e.g., /save, /clear, /undo). 5. Track token usage per turn and per session. 6. Support "System Prompt Hot-Swapping" to change the personality mid-chat. This project masters stateful LLM interactions.',
+   tips:['Use `sqlite3` for a lightweight, single-file conversation history.', 'Implement a "Markdown" renderer for pretty-printing responses.', 'Allow "Slash Commands" for quick actions like `/clear` or `/export`.'],
+   skills:['Streaming API','Rich UI','Local Persistence','Session Management','Token Tracking'],
+   deliverable:'A CLI tool that feels like a native terminal application, with lightning-fast streaming and perfectly preserved conversation context.',
+   hrs:5,tags:['Python','CLI','OpenAI']},
+  {id:'ph2-p5',name:'Enterprise GenAI Microservice',
+   level:'Intermediate',
+   desc:'A high-performance FastAPI service featuring rate-limiting, structured logging, and production-grade monitoring for AI tasks.',
+   businessValue:'Creates a secure, scalable "AI Gateway" that protects backend LLMs from abuse and provides visibility into spend.',
+   guide:'Implementation: 1. Integrate `slowapi` for per-client rate limiting. 2. Configure `structlog` for JSON-formatted logs. 3. Implement async database operations (even if just for logging). 4. Add a custom `/metrics` endpoint that reports average LLM latency and token costs. 5. Set up a Docker Compose stack with the API and a Redis instance for rate-limiting state. This project prepares you for real-world deployments.',
+   tips:['Use Redis for high-performance rate limiting.', 'Log the "User-Agent" and "Client-IP" to track usage patterns.', 'Add a health check that verifies the OpenAI API connectivity.'],
+   skills:['Rate Limiting','Production Logging','Monitoring','Docker Compose','Async Programming'],
+   deliverable:'A backend service that can handle concurrent users safely, with clear visibility into its performance and costs.',
+   hrs:6,tags:['FastAPI','Pydantic','OpenAI']},
+  {id:'ph2-p6',name:'Structured Schema Extractor',
+   level:'Intermediate',
+   desc:'Transform unstructured real-world documents (invoices, emails, logs) into strictly typed JSON objects using LLM-native schema enforcement.',
+   businessValue:'Converts messy data into actionable insights, enabling automated workflows for invoices, support tickets, and more.',
+   guide:'Implementation: 1. Define complex, nested Pydantic models (e.g., an Invoice model with a list of Item models). 2. Use OpenAI\'s `structured_outputs` feature. 3. Create a test suite with 10 varied documents. 4. Compare the extraction accuracy when using the model\'s built-in schema enforcement vs. post-processing with Pydantic. 5. Implement a "Validation Report" that flags data that doesn\'t meet business rules. This project bridges AI and structured data systems.',
+   tips:['Always provide a JSON Schema to the model.', 'Use "Self-Correction" by passing the validation error back to the LLM.', 'Try `gpt-4o-2024-08-06` for 100% reliable structured output.'],
+   skills:['JSON Schema','Pydantic v2','Structured Outputs','Data Engineering','Validation Logic'],
+   deliverable:'An automated tool that takes a messy PDF/text invoice and returns a perfectly formatted JSON object ready for a database.',
+   hrs:5,tags:['Pydantic','OpenAI','JSON']},
+  {id:'ph2-p7',name:'AI Talent Matcher (Resume/JD)',
+   level:'Intermediate',
+   desc:'A deep-analysis tool that scores resumes against job descriptions, identifying skills gaps and generating tailored improvement plans.',
+   businessValue:'Significantly reduces recruitment overhead by automatically screening and ranking candidates with human-like reasoning.',
+   guide:'Implementation: 1. Parse PDF resumes and text JDs. 2. Use a multi-document prompt that asks the LLM to act as a "Senior Technical Recruiter." 3. Extract specific skill matches, partial matches, and complete gaps. 4. Generate a structured "Gap Analysis" JSON. 5. Produce a "Learning Roadmap" for the candidate. 6. Implement a scoring algorithm that combines LLM reasoning with keyword weightings. This project explores high-value business logic.',
+   tips:['Extract "Hard Skills" and "Soft Skills" separately.', 'Generate a "Missing Skills" list to help candidates improve.', 'Validate the extracted dates to ensure experience calculations are correct.'],
+   skills:['Multi-document Context','Semantic Matching','Gap Analysis','Career Coaching Logic'],
+   deliverable:'A /match API that provides a detailed, objective fit score and actionable feedback for any candidate/job pair.',
+   hrs:5,tags:['NLP','Classification','FastAPI']}
  ]
 },
-{id:'ph3',label:'Phase 3',name:'Embeddings & RAG',color:'#06b6d4',
+{id:'ph3',label:'Phase 3',name:'Advanced Prompting & Frameworks',color:'#8b5cf6',
+ icon:'🧠',
+ desc:'Leveling up your prompting techniques with Chain-of-Thought, ReAct, and exploring industry-leading orchestration frameworks.',
  courses:[
-  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
-    {name:'Vector Databases and Embeddings for Developers',url:'https://www.pluralsight.com/courses/developers-vector-databases-embeddings',dur:'43min',free:false},
-    {name:'OpenAI Embeddings API',url:'https://www.pluralsight.com/courses/openai-embeddings-api',dur:'31min',free:false}
-  ]},
   {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'Advanced Retrieval for AI with Chroma',url:'https://www.deeplearning.ai/short-courses/advanced-retrieval-for-ai/',dur:'52min',free:true},
-    {name:'Building and Evaluating Advanced RAG',url:'https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/',dur:'~1h',free:true}
-  ]},
-  {platform:'Hugging Face',pcolor:'#f97316',items:[
-    {name:'sentence-transformers docs (sbert.net)',url:'https://sbert.net/',dur:'Reference',free:true,badge:'MUST DO'},
-    {name:'MTEB Leaderboard — pick best embedding model',url:'https://huggingface.co/spaces/mteb/leaderboard',dur:'Reference',free:true}
-  ]},
-  {platform:'QA Platform',pcolor:'#3b82f6',items:[
-    {name:'Enhancing Generative AI Models with RAG (lab)',url:'https://platform.qa.com/lab/enhancing-generative-ai-models-with-retrieval-augmented-generation-rag/',dur:'30min',free:false}
+    {name:'ChatGPT Prompt Engineering for Developers',url:'https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/',dur:'~1h',free:true,
+     readSections:['Guidelines','Iterative Prompt Development','Summarizing','Inferring','Transforming','Expanding']},
+    {name:'Building Systems with the ChatGPT API',url:'https://www.deeplearning.ai/short-courses/building-systems-with-chatgpt/',dur:'~1h',free:true,
+     readSections:['Language Models, the Chat Format and Tokens','Classification','Moderation','Chain of Thought Reasoning','Chaining Prompts','Check Outputs']}
   ]},
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'LangChain RAG Tutorial',url:'https://python.langchain.com/docs/tutorials/rag/',dur:'Reference',free:true},
-    {name:'Chroma Docs',url:'https://docs.trychroma.com/',dur:'Reference',free:true},
-    {name:'Qdrant Docs',url:'https://qdrant.tech/documentation/',dur:'Reference',free:true},
-    {name:'OpenAI Embeddings Guide',url:'https://platform.openai.com/docs/guides/embeddings',dur:'Reference',free:true}
+    {name:'Prompt Engineering Guide (DAIR.AI)',url:'https://www.promptingguide.ai/',dur:'Reference',free:true,
+     readSections:['Introduction','Techniques','Applications','Models','Risks','Adversarial Prompting']},
+    {name:'LangChain: Expression Language (LCEL)',url:'https://python.langchain.com/docs/concepts/lcel/',dur:'Reference',free:true,
+     readSections:['Why use LCEL?','Basic Example','Streaming','Parallelism','Retries and Fallbacks']},
+    {name:'LlamaIndex: High-Level Concepts',url:'https://docs.llamaindex.ai/en/stable/getting_started/concepts.html',dur:'Reference',free:true,
+     readSections:['Data Connectors (LlamaHub)','Documents / Nodes','Index Structures','Query Engines','Chat Engines']}
   ]}
  ],
  projects:[
-  {id:'ph3-p8',name:'Semantic Search Prototype',desc:'Embed 20-50 docs into Chroma, CLI query → top-5 ranked results with similarity scores.',tags:['ChromaDB','OpenAI','Embeddings']},
-  {id:'ph3-p9',name:'PDF Q&A Assistant',desc:'Parse PDFs → chunk → embed → retrieve → answer with citations.',tags:['RAG','ChromaDB','LangChain']},
-  {id:'ph3-p10',name:'Docs Knowledge Assistant',desc:'Answer questions over markdown/README files with grounded citations.',tags:['RAG','Embeddings','FastAPI']},
-  {id:'ph3-p11',name:'Support Knowledge Bot',desc:'Answer from support docs only and refuse unsupported answers.',tags:['RAG','Safety','FastAPI']},
-  {id:'ph3-p11a',name:'GraphRAG Document Explorer',desc:'Knowledge graph for multi-hop reasoning over complex text using LightRAG principles.',tags:['GraphRAG','LightRAG','Advanced']}
+  {id:'ph3-p8',name:'Advanced Prompting Workshop',
+   level:'Advanced',
+   desc:'Build a library of reusable, complex prompts for various business tasks using advanced techniques like CoT and Self-Correction.',
+   businessValue:'Creates a library of "High-Performing Prompts" that solve complex logical problems where basic prompting fails.',
+   guide:'Implementation: 1. Develop a "Prompt Runner" utility. 2. Implement a Chain-of-Thought (CoT) prompt for a logical reasoning task (e.g., scheduling). 3. Create a "Few-Shot" prompt for a complex classification task with 10 diverse examples. 4. Implement a "Self-Correction" loop: Model A generates, Model B critiques, Model A regenerates. 5. Document the "Accuracy Lift" gained from each technique. This project makes you a master of the "hidden logic" of prompts.',
+   tips:['Use the "Chain of Thought" strategy for math or logic tasks.', 'Implement "Self-Consistency" by running the prompt 3 times and picking the majority.', 'Try "Least-to-Most" prompting for very long, complex multi-step tasks.'],
+   skills:['Chain-of-Thought','Few-Shot Learning','Self-Reflection Loops','Prompt Benchmarking'],
+   deliverable:'A collection of 5+ "Gold Standard" prompts with a Python script that executes and verifies them against a test set.',
+   hrs:6,tags:['Prompting','Engineering','Advanced']},
+  {id:'ph3-p9',name:'Multi-Framework Orchestrator',
+   level:'Advanced',
+   desc:'Compare LangChain, LlamaIndex, and PydanticAI by building the same complex task in all three frameworks.',
+   businessValue:'Informs critical architecture decisions by proving which AI framework (LangChain vs LlamaIndex) is best for specific company needs.',
+   guide:'Implementation: 1. Choose a task: "Extract structured data from a 50-page PDF." 2. Implement using LangChain\'s LCEL and PDF loaders. 3. Implement using LlamaIndex\'s VectorStoreIndex and QueryEngine. 4. Implement using PydanticAI\'s strictly typed agent. 5. Write a "Framework Report" comparing ease of use, debuggability, and performance. This project helps you choose the right tool for the right job.',
+   tips:['Focus on "Debuggability" — which framework makes it easier to see what went wrong?', 'Benchmark the "Init Time" of each framework.', 'Compare how each framework handles "Streaming" out of the box.'],
+   skills:['LangChain','LlamaIndex','PydanticAI','Framework Comparison','RAG Architectures'],
+   deliverable:'A multi-file repository showing identical functionality implemented via three distinct philosophies, with a detailed technical comparison.',
+   hrs:8,tags:['Orchestration','Frameworks','Comparison']}
  ]
 },
-{id:'ph4',label:'Phase 4',name:'Tool Calling & Workflows',color:'#f59e0b',
+{id:'ph4',label:'Phase 4',name:'Vector DBs & RAG',color:'#3b82f6',
+ icon:'📂',
+ desc:'Building Retrieval Augmented Generation (RAG) systems that can search across millions of documents with semantic precision.',
  courses:[
-  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
-    {name:'Function Calling and Tool Use with OpenAI',url:'https://www.pluralsight.com/courses/function-calling-tool-use-openai',dur:'38min',free:false},
-    {name:'OpenAI Responses API and Agents SDK',url:'https://www.pluralsight.com/courses/openai-responses-api-agents-sdk',dur:'45min',free:false}
-  ]},
   {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'Functions, Tools and Agents with LangChain',url:'https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/',dur:'1h44m',free:true}
+    {name:'Vector Databases: from Embeddings to Applications',url:'https://www.deeplearning.ai/short-courses/vector-databases-embeddings-applications/',dur:'~1h',free:true,
+     readSections:['What is a Vector Database?','How Embeddings Work','Similarity Search','Building a RAG application']},
+    {name:'Advanced Retrieval for AI with Chroma',url:'https://www.deeplearning.ai/short-courses/advanced-retrieval-for-ai/',dur:'~1h',free:true,
+     readSections:['Introduction to Retrieval','Query Expansion','Cross-Encoder Reranking','Embedding Adapters']}
   ]},
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'OpenAI Function Calling Guide',url:'https://platform.openai.com/docs/guides/function-calling',dur:'Reference',free:true},
-    {name:'OpenAI Tools Guide',url:'https://platform.openai.com/docs/guides/tools',dur:'Reference',free:true},
-    {name:'OpenAI Agents SDK Docs',url:'https://openai.github.io/openai-agents-python/',dur:'Reference',free:true}
+    {name:'ChromaDB Official Docs',url:'https://docs.trychroma.com/',dur:'Reference',free:true,
+     readSections:['Getting Started','Core Concepts','API Reference','Deployment','Multi-modal support']},
+    {name:'Qdrant: Hybrid Search Guide',url:'https://qdrant.tech/documentation/concepts/hybrid-search/',dur:'Reference',free:true,
+     readSections:['Dense vs Sparse Vectors','Hybrid Search Implementation','Scoring and Ranking','Performance Tuning']},
+    {name:'Pinecone: RAG Best Practices',url:'https://www.pinecone.io/learn/rag-best-practices/',dur:'Reference',free:true,
+     readSections:['Chunking Strategies','Metadata Filtering','Reranking Results','Handling Large Datasets']}
   ]}
  ],
  projects:[
-  {id:'ph4-p12',name:'Tool-Using Assistant',desc:'Calculator, docs search, notes, file lookup, and mock calendar tools.',tags:['Tool Calling','OpenAI','Python']},
-  {id:'ph4-p13',name:'Research Assistant',desc:'Retrieve web/docs content, synthesize, cite, and decline when unsure.',tags:['Tools','RAG','OpenAI']},
-  {id:'ph4-p14',name:'SQL / Reporting Assistant',desc:'Generate read-only SQL safely with schema awareness.',tags:['SQL','Safety','OpenAI']},
-  {id:'ph4-p15',name:'Ticket Triage Assistant',desc:'Classify, prioritize, route, and draft responses for support tickets.',tags:['NLP','Classification','FastAPI']}
+  {id:'ph4-p10',name:'Hybrid Search Engine (Local)',
+   level:'Advanced',
+   desc:'Build a document search system that combines semantic (Vector) and keyword (BM25) search for maximum retrieval accuracy.',
+   businessValue:'Combines the best of both worlds: finding "exact matches" for names/codes and "semantic matches" for meanings.',
+   guide:'Implementation: 1. Use ChromaDB for dense vector storage. 2. Use `rank_bm25` for sparse keyword search. 3. Implement Reciprocal Rank Fusion (RRF) to merge the results from both methods. 4. Build a CLI to index and search. 5. Test with queries that are conceptual (best for vectors) vs. keyword-specific (best for BM25). This project masters the "Hybrid Search" pattern used in production.',
+   tips:['Start with `all-MiniLM-L6-v2` for local, fast embeddings.', 'Use `rank_bm25` for the keyword layer.', 'Implement a "Score Threshold" to filter out irrelevant results.'],
+   skills:['Vector Search','BM25','RRF Algorithm','ChromaDB','Indexing Strategies'],
+   deliverable:'A local search engine that indexes your own documents and provides a "Hybrid" result that is more accurate than either method alone.',
+   hrs:8,tags:['VectorDB','RAG','Search']},
+  {id:'ph4-p11',name:'Production RAG with Reranking',
+   level:'Advanced',
+   desc:'Create a high-fidelity RAG pipeline that uses a Cross-Encoder to rerank retrieved documents before passing them to the LLM.',
+   businessValue:'Delivers the most accurate RAG system possible, significantly reducing "hallucinations" by ensuring only the best context is used.',
+   guide:'Implementation: 1. Stage 1 (Retrieval): Fetch top 20 documents from a vector store. 2. Stage 2 (Reranking): Use a Cross-Encoder model (e.g., `BAAI/bge-reranker-v2-m3`) to re-score those 20 docs against the query. 3. Stage 3 (Synthesis): Take only the top 3 reranked docs and pass them to the LLM. 4. Measure the difference in answer quality vs. retrieval latency. This project implements the state-of-the-art in RAG pipelines.',
+   tips:['Use the `Cohere` or `BGE` Reranker for the best results.', 'Profile the latency: reranking adds ~200-500ms but increases precision.', 'Test with "Distractor" documents to see if the reranker can ignore them.'],
+   skills:['Cross-Encoders','Reranking','Two-Stage Retrieval','Performance Profiling','Model Selection'],
+   deliverable:'A RAG service that handles complex questions by finding the "needle in the haystack" through intelligent reranking.',
+   hrs:10,tags:['RAG','Reranking','Production']}
  ]
 },
 {id:'ph5',label:'Phase 5',name:'Evals & Observability',color:'#ef4444',
+ icon:'📈',
+ desc:'The critical phase: learning how to measure, evaluate, and monitor LLM performance to move from "demo" to "production".',
  courses:[
-  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
-    {name:'Testing, Monitoring, and Evaluating OpenAI Models',url:'https://www.pluralsight.com/courses/testing-monitoring-evaluating-openai-models',dur:'59min',free:false},
-    {name:'OpenAI Security and Moderations',url:'https://www.pluralsight.com/courses/openai-security-moderations',dur:'28min',free:false},
-    {name:'Generative AI Data Privacy and Safe Use',url:'https://www.pluralsight.com/courses/safe-use-developers-generative-ai-data-privacy',dur:'54min',free:false}
-  ]},
   {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'Building and Evaluating Advanced RAG',url:'https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/',dur:'~1h',free:true},
-    {name:'Red Teaming LLM Applications',url:'https://www.deeplearning.ai/short-courses/red-teaming-llm-applications/',dur:'~1h',free:true}
+    {name:'Building and Evaluating Advanced RAG',url:'https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/',dur:'~1h',free:true,
+     readSections:['The RAG Triad','Faithfulness Evaluation','Answer Relevance','Context Relevance','Automated Evaluation with Ragas']},
+    {name:'Red Teaming LLM Applications',url:'https://www.deeplearning.ai/short-courses/red-teaming-llm-applications/',dur:'~1h',free:true,
+     readSections:['Red Teaming Fundamentals','Finding Jailbreaks','Adversarial Testing','Defensive Strategies']},
+    {name:'Quality and Safety for LLM Applications',url:'https://www.deeplearning.ai/short-courses/quality-safety-llm-applications/',dur:'~1h',free:true,
+     readSections:['Defining Quality and Safety','Guardrails Implementation','Moderation Workflows','Monitoring and Iteration']}
+  ]},
+  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
+    {name:'Testing, Monitoring, and Evaluating OpenAI Models',url:'https://www.pluralsight.com/courses/testing-monitoring-evaluating-openai-models',dur:'59min',free:false,
+     readSections:['Designing Evals','Monitoring in Real-time','Interpreting Model Metrics','A/B Testing Strategies']},
+    {name:'OpenAI Security and Moderations',url:'https://www.pluralsight.com/courses/openai-security-moderations',dur:'28min',free:false,
+     readSections:['Moderation Endpoint','Safety System Prompts','Preventing Abuse']},
+    {name:'Generative AI Data Privacy and Safe Use',url:'https://www.pluralsight.com/courses/safe-use-developers-generative-ai-data-privacy',dur:'54min',free:false,
+     readSections:['PII Detection','Anonymization Techniques','Legal and Regulatory Landscape']}
   ]},
   {platform:'LangChain Academy',pcolor:'#ec4899',items:[
-    {name:'LangSmith Essentials',url:'https://academy.langchain.com/courses/langsmith-essentials',dur:'~1h',free:true},
-    {name:'Introduction to Agent Observability & Evals',url:'https://academy.langchain.com/',dur:'Self-paced',free:true}
+    {name:'LangSmith Essentials',url:'https://academy.langchain.com/courses/langsmith-essentials',dur:'~1h',free:true,
+     readSections:['Tracing','Datasets','Evaluation','Testing and Monitoring']}
   ]},
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'LangSmith Docs',url:'https://docs.smith.langchain.com/',dur:'Reference',free:true},
-    {name:'Langfuse Docs (open-source observability)',url:'https://langfuse.com/docs',dur:'Reference',free:true},
-    {name:'DeepEval Framework',url:'https://docs.confident-ai.com/',dur:'Reference',free:true},
-    {name:'OWASP LLM Top 10 (2025)',url:'https://owasp.org/www-project-top-10-for-large-language-model-applications/',dur:'Reference',free:true,badge:'CRITICAL'}
+    {name:'Langfuse Docs',url:'https://langfuse.com/docs',dur:'Reference',free:true,
+     readSections:['Quickstart','Tracing','Analytics','Scores and Evals','Prompts']},
+    {name:'DeepEval Framework',url:'https://docs.confident-ai.com/',dur:'Reference',free:true,
+     readSections:['Metrics Overview','Unit Testing','LLM-as-a-Judge (G-Eval)','RAG Evaluation']},
+    {name:'Arize Phoenix',url:'https://docs.arize.com/phoenix/',dur:'Reference',free:true,
+     readSections:['Tracing Basics','Inferences and Evaluations','Local vs Production Setup']},
+    {name:'OWASP LLM Top 10 (2025)',url:'https://owasp.org/www-project-top-10-for-large-language-model-applications/',dur:'Reference',free:true,badge:'CRITICAL',
+     readSections:['Top 10 Risks','LLM01: Prompt Injection','LLM02: Insecure Output Handling','LLM06: Sensitive Information Disclosure']}
   ]}
  ],
  projects:[
-  {id:'ph5-p16',name:'Eval Suite',desc:'30-50 golden test cases, pytest + DeepEval, LLM-as-a-Judge, CI-ready eval pipeline.',tags:['DeepEval','pytest','LangSmith']},
-  {id:'ph5-p17',name:'Productionize One App',desc:'Add logging, retries, timeouts, caching, metrics, prompt versioning, and README.',tags:['Production','Logging','Docker']},
-  {id:'ph5-p17a',name:'DSPy Prompt Optimizer',desc:'Replace manual prompts with programmatically compiled, optimized prompts.',tags:['DSPy','Optimization','Advanced']},
-  {id:'ph5-p17b',name:'CI/CD Pipeline for AI',desc:'GitHub Actions eval suite — quality gate, cost regression check, container pipeline.',tags:['GitHub Actions','CI/CD','Docker']},
-  {id:'ph5-p17c',name:'OWASP LLM Security Scanner',desc:'Implement guardrails for prompt injection, test indirect injection, restrict tool scopes.',tags:['OWASP','Security','Red Teaming']}
+   {id:'ph5-p16',name:'Automated Eval Suite',
+    level:'Intermediate',
+    desc:'Build a professional evaluation pipeline that uses LLM-as-a-Judge and metrics like Ragas to verify RAG quality.',
+    businessValue:'Moves development from "vibe-based" to "data-driven". Essential for maintaining quality as prompts and models evolve.',
+    guide:'Implementation: 1. Create a "Golden Dataset" of 50 query/context/answer triplets. 2. Implement a script using `DeepEval` or `Ragas`. 3. Define metrics: Faithfulness, Answer Relevancy, and Context Precision. 4. Run the suite and generate a JSON/CSV report. 5. Integrate into GitHub Actions to block "bad" prompt updates. This project moves you from "it looks okay" to "it is verified".',
+    tips:['Use G-Eval (LLM-as-a-Judge) for subjective qualities.', 'Automate this in CI/CD to prevent regressions.', 'Start with a small, high-quality "Golden Dataset".'],
+    skills:['LLM-as-a-Judge','Ragas','Automated Testing','CI/CD for AI','Metric Definition'],
+    deliverable:'A testing suite that gives every change a "Quality Score" and prevents regression in your AI application\'s accuracy.',
+    hrs:8,tags:['Evals','Quality','CI/CD']},
+   {id:'ph5-p17',name:'Observability Dashboard',
+    level:'Intermediate',
+    desc:'Implement full-stack tracing for an LLM app to monitor latency, costs, and traces in real-time using Langfuse or LangSmith.',
+    businessValue:'Provides visibility into costs, latency, and failure modes. Critical for scaling AI features to real users.',
+    guide:'Implementation: 1. Instrument your FastAPI app with the Langfuse SDK. 2. Track nested traces (e.g., Retrieval -> Reranking -> LLM). 3. Log user feedback (thumbs up/down) directly to the trace. 4. Set up an alert for high-cost or high-latency requests. 5. View your traces in the Langfuse UI. This project provides the "Flight Data Recorder" for your AI app.',
+    tips:['Track "Trace IDs" across your entire stack.', 'Log user feedback (thumbs up/down) to link with specific traces.', 'Set up alerts for high-cost or high-latency outliers.'],
+    skills:['Observability','Tracing','Cost Analysis','Feedback Loops','Production Monitoring'],
+    deliverable:'A live monitoring system where you can replay any user interaction and see exactly why a model gave a specific answer.',
+    hrs:7,tags:['Observability','Monitoring','Ops']},
+   {id:'ph5-p17a',name:'Prompt Optimizer (DSPy)',
+    level:'Advanced',
+    desc:'Replace manual "prompt engineering" with programmatic optimization using the DSPy framework.',
+    businessValue:'Automates the tedious process of prompt engineering. Results in more robust and efficient prompts than manual trial-and-error.',
+    guide:'Implementation: 1. Define a DSPy Signature for a task (e.g., multi-hop RAG). 2. Create a small training set of 20 examples. 3. Use the `BootstrapFewShot` teleprompter to automatically find the best examples and instructions. 4. Compare the accuracy of the compiled program vs. a hand-written prompt. This is the transition to "Software Engineering" for prompts.',
+    tips:['Start with a clear "Signature" of your task.', 'Use "BootstrapFewShot" to automatically find the best examples.', 'Optimize for smaller, cheaper models to save costs.'],
+    skills:['DSPy','Programmatic Prompts','Optimization','Few-Shot Bootstrapping'],
+    deliverable:'A DSPy program that outperforms your best manual prompt, proving the power of programmatic optimization.',
+    hrs:8,tags:['DSPy','Optimization','Advanced']},
+   {id:'ph5-p17b',name:'Red Teaming & Security Guardrails',
+    level:'Advanced',
+    desc:'Hardening your AI application against prompt injection, data leakage, and harmful content using active defense layers.',
+    businessValue:'Protects the brand and users from adversarial attacks, prompt injection, and toxic outputs. Mandatory for enterprise applications.',
+    guide:'Implementation: 1. Use an automated red-teaming tool (e.g., Giskard or PyRIT). 2. Attempt common injections: "Ignore all previous instructions," "What is your system prompt?". 3. Implement an input/output guard layer using `NeMo Guardrails` or custom LLM checks. 4. Add a PII scrubber to the output. This project ensures your AI app is safe and compliant.',
+    tips:['Use "Jailbreak" datasets to test your defenses.', 'Implement multi-layer guardrails (input and output).', 'Regularly audit for PII leakage.'],
+    skills:['Red Teaming','AI Security','Guardrails','PII Scrubbing','Vulnerability Assessment'],
+    deliverable:'A "Security Shield" implementation that blocks 95%+ of adversarial attempts while maintaining low latency.',
+    hrs:7,tags:['Security','Red Teaming','Guardrails']}
  ]
 },
 {id:'ph6',label:'Phase 6',name:'MCP & Agentic Orchestration',color:'#8b5cf6',
+ icon:'🤖',
+ desc:'The cutting edge: building autonomous agents that can use tools and standardizing tool-access via the Model Context Protocol (MCP).',
  courses:[
-  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
-    {name:'Agentic AI for Developers',url:'https://www.pluralsight.com/courses/agentic-ai-developers',dur:'1h24m',free:false},
-    {name:'OpenAI Responses API and Agents SDK',url:'https://www.pluralsight.com/courses/openai-responses-api-agents-sdk',dur:'45min',free:false},
-    {name:'Developing AI Agents with OpenAI AgentKit',url:'https://www.pluralsight.com/courses/developing-ai-agents-openai-agentkit',dur:'1h24m',free:false}
-  ]},
   {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'AI Agents in LangGraph',url:'https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/',dur:'1h32m',free:true,badge:'MUST DO'},
-    {name:'Multi-AI Agent Systems with CrewAI',url:'https://www.deeplearning.ai/short-courses/multi-ai-agent-systems-with-crewai/',dur:'~1h',free:true},
-    {name:'Build AI Apps with MCP Servers',url:'https://www.deeplearning.ai/short-courses/build-ai-apps-with-mcp-server-working-with-box-files/',dur:'~1h',free:true},
-    {name:'A2A: The Agent2Agent Protocol',url:'https://www.deeplearning.ai/short-courses/a2a-the-agent2agent-protocol/',dur:'1h27m',free:true,badge:'NEW 2026'},
-    {name:'Agentic AI by Andrew Ng',url:'https://www.deeplearning.ai/courses/agentic-ai/',dur:'Self-paced',free:true},
-    {name:'Agent Memory: Building Memory-Aware Agents',url:'https://www.deeplearning.ai/short-courses/agent-memory-building-memory-aware-agents/',dur:'~1h',free:true}
+    {name:'AI Agents in LangGraph',url:'https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/',dur:'1.5h',free:true,badge:'MUST DO',
+     readSections:['Introduction to LangGraph','Nodes and Edges','State Management','Persistence and Time Travel','Multi-agent Systems']},
+    {name:'Build AI Apps with MCP Servers',url:'https://www.deeplearning.ai/short-courses/build-ai-apps-with-mcp-server-working-with-box-files/',dur:'1h',free:true,
+     readSections:['Overview of MCP','Creating an MCP Server','Resources, Tools, and Prompts','Connecting to Claude Desktop']}
   ]},
   {platform:'LangChain Academy',pcolor:'#ec4899',items:[
-    {name:'Introduction to LangGraph (55 lessons)',url:'https://academy.langchain.com/courses/intro-to-langgraph',dur:'6h',free:true,badge:'HIGHLY REC'},
-    {name:'LangGraph Essentials Quickstart',url:'https://academy.langchain.com/courses/langgraph-essentials-python',dur:'~1h',free:true}
+    {name:'Introduction to LangGraph (Python)',url:'https://academy.langchain.com/courses/intro-to-langgraph',dur:'6h',free:true,badge:'HIGHLY REC',
+     readSections:['Module 1: Graphs','Module 2: State','Module 3: Persistence','Module 4: Multi-agent','Module 5: Human-in-the-loop']}
   ]},
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'MCP Official Docs',url:'https://modelcontextprotocol.io/docs/',dur:'Reference',free:true},
-    {name:'LangGraph Docs',url:'https://langchain-ai.github.io/langgraph/',dur:'Reference',free:true},
-    {name:'OpenAI Agents SDK',url:'https://openai.github.io/openai-agents-python/',dur:'Reference',free:true},
-    {name:'A2A Python SDK',url:'https://github.com/google-a2a/a2a-python',dur:'Reference',free:true,badge:'NEW 2026'},
-    {name:'Python MCP SDK',url:'https://github.com/modelcontextprotocol/python-sdk',dur:'Reference',free:true}
+    {name:'MCP Official Docs',url:'https://modelcontextprotocol.io/docs/',dur:'Reference',free:true,
+     readSections:['Quickstart','Core Concepts','Python SDK','TypeScript SDK','Example Servers']},
+    {name:'LangGraph: State Management',url:'https://langchain-ai.github.io/langgraph/concepts/low_level/#state',dur:'Reference',free:true,
+     readSections:['State Definition','Reducers','Shared State','Subgraphs']}
   ]}
  ],
  projects:[
-  {id:'ph6-p18',name:'Simple MCP Server',desc:'Expose one tool, one resource, one prompt for a local use case.',tags:['MCP','Python','FastMCP']},
-  {id:'ph6-p19',name:'Python MCP Utility Server',desc:'Local docs search, task tracker, file summarizer, or personal notes lookup.',tags:['MCP','Tools','Python']},
-  {id:'ph6-p20',name:'MCP-Powered Agent Integration',desc:'Connect an agent/client to your MCP server and use it in a real workflow.',tags:['MCP','LangGraph','Agents']},
-  {id:'ph6-p21',name:'HITL SQL Assistant',desc:'Pause before execution, require approve/reject from human.',tags:['HITL','LangGraph','SQL']},
-  {id:'ph6-p22',name:'HITL File Action Agent',desc:'Pause before write/delete/send actions with human approval gate.',tags:['HITL','Safety','LangGraph']},
-  {id:'ph6-p23',name:'Stateful Research Workflow',desc:'Resume after interruption, persist state across sessions.',tags:['LangGraph','Persistence','Agents']},
-  {id:'ph6-p24',name:'Orchestration & Multi-Agent',desc:'Planner + tool-call + approval gate + resume + result synthesis.',tags:['LangGraph','PydanticAI','Multi-Agent']}
+  {id:'ph6-p18',name:'FastMCP Utility Server',
+   level:'Intermediate',
+   desc:'Build a custom MCP server that gives any AI assistant (Claude, Cursor) new powers on your local machine.',
+   businessValue:'Bridges the gap between AI and local business workflows/data. Standardizes tool-use across different AI agents.',
+   guide:'Implementation: 1. Use the Python `FastMCP` SDK. 2. Tool 1: `execute_command` (safe shell wrapper). 3. Tool 2: `read_recent_logs` (tail -n X on specific files). 4. Resource: `project_status` (returns a summary of the current repo). 5. Deploy and test in Claude Desktop. This project masters the new standard for AI tool-use.',
+   tips:['Start with read-only tools before adding write capabilities.', 'Use environment variables for any API keys or local paths.', 'Test your server in the Claude Desktop app first.'],
+   skills:['MCP Protocol','FastMCP SDK','Tool/Resource Design','System Programming'],
+   deliverable:'A running MCP server that makes you 10x faster by giving your AI agent direct, standardized access to your dev environment.',
+   hrs:5,tags:['MCP','Python','Productivity']},
+  {id:'ph6-p19',name:'Human-in-the-Loop Agent',
+   level:'Advanced',
+   desc:'Build a stateful LangGraph agent that requires explicit human approval for sensitive or "dangerous" tool actions.',
+   businessValue:'Enables AI to handle sensitive tasks safely, ensuring regulatory compliance and preventing costly errors.',
+   guide:'Implementation: 1. Define a graph with a "Tools" node and a "Human Review" node. 2. Use `interrupt_before` on the tools node. 3. Implement a simple web UI (FastAPI + HTML) to view the pending action. 4. Use `update_state` to send the human\'s decision back to the graph. 5. Test by trying to "delete a production database" and verifying the pause. This project solves the "Agent Trust" problem.',
+   tips:['Keep the "State" small to avoid context window issues.', 'Use persistent checkpoints so agents can "resume" after human approval.', 'Design clear UI for the human to understand "why" the agent wants to take an action.'],
+   skills:['LangGraph Checkpoints','State Management','HITL Patterns','Async Orchestration'],
+   deliverable:'A "Safe Agent" that collaborates with you, asking for permission before doing anything critical or expensive.',
+   hrs:6,tags:['LangGraph','Safety','HITL']},
+  {id:'ph6-p20',name:'Multi-Agent Supervisor',
+   level:'Advanced',
+   desc:'Build an orchestrator agent that intelligently delegates complex tasks to a team of specialized sub-agents.',
+   businessValue:'Models complex organizational structures within a single AI system, allowing for high-quality, peer-reviewed outputs at scale.',
+   guide:'Implementation: 1. Create 3 sub-agents: Coder, Researcher, and Reviewer. 2. Implement a Supervisor agent using the LangGraph "Router" pattern. 3. The Supervisor decides which sub-agent should handle the next step. 4. Sub-agents communicate via a shared "Graph State." 5. Final output is synthesized by the Supervisor. This project represents the current peak of agentic architecture.',
+   tips:['Limit the number of agents to avoid "too many cooks" confusion.', 'Use a strong model for the Supervisor (e.g., GPT-4o, Claude 3.5 Sonnet).', 'Implement shared state carefully to prevent agents from overwriting each other.'],
+   skills:['Supervisor Pattern','Agent Delegation','State Sharing','Graph Theory for Agents'],
+   deliverable:'A "Mini-Org" of agents that can take a vague requirement and work together to produce a complete, verified solution.',
+   hrs:8,tags:['LangGraph','Multi-Agent','Orchestration']}
  ]
 },
 {id:'ph7',label:'Phase 7',name:'AI-Native Dev Productivity',color:'#06b6d4',
+ icon:'💻',
+ desc:'Integrating AI directly into your coding workflow using Aider, PydanticAI, and custom local model configurations.',
  courses:[
-  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
-    {name:'OpenAI Codex',url:'https://www.pluralsight.com/courses/openai-codex',dur:'34min',free:false},
-    {name:'Enhancing Developer Workflows with OpenAI',url:'https://www.pluralsight.com/courses/enhancing-developer-workflows-openai',dur:'33min',free:false}
-  ]},
   {platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'Aider Documentation',url:'https://aider.chat/docs/',dur:'Reference',free:true,
+     readSections:['Installation','Architect Mode','Code Mode','Using with Ollama','Configuration']},
+    {name:'PydanticAI Docs',url:'https://ai.pydantic.dev/',dur:'Reference',free:true,
+     readSections:['Agents','Tools','Dependencies','Evals','Models']},
     {name:'Ollama Tool Calling Docs',url:'https://docs.ollama.com/capabilities/tool-calling',dur:'Reference',free:true},
-    {name:'LM Studio Server Docs',url:'https://lmstudio.ai/docs/developer/core/server',dur:'Reference',free:true},
-    {name:'Continue.dev (open-source AI coding)',url:'https://continue.dev/',dur:'Reference',free:true},
-    {name:'Open WebUI',url:'https://openwebui.com/',dur:'Reference',free:true}
+    {name:'Continue.dev Custom Config',url:'https://docs.continue.dev/customization/config',dur:'20min',free:true,
+     readSections:['Custom Models','Slash Commands','Context Providers']}
   ]}
  ],
  projects:[
-  {id:'ph7-p25',name:'Personal Dev Productivity Agent',desc:'Summarize repo, generate TODOs, explain stack traces, search docs, update roadmap.',tags:['Agents','Productivity','MCP']},
-  {id:'ph7-p26',name:'Local AI Coding Utility',desc:'Local code explainer + grep + summarizer using Ollama/LM Studio with tool-calling.',tags:['Ollama','LM Studio','Local AI']}
+  {id:'ph7-p25',name:'Aider-Driven Feature Implementation',
+   level:'Intermediate',
+   desc:'Build a non-trivial feature in an existing codebase using Aider in "Architect Mode" with a local model.',
+   businessValue:'Dramatically increases developer velocity and reduces context-switching by delegating repetitive coding tasks to AI.',
+   guide:'Implementation: 1. Install Aider and connect it to a local LLM (e.g., Llama 3 via Ollama). 2. Use `/architect` to plan a "User Profile" feature. 3. Let Aider generate the migrations, models, and API routes. 4. Use Aider\'s test-driven mode to fix any bugs it introduces. This project proves that you can build faster with AI in the driver\'s seat.',
+   tips:['Work in small, logical commits to allow easy rollbacks.', 'Use Aider\'s "Architect Mode" for planning before generation.', 'Always verify AI-generated tests before trusting the code.'],
+   skills:['Aider CLI','Architect Mode','Local LLM Ops','AI-Driven TDD'],
+   deliverable:'A complete, merged PR where 100% of the code and tests were written by Aider under your guidance.',
+   hrs:6,tags:['Aider','Productivity','Local AI']},
+  {id:'ph7-p26',name:'PydanticAI Agent System',
+   level:'Advanced',
+   desc:'Build a strictly typed, production-ready agent using PydanticAI for a complex financial analysis task.',
+   businessValue:'Provides a production-grade, type-safe framework for building reliable agents that integrate seamlessly with modern Python backends.',
+   guide:'Implementation: 1. Define a Pydantic signature for a "Portfolio Analysis." 2. Implement tools for fetching stock prices and news. 3. Use Dependency Injection to pass a validated API client to the agent. 4. Write an eval suite using PydanticAI\'s built-in testing patterns. This project masters the "Typed Agent" philosophy which is essential for enterprise safety.',
+   tips:['Leverage Pydantic\'s validation to "force" the agent into specific output formats.', 'Use Dependency Injection to keep your agent logic separate from infrastructure.', 'Monitor your agent runs with Logfire for deep debugging.'],
+   skills:['PydanticAI','Type-Safe Agents','Dependency Injection','Structured Reasoning'],
+   deliverable:'A financial agent script that is 100% type-checked by Mypy and returns perfectly validated analysis results every time.',
+   hrs:5,tags:['PydanticAI','Python','Agents']}
  ]
 },
-{id:'ph8',label:'Phase 8',name:'Multimodal, Real-Time & SLMs',color:'#f97316',
+{id:'ph8',label:'Phase 8',name:'Multimodal & Real-Time Voice',color:'#f97316',
+ icon:'🎤',
+ desc:'Exploring the next frontier: building applications that can see, hear, and speak with sub-second latency.',
  courses:[
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'OpenAI Realtime API',url:'https://platform.openai.com/docs/guides/realtime',dur:'Reference',free:true},
-    {name:'OpenAI Vision Guide',url:'https://platform.openai.com/docs/guides/vision',dur:'Reference',free:true},
-    {name:'Hugging Face SLM Guide',url:'https://huggingface.co/blog/smollm',dur:'Reference',free:true},
-    {name:'Unsloth Fast Fine-tuning',url:'https://github.com/unslothai/unsloth',dur:'Reference',free:true},
-    {name:'MLX Examples (Apple Silicon)',url:'https://github.com/ml-explore/mlx-examples/tree/main/llms',dur:'Reference',free:true}
-  ]}
+{platform:'Docs',pcolor:'#3b82f6',items:[
+    {name:'Gemini Multimodal Live API',url:'https://ai.google.dev/gemini-api/docs/multimodal-live',dur:'Reference',free:true,badge:'NEW',
+     readSections:['Introduction','WebSocket API','Audio/Video Formats','Function Calling','Best Practices']},
+    {name:'OpenAI Realtime API Guide',url:'https://platform.openai.com/docs/guides/realtime',dur:'Reference',free:true,
+     readSections:['Architecture','Events','Tools','VAD (Voice Activity Detection)','Session Management']},
+    {name:'Vision Analysis with GPT-4o & Gemini 1.5 Pro',url:'https://platform.openai.com/docs/guides/vision',dur:'30min',free:true,
+     readSections:['Capabilities','Prompting for Vision','Cost Analysis']}
+  ]
  ],
  projects:[
-  {id:'ph8-p27',name:'Vision-Based Data Extractor',desc:'Extract structured JSON (tables, charts, receipts) using GPT-4o vision.',tags:['Vision','GPT-4o','Multimodal']},
-  {id:'ph8-p28',name:'Real-Time Voice Assistant',desc:'OpenAI Realtime API — low-latency voice-in, voice-out assistant.',tags:['Realtime API','WebSockets','Audio']},
-  {id:'ph8-p29',name:'Local SLM Fine-Tuning',desc:'Generate synthetic dataset with large model, fine-tune Llama-3-8B via Unsloth/MLX.',tags:['MLX','Fine-tuning','Apple Silicon']}
+   {id:'ph8-p27',name:'Gemini Multimodal Live Assistant',
+    level:'Advanced',
+    desc:'Build a low-latency voice-to-voice assistant that can perform tasks while talking to you.',
+    businessValue:'Unlocks natural, eyes-free interactions for field workers, accessibility, or high-touch customer support.',
+    guide:'Implementation: 1. Set up a WebSocket client in Python. 2. Connect to the Gemini Multimodal Live API. 3. Stream microphone input and play back model audio output using `pyaudio`. 4. Implement a "Live Tool" (e.g., "Search Wikipedia") that the agent can call while speaking. 5. Optimize for minimum latency. This project gives you a glimpse into the future of human-computer interaction.',
+    tips:['Focus on reducing "turn-taking" latency for a natural feel.', 'Handle background noise with proper VAD (Voice Activity Detection).', 'Start with Gemini 2.0 Flash for the best speed-to-cost ratio.'],
+    skills:['WebSockets','Audio Streaming','GenAI Live API','Real-time Tool-use'],
+    deliverable:'A "Voice Companion" app that responds to your voice in <500ms and can help you browse information hands-free.',
+    hrs:8,tags:['Gemini','Multimodal','Voice']},
+   {id:'ph8-p28',name:'AI Security Camera (Vision)',
+    level:'Intermediate',
+    desc:'Build a monitoring system that uses a vision-capable LLM to detect specific events in a visual stream.',
+    businessValue:'Automates complex visual monitoring tasks that previously required human oversight, reducing labor costs and response times.',
+    guide:'Implementation: 1. Capture frames from a webcam or video file using OpenCV. 2. Send every Nth frame to GPT-4o or Gemini 1.5 Pro with a "Monitoring Prompt." 3. The LLM should output a structured JSON: { "event_detected": bool, "description": string, "severity": 1-5 }. 4. Trigger a local notification for high-severity events. This project masters the "Vision Agent" pattern.',
+    tips:['Don\'t stream video; send periodic keyframes to save on token costs.', 'Use a "Decision Chain" to only process high-confidence triggers.', 'Ensure privacy by processing frames in a secure, transient environment.'],
+    skills:['OpenCV','Vision LLMs','Stream Processing','Event Notification'],
+    deliverable:'A security script that can tell the difference between "a cat in the garden" and "a person at the front door" with high precision.',
+    hrs:6,tags:['Vision','Security','Automation']}
  ]
 },
-{id:'ph9',label:'Phase 9',name:'Portfolio & Job Prep',color:'#10b981',
+{id:'ph9',label:'Phase 9',name:'Portfolio & Personal Brand',color:'#10b981',
+ icon:'✨',
+ desc:'Finalizing your journey by showcasing your skills to the world through a high-impact portfolio.',
  courses:[
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'README Template Generator',url:'https://www.makeareadme.com/',dur:'Reference',free:true},
-    {name:'Architecture Diagram Tool (diagrams.net)',url:'https://app.diagrams.net/',dur:'Reference',free:true},
-    {name:'Loom Demo Recording',url:'https://www.loom.com/',dur:'Reference',free:true}
+    {name:'README Masterclass',url:'https://github.com/othneildrew/Best-README-Template',dur:'30min',free:true,
+     readSections:['The Template','Why it works','Best Practices']},
+    {name:'Mermaid.js for Architecture',url:'https://mermaid.js.org/',dur:'Reference',free:true,
+     readSections:['Flowcharts','Sequence Diagrams','Entity Relationship Diagrams','Git Graphs']},
+    {name:'Recording Pro Demos with Loom',url:'https://www.loom.com/blog/how-to-record-a-demo',dur:'15min',free:true,
+     readSections:['Planning your demo','Lighting and Audio','Editing for Impact']}
   ]}
  ],
  projects:[
-  {id:'ph9-portfolio',name:'Portfolio Cleanup & GitHub Profile',desc:'Pin 4 repos, write profile README, add architecture diagrams, record Loom demos, write resume bullets.',tags:['Portfolio','GitHub','Resume']}
+   {id:'ph9-p29',name:'The "Star" Portfolio',
+    level:'Intermediate',
+    desc:'Curate your best roadmap projects and build a professional, high-impact showcase for employers.',
+    businessValue:'Establishes professional credibility and demonstrates practical expertise to potential employers or clients.',
+    guide:'Implementation: 1. Select your top 3 projects (e.g., a LangGraph agent, a RAG pipeline, and an MCP server). 2. Write "Story-driven" READMEs: What was the problem? How did you solve it? What were the metrics? 3. Add professional architecture diagrams using Mermaid.js. 4. Record 2-minute Loom demos. 5. Create a GitHub Profile README that highlights your GenAI roadmap completion. This project gets you hired.',
+    tips:['Focus on the "Why" and the results, not just the code.', 'Include a "Challenges" section to show how you problem-solve.', 'Make your demos short, punchy, and results-oriented.'],
+    skills:['Technical Writing','Architecture Visualization','Mermaid.js','Storytelling for Devs'],
+    deliverable:'A world-class GitHub profile and a portfolio site that clearly demonstrates your ability to build production-grade AI systems.',
+    hrs:10,tags:['Portfolio','GitHub','Career']}
  ]
 },
-{id:'ph10',label:'Phase 10',name:'Certification',color:'#64748b',
+{id:'ph10',label:'Phase 10',name:'Cloud AI Certifications',color:'#64748b',
+ icon:'🎓',
+ desc:'Validating your expertise with industry-recognized certifications from major cloud providers.',
  courses:[
-  {platform:'QA Platform',pcolor:'#3b82f6',items:[
-    {name:'AI-900 Exam Prep: Azure AI Fundamentals (15 lessons)',url:'https://platform.qa.com/learning-paths/ai-900-exam-preparation-microsoft-azure-ai-fundamentals-1968/',dur:'9h46m',free:false}
-  ]},
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'Microsoft Learn — Azure AI Fundamentals',url:'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/',dur:'Free prep',free:true},
-    {name:'AWS AIF-C01 — Certified AI Practitioner',url:'https://aws.amazon.com/certification/certified-ai-practitioner/',dur:'Reference',free:true}
+  {platform:'Certification',pcolor:'#3b82f6',items:[
+    {name:'Azure AI Fundamentals (AI-900)',url:'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/',dur:'10h',free:true,
+     readSections:['AI Workloads and Considerations','Fundamental Principles of ML','Computer Vision Workloads','NLP Workloads','Azure OpenAI Service']},
+    {name:'AWS Certified AI Practitioner (AIF-C01)',url:'https://aws.amazon.com/certification/certified-ai-practitioner/',dur:'15h',free:true,
+     readSections:['Fundamentals of AI and ML','Generative AI Essentials','Applications of Foundation Models','Guidelines for Responsible AI','Security, Compliance, and Governance']}
   ]}
  ],
  projects:[
-  {id:'ph10-cert',name:'Certification: AI-900 or AWS AIF-C01',desc:'Microsoft Azure AI Fundamentals (AI-900 → AI-901 after Jun 2026) or AWS Certified AI Practitioner.',tags:['Azure','AWS','Certification']}
+   {id:'ph10-p30',name:'Certification Exam Readiness',
+    level:'Intermediate',
+    desc:'Systematically study for and pass a cloud AI certification to prove your foundational cloud-AI knowledge.',
+    businessValue:'Validates your skills with industry-recognized credentials, opening doors to enterprise roles and consulting opportunities.',
+    guide:'Implementation: 1. Choose your track (AWS or Azure). 2. Complete the official MS Learn or AWS Skill Builder modules. 3. Build a "Cheat Sheet" of core services and their specific use cases. 4. Take 3 full-length practice exams. 5. Review every wrong answer and go back to the docs. This project solidifies your "Big Picture" understanding of cloud AI ecosystems.',
+    tips:['Use the official "Study Guide" as your primary roadmap.', 'Focus on the specific service limits and pricing tiers for the exam.', 'Hands-on labs are more effective than passive reading.'],
+    skills:['Cloud AI Services','Service Selection','Responsible AI Principles','Architecture Patterns'],
+    deliverable:'A verified certification badge on your LinkedIn profile and a deeper understanding of cloud AI infrastructure.',
+    hrs:20,tags:['Azure','AWS','Certification']}
  ]
 },
-{id:'ph11',label:'Phase 11',name:'Capstone Projects',color:'#ec4899',
+{id:'ph11',label:'Phase 11',name:'Structured Capstones',color:'#ec4899',
+ icon:'🏆',
+ desc:'The final challenge: building complex, multi-agent systems that solve real-world problems with high autonomy and reliability.',
  courses:[
-  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'AI Agentic Design Patterns with AutoGen',url:'https://www.deeplearning.ai/short-courses/ai-agentic-design-patterns-with-autogen/',dur:'~1h',free:true}
-  ]},
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'LangGraph Advanced Concepts',url:'https://langchain-ai.github.io/langgraph/concepts/',dur:'Reference',free:true},
-    {name:'OpenAI GPT-4o Vision',url:'https://platform.openai.com/docs/guides/vision',dur:'Reference',free:true},
-    {name:'OpenAI Audio/TTS',url:'https://platform.openai.com/docs/guides/text-to-speech',dur:'Reference',free:true},
-    {name:'Tavily Search API',url:'https://docs.tavily.com/',dur:'Reference',free:true}
+  {platform:'Advanced',pcolor:'#10b981',items:[
+    {name:'LangGraph Advanced Patterns',url:'https://langchain-ai.github.io/langgraph/how-tos/',dur:'Reference',free:true,
+     readSections:['Subgraphs','Shared State','Multi-agent','Human-in-the-loop','Persistence']},
+    {name:'Tavily Search Mastery',url:'https://docs.tavily.com/',dur:'20min',free:true,
+     readSections:['API Basics','Context Optimization','Advanced Filtering']}
   ]}
  ],
  projects:[
-  {id:'ph11-p30',name:'Unified AI Assistant',desc:'Full-stack ChatGPT clone: text+memory, voice, vision, file analysis, web search, persistent memory.',tags:['LangGraph','GPT-4o','FastAPI','React']},
-  {id:'ph11-p31',name:'Multi-Agent Research Platform',desc:'Planner + parallel search agents + critic + writer → polished PDF report with HITL checkpoint.',tags:['Multi-Agent','LangGraph','MCP','A2A']},
-  {id:'ph11-p32',name:'Personal AI Dev Copilot',desc:'MCP server + agent for code review, PR descriptions, ticket planning, daily standups.',tags:['MCP','LangGraph','FastAPI','Productivity']}
+   {id:'ph11-p31',name:'The Autonomous Researcher',
+    level:'Advanced',
+    desc:'Build a team of agents that can take a single complex research topic and produce a verified 10-page report with citations.',
+    businessValue:'Automates high-value market research and analysis, turning days of manual work into minutes of AI execution.',
+    guide:'Implementation: 1. Build a "Searcher" agent that uses Tavily to find sources. 2. Build a "Validator" agent that fact-checks the Searcher\'s findings against multiple sources. 3. Build a "Writer" agent that synthesizes the data into Markdown. 4. Build a "Supervisor" that orchestrates the workflow. 5. Implement a "Final Approval" step in LangGraph. This project demonstrates massive productivity gains through AI agents.',
+    tips:['Implement a "Fact Checker" agent that cross-references multiple sources.', 'Optimize for "Diversity of Sources" in your search prompts.', 'Use Markdown output to ensure easy integration with existing document tools.'],
+    skills:['Agentic Workflows','Fact Verification','Information Synthesis','Complex Orchestration'],
+    deliverable:'A CLI or Web app that produces a high-quality, cited research paper on any topic in under 5 minutes.',
+    hrs:25,tags:['LangGraph','Agents','Research']},
+   {id:'ph11-p32',name:'Unified Multi-Agent OS',
+    level:'Advanced',
+    desc:'Build a private, self-hosted platform that acts as your personal "Agent Operating System" with vision, voice, and full tool access.',
+    businessValue:'The "Holy Grail" of personal productivity—a custom, private AI ecosystem that acts as a cognitive multiplier for your specific workflow.',
+    guide:'Implementation: 1. Backend: FastAPI + LangGraph + Postgres (for history). 2. Frontend: React + Tailwind. 3. Tool Hub: Integrate 5+ MCP servers (Files, Web, GitHub, Jira, etc.). 4. Features: Real-time voice chat, image analysis, and background task execution. 5. Deploy on your local machine or a private cloud. This is the culmination of everything you\'ve learned.',
+    tips:['Start with a "Modular" architecture so you can add MCP servers over time.', 'Focus on "Context Management"—the AI needs to know your current project state.', 'Prioritize local data privacy for your most sensitive documents.'],
+    skills:['Full-stack Development','Postgres Vector Search','MCP Integration','Real-time UI','System Architecture'],
+    deliverable:'Your own personal AI cockpit that you use daily to manage your work, life, and code.',
+    hrs:40,tags:['Capstone','Full-stack','LangGraph','React']}
  ]
 }
 ];
@@ -681,10 +1089,41 @@ let state = JSON.parse(localStorage.getItem('genai-progress-v3') || '{}');
 let currentPhase = state._lastPhase || 'ph1';
 let theme = localStorage.getItem('genai-theme') || 'dark';
 
-// ---- Helpers ----
-function save(){ localStorage.setItem('genai-progress-v3', JSON.stringify(state)); updateSidebar(); }
+// ---- State Helpers ----
+function save(){ 
+  localStorage.setItem('genai-progress-v3', JSON.stringify(state)); 
+  updateSidebar(); 
+  updateCurrentPill();
+}
 function isDone(id){ return !!state[id]; }
-function toggle(id){ state[id]=!state[id]; save(); }
+function isCurrent(id){ return state._currentItem === id; }
+function toggle(id){ 
+  const wasDone = state[id];
+  state[id]=!state[id]; 
+  save(); 
+  if(!wasDone && state[id]) checkCelebrate(id);
+}
+function checkCelebrate(id){
+  // If a phase was just fully completed, throw confetti
+  const phId = id.split('-')[0];
+  const ph = PHASES.find(p=>p.id===phId);
+  if(ph && phaseAllDone(ph)){
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: [ph.color, '#8b5cf6', '#ec4899']
+    });
+  } else if(id.includes('-p')) {
+    // Smaller celebration for individual projects
+    confetti({
+      particleCount: 50,
+      spread: 50,
+      origin: { y: 0.8 },
+      colors: ['#10b981', '#3b82f6']
+    });
+  }
+}
 function allProjects(){ return PHASES.flatMap(p=>p.projects); }
 function allCourses(){ return PHASES.flatMap(p=>p.courses.flatMap(pl=>pl.items.map((_,i)=>p.id+'-c-'+pl.platform+'-'+i))); }
 function doneProjects(){ return allProjects().filter(p=>isDone(p.id)).length; }
@@ -695,6 +1134,13 @@ function phaseDone(ph){ return ph.projects.filter(p=>isDone(p.id)).length; }
 function phaseAllDone(ph){ 
   const allC=ph.courses.flatMap((pl,pi)=>pl.items.map((_,i)=>courseId(ph.id,pl.platform,i)));
   return ph.projects.every(p=>isDone(p.id)) && allC.every(id=>isDone(id));
+}
+function phasePct(ph){
+  const allC=ph.courses.flatMap((pl,pi)=>pl.items.map((_,i)=>courseId(ph.id,pl.platform,i)));
+  const total = ph.projects.length + allC.length;
+  if(total === 0) return 0;
+  const done = ph.projects.filter(p=>isDone(p.id)).length + allC.filter(id=>isDone(id)).length;
+  return Math.round((done/total)*100);
 }
 
 // ---- Time tracking ----
@@ -749,19 +1195,37 @@ function updateSidebar(){
   document.getElementById('export-info').textContent=`${dp} projects complete &bull; ${dc} courses complete &bull; Saved locally`;
 }
 
-function buildNav(){
+function buildNav(filter=''){
   const nav=document.getElementById('nav');
-  nav.innerHTML=PHASES.map(ph=>`
+  const filtered = PHASES.filter(ph => {
+    if(!filter) return true;
+    const f = filter.toLowerCase();
+    return ph.name.toLowerCase().includes(f) || 
+           ph.label.toLowerCase().includes(f) ||
+           ph.projects.some(p => p.name.toLowerCase().includes(f) || p.desc.toLowerCase().includes(f)) ||
+           ph.courses.some(pl => pl.platform.toLowerCase().includes(f) || pl.items.some(i => i.name.toLowerCase().includes(f)));
+  });
+
+  nav.innerHTML=filtered.map(ph=>`
     <div class="nav-item${ph.id===currentPhase?' active':''}" data-id="${ph.id}" onclick="showPhase('${ph.id}')">
-      <div class="nav-item-left">
-        <div class="nav-dot" style="background:${ph.color}"></div>
-        <div class="nav-info">
-          <div class="nav-title">${ph.name}</div>
-          <div class="nav-sub">${ph.label}</div>
+      <div style="flex:1">
+        <div class="nav-item-left">
+          <div class="nav-dot" style="background:${ph.color}"></div>
+          <div class="nav-info">
+            <div class="nav-title">${ph.name}</div>
+            <div class="nav-sub">${ph.label}</div>
+          </div>
+        </div>
+        <div class="nav-progress-outer">
+          <div class="nav-progress-inner" style="width:${phasePct(ph)}%"></div>
         </div>
       </div>
       <span class="nav-badge${phaseAllDone(ph)?' done-badge':''}">${phaseAllDone(ph)?'✓ Done':phaseDone(ph)+'/'+ph.projects.length}</span>
     </div>`).join('');
+}
+
+function handleSearch(val){
+  buildNav(val);
 }
 
 // ---- Phase content ----
@@ -787,8 +1251,21 @@ function renderPhase(ph){
       <button class="btn" onclick="markAllProjects('${ph.id}')" title="Toggle all projects in this phase">✓ All Projects</button>
       <button class="btn btn-accent" onclick="markPhaseComplete('${ph.id}')" title="Mark entire phase complete">⚡ Complete Phase</button>
       <button class="btn${state._currentPhase===ph.id?' btn-current':''}" onclick="setCurrentPhase('${ph.id}')" title="Mark this as your current active phase" style="min-width:auto">
-        ${state._currentPhase===ph.id ? '📍 Current' : '📍 Set Current'}
+        ${state._currentPhase===ph.id ? '📍 Current Phase' : '📍 Set Phase Current'}
       </button>
+    </div>
+  </div>
+
+  <div id="current-focus-summary" style="padding:1rem 2.5rem; background:rgba(139,92,246,0.03); border-bottom:1px solid var(--border); ${!state._currentItem ? 'display:none' : 'display:flex'}; align-items:center; gap:1rem; flex-wrap:wrap">
+    <div style="flex:1">
+      <span style="font-size:.65rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:700">🎯 Current Goal</span>
+      <div id="current-focus-text" style="font-size:1rem; font-weight:700; color:var(--accent); margin-top:.2rem">
+        ${state._currentItem ? findItemName(state._currentItem) : 'None selected'}
+      </div>
+    </div>
+    <div style="display:flex; gap:.5rem">
+      <button class="btn" style="padding:.3rem .7rem; font-size:.7rem" onclick="jumpToCurrent()">🚀 Jump to Item</button>
+      <button class="btn" style="padding:.3rem .7rem; font-size:.7rem" onclick="setCurrentItem(null)">✕ Clear</button>
     </div>
   </div>
 
@@ -809,17 +1286,29 @@ function renderPhase(ph){
           <div class="platform-body">
             ${pl.items.map((c,i)=>{
               const cid=courseId(ph.id,pl.platform,i);
-              return `<div class="course-item">
+              return `<div class="course-item ${isCurrent(cid)?'is-current':''}" id="item-${cid}">
                 <div class="course-check${isDone(cid)?' done':''}" onclick="toggleCourse('${cid}',this)" title="Mark complete">
                   ${isDone(cid)?'✓':''}
                 </div>
                 <div class="course-info">
-                  <div class="course-name"><a href="${c.url}" target="_blank" rel="noopener">${c.name}</a></div>
+                  <div class="course-name">
+                    <a href="${c.url}" target="_blank" rel="noopener">${c.name}</a>
+                    ${isCurrent(cid)?'<span class="item-current-badge">📍 Current</span>':''}
+                  </div>
                   <div class="course-details">
                     <span class="tag ${c.free?'free':'paid'}">${c.free?'FREE':'PAID'}</span>
                     <span class="tag">${c.dur}</span>
                     ${c.badge?`<span class="tag new">${c.badge}</span>`:''}
+                    <button class="course-set-btn ${isCurrent(cid)?'active':''}" onclick="setCurrentItem('${cid}')">
+                      ${isCurrent(cid)?'Active':'Set Current'}
+                    </button>
                   </div>
+                  ${c.readSections ? `
+                    <div class="reading-guide">
+                      <div class="reading-guide-title">Key Sections to Focus On:</div>
+                      <ul>${c.readSections.map(s=>`<li>${s}</li>`).join('')}</ul>
+                    </div>
+                  `:''}
                 </div>
               </div>`;
             }).join('')}
@@ -829,10 +1318,14 @@ function renderPhase(ph){
   </div>
 
   <div class="section">
-    <div class="section-title">🚀 Projects</div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
+      <span>🚀 Projects</span>
+      <button class="btn" style="font-size:.65rem;padding:.25rem .65rem" onclick="toggleAllCards('${ph.id}', this)">Collapse All</button>
+    </div>
+
     <div class="projects-grid">
       ${ph.projects.map(p=>`
-        <div class="card${isDone(p.id)?' done':''}" id="card-${p.id}" onclick="toggleCard('${p.id}')">
+        <div class="card ${isDone(p.id)?'done':''} ${isCurrent(p.id)?'is-current':''}" id="card-${p.id}" onclick="toggleCard('${p.id}')">
           <div class="card-header">
             <span class="card-id">${p.id}</span>
             <div style="display:flex;align-items:center;gap:.4rem">
@@ -840,9 +1333,54 @@ function renderPhase(ph){
               <div class="card-check">${isDone(p.id)?'✓':''}</div>
             </div>
           </div>
-          <div class="card-title">${p.name}</div>
-          <div class="card-desc">${p.desc}</div>
+          <div class="card-title">
+            ${p.level ? `<span class="card-level level-${p.level.toLowerCase()}">${p.level}</span>` : ''}
+            ${p.name} 
+            ${isCurrent(p.id)?'<span class="item-current-badge">📍 Current</span>':''}
+          </div>
+          <div class="card-desc" style="font-weight:500; color:var(--text); margin-bottom:.5rem">${p.desc}</div>
+          
+          ${p.businessValue ? `
+            <div class="business-value-box">
+              <div class="business-value-title">💼 Business Value</div>
+              <div class="guide-text">${p.businessValue}</div>
+            </div>
+          ` : ''}
+
+          <div class="card-guide">
+            <div class="card-guide-section">
+              <span class="guide-label">Implementation Guide</span>
+              <p class="guide-text">${p.guide}</p>
+            </div>
+
+            ${p.tips ? `
+              <div class="tips-list">
+                <div class="tips-title">💡 Expert Tips</div>
+                <ul>${p.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
+              </div>
+            ` : ''}
+
+            <div class="card-guide-section">
+              <span class="guide-label">Key Skills</span>
+              <div class="skills-chips">
+                ${p.skills.map(s=>`<span class="skill-chip">${s}</span>`).join('')}
+              </div>
+            </div>
+            <div class="card-guide-section">
+              <span class="guide-label">Definition of Done</span>
+              <div class="deliverable-box">${p.deliverable}</div>
+            </div>
+          </div>
           <div class="card-tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+          
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.75rem">
+            <button class="card-current-btn ${isCurrent(p.id)?'active':''}" onclick="event.stopPropagation(); setCurrentItem('${p.id}')" style="position:static">
+              ${isCurrent(p.id)?'📍 Current Goal':'📍 Set Current'}
+            </button>
+            <button class="card-share-btn" onclick="event.stopPropagation(); copyProjectLink('${p.id}')" title="Copy link to this project">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+            </button>
+          </div>
         </div>`).join('')}
     </div>
   </div>`;
@@ -901,6 +1439,45 @@ function markPhaseComplete(phId){
   save(); showPhase(phId); buildNav();
 }
 
+// ---- Item Focus ----
+function setCurrentItem(id){
+  if(state._currentItem === id) state._currentItem = null;
+  else state._currentItem = id;
+  save();
+  showPhase(currentPhase);
+}
+function findItemName(id){
+  if(!id) return '';
+  const p = allProjects().find(p=>p.id===id);
+  if(p) return p.name;
+  // Course ID: phId-c-Platform-Index
+  const parts = id.split('-c-');
+  if(parts.length===2){
+    const ph = PHASES.find(ph=>ph.id===parts[0]);
+    if(ph){
+      const platName = parts[1].split('-')[0].replace(/_/g,' ');
+      const idx = parseInt(parts[1].split('-').pop());
+      const plat = ph.courses.find(c=>c.platform === platName);
+      if(plat && plat.items[idx]) return plat.items[idx].name;
+    }
+  }
+  return id;
+}
+function jumpToCurrent(){
+  if(!state._currentItem) return;
+  const id = state._currentItem;
+  const phId = id.split('-')[0];
+  if(phId !== currentPhase) showPhase(phId);
+  setTimeout(()=>{
+    const el = document.getElementById(id.includes('-c-') ? 'item-'+id : 'card-'+id);
+    if(el){
+      el.scrollIntoView({behavior:'smooth', block:'center'});
+      el.style.boxShadow = '0 0 0 2px var(--accent)';
+      setTimeout(()=>el.style.boxShadow='', 2000);
+    }
+  }, 100);
+}
+
 // ---- Current Phase ----
 function setCurrentPhase(id){
   state._currentPhase = (state._currentPhase === id) ? null : id;
@@ -930,6 +1507,14 @@ function toggleAllPlatforms(phId, btn){
   btn.textContent = anyOpen ? 'Expand All' : 'Collapse All';
 }
 
+// ---- Expand All Cards ----
+function toggleAllCards(phId, btn){
+  const allCards=document.querySelectorAll('.projects-grid .card');
+  const anyCollapsed=[...allCards].some(el=>el.classList.contains('collapsed'));
+  allCards.forEach(el=>{ el.classList.toggle('collapsed', !anyCollapsed); });
+  btn.textContent = anyCollapsed ? 'Collapse All' : 'Expand All';
+}
+
 // ---- Export / Import ----
 function exportProgress(){
   const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
@@ -943,6 +1528,50 @@ function importProgress(e){
   const reader=new FileReader();
   reader.onload=ev=>{ try{ state=JSON.parse(ev.target.result); save(); location.reload(); }catch(err){ alert('Invalid file'); } };
   reader.readAsText(file);
+}
+function masterAllProjects(){
+  if(!confirm('Mark all PROJECTS across all phases as complete?')) return;
+  PHASES.forEach(ph=>{
+    ph.projects.forEach(p=>{ state[p.id]=true; });
+  });
+  save(); buildNav(); showPhase(currentPhase);
+  confetti({ particleCount: 200, spread: 100, origin: { y: 0.7 } });
+}
+function masterAllCourses(){
+  if(!confirm('Mark all COURSES across all phases as complete?')) return;
+  PHASES.forEach(ph=>{
+    ph.courses.forEach(pl=>pl.items.forEach((_,i)=>{ state[courseId(ph.id,pl.platform,i)]=true; }));
+  });
+  save(); buildNav(); showPhase(currentPhase);
+  confetti({ particleCount: 150, spread: 80, origin: { y: 0.8 }, colors: ['#3b82f6', '#10b981'] });
+}
+function masterAll(){
+  if(!confirm('Mark everything in the roadmap as complete? This will also throw a lot of confetti!')) return;
+  PHASES.forEach(ph=>{
+    ph.projects.forEach(p=>{ state[p.id]=true; });
+    ph.courses.forEach(pl=>pl.items.forEach((_,i)=>{ state[courseId(ph.id,pl.platform,i)]=true; }));
+  });
+  save();
+  buildNav();
+  showPhase(currentPhase);
+  confetti({
+    particleCount: 500,
+    spread: 160,
+    origin: { y: 0.5 },
+    colors: ['#8b5cf6', '#ec4899', '#10b981', '#3b82f6', '#f59e0b']
+  });
+}
+function expandEverything(){
+  // Expand all platforms and cards in the current phase
+  const allGroups=document.querySelectorAll('[id^="pg-"]');
+  allGroups.forEach(el=>{ el.classList.add('open'); });
+  const allCards=document.querySelectorAll('.projects-grid .card');
+  allCards.forEach(el=>{ el.classList.remove('collapsed'); });
+  // Update button text in the view if they exist
+  document.querySelectorAll('.btn').forEach(btn => {
+    if(btn.textContent === 'Expand All') btn.textContent = 'Collapse All';
+    else if(btn.textContent === 'Collapse All') btn.textContent = 'Expand All';
+  });
 }
 function resetProgress(){
   if(!confirm('Reset all progress?')) return;
@@ -1145,6 +1774,89 @@ if (syncPAT && syncGistId) {
   });
 }
 
+function copyProjectLink(id) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('p', id);
+  navigator.clipboard.writeText(url.toString()).then(() => {
+    alert('Link copied to clipboard!');
+  });
+}
+
+function showOverview() {
+  const content = document.getElementById('content');
+  content.innerHTML = `
+    <div class="phase-header">
+      <div style="flex:1">
+        <div class="phase-label">Introduction</div>
+        <h1 class="phase-title">GenAI Roadmap 2026 Overview</h1>
+        <p class="guide-text" style="margin-top:1rem; max-width:800px; font-size:1rem">
+          Welcome to the ultimate guide for becoming a Senior GenAI Engineer in 2026. This roadmap is structured into 12 distinct phases, 
+          taking you from software fundamentals to advanced agentic orchestration and experimental AI patterns.
+        </p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title" style="display:flex;align-items:center;gap:.5rem">
+        <span>Why this Roadmap?</span>
+        <div style="flex:1;height:1px;background:var(--border)"></div>
+      </div>
+      <div class="card-desc" style="max-width:800px; font-size:0.9rem; margin-top:1rem">
+        The field of AI is moving at lightning speed. This curriculum focuses on **durable skills**: orchestration, evaluation, 
+        observability, and tool-use (MCP), rather than just prompt engineering. By completing these 37+ projects, 
+        you will build a portfolio that proves your ability to ship production-grade AI systems.
+      </div>
+      
+      <div class="projects-grid" style="margin-top:2rem">
+        <div class="card" onclick="showPhase('ph0')">
+          <div class="card-header">
+            <span class="card-id">PATHWAY 1</span>
+          </div>
+          <div class="card-title">Foundations First</div>
+          <div class="card-desc">Master Python, FastAPI, and Docker. Without these, AI is just a script.</div>
+          <div class="tag">Phase 0-2</div>
+        </div>
+        <div class="card" onclick="showPhase('ph4')">
+          <div class="card-header">
+            <span class="card-id">PATHWAY 2</span>
+          </div>
+          <div class="card-title">Data & Retrieval</div>
+          <div class="card-desc">Learn Vector DBs and Advanced RAG. Context is everything in 2026.</div>
+          <div class="tag">Phase 3-5</div>
+        </div>
+        <div class="card" onclick="showPhase('ph6')">
+          <div class="card-header">
+            <span class="card-id">PATHWAY 3</span>
+          </div>
+          <div class="card-title">Agentic Future</div>
+          <div class="card-desc">Build autonomous agents with LangGraph and MCP. Standardized tool use is the alpha.</div>
+          <div class="tag">Phase 6-11</div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  currentPhase = null;
+  state._lastPhase = null;
+  save();
+}
+
+// Check for deep links on load
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const projectId = params.get('p');
+  if (projectId) {
+    const phaseId = projectId.split('-')[0];
+    showPhase(phaseId);
+    setTimeout(() => {
+      const el = document.getElementById('card-' + projectId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('is-current');
+        if (el.classList.contains('collapsed')) toggleCard(projectId);
+      }
+    }, 500);
+  }
+});
 </script>
 </body>
 </html>
