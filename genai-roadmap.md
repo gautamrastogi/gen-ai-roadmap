@@ -1,7 +1,7 @@
 # Final Best GenAI Roadmap for a Python Developer (2026)
 Last updated: 2026-04-28
 
-> Verification note (2026-04-26): Re-checked against official OpenAI, Microsoft, Anthropic, Google A2A, and LangChain Academy sources. The biggest updates are: use the OpenAI `Responses API` for new builds, treat the `Assistants API` as legacy/deprecating, account for `AI-900` retirement on **June 30, 2026**, and give more weight to MCP, remote MCP, agent evals, and newer LangChain Academy material.
+> Verification note (2026-04-29): Re-checked against official OpenAI, Microsoft, Anthropic, Google A2A, and LangChain Academy sources. The biggest updates are: use the OpenAI `Responses API` for new builds, treat the `Assistants API` as legacy/deprecating, account for `AI-900` retirement on **June 30, 2026**, and give more weight to MCP, remote MCP, agent evals, A2A, and the latest specialized agent frameworks (PydanticAI for type-safety, smolagents for code-first execution).
 
 ## Goal
 Transition from Python Software Engineer to:
@@ -16,63 +16,19 @@ Transition from Python Software Engineer to:
 
 | Trend | Why It Matters | Covered In |
 |-------|---------------|------------|
-| **Agentic Systems** (LangGraph, CrewAI, OpenAI Agents SDK) | The dominant engineering paradigm — agents planning and executing multi-step tasks autonomously | Phase 6 |
+| **Agentic Systems** (LangGraph, CrewAI, PydanticAI) | The dominant engineering paradigm — agents planning and executing multi-step tasks autonomously | Phase 6 |
 | **Model Context Protocol (MCP)** | Industry-standard "USB-C for AI" — standardizes how agents connect to tools, files, and databases | Phase 6 |
 | **A2A (Agent-to-Agent Protocol)** | Google/Linux Foundation standard for agents collaborating cross-framework (LangGraph ↔ CrewAI ↔ ADK) | Phase 6 |
 | **Reasoning-First Models** (o1/o3, DeepSeek-R1) | Chain-of-thought deliberation loops — know when to use expensive reasoning vs fast generalist models | Phase 2 |
+| **GraphRAG & Knowledge Fabrics** | Moving beyond flat vector search to handle multi-hop reasoning and entity relationships | Phase 3 |
+| **Programmatic Prompting** (DSPy) | Replacing manual prompt engineering with compiled, metric-optimized prompt weights | Phase 5 |
 | **Evals-as-Code (EDD)** | AI is non-deterministic — treat prompts like code with CI-integrated test suites (DeepEval, LangSmith) | Phase 5 |
 | **AI Security & Prompt Injection** | OWASP LLM Top 10 — every production AI app needs guardrails | Phase 5 |
 | **CI/CD for AI Apps** | Automated eval pipelines on every PR, LLM-as-a-Judge regression checks | Phase 5 |
 | **Multimodal** (Vision, Audio, Video) | GPT-4o vision, Whisper STT, TTS — first-class in capstone projects | Phase 10 |
 | **Local Models** (Ollama, LM Studio, llama.cpp) | Cost/privacy/air-gap — know when open-weights beats hosted | Phases 2, 7 |
 
-## Will this roadmap get you a GenAI job?
-
-**Yes — here is the honest picture for both Vilnius and the wider EU/UK market.**
-
----
-
-### Vilnius / Lithuania market
-
-As of April 2026 (SalaryExpert / Numbeo data):
-
-| Role | Entry (1-3 yrs) | Average | Senior (8+ yrs) |
-|---|---|---|---|
-| AI Engineer | €25,886 | €36,748 | €41,938 |
-| ML Engineer | €28,091 | €39,937 | €45,694 |
-
-> Predicted **+38% salary growth over 5 years** — avg AI Engineer expected to reach ~€51K–€55K by 2031.
-> Average monthly net salary in Vilnius: ~€1,645 (Numbeo, April 2026). Senior qualified IT: up to ~€3K net/month (~€60K gross at top of market).
-> Tax note: Lithuania has ~42.5% total burden (income + social + pension contributions).
-
-**Who's hiring AI/ML engineers in Vilnius:**
-- **Vinted** — e-commerce unicorn, ML recommendation, NLP, search ranking
-- **Tesonet / NordSecurity / NordVPN / NordPass / Oxylabs** — cybersecurity, ML for threat detection, web data
-- **Hostinger** — AI-powered web hosting, LLM product features
-- **Revolut** — European HQ in Vilnius, fintech AI, fraud detection, NLP
-- **Nasdaq Vilnius Technology Center** — financial data, ML models
-- **Barclays Technology Center Vilnius** — UK bank with large Vilnius tech hub
-- **CGI / Devbridge (Cognizant)** — IT consulting, enterprise AI projects
-- **Kilo Health** — health tech, AI-powered wellness products
-
-**Lithuania-specific context:**
-- Vilnius is the Baltic region's fastest-growing tech hub. Sometimes called the "Silicon Alley of the Baltics".
-- Strong fintech + cybersecurity + e-commerce AI demand.
-- Many Lithuania-based engineers also target EU remote roles (Amsterdam, Berlin, Warsaw) — this roadmap prepares you for that too.
-- Job boards to watch: `cvbankas.lt`, `workinlithuania.com`, `rekvizitai.lt`, LinkedIn (set location: Vilnius + Remote).
-
----
-
-### UK/EU international market
-
-As of April 2026 there are 564+ LLM/AI engineer roles open in the UK alone (Glassdoor). Salary range for applied AI / GenAI engineers:
-- Junior / 1-2 years experience: £52K–£75K (Trainline, Colibri, Elutions)
-- Mid-level 2-4 years: £70K–£95K (Hadean, Pantheon, CUBE)
-- Senior / specialist: £95K–£175K+
-
----
-
-**What gets you hired after this roadmap (same for both markets):**
+## What gets you hired after this roadmap:
 1. 2-3 polished GitHub repos that work end-to-end (not half-finished)
 2. One live deployed app (not just localhost) with a real URL
 3. Can explain your RAG architecture, chunking strategy, evaluation approach
@@ -84,7 +40,7 @@ As of April 2026 there are 564+ LLM/AI engineer roles open in the UK alone (Glas
 - Deep ML maths (not needed for most GenAI roles)
 - Kubernetes / SRE (infrastructure — you'd learn that on the job)
 
-**Bottom line:** Complete Phases 1–8, have 3 public repos, and you will pass screening for applied AI/GenAI engineer roles at Vinted, Revolut, Hostinger, NordSecurity, and equivalent product companies in Vilnius and across the EU.
+**Bottom line:** Complete Phases 1–8, have 3 public repos, and you will pass screening for applied AI/GenAI engineer roles at top tech companies.
 
 ## Core principle
 Do not optimize for certificates first.
@@ -136,11 +92,12 @@ Optimize for:
 | 5 | Evals + Safety + Observability | ⬜ Not Started |
 | 6 | MCP + Agentic Orchestration | ⬜ Not Started |
 | 7 | AI-Native Developer Productivity | ⬜ Not Started |
-| 8 | Portfolio + Job Prep | ⬜ Not Started |
-| 9 | Certifications | ⬜ Not Started |
-| 10 | Capstone: Resume-Grade Projects | ⬜ Not Started |
+| 8 | Multimodal, Real-Time AI, & SLMs | ⬜ Not Started |
+| 9 | Portfolio + Job Prep | ⬜ Not Started |
+| 10 | Certifications | ⬜ Not Started |
+| 11 | Capstone: Resume-Grade Projects | ⬜ Not Started |
 
-**Overall: 4 / 30 projects done**
+**Overall: 4 / 33 projects done**
 
 ## Project Checklist
 
@@ -163,6 +120,7 @@ Optimize for:
 - [ ] Project 9: PDF Q&A Assistant
 - [ ] Project 10: Docs Knowledge Assistant
 - [ ] Project 11: Support Knowledge Bot
+- [ ] Project 11a: GraphRAG Document Explorer
 
 ### Phase 4 — Tool Calling + Workflow Automation
 - [ ] Project 12: Tool-Using Assistant
@@ -173,6 +131,9 @@ Optimize for:
 ### Phase 5 — Evals + Safety + Observability
 - [ ] Project 16: Eval Suite
 - [ ] Project 17: Productionize One App
+- [ ] Project 17a: DSPy Prompt Optimizer
+- [ ] Project 17b: CI/CD Pipeline for AI
+- [ ] Project 17c: OWASP LLM Security Scanner
 
 ### Phase 6 — MCP + Agentic Orchestration
 - [ ] Project 18: Simple MCP Server
@@ -181,16 +142,21 @@ Optimize for:
 - [ ] Project 21: HITL SQL Assistant
 - [ ] Project 22: HITL File Action Agent
 - [ ] Project 23: Stateful Research Workflow
-- [ ] Project 24: LangGraph Workflow
+- [ ] Project 24: Orchestration & Multi-Agent
 
 ### Phase 7 — AI-Native Developer Productivity
 - [ ] Project 25: Personal Dev Productivity Agent
 - [ ] Project 26: Local AI Coding Utility
 
-### Phase 10 — Capstone: Resume-Grade Projects
-- [ ] Project 27: Unified AI Assistant (ChatGPT clone — voice, vision, files, memory)
-- [ ] Project 28: Multi-Agent Research & Report Platform
-- [ ] Project 29: Personal AI Dev Copilot
+### Phase 8 — Multimodal, Real-Time AI, & SLMs
+- [ ] Project 27: Vision-Based Data Extractor
+- [ ] Project 28: Real-Time Voice Assistant
+- [ ] Project 29: Local SLM Fine-Tuning
+
+### Phase 11 — Capstone: Resume-Grade Projects
+- [ ] Project 30: Unified AI Assistant (ChatGPT clone — voice, vision, files, memory)
+- [ ] Project 31: Multi-Agent Research & Report Platform
+- [ ] Project 32: Personal AI Dev Copilot
 
 ---
 
@@ -203,9 +169,10 @@ Optimize for:
 5. Evals + safety + observability + production reliability
 6. MCP + agentic orchestration + HITL + persistence
 7. AI-native developer productivity
-8. Portfolio + job prep
-9. One certification
-10. Capstone: 3 big resume-grade projects that combine everything
+8. Multimodal, Real-Time AI, & SLMs
+9. Portfolio + job prep
+10. One certification
+11. Capstone: 3 big resume-grade projects that combine everything
 
 ---
 
@@ -373,6 +340,105 @@ You understand practical LLM behavior and failure modes.
   - model runtime = Ollama / LM Studio serving the local model
   - agent runtime = your Python app / LangGraph loop / OpenAI Agents SDK handling tools, memory, approvals, and orchestration
 
+## 🖥️ Local Models on Apple Silicon (M1 Max 32GB)
+> **Your hardware advantage:** M1 Max with 32GB unified memory is a serious local AI machine. The unified memory architecture means your GPU and CPU share the same pool — models that would choke an NVIDIA RTX 4090 (24GB VRAM) run comfortably here.
+
+### Why M1 Max is Good for Local AI
+- **32GB unified memory** = GPU and CPU share it, no VRAM bottleneck
+- **400 GB/s memory bandwidth** = fast token generation even on large models
+- **Apple Neural Engine (ANE)** = hardware ML acceleration baked in
+- **Energy-efficient** = run 7B–30B models for hours without fan noise or heat
+
+### Framework Choice for Apple Silicon
+
+| Framework | Best For | Speed |
+|-----------|----------|-------|
+| **MLX** ⭐ | Apple Silicon native — zero-copy tensors, fastest throughput | Fastest generation |
+| **Ollama** | OpenAI-compatible API, easy setup, developer-friendly | Very fast |
+| **LM Studio** | GUI exploration, visual parameter tuning, no terminal | Same as Ollama (same backend) |
+| **llama.cpp** | Low-level control, custom quantization experiments | Same as Ollama |
+
+> **Rule**: Use **Ollama** for development/agent integration. Use **MLX** when you want maximum speed or local fine-tuning on Mac.
+
+### What Can You Run on 32GB M1 Max?
+
+| Model Size | Examples | Q4 Memory | Speed |
+|-----------|----------|-----------|-------|
+| **7–8B** | Qwen3-8B, Llama 3.1 8B, Mistral 7B | ~5GB | ~60–80 tok/s — instant |
+| **14B** | Qwen3-14B, Phi-4, Gemma 3 12B | ~9GB | ~40–50 tok/s — very fast |
+| **27–30B** ⭐ Sweet spot | Qwen3-30B-A3B (MoE), Mistral Small 22B | ~18–22GB | ~20–30 tok/s — smooth |
+| **70B (quantized)** | Llama 3.3 70B Q4, DeepSeek-R1-Distill 70B | ~42GB | ~8–12 tok/s — usable |
+
+> ⚠️ **70B warning**: With 32GB, 70B Q4 models will exceed RAM and swap to SSD. Stick to 30B or less for a smooth experience. Use 70B only for experiments.
+
+### Recommended Models to Try First (2026)
+
+```bash
+# Install Ollama first: https://ollama.com
+brew install ollama
+
+# Best everyday model — fast + smart
+ollama run qwen3:14b
+
+# Best coding model
+ollama run qwen3:14b  # or qwen2.5-coder:14b
+
+# Reasoning model (like a local o1)
+ollama pull deepseek-r1:14b
+
+# Tiny but surprisingly capable
+ollama run phi4:latest
+
+# Vision model (multimodal)
+ollama run llava:13b
+```
+
+### MLX Setup (Fastest for Mac)
+```bash
+pip install mlx-lm
+
+# Run Qwen3 14B via MLX (faster than Ollama)
+python -m mlx_lm.chat --model mlx-community/Qwen2.5-14B-Instruct-4bit
+
+# Fine-tune locally (Phase 8 skill)
+python -m mlx_lm.lora --train --model mlx-community/Llama-3.2-3B-Instruct-4bit \
+    --data ./data --iters 1000
+```
+
+### Connect Local Models to Your Python Code
+Both Ollama and LM Studio expose an OpenAI-compatible API — swap the base URL and you're done:
+
+```python
+from openai import OpenAI
+
+# Use Ollama locally instead of OpenAI
+client = OpenAI(
+    base_url="http://localhost:11434/v1",
+    api_key="ollama",  # required but ignored
+)
+
+response = client.chat.completions.create(
+    model="qwen3:14b",
+    messages=[{"role": "user", "content": "Explain embeddings in 2 sentences."}]
+)
+print(response.choices[0].message.content)
+```
+
+### Key Concepts to Learn
+- **Quantization**: Q4_K_M = 4-bit weights with K-means grouping. Best quality/size tradeoff. Q2 = tiny but dumb. Q8 = near-full quality.
+- **GGUF format**: The standard model file format for llama.cpp/Ollama. Download from Hugging Face `mlx-community` or `bartowski` namespaces.
+- **Context window**: Most 7–14B models support 8k–128k tokens. Larger context = more RAM needed for the KV cache.
+- **Memory pressure**: Watch Activity Monitor → Memory tab. If "Memory Pressure" is red, your model is too big.
+- **Model vs Instruct variants**: Always use the `-Instruct` or `-Chat` variant for conversations. Base models need special prompting.
+- **MoE (Mixture of Experts)**: Models like Qwen3-30B-A3B activate only a subset of parameters per token — smaller memory footprint at big-model quality.
+
+### Resources
+- Ollama model library: https://ollama.com/library
+- MLX community models (Hugging Face): https://huggingface.co/mlx-community
+- GGUF models (bartowski): https://huggingface.co/bartowski
+- mlx-lm docs: https://github.com/ml-explore/mlx-examples/tree/main/llms
+- Open WebUI (local ChatGPT UI for Ollama): https://openwebui.com/
+
 ## Projects
 ### Project 4: CLI Chatbot
 Features:
@@ -450,8 +516,10 @@ You can build Python LLM services without framework magic.
 - hybrid search: BM25 keyword + vector (better than pure vector in production)
 - retrieval
 - reranking basics (Cohere Rerank, cross-encoders)
+- **GraphRAG and LightRAG**: Moving beyond flat vector search by building entity relationship graphs for multi-hop reasoning. Critical for complex, knowledge-intensive retrieval where context clumping fails.
 - grounded generation
 - citations
+- **Context Engineering**: smarter chunking, retrieval routing, memory management, and query rewriting to maximize relevance
 - **Hugging Face sentence-transformers** — produce embeddings with open-source models (all-MiniLM-L6, BGE, nomic-embed)
 - **Ollama** — run Llama 3 / Mistral locally for RAG experiments
 - difference: OpenAI embeddings vs open-source embeddings (cost, privacy, quality)
@@ -475,6 +543,9 @@ Use markdown/docs/READMEs.
 
 ### Project 11: Support Knowledge Bot
 Answer from support docs only and refuse unsupported answers.
+
+### Project 11a: GraphRAG Document Explorer
+Build a knowledge graph to answer multi-hop reasoning questions over a complex text corpus using LightRAG or Microsoft GraphRAG principles.
 
 ## Completion goal
 You have a strong production-style RAG project with citations.
@@ -596,22 +667,26 @@ You can build assistants that do useful actions, not just chat.
   - LLM-as-a-Judge — use a powerful model to evaluate outputs of a smaller model on rubric-based metrics
   - Component-level tracing — isolate failures in retriever, reranker, or planner stages
   - DeepEval integrates with pytest — treat AI quality like unit tests
+- **Programmatic Prompt Optimization (DSPy):**
+  - Shift from manual prompt tweaking to defining modules and metrics
+  - Let DSPy compile and optimize prompt weights autonomously
 - moderation
 - abuse prevention
 - privacy / PII handling
-- observability tools: **LangSmith**, **Langfuse** (open-source), **Arize Phoenix**
+- observability tools: **LangSmith**, **Langfuse** (open-source), **Arize Phoenix**, **Opik**, **Braintrust**
 - tracing
 - logging
 - latency tracking
 - caching
 - fallback behavior
-- prompt versioning
+- prompt versioning and management: **PromptLayer**, **Maxim AI**
 - cost tracking
+- **Multi-LLM Routing**: preventing vendor lock-in and optimizing latency/cost using routing layers like **LiteLLM** or **Logic**
 
 ## Learn: AI Security ⭐ 2026 Critical
 > Every production LLM app is an attack surface. OWASP LLM Top 10 is now the standard checklist.
 
-- **OWASP LLM Top 10 (2025 edition)** — the canonical checklist:
+- **OWASP LLM Top 10 (2025/2026 edition)** — the canonical checklist:
   - LLM01: Prompt Injection (direct and indirect)
   - LLM02: Insecure Output Handling (XSS, SSRF via LLM output)
   - LLM03: Training Data Poisoning
@@ -670,16 +745,15 @@ Add:
 - failure handling
 - prompt versioning (prompts as files, tracked in git)
 - README with cost/latency notes
-- OWASP LLM Top 10 review — document your mitigations for the top risks
-- **GitHub Actions CI/CD pipeline:**
-  - lint + test + eval on PR
-  - Docker build → push → deploy to cloud
-- **Deploy to cloud** — your app must be live at a real URL. Pick one:
-  - Azure Container Apps (easiest if you have Azure access)
-  - AWS App Runner (easy, just push a container)
-  - Railway.app (free tier, zero infra knowledge needed)
-  - Render.com (free tier)
-- Document the URL in the README
+
+### Project 17a: DSPy Prompt Optimizer
+Replace manual prompts with compiled, programmatically optimized prompts.
+
+### Project 17b: CI/CD Pipeline for AI
+Automate tests and regression evals via GitHub Actions, building a container-based deployment pipeline.
+
+### Project 17c: OWASP LLM Security Scanner
+Implement security guardrails for prompt injection, test for indirect injection, and restrict tool scopes.
 
 ## Completion goal
 You can evaluate, secure, and deploy an AI application like a production engineer.
@@ -795,8 +869,11 @@ Connect an agent/client to your MCP server and use it in a workflow.
 Learn in this order:
 1. direct tool-calling workflows
 2. simple orchestration
-3. LangChain only where useful
-4. LangGraph for stateful orchestration
+3. PydanticAI (for type-safe, contract-driven LLM systems) and smolagents (for highly efficient, code-first execution)
+4. LangChain only where useful
+5. LangGraph for complex, stateful orchestration
+6. CrewAI / Microsoft Agent Framework for multi-agent teams
+7. Explore specialized SDKs: OpenAI Agents SDK (MCP native), Google ADK (GCP/Multimodal), Mastra (JS/TS)
 
 ## Projects
 ### Project 21: HITL SQL Assistant
@@ -808,10 +885,10 @@ Pause before write/delete/send actions.
 ### Project 23: Stateful Research Workflow
 Resume after interruption, persist state.
 
-### Project 24: LangGraph Workflow
-Implement:
+### Project 24: Orchestration & Multi-Agent
+Implement using LangGraph, PydanticAI, or smolagents:
 - planner
-- tool call
+- tool call or code-execution
 - approval gate
 - resume execution
 - final result synthesis
@@ -861,6 +938,8 @@ Use AI to accelerate your own development workflow.
   - serve a local model with Ollama or LM Studio
   - expose tools via Python functions or MCP
   - run the agent loop in your app, Codex, Claude Code, or Open WebUI
+- **Agentic IDEs:** Use Cursor, Windsurf for deep codebase reasoning and refactoring.
+- **Terminal Coding Agents:** Master Claude Code, Devin for autonomous end-to-end execution.
 - AI-first IDE patterns
 - dev workflow automation
 - **Native Browser Agents vs MCP Browser**:
@@ -892,7 +971,41 @@ You work like an AI-native developer, not just an AI consumer.
 
 ---
 
-# PHASE 8 - PORTFOLIO + JOB PREP
+# PHASE 8 - MULTIMODAL, REAL-TIME AI, & SLMs (Small Language Models)
+
+## Resources
+
+### 📘 Official Docs (free)
+- OpenAI Realtime API: https://platform.openai.com/docs/guides/realtime
+- OpenAI Vision: https://platform.openai.com/docs/guides/vision
+- Hugging Face SLM Guide: https://huggingface.co/blog/smollm
+- Unsloth (Fast Fine-tuning): https://github.com/unslothai/unsloth
+- Synthetic Data Generation with Argilla: https://docs.argilla.io/en/latest/
+
+## Learn
+- Multimodal architectures (Vision + Audio)
+- Real-time streaming protocols (WebSockets / WebRTC for AI)
+- SLMs (Small Language Models: Phi-3, Llama-3-8B, Qwen)
+- Synthetic Data Generation techniques (using large models to train small models)
+- Parameter-Efficient Fine-Tuning (PEFT, LoRA)
+
+## Projects
+
+### Project 27: Vision-Based Data Extractor
+Extract structured JSON data (tables, charts, receipts) using vision models (GPT-4o or Claude 3.5 Sonnet).
+
+### Project 28: Real-Time Voice Assistant
+Use the OpenAI Realtime API (or WebSockets + local Whisper/TTS) to build a low-latency voice-in, voice-out assistant.
+
+### Project 29: Local SLM Fine-Tuning
+Generate a small synthetic dataset using a large model, then use Unsloth to fine-tune a Llama-3-8B model locally on your specific data.
+
+## Completion goal
+You can handle vision, audio, and custom-trained local SLMs, matching the 2026 enterprise trend.
+
+---
+
+# PHASE 9 - PORTFOLIO + JOB PREP
 
 ## Resources
 
@@ -942,7 +1055,7 @@ You are interview-ready with real proof.
 
 ---
 
-# PHASE 9 - CERTIFICATIONS
+# PHASE 10 - CERTIFICATIONS
 
 ## Resources
 
@@ -987,16 +1100,16 @@ Projects are the real proof.
 
 ---
 
-# PHASE 10 - CAPSTONE: RESUME-GRADE PROJECTS
+# PHASE 11 - CAPSTONE: RESUME-GRADE PROJECTS
 
-> Do this LAST — after Phases 1-9. These are the crown jewels of your portfolio. Each one combines everything you have learned into one polished, deployable, demo-able product.
+> Do this LAST — after Phases 1-10. These are the crown jewels of your portfolio. Each one combines everything you have learned into one polished, deployable, demo-able product.
 
 ## Why this phase matters
 Recruiters look for projects they can understand and imagine using. A certificate says you watched videos. These projects say you built things that work.
 
 ---
 
-## Project 27: Unified AI Assistant
+## Project 30: Unified AI Assistant
 **"My ChatGPT" — the all-in-one AI platform**
 
 Build a full-stack web AI assistant that rivals ChatGPT in features:
@@ -1013,12 +1126,12 @@ Build a full-stack web AI assistant that rivals ChatGPT in features:
 | Persistent memory | Remembers who you are, your preferences, past conversations |
 | FastAPI backend + React or Streamlit frontend | Clean, deployable, Docker |
 
-**Tell Copilot:** `generate repo scaffold for phase 10 project 27`  
+**Tell Copilot:** `generate repo scaffold for phase 11 project 30`  
 **You're done when:** You can record a 3-minute Loom demo showing voice in, image Q&A, file upload, and a web search.
 
 ---
 
-## Project 28: Multi-Agent Research & Report Platform
+## Project 31: Multi-Agent Research & Report Platform
 **"Deep Research" — automated intelligence briefing generator**
 
 Given a topic, this system autonomously researches it and produces a polished report:
@@ -1035,12 +1148,12 @@ Given a topic, this system autonomously researches it and produces a polished re
 | LangGraph orchestration | Full stateful multi-agent graph with persistence |
 | MCP server | Expose "run research" as an MCP tool usable from Claude Desktop |
 
-**Tell Copilot:** `generate repo scaffold for phase 10 project 28`  
+**Tell Copilot:** `generate repo scaffold for phase 11 project 31`  
 **You're done when:** You can demo "research the impact of GenAI on software engineering" → full PDF report in 2 minutes.
 
 ---
 
-## Project 29: Personal AI Dev Copilot
+## Project 32: Personal AI Dev Copilot
 **"My Copilot" — a coding + productivity assistant built for your own workflow**
 
 An MCP server + agent that integrates into your daily developer life:
@@ -1057,7 +1170,7 @@ An MCP server + agent that integrates into your daily developer life:
 | Runs as FastAPI service | Also usable as REST API / webhook |
 | Configurable persona | System prompt tuned to your stack and preferences |
 
-**Tell Copilot:** `generate repo scaffold for phase 10 project 29`  
+**Tell Copilot:** `generate repo scaffold for phase 11 project 32`  
 **You're done when:** You use it yourself every day and it's in your GitHub profile README.
 
 ---
