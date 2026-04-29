@@ -288,6 +288,32 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   .header-actions{width:100%}
   .btn{font-size:.75rem;padding:.45rem .8rem}
 }
+
+/* Gist Sync */
+.sync-status{display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--dim)}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--dim);flex-shrink:0;transition:background .3s}
+.sync-dot.ok{background:var(--success);box-shadow:0 0 6px rgba(16,185,129,.5)}
+.sync-dot.syncing{background:var(--warning);animation:pulse 1s infinite}
+.sync-dot.err{background:#ef4444}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Settings modal */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;backdrop-filter:blur(4px);align-items:center;justify-content:center}
+.modal-bg.show{display:flex}
+.modal{background:var(--bg-sidebar);border:1px solid var(--border);border-radius:20px;padding:2rem;width:min(480px,90vw);max-height:90vh;overflow-y:auto}
+.modal h2{font-size:1.1rem;font-weight:800;margin-bottom:.4rem}
+.modal p{font-size:.8rem;color:var(--dim);margin-bottom:1.25rem;line-height:1.6}
+.modal label{display:block;font-size:.75rem;font-weight:600;color:var(--dim);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.05em}
+.modal input{
+  width:100%;padding:.65rem .9rem;border-radius:10px;
+  border:1px solid var(--border);background:var(--bg-glass);
+  color:var(--text);font-size:.82rem;margin-bottom:1rem;
+  font-family:'JetBrains Mono',monospace;outline:none;
+  transition:border-color .2s;
+}
+.modal input:focus{border-color:var(--accent)}
+.modal-actions{display:flex;gap:.75rem;justify-content:flex-end;margin-top:.5rem;flex-wrap:wrap}
+.modal-note{font-size:.72rem;color:var(--dim);background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.15);border-radius:10px;padding:.75rem;margin-bottom:1rem;line-height:1.6}
 </style>
 </head>
 <body>
@@ -315,7 +341,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   <div class="nav-label">Phases</div>
   <nav id="nav"></nav>
   <div class="sidebar-footer">
-    <span class="version">V3.0.0 Agentic</span>
+    <div class="sync-status"><div class="sync-dot" id="sync-dot"></div><span id="sync-label">Local only</span></div>
     <button class="theme-btn" id="themeBtn" title="Toggle theme">☀️</button>
   </div>
 </aside>
@@ -328,6 +354,28 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
     <button class="btn" onclick="resetProgress()" style="color:#ef4444">↺ Reset</button>
   </div>
   <div id="content"></div>
+
+<!-- Settings modal -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <h2>☁️ GitHub Gist Sync</h2>
+    <p>Sync your progress across all devices using a private GitHub Gist — no backend needed.</p>
+    <div class="modal-note">
+      1. Go to <strong>github.com → Settings → Developer settings → Personal access tokens → Tokens (classic)</strong><br>
+      2. Generate a token with <strong>only the <code>gist</code> scope</strong><br>
+      3. Paste it below. It is stored in your browser only, never sent anywhere except GitHub's API.
+    </div>
+    <label>GitHub Personal Access Token (gist scope)</label>
+    <input type="password" id="pat-input" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
+    <label>Gist ID <span style="font-weight:400;text-transform:none">(leave blank to auto-create on first save)</span></label>
+    <input type="text" id="gist-input" placeholder="Leave blank to auto-create">
+    <div class="modal-actions">
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGistSettings()">Save &amp; Sync</button>
+    </div>
+  </div>
+</div>
+
 </main>
 <script>
 
@@ -800,6 +848,137 @@ applyTheme();
 buildNav();
 updateSidebar();
 showPhase(currentPhase);
+
+// ---- Gist Sync ----
+const GIST_FILENAME = 'genai-roadmap-progress.json';
+let syncPAT = localStorage.getItem('gist-pat') || '';
+let syncGistId = localStorage.getItem('gist-id') || '';
+let syncTimer = null;
+
+function setSyncStatus(state, text) {
+  const dot = document.getElementById('sync-dot');
+  const lbl = document.getElementById('sync-label');
+  if (!dot) return;
+  dot.className = 'sync-dot' + (state ? ' ' + state : '');
+  if (lbl) lbl.textContent = text;
+}
+
+async function gistFetch(method, path, body) {
+  return fetch('https://api.github.com' + path, {
+    method,
+    headers: {
+      'Authorization': 'token ' + syncPAT,
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+}
+
+async function pushToGist() {
+  if (!syncPAT) return;
+  setSyncStatus('syncing', 'Syncing...');
+  try {
+    const content = JSON.stringify(state, null, 2);
+    if (!syncGistId) {
+      const res = await gistFetch('POST', '/gists', {
+        description: 'GenAI Roadmap Progress',
+        public: false,
+        files: { [GIST_FILENAME]: { content } }
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Create failed');
+      syncGistId = data.id;
+      localStorage.setItem('gist-id', syncGistId);
+      const gi = document.getElementById('gist-input');
+      if (gi) gi.value = syncGistId;
+    } else {
+      const res = await gistFetch('PATCH', '/gists/' + syncGistId, {
+        files: { [GIST_FILENAME]: { content } }
+      });
+      if (!res.ok) { const d=await res.json(); throw new Error(d.message||'Update failed'); }
+    }
+    setSyncStatus('ok', 'Synced to Gist');
+  } catch (e) {
+    setSyncStatus('err', 'Sync failed: ' + e.message);
+  }
+}
+
+async function pullFromGist() {
+  if (!syncPAT || !syncGistId) return false;
+  setSyncStatus('syncing', 'Loading...');
+  try {
+    const res = await gistFetch('GET', '/gists/' + syncGistId);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Load failed');
+    const file = data.files[GIST_FILENAME];
+    if (!file) throw new Error('Progress file not found in Gist');
+    const remote = JSON.parse(file.content);
+    state = remote;
+    localStorage.setItem('genai-progress-v3', JSON.stringify(state));
+    setSyncStatus('ok', 'Synced from Gist');
+    return true;
+  } catch(e) {
+    setSyncStatus('err', 'Pull failed: ' + e.message);
+    return false;
+  }
+}
+
+function schedulePush() {
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(pushToGist, 1500);
+}
+
+// Patch save() to trigger gist push on every state change
+const _origSave = save;
+window.save = function() { _origSave(); if (syncPAT) schedulePush(); };
+
+// Modal controls
+function openModal() {
+  document.getElementById('pat-input').value = syncPAT;
+  document.getElementById('gist-input').value = syncGistId;
+  document.getElementById('modal-bg').classList.add('show');
+}
+function closeModal() {
+  document.getElementById('modal-bg').classList.remove('show');
+}
+async function saveGistSettings() {
+  syncPAT = document.getElementById('pat-input').value.trim();
+  syncGistId = document.getElementById('gist-input').value.trim();
+  localStorage.setItem('gist-pat', syncPAT);
+  localStorage.setItem('gist-id', syncGistId);
+  closeModal();
+  if (!syncPAT) { setSyncStatus('', 'Local only'); return; }
+  const pulled = syncGistId ? await pullFromGist() : false;
+  if (pulled) { buildNav(); updateSidebar(); showPhase(currentPhase); }
+  else await pushToGist();
+}
+document.addEventListener('DOMContentLoaded', () => { const _mb=document.getElementById('modal-bg'); if(_mb) _mb.addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+  }); });
+
+// Inject "Gist Sync" button into export bar
+(function(){
+  const bar = document.querySelector('.export-bar');
+  if (!bar) return;
+  const btn = document.createElement('button');
+  btn.className = 'btn';
+  btn.textContent = '\u2601 Gist Sync';
+  btn.onclick = openModal;
+  bar.insertBefore(btn, bar.children[1]);
+})();
+
+// On load: pull from gist if configured
+if (syncPAT && syncGistId) {
+  pullFromGist().then(ok => {
+    if (ok) { buildNav(); updateSidebar(); showPhase(currentPhase); }
+  });
+} else if (syncPAT) {
+  setSyncStatus('', 'Token set, no Gist yet');
+} else {
+  setSyncStatus('', 'Local only');
+}
+
 </script>
 </body>
 </html>
