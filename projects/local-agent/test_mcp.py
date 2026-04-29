@@ -6,7 +6,16 @@ This demonstrates calling the tools directly (for testing purposes).
 
 import json
 
-from mcp_server import call_local_model, read_file, run_command, web_search, write_file
+from mcp_server import (
+    call_local_model,
+    git_status_and_diff,
+    health_check,
+    list_tool_capabilities,
+    read_file,
+    run_command,
+    web_search,
+    write_file,
+)
 
 
 def pretty(raw: str) -> str:
@@ -30,12 +39,28 @@ def test_tools():
     result = run_command("ls -la")
     print("Result:\n", pretty(result))
 
+    print("\nTesting run_command invalid command...")
+    result = run_command("rm -rf /")
+    print("Result:\n", pretty(result))
+
+    print("\nTesting git_status_and_diff...")
+    result = git_status_and_diff(120)
+    print("Result:\n", pretty(result))
+
     print("\nTesting web_search...")
     result = web_search("what is AI")
     print("Result:\n", pretty(result))
 
     print("\nTesting call_local_model...")
     result = call_local_model("Give 3 short tips to build a safe MCP server.")
+    print("Result:\n", pretty(result))
+
+    print("\nTesting health_check...")
+    result = health_check()
+    print("Result:\n", pretty(result))
+
+    print("\nTesting list_tool_capabilities...")
+    result = list_tool_capabilities()
     print("Result:\n", pretty(result))
 
     print("\nTest complete. Check for test_output.txt file.")

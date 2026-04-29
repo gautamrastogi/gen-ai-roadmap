@@ -118,6 +118,14 @@ class RoadmapHandler(BaseHTTPRequestHandler):
             return
         self.send_error(HTTPStatus.NOT_FOUND, "Not found")
 
+    def do_HEAD(self) -> None:
+        parsed = urlparse(self.path)
+        if parsed.path in {"/", "/dashboard.html", "/healthz", "/api/state"}:
+            self.send_response(HTTPStatus.OK)
+            self.end_headers()
+            return
+        self.send_error(HTTPStatus.NOT_FOUND, "Not found")
+
     def do_POST(self) -> None:
         parsed = urlparse(self.path)
         if parsed.path != "/api/toggle":

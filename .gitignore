@@ -1,4 +1,60 @@
+# Python
 __pycache__/
-*.log
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# macOS
 .DS_Store
-tracker.db
+.AppleDouble
+.LSOverride
+
+# IDE / editors
+.cursor/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Log files
+*.log
+logs/
+
+# Test artifacts
+test_output.txt
+.pytest_cache/
+
+# Dashboard runtime files
+projects/dashboard/tracker.db
+projects/dashboard/launchd.out.log
+projects/dashboard/launchd.err.log
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Secrets / keys
+*.pem
+*.key
+
+# OS / temp
+*.tmp
+*.bak
+Thumbs.db
