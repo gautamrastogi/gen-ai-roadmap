@@ -290,11 +290,18 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 }
 
 /* Gist Sync */
-.sync-status{display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:var(--dim)}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--dim);flex-shrink:0;transition:background .3s}
-.sync-dot.ok{background:var(--success);box-shadow:0 0 6px rgba(16,185,129,.5)}
-.sync-dot.syncing{background:var(--warning);animation:pulse 1s infinite}
-.sync-dot.err{background:#ef4444}
+.sync-panel{background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.18);border-radius:12px;padding:.75rem;margin:.75rem 0;cursor:pointer;transition:border-color .2s}
+.sync-panel:hover{border-color:rgba(139,92,246,.4)}
+.sync-panel-row{display:flex;align-items:center;gap:.5rem}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--dim);flex-shrink:0;transition:background .3s}
+.sync-dot.ok{background:#10b981;box-shadow:0 0 6px rgba(16,185,129,.6)}
+.sync-dot.syncing{background:#f59e0b;animation:pulse 1s infinite}
+.sync-dot.err{background:#ef4444;box-shadow:0 0 6px rgba(239,68,68,.4)}
+.sync-label{font-size:.73rem;font-weight:600;color:var(--text);flex:1}
+.sync-config{font-size:.65rem;color:var(--dim);margin-top:.3rem;line-height:1.5}
+.sync-badge{font-size:.6rem;padding:.1rem .4rem;border-radius:4px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.sync-badge.connected{background:rgba(16,185,129,.15);color:#10b981}
+.sync-badge.disconnected{background:rgba(100,116,139,.15);color:var(--dim)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
 /* Settings modal */
@@ -341,7 +348,14 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   <div class="nav-label">Phases</div>
   <nav id="nav"></nav>
   <div class="sidebar-footer">
-    <div class="sync-status"><div class="sync-dot" id="sync-dot"></div><span id="sync-label">Local only</span></div>
+    <div class="sync-panel" onclick="openModal()" title="Configure Gist sync">
+  <div class="sync-panel-row">
+    <div class="sync-dot" id="sync-dot"></div>
+    <span class="sync-label" id="sync-label">Sync</span>
+    <span class="sync-badge disconnected" id="sync-badge">Off</span>
+  </div>
+  <div class="sync-config" id="sync-detail">Click to configure cloud sync</div>
+</div>
     <button class="theme-btn" id="themeBtn" title="Toggle theme">☀️</button>
   </div>
 </aside>
@@ -365,6 +379,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
       2. Generate a token with <strong>only the <code>gist</code> scope</strong><br>
       3. Paste it below. It is stored in your browser only, never sent anywhere except GitHub's API.
     </div>
+    <div id="modal-status" style="font-size:.78rem;background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.15);border-radius:10px;padding:.65rem .85rem;margin-bottom:1rem;line-height:1.6">Not connected</div>
     <label>GitHub Personal Access Token (gist scope)</label>
     <input type="password" id="pat-input" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
     <label>Gist ID <span style="font-weight:400;text-transform:none">(leave blank to auto-create on first save)</span></label>
@@ -855,12 +870,40 @@ let syncPAT = localStorage.getItem('gist-pat') || '';
 let syncGistId = localStorage.getItem('gist-id') || '';
 let syncTimer = null;
 
-function setSyncStatus(state, text) {
+function fmtTime(iso) {
+  if (!iso) return 'never';
+  const d = new Date(iso);
+  return d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ' ' + d.toLocaleDateString([], {month:'short',day:'numeric'});
+}
+
+function setSyncStatus(st, label, detail) {
   const dot = document.getElementById('sync-dot');
   const lbl = document.getElementById('sync-label');
+  const det = document.getElementById('sync-detail');
+  const bdg = document.getElementById('sync-badge');
   if (!dot) return;
-  dot.className = 'sync-dot' + (state ? ' ' + state : '');
-  if (lbl) lbl.textContent = text;
+  dot.className = 'sync-dot' + (st ? ' ' + st : '');
+  if (lbl) lbl.textContent = label || 'Sync';
+  if (det) det.textContent = detail || '';
+  if (bdg) {
+    const on = st === 'ok' || st === 'syncing';
+    bdg.textContent = on ? 'On' : 'Off';
+    bdg.className = 'sync-badge ' + (on ? 'connected' : 'disconnected');
+  }
+}
+
+function refreshSyncPanel() {
+  if (!syncPAT) {
+    setSyncStatus('', 'Cloud Sync', 'Click to connect GitHub Gist');
+    return;
+  }
+  const lastSync = localStorage.getItem('gist-last-sync');
+  const gidShort = syncGistId ? syncGistId.slice(0,8)+'…' : 'none';
+  if (syncGistId) {
+    setSyncStatus('ok', 'Synced to Gist', `Gist: ${gidShort} • Last: ${fmtTime(lastSync)}`);
+  } else {
+    setSyncStatus('', 'Token set', 'Gist will be created on next save');
+  }
 }
 
 async function gistFetch(method, path, body) {
@@ -877,12 +920,12 @@ async function gistFetch(method, path, body) {
 
 async function pushToGist() {
   if (!syncPAT) return;
-  setSyncStatus('syncing', 'Syncing...');
+  setSyncStatus('syncing', 'Syncing…', 'Saving to GitHub Gist…');
   try {
     const content = JSON.stringify(state, null, 2);
     if (!syncGistId) {
       const res = await gistFetch('POST', '/gists', {
-        description: 'GenAI Roadmap Progress',
+        description: 'GenAI Roadmap Progress (auto-synced)',
         public: false,
         files: { [GIST_FILENAME]: { content } }
       });
@@ -898,15 +941,18 @@ async function pushToGist() {
       });
       if (!res.ok) { const d=await res.json(); throw new Error(d.message||'Update failed'); }
     }
-    setSyncStatus('ok', 'Synced to Gist');
+    const now = new Date().toISOString();
+    localStorage.setItem('gist-last-sync', now);
+    refreshSyncPanel();
   } catch (e) {
-    setSyncStatus('err', 'Sync failed: ' + e.message);
+    const det = `Error: ${e.message}`;
+    setSyncStatus('err', 'Sync failed', det);
   }
 }
 
 async function pullFromGist() {
   if (!syncPAT || !syncGistId) return false;
-  setSyncStatus('syncing', 'Loading...');
+  setSyncStatus('syncing', 'Loading…', 'Fetching from GitHub Gist…');
   try {
     const res = await gistFetch('GET', '/gists/' + syncGistId);
     const data = await res.json();
@@ -916,10 +962,12 @@ async function pullFromGist() {
     const remote = JSON.parse(file.content);
     state = remote;
     localStorage.setItem('genai-progress-v3', JSON.stringify(state));
-    setSyncStatus('ok', 'Synced from Gist');
+    const now = new Date().toISOString();
+    localStorage.setItem('gist-last-sync', now);
+    refreshSyncPanel();
     return true;
   } catch(e) {
-    setSyncStatus('err', 'Pull failed: ' + e.message);
+    setSyncStatus('err', 'Pull failed', e.message);
     return false;
   }
 }
@@ -929,35 +977,49 @@ function schedulePush() {
   syncTimer = setTimeout(pushToGist, 1500);
 }
 
-// Patch save() to trigger gist push on every state change
 const _origSave = save;
 window.save = function() { _origSave(); if (syncPAT) schedulePush(); };
 
-// Modal controls
+// Modal
 function openModal() {
-  document.getElementById('pat-input').value = syncPAT;
+  document.getElementById('pat-input').value = syncPAT ? '••••••••••••' + syncPAT.slice(-4) : '';
   document.getElementById('gist-input').value = syncGistId;
+  // Update modal connection status
+  const ms = document.getElementById('modal-status');
+  if (ms) {
+    if (syncPAT && syncGistId) {
+      const last = localStorage.getItem('gist-last-sync');
+      ms.innerHTML = `<span style="color:#10b981">✓ Connected</span> — Gist <code>${syncGistId.slice(0,12)}…</code><br><small>Last synced: ${fmtTime(last)}</small>`;
+    } else if (syncPAT) {
+      ms.innerHTML = `<span style="color:#f59e0b">⚠ Token saved, no Gist yet</span> — will create on next save`;
+    } else {
+      ms.innerHTML = `<span style="color:var(--dim)">Not connected</span> — enter token below`;
+    }
+  }
   document.getElementById('modal-bg').classList.add('show');
 }
 function closeModal() {
   document.getElementById('modal-bg').classList.remove('show');
 }
 async function saveGistSettings() {
-  syncPAT = document.getElementById('pat-input').value.trim();
+  const patVal = document.getElementById('pat-input').value.trim();
+  // If they didn't clear the masked value, keep existing PAT
+  if (patVal && !patVal.startsWith('••')) syncPAT = patVal;
   syncGistId = document.getElementById('gist-input').value.trim();
   localStorage.setItem('gist-pat', syncPAT);
   localStorage.setItem('gist-id', syncGistId);
   closeModal();
-  if (!syncPAT) { setSyncStatus('', 'Local only'); return; }
+  if (!syncPAT) { setSyncStatus('', 'Cloud Sync', 'Click to connect GitHub Gist'); return; }
   const pulled = syncGistId ? await pullFromGist() : false;
   if (pulled) { buildNav(); updateSidebar(); showPhase(currentPhase); }
   else await pushToGist();
 }
-document.addEventListener('DOMContentLoaded', () => { const _mb=document.getElementById('modal-bg'); if(_mb) _mb.addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeModal();
-  }); });
+document.addEventListener('DOMContentLoaded', () => {
+  const _mb = document.getElementById('modal-bg');
+  if (_mb) _mb.addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+});
 
-// Inject "Gist Sync" button into export bar
+// Inject Gist Sync button into export bar
 (function(){
   const bar = document.querySelector('.export-bar');
   if (!bar) return;
@@ -968,15 +1030,12 @@ document.addEventListener('DOMContentLoaded', () => { const _mb=document.getElem
   bar.insertBefore(btn, bar.children[1]);
 })();
 
-// On load: pull from gist if configured
+// Init
+refreshSyncPanel();
 if (syncPAT && syncGistId) {
   pullFromGist().then(ok => {
     if (ok) { buildNav(); updateSidebar(); showPhase(currentPhase); }
   });
-} else if (syncPAT) {
-  setSyncStatus('', 'Token set, no Gist yet');
-} else {
-  setSyncStatus('', 'Local only');
 }
 
 </script>
