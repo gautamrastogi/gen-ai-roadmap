@@ -1,7 +1,60 @@
-# Final Best GenAI Roadmap for a Python Developer (2026)
-Last updated: 2026-04-28
+# GenAI Developer Roadmap 2026
 
-> Verification note (2026-04-29): Re-checked against official OpenAI, Microsoft, Anthropic, Google A2A, and LangChain Academy sources. The biggest updates are: use the OpenAI `Responses API` for new builds, treat the `Assistants API` as legacy/deprecating, account for `AI-900` retirement on **June 30, 2026**, and give more weight to MCP, remote MCP, agent evals, A2A, and the latest specialized agent frameworks (PydanticAI for type-safety, smolagents for code-first execution).
+<!--
+  CONTEXT FOR LLMs READING THIS FILE
+  ===================================
+  This is the primary roadmap document for a structured self-study program
+  to transition from Python Software Engineer to GenAI / Agentic Systems Engineer.
+
+  Owner:        Gautam Rastogi
+  Hardware:     Apple M1 Max, 32 GB unified memory (strong local AI capability)
+  OS:           macOS (Apple Silicon)
+  Primary IDE:  VS Code + GitHub Copilot, Antigravity AI assistant
+  Python:       3.14.4 (global), 3.12 (ML/MLX workloads)
+  Package mgr:  uv + pip inside project .venv
+  Local models: LM Studio (GUI) + Ollama (API), both installed
+  Cloud models: OpenAI (GPT-4o, o3), Anthropic (Claude Sonnet)
+  Repo:         https://github.com/gautamrastogi/gen-ai-roadmap
+  Dashboard:    https://gautamrastogi.github.io/gen-ai-roadmap/
+
+  HOW TO READ THIS FILE
+  ─────────────────────
+  • Phases 0–11 are sequential — do not skip ahead
+  • Each phase has: Goal → Skills → Courses → Projects → Resources
+  • Projects are the primary deliverables — each one should be a public GitHub repo
+  • "Learn" sections = theory to understand before building
+  • Checklist (lines ~102–160) = quick progress tracker
+  • Phase Summary table = high-level status at a glance
+  • Current focus is Phase 2 (Python LLM App Development)
+
+  TECH STACK CONVENTIONS
+  ──────────────────────
+  • LLM SDK:         openai (Responses API — NOT Assistants API, deprecated Aug 2026)
+  • Orchestration:   LangGraph (stateful graphs), PydanticAI (type-safe)
+  • Evals:           DeepEval, LangSmith, Langfuse
+  • Vector DB:       ChromaDB (local dev), Qdrant (production)
+  • Embeddings:      text-embedding-3-small (OpenAI), or sentence-transformers (local)
+  • Agents:          smolagents (code-first), LangGraph (stateful), OpenAI Agents SDK
+  • Local inference: Ollama (API), LM Studio (GUI), MLX (peak Mac performance)
+  • Prompt opt:      DSPy (compiled prompts, replaces hand-tuning)
+  • Multi-LLM:       LiteLLM (swap providers with one line)
+  • Observability:   Arize Phoenix (open-source), LangSmith
+  • CI/CD:           GitHub Actions with eval-gated deploys
+  • Security:        OWASP LLM Top 10, prompt injection guards
+
+  KEY DECISIONS
+  ─────────────
+  • Use OpenAI Responses API (not Chat Completions) for all new projects
+  • Assistants API is sunset Aug 26, 2026 — do NOT build on it
+  • Prefer code-first/type-safe frameworks (PydanticAI) over black-box wrappers
+  • MCP (Model Context Protocol) is the standard tool integration layer
+  • All projects should have evals and observability from day one
+  • Security is integrated (OWASP LLM Top 10), not bolted on later
+-->
+
+> **Last updated:** 2026-04-29 | **Current phase:** Phase 2 — Python LLM App Development
+>
+> Verified against: OpenAI Responses API docs, LangChain Academy, Anthropic docs, Google A2A spec, LangGraph v1.1, PydanticAI v1.88, DeepEval v3.9. Key changes: Responses API is now the primary interface (Chat Completions still valid but Assistants API deprecated); MCP has become the industry standard tool layer; GraphRAG added to Phase 3; CI/CD + Security moved to Phase 5 as first-class skills.
 
 ## Goal
 Transition from Python Software Engineer to:
