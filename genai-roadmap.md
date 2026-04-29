@@ -1,5 +1,5 @@
 # Final Best GenAI Roadmap for a Python Developer (2026)
-Last updated: 2026-04-26
+Last updated: 2026-04-28
 
 > Verification note (2026-04-26): Re-checked against official OpenAI, Microsoft, Anthropic, Google A2A, and LangChain Academy sources. The biggest updates are: use the OpenAI `Responses API` for new builds, treat the `Assistants API` as legacy/deprecating, account for `AI-900` retirement on **June 30, 2026**, and give more weight to MCP, remote MCP, agent evals, and newer LangChain Academy material.
 
@@ -10,6 +10,21 @@ Transition from Python Software Engineer to:
 - Applied AI Engineer
 - AI Backend Engineer
 - Agentic Systems Engineer
+
+## 2026 GenAI Industry Trends
+> These are the high-signal topics the industry is actively hiring and building around in 2026. Prioritize them.
+
+| Trend | Why It Matters | Covered In |
+|-------|---------------|------------|
+| **Agentic Systems** (LangGraph, CrewAI, OpenAI Agents SDK) | The dominant engineering paradigm — agents planning and executing multi-step tasks autonomously | Phase 6 |
+| **Model Context Protocol (MCP)** | Industry-standard "USB-C for AI" — standardizes how agents connect to tools, files, and databases | Phase 6 |
+| **A2A (Agent-to-Agent Protocol)** | Google/Linux Foundation standard for agents collaborating cross-framework (LangGraph ↔ CrewAI ↔ ADK) | Phase 6 |
+| **Reasoning-First Models** (o1/o3, DeepSeek-R1) | Chain-of-thought deliberation loops — know when to use expensive reasoning vs fast generalist models | Phase 2 |
+| **Evals-as-Code (EDD)** | AI is non-deterministic — treat prompts like code with CI-integrated test suites (DeepEval, LangSmith) | Phase 5 |
+| **AI Security & Prompt Injection** | OWASP LLM Top 10 — every production AI app needs guardrails | Phase 5 |
+| **CI/CD for AI Apps** | Automated eval pipelines on every PR, LLM-as-a-Judge regression checks | Phase 5 |
+| **Multimodal** (Vision, Audio, Video) | GPT-4o vision, Whisper STT, TTS — first-class in capstone projects | Phase 10 |
+| **Local Models** (Ollama, LM Studio, llama.cpp) | Cost/privacy/air-gap — know when open-weights beats hosted | Phases 2, 7 |
 
 ## Will this roadmap get you a GenAI job?
 
@@ -107,7 +122,8 @@ Optimize for:
     - ✅ ~~OpenAI for Developers~~ — DONE
     - ✅ ~~Generative AI for Developers~~ — DONE
     - ✅ ~~Generative AI Integration for Developers~~ — DONE
-    - 📖 **Studying: Generative AI Fundamentals of AWS** (QA Platform, ~2h 23m)
+    - ✅ ~~Generative AI Fundamentals of AWS~~ — DONE
+    - 📖 **Studying: Using Generative AI in Azure and Microsoft Power Platform** (QA Platform, ~1h 22m)
 
 ## Phase Summary
 | Phase | Name | Status |
@@ -346,12 +362,16 @@ You understand practical LLM behavior and failure modes.
 - moderation basics
 - token/cost awareness
 - model selection basics
-- when to use reasoning models vs faster general-purpose models
-- **open source models: Llama 3, Mistral, Gemma** — run locally via Ollama; understand cost/privacy/quality tradeoffs vs OpenAI
+- **Reasoning Models (2026 critical skill):**
+  - When to use reasoning models (OpenAI o1/o3, DeepSeek-R1) vs fast generalist models (GPT-4o, Claude Sonnet 3.5)
+  - **DeepSeek-R1** — open-weights, MIT license, ~96% cheaper than o1, transparent chain-of-thought logs; ideal for cost-sensitive production and self-hosting
+  - **OpenAI o3/o1** — best for complex multi-file agentic coding and general-purpose reasoning with managed infrastructure
+  - Chain-of-Thought (CoT) and deliberation loops — understand how reasoning models "think before answering"
+- **Open source models: Llama 3.x, Mistral, Gemma, Phi-3** — run locally via Ollama; understand cost/privacy/quality tradeoffs vs OpenAI
 - when to use open source (data privacy, cost at scale, air-gapped) vs OpenAI (quality, ease, multimodal)
 - learn the split between **model runtime** and **agent runtime**:
   - model runtime = Ollama / LM Studio serving the local model
-  - agent runtime = your Python app / Codex / Claude Code / Open WebUI / LangGraph loop handling tools, memory, approvals, and orchestration
+  - agent runtime = your Python app / LangGraph loop / OpenAI Agents SDK handling tools, memory, approvals, and orchestration
 
 ## Projects
 ### Project 4: CLI Chatbot
@@ -545,6 +565,8 @@ You can build assistants that do useful actions, not just chat.
 ### 🟢 DeepLearning.AI (free)
 - **Building and Evaluating Advanced RAG** — RAG triad: answer relevance, context relevance, groundedness evals.  
   https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/
+- **Red Teaming LLM Applications** — Identify and fix vulnerabilities, jailbreaks, and prompt injection attacks.  
+  https://www.deeplearning.ai/short-courses/red-teaming-llm-applications/
 
 ### 🎓 LangChain Academy (free)
 - **Quickstart: LangSmith Essentials** (free · ~1h) — Practical tracing, feedback loops, and evaluation workflow for agent applications.  
@@ -556,17 +578,24 @@ You can build assistants that do useful actions, not just chat.
 - LangSmith docs (tracing + evals): https://docs.smith.langchain.com/
 - Langfuse docs (open-source observability): https://langfuse.com/docs
 - Arize Phoenix (open-source evals + tracing): https://docs.arize.com/phoenix
-- DeepEval framework: https://docs.confident-ai.com/
+- DeepEval framework (pytest-integrated evals): https://docs.confident-ai.com/
 - OpenAI moderation guide: https://platform.openai.com/docs/guides/moderation
 - OpenAI agent evals guide: https://platform.openai.com/docs/guides/agent-evals
 - OpenAI evals guide: https://platform.openai.com/docs/guides/evals
 - OpenAI evaluation best practices: https://platform.openai.com/docs/guides/evaluation-best-practices
+- OWASP LLM Top 10 (2025): https://owasp.org/www-project-top-10-for-large-language-model-applications/
+- GitHub Actions CI/CD docs: https://docs.github.com/en/actions
 
-## Learn
-- evaluation datasets
-- regression tests for prompts
+## Learn: Evals & Reliability
+- evaluation datasets and golden test sets
+- regression tests for prompts — treat prompts as code with version control
 - groundedness checks
 - hallucination controls
+- **Eval-Driven Development (EDD):**
+  - define success criteria upfront like TDD
+  - LLM-as-a-Judge — use a powerful model to evaluate outputs of a smaller model on rubric-based metrics
+  - Component-level tracing — isolate failures in retriever, reranker, or planner stages
+  - DeepEval integrates with pytest — treat AI quality like unit tests
 - moderation
 - abuse prevention
 - privacy / PII handling
@@ -579,9 +608,57 @@ You can build assistants that do useful actions, not just chat.
 - prompt versioning
 - cost tracking
 
+## Learn: AI Security ⭐ 2026 Critical
+> Every production LLM app is an attack surface. OWASP LLM Top 10 is now the standard checklist.
+
+- **OWASP LLM Top 10 (2025 edition)** — the canonical checklist:
+  - LLM01: Prompt Injection (direct and indirect)
+  - LLM02: Insecure Output Handling (XSS, SSRF via LLM output)
+  - LLM03: Training Data Poisoning
+  - LLM04: Model Denial of Service (token flooding, context exhaustion)
+  - LLM05: Supply Chain Vulnerabilities (compromised plugins, dependencies)
+  - LLM06: Sensitive Information Disclosure (PII leakage via prompts)
+  - LLM07: Insecure Plugin Design (overprivileged tool calls)
+  - LLM08: Excessive Agency (agent acts without appropriate HITL approval)
+  - LLM09: Overreliance (no fallback when model is wrong)
+  - LLM10: Model Theft
+- **Prompt injection defenses:** input validation, role separation, system prompt hardening, output parsers
+- **Safe tool execution:** scope tool permissions to minimum required; never expose shell-exec as a tool without HITL
+- **Red teaming:** adversarial prompt testing before production — jailbreak tests, indirect injection via RAG sources
+- **Secrets management:** never pass API keys in prompts; use env vars and vaults
+- **Rate limiting and abuse prevention** at API gateway level
+- **Content filtering:** OpenAI Moderation API, custom regex guards, output scanners
+
+## Learn: CI/CD for GenAI Apps ⭐ 2026 Critical
+> AI apps need a different CI/CD strategy — non-deterministic outputs require eval-based gates instead of simple pass/fail assertions.
+
+- **GitHub Actions for AI pipelines:**
+  - Trigger eval suite on every PR
+  - LLM-as-a-Judge quality gate — fail the build if quality score drops below threshold
+  - Cost regression check — alert if new prompt version costs 2x more
+- **Prompt version control:**
+  - Store prompts in version-controlled files (not hardcoded strings)
+  - Track prompt changes in git history
+  - Tag prompt versions that go to production
+- **Model version management:**
+  - Pin model versions in production (`gpt-4o-2024-11-20` not `gpt-4o`)
+  - Test against new model versions before upgrading
+- **Container-based deployment pipeline:**
+  - Docker → push to registry → deploy via GitHub Actions
+  - Environment parity: dev/staging/prod
+- **Integration tests vs eval tests:**
+  - Integration tests: check API contracts, response schema, latency thresholds (deterministic)
+  - Eval tests: check output quality on golden dataset (probabilistic, use threshold pass/fail)
+- **Rollback strategy:** canary deployments; monitor latency and quality metrics before full rollout
+
 ## Projects
 ### Project 16: Eval Suite
-Create 30-50 test cases for one app.
+Create 30-50 test cases for one app:
+- golden dataset with expected outputs
+- pytest + DeepEval integration
+- LLM-as-a-Judge metric for subjective quality
+- groundedness check for any RAG outputs
+- CI-ready: run eval suite automatically on push
 
 ### Project 17: Productionize One App
 Add:
@@ -591,8 +668,12 @@ Add:
 - caching
 - metrics
 - failure handling
-- prompt versioning
+- prompt versioning (prompts as files, tracked in git)
 - README with cost/latency notes
+- OWASP LLM Top 10 review — document your mitigations for the top risks
+- **GitHub Actions CI/CD pipeline:**
+  - lint + test + eval on PR
+  - Docker build → push → deploy to cloud
 - **Deploy to cloud** — your app must be live at a real URL. Pick one:
   - Azure Container Apps (easiest if you have Azure access)
   - AWS App Runner (easy, just push a container)
@@ -601,7 +682,7 @@ Add:
 - Document the URL in the README
 
 ## Completion goal
-You can evaluate and stabilize an AI application.
+You can evaluate, secure, and deploy an AI application like a production engineer.
 
 ---
 
@@ -630,7 +711,7 @@ You can evaluate and stabilize an AI application.
   https://www.deeplearning.ai/short-courses/multi-ai-agent-systems-with-crewai/
 - **Build AI Apps with MCP Servers** — Model Context Protocol, connecting agents to external tools via MCP.  
   https://www.deeplearning.ai/short-courses/build-ai-apps-with-mcp-server-working-with-box-files/
-- **A2A: The Agent2Agent Protocol** ⭐ NEW (1h27m · Intermediate) — Google Cloud + IBM Research. The open standard (donated to Linux Foundation) for **agent-to-agent communication**. Complements MCP: MCP connects agents to tools/data, A2A lets agents collaborate with each other. Build multi-agent systems across different frameworks (LangGraph, ADK, CrewAI). MUST LEARN in 2026.  
+- **A2A: The Agent2Agent Protocol** ⭐ NEW 2026 (1h27m · Intermediate) — Google Cloud + IBM Research. The open standard (donated to Linux Foundation) for **agent-to-agent communication**. Complements MCP: MCP connects agents to tools/data, A2A lets agents collaborate with each other across frameworks (LangGraph, ADK, CrewAI). **Must learn in 2026 — this is now part of every senior multi-agent system design.**  
   https://www.deeplearning.ai/short-courses/a2a-the-agent2agent-protocol/
 - **Agentic AI** by Andrew Ng — Agentic design patterns: reflection, tool use, planning, multi-agent.  
   https://www.deeplearning.ai/courses/agentic-ai/
@@ -782,6 +863,11 @@ Use AI to accelerate your own development workflow.
   - run the agent loop in your app, Codex, Claude Code, or Open WebUI
 - AI-first IDE patterns
 - dev workflow automation
+- **Native Browser Agents vs MCP Browser**:
+  - In 2026, many AI assistants (like Antigravity) have **native browser integration** (`browser_subagent`).
+  - Use native tools for complex UI interaction, recording actions, and high-fidelity testing.
+  - Use MCP-based browsers (like Playwright MCP) for headless, scriptable automation and structured data scraping.
+  - **Rule of thumb**: If your agent has a native high-performance tool, prefer it over generic MCP equivalents for speed and deeper integration.
 
 ## Projects
 ### Project 25: Personal Dev Productivity Agent
