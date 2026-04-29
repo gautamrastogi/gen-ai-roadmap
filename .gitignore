@@ -1,3 +1,7 @@
+# ============================================================
+# GenAI Roadmap — .gitignore
+# ============================================================
+
 # Python
 __pycache__/
 *.pyc
@@ -8,17 +12,23 @@ __pycache__/
 dist/
 build/
 .eggs/
+*.egg
 
 # Virtual environments
 .venv/
+.venv-ml/
 venv/
 env/
 ENV/
+*/.venv/
 
 # macOS
 .DS_Store
 .AppleDouble
 .LSOverride
+._*
+.Spotlight-V100
+.Trashes
 
 # IDE / editors
 .cursor/
@@ -26,8 +36,13 @@ ENV/
 .vscode/
 *.swp
 *.swo
+*~
 
-# SQLite databases
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# SQLite / databases
 *.db
 *.sqlite
 *.sqlite3
@@ -39,6 +54,9 @@ logs/
 # Test artifacts
 test_output.txt
 .pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
 
 # Dashboard runtime files
 projects/dashboard/tracker.db
@@ -50,11 +68,41 @@ projects/dashboard/launchd.err.log
 .env.*
 !.env.example
 
-# Secrets / keys
+# API keys / secrets
 *.pem
 *.key
+*.p12
+secrets.json
 
 # OS / temp
 *.tmp
 *.bak
+*.orig
 Thumbs.db
+
+# Node (if any JS projects added)
+node_modules/
+npm-debug.log*
+
+# ML model files (large — don't commit)
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.pth
+models/
+adapters/
+
+# HuggingFace cache
+~/.cache/huggingface/
+
+# Output / generated
+output/
+generated/
+artifacts/
+*.mp3
+*.mp4
+*.wav
+
+# Docker
+.docker/

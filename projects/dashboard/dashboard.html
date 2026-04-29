@@ -549,7 +549,8 @@
             { id: 5, name: "Evals & Observability", key: "ph5" },
             { id: 6, name: "MCP & Agentic Orchestration", key: "ph6" },
             { id: 7, name: "AI Productivity", key: "ph7" },
-            { id: 10, name: "Capstone Projects", key: "ph10" }
+            { id: 8, name: "Multimodal & SLMs", key: "ph8" },
+            { id: 11, name: "Capstone Projects", key: "ph11" }
         ];
 
         const projects = [
@@ -568,6 +569,7 @@
             { id: "ph3-p9", phase: 3, name: "PDF Q&A Assistant", desc: "Complete RAG pipeline for local PDF knowledge bases." },
             { id: "ph3-p10", phase: 3, name: "Docs Knowledge Assistant", desc: "Markdown-based documentation search and reasoning." },
             { id: "ph3-p11", phase: 3, name: "Support Knowledge Bot", desc: "Guardrailed bot answering only from provided knowledge." },
+            { id: "ph3-p11a", phase: 3, name: "GraphRAG Explorer", desc: "Build a knowledge graph for multi-hop reasoning over complex texts." },
             
             { id: "ph4-p12", phase: 4, name: "Tool-Using Assistant", desc: "Assistant capable of using local tools (Calculator, Files)." },
             { id: "ph4-p13", phase: 4, name: "Research Assistant", desc: "Web-enabled agent with synthesis and citation powers." },
@@ -575,7 +577,10 @@
             { id: "ph4-p15", phase: 4, name: "Ticket Triage Assistant", desc: "Automated prioritization and routing of support tickets." },
             
             { id: "ph5-p16", phase: 5, name: "Eval Suite", desc: "Automated evaluation of AI outputs using DeepEval." },
-            { id: "ph5-p17", phase: 5, name: "Productionize One App", desc: "Full observability stack: LangSmith, tracing, and logging." },
+            { id: "ph5-p17", phase: 5, name: "Productionize One App", desc: "Full observability stack: LangSmith, Opik, tracing, and logging." },
+            { id: "ph5-p17a", phase: 5, name: "DSPy Prompt Optimizer", desc: "Replace manual prompts with programmatic metric-optimized weights." },
+            { id: "ph5-p17b", phase: 5, name: "CI/CD Pipeline for AI", desc: "Automate regression evals on PRs via GitHub Actions." },
+            { id: "ph5-p17c", phase: 5, name: "OWASP LLM Scanner", desc: "Implement security guardrails for prompt injection and scopes." },
             
             { id: "ph6-p18", phase: 6, name: "Simple MCP Server", desc: "Build and expose your first MCP server (Tools/Resources)." },
             { id: "ph6-p19", phase: 6, name: "Python MCP Utility", desc: "Utility server for local dev tasks and file operations." },
@@ -583,14 +588,18 @@
             { id: "ph6-p21", phase: 6, name: "HITL SQL Assistant", desc: "Human-in-the-loop approval gate for sensitive actions." },
             { id: "ph6-p22", phase: 6, name: "HITL File Agent", desc: "Agent that asks permission before modifying the disk." },
             { id: "ph6-p23", phase: 6, name: "Stateful Research Workflow", desc: "Resumable research agent with durable state." },
-            { id: "ph6-p24", phase: 6, name: "LangGraph Multi-Agent", desc: "Multi-agent orchestration with planning and feedback loops." },
+            { id: "ph6-p24", phase: 6, name: "Orchestration & Multi-Agent", desc: "Stateful orchestration with PydanticAI, LangGraph, or CrewAI." },
             
             { id: "ph7-p25", phase: 7, name: "Dev Productivity Agent", desc: "Assistant that helps summarize repos and generate TODOs." },
             { id: "ph7-p26", phase: 7, name: "Local Coding Utility", desc: "Ollama-powered coding helper in your local terminal." },
             
-            { id: "ph10-p27", phase: 10, name: "Unified AI Platform", desc: "ChatGPT clone with Voice, Vision, and Memory." },
-            { id: "ph10-p28", phase: 10, name: "Multi-Agent Research Plat", desc: "Platform for massive parallelized research tasks." },
-            { id: "ph10-p29", phase: 10, name: "Personal AI Dev Copilot", desc: "Context-aware coding assistant integrated into your flow." }
+            { id: "ph8-p27", phase: 8, name: "Vision Data Extractor", desc: "Extract JSON from receipts & images using vision models." },
+            { id: "ph8-p28", phase: 8, name: "Real-Time Voice Assistant", desc: "Low-latency voice assistant via WebSockets or Realtime API." },
+            { id: "ph8-p29", phase: 8, name: "Local SLM Fine-Tuning", desc: "Synthetic data generation and Unsloth LoRA fine-tuning." },
+            
+            { id: "ph11-p30", phase: 11, name: "Unified AI Platform", desc: "ChatGPT clone with Voice, Vision, and Memory." },
+            { id: "ph11-p31", phase: 11, name: "Multi-Agent Research Plat", desc: "Platform for massive parallelized research tasks." },
+            { id: "ph11-p32", phase: 11, name: "Personal AI Dev Copilot", desc: "Context-aware coding assistant integrated into your flow." }
         ];
 
         async function init() {
