@@ -23,7 +23,7 @@
 
 ## Step 1: Python Environment Strategy
 
-> **Important:** Python 3.14 is too new for MLX and some ML packages.
+> **Important:** Python 3.14 version is too new for MLX and some ML packages.
 > Use **3.14 for API/web projects** and **3.12 for local model/ML projects**.
 
 ```bash
