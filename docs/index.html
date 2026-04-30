@@ -534,12 +534,35 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 }
 .card-share-btn:hover{color:var(--accent-text)}
 
-/* ─── Collapsed card ─── */
+/* ─── Collapsed card (default state) ─── */
+.card{cursor:pointer}
 .card.collapsed{padding:.8rem 1.125rem;min-height:auto}
 .card.collapsed .card-desc,.card.collapsed .card-guide,
-.card.collapsed .card-tags,.card.collapsed .card-current-btn{display:none}
+.card.collapsed .card-tags,.card.collapsed .card-footer-row{display:none}
 .card.collapsed .card-header{margin-bottom:.225rem}
-.card.collapsed .card-title{margin-bottom:0;font-size:.85rem}
+.card.collapsed .card-title-flex{margin-bottom:0}
+.card.collapsed .card-title{font-size:.85rem;margin-bottom:0}
+
+/* Expand chevron in card title */
+.card-title-flex{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.35rem}
+.card-expand-chev{font-size:.55rem;color:var(--text-3);transition:transform .25s var(--spring),color .15s;flex-shrink:0;margin-top:.25rem;line-height:1}
+.card:not(.collapsed) .card-expand-chev{transform:rotate(180deg);color:var(--accent-text)}
+
+/* Fade-in when card expands */
+.card:not(.collapsed) .card-desc,
+.card:not(.collapsed) .card-guide,
+.card:not(.collapsed) .card-tags{animation:fadeInDown .18s ease}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+
+/* Reading guide toggle */
+.reading-guide.rg-hidden{display:none}
+.sections-toggle{
+  font-size:.55rem;color:var(--text-3);background:none;
+  border:1px solid var(--border-s);border-radius:var(--radius-xs);
+  padding:.06rem .3rem;cursor:pointer;transition:var(--tr);
+  font-family:'JetBrains Mono',monospace;flex-shrink:0;
+}
+.sections-toggle:hover,.sections-toggle.open{color:var(--accent-text);border-color:var(--border-act)}
 
 /* ─── Sidebar current focus ─── */
 #sidebar-current{margin-top:.875rem;padding-top:.875rem;border-top:1px solid var(--border-s);display:flex;flex-direction:column;gap:.35rem}
@@ -1464,12 +1487,13 @@ function renderPhase(ph){
                     <span class="tag ${c.free?'free':'paid'}">${c.free?'FREE':'PAID'}</span>
                     <span class="tag">${c.dur}</span>
                     ${c.badge?`<span class="tag new">${c.badge}</span>`:''}
+                    ${c.readSections?`<button class="sections-toggle" onclick="event.stopPropagation();toggleReadingGuide(this)">Sections ▼</button>`:''}
                     <button class="course-set-btn ${isCurrent(cid)?'active':''}" onclick="setCurrentItem('${cid}')">
                       ${isCurrent(cid)?'Active':'Set Current'}
                     </button>
                   </div>
                   ${c.readSections ? `
-                    <div class="reading-guide">
+                    <div class="reading-guide rg-hidden">
                       <div class="reading-guide-title">Key Sections to Focus On:</div>
                       <ul>${c.readSections.map(s=>`<li>${s}</li>`).join('')}</ul>
                     </div>
@@ -1485,23 +1509,26 @@ function renderPhase(ph){
   <div class="section">
     <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
       <span>Projects</span>
-      <button class="btn" style="font-size:.65rem;padding:.25rem .65rem" onclick="toggleAllCards('${ph.id}', this)">Collapse All</button>
+      <button class="btn" style="font-size:.65rem;padding:.25rem .65rem" onclick="toggleAllCards('${ph.id}', this)">Expand All</button>
     </div>
 
     <div class="projects-grid">
       ${ph.projects.map(p=>`
-        <div class="card ${isDone(p.id)?'done':''} ${isCurrent(p.id)?'is-current':''}" id="card-${p.id}" onclick="toggleCard('${p.id}')">
+        <div class="card ${isDone(p.id)?'done':''} ${isCurrent(p.id)?'is-current':''} collapsed" id="card-${p.id}" onclick="toggleExpand('${p.id}')">
           <div class="card-header">
             <span class="card-id">${p.id}</span>
             <div style="display:flex;align-items:center;gap:.4rem">
               <span style="font-size:.6rem;color:var(--text-3);font-family:'JetBrains Mono',monospace">${p.hrs||4}h</span>
-              <div class="card-check">${isDone(p.id)?'✓':''}</div>
+              <div class="card-check" onclick="event.stopPropagation();toggleDone('${p.id}')" title="Mark complete">${isDone(p.id)?'✓':''}</div>
             </div>
           </div>
-          <div class="card-title">
-            ${p.level ? `<span class="card-level level-${p.level.toLowerCase()}">${p.level}</span>` : ''}
-            ${p.name} 
-            ${isCurrent(p.id)?'<span class="item-current-badge">Active</span>':''}
+          <div class="card-title-flex">
+            <div class="card-title">
+              ${p.level ? `<span class="card-level level-${p.level.toLowerCase()}">${p.level}</span>` : ''}
+              ${p.name} 
+              ${isCurrent(p.id)?'<span class="item-current-badge">Active</span>':''}
+            </div>
+            <span class="card-expand-chev">▲</span>
           </div>
           <div class="card-desc" style="font-weight:500; color:var(--text); margin-bottom:.5rem">${p.desc}</div>
           
@@ -1538,7 +1565,7 @@ function renderPhase(ph){
           </div>
           <div class="card-tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
           
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.75rem">
+          <div class="card-footer-row" style="display:flex; justify-content:space-between; align-items:center; margin-top:.75rem">
             <button class="card-current-btn ${isCurrent(p.id)?'active':''}" onclick="event.stopPropagation(); setCurrentItem('${p.id}')" style="position:static">
               ${isCurrent(p.id)?'Active Goal':'Set as Current'}
             </button>
@@ -1565,7 +1592,13 @@ function togglePlatform(phId,plat){
   if(el) el.classList.toggle('open');
 }
 
-function toggleCard(id){
+// Expand / collapse card body (visual only)
+function toggleExpand(id){
+  const card=document.getElementById('card-'+id);
+  if(card) card.classList.toggle('collapsed');
+}
+// Mark project done (check circle click)
+function toggleDone(id){
   toggle(id);
   const card=document.getElementById('card-'+id);
   if(card){
@@ -1574,6 +1607,15 @@ function toggleCard(id){
   }
   buildNav();
   updateSidebar();
+}
+// Keep old name as alias so deep-link expand still works
+function toggleCard(id){ toggleExpand(id); }
+// Toggle reading-guide sections panel
+function toggleReadingGuide(btn){
+  const guide=btn.closest('.course-info').querySelector('.reading-guide');
+  const hidden=guide.classList.toggle('rg-hidden');
+  btn.classList.toggle('open',!hidden);
+  btn.textContent=hidden?'Sections ▼':'Sections ▲';
 }
 
 function toggleCourse(cid,el){
@@ -1676,8 +1718,8 @@ function toggleAllPlatforms(phId, btn){
 function toggleAllCards(phId, btn){
   const allCards=document.querySelectorAll('.projects-grid .card');
   const anyCollapsed=[...allCards].some(el=>el.classList.contains('collapsed'));
-  allCards.forEach(el=>{ el.classList.toggle('collapsed', !anyCollapsed); });
-  btn.textContent = anyCollapsed ? 'Collapse All' : 'Expand All';
+  allCards.forEach(el=>{ el.classList.toggle('collapsed',!anyCollapsed); });
+  btn.textContent=anyCollapsed?'Collapse All':'Expand All';
 }
 
 // ---- Export / Import ----
