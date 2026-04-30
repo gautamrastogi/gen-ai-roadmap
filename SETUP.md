@@ -88,6 +88,8 @@ pip install langgraph                 # Stateful agent graphs
 pip install pydantic-ai               # Type-safe agents
 pip install openai-agents             # OpenAI Agents SDK
 pip install smolagents                # Code-first agent framework
+pip install mcp                       # MCP Python SDK
+pip install e2b-code-interpreter      # Sandboxed code execution for agents
 ```
 
 ### Phase 8 — Local Models & Fine-Tuning (Use Python 3.12!)
@@ -111,10 +113,10 @@ pip install datasets                  # HF datasets for fine-tuning data
 ollama serve
 
 # Pull models (choose based on task)
-ollama pull qwen3:14b           # Best everyday model (~9GB)
-ollama pull qwen2.5-coder:14b   # Best for coding tasks (~9GB)
-ollama pull deepseek-r1:14b     # Reasoning / chain-of-thought (~9GB)
-ollama pull phi4:latest         # Tiny but capable (~5GB)
+ollama pull qwen3:14b           # ⭐ Best everyday model — hybrid thinking/non-thinking, MCP native (~9GB)
+ollama pull qwen3:30b-a3b       # ⭐ Best reasoning sweet spot — MoE, 3B active params (~18GB)
+ollama pull qwen2.5-coder:14b   # Best for dedicated coding tasks (~9GB)
+ollama pull deepseek-r1:14b     # Reasoning / transparent chain-of-thought (~9GB)
 ollama pull llava:13b           # Vision + language (~8GB)
 
 # List pulled models

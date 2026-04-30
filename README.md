@@ -100,11 +100,12 @@ This roadmap is optimized for Apple Silicon. Recommended local model setup:
 | [Ollama](https://ollama.com/) | CLI-driven local model server |
 | [MLX](https://github.com/ml-explore/mlx-examples) | Apple Silicon optimized fine-tuning |
 
-**Recommended local models (runs well on M1 Max):**
-- `lmstudio-community/Llama-3.2-8B-Instruct` — general assistant
-- `microsoft/phi-3.5-mini-instruct` — fast, efficient
-- `mistralai/Mistral-7B-Instruct-v0.3` — coding tasks
-- `deepseek-ai/deepseek-coder-6.7b-instruct` — code generation
+**Recommended local models (runs well on M1 Max — updated April 2026):**
+- `qwen3:14b` — ⭐ best everyday model: fast, smart, hybrid thinking/non-thinking modes, native MCP support
+- `qwen3:30b-a3b` — ⭐ reasoning sweet spot: MoE architecture (only 3B active params), best quality/speed on 32GB
+- `qwen2.5-coder:14b` — best dedicated coding model
+- `deepseek-r1:14b` — reasoning model with transparent chain-of-thought logs
+- `llava:13b` — vision/multimodal tasks
 
 ---
 
@@ -113,11 +114,15 @@ This roadmap is optimized for Apple Silicon. Recommended local model setup:
 ```
 gen-ai-roadmap/
 ├── docs/
-│   └── index.html        # Dashboard (single-file app, deployed to GitHub Pages)
+│   └── index.html              # Dashboard (single-file app, deployed to GitHub Pages)
 ├── projects/
-│   └── local-agent/      # FastMCP local Python MCP server
-├── genai-roadmap.md      # Full roadmap content (source of truth)
-├── .env                  # Local secrets (gitignored)
+│   ├── local-agent/            # FastMCP local Python MCP server
+│   ├── p0-genai-starter-template/  # Phase 0: FastAPI + Pydantic starter template
+│   ├── p1-prompt-playground/   # Phase 1: Prompt strategy comparison app
+│   ├── p2-summarizer/          # Phase 1: FastAPI summarization service
+│   └── p3-rewriter/            # Phase 1: Tone/style rewriter service
+├── genai-roadmap.md            # Full roadmap content (source of truth)
+├── .env                        # Local secrets (gitignored)
 ├── .gitignore
 └── README.md
 ```

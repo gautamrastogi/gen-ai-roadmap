@@ -36,6 +36,9 @@
   • Embeddings:      text-embedding-3-small (OpenAI), or sentence-transformers (local)
   • Agents:          smolagents (code-first), LangGraph (stateful), OpenAI Agents SDK
   • Local inference: Ollama (API), LM Studio (GUI), MLX (peak Mac performance)
+  • Local models:    Qwen3-14B (everyday), Qwen3-30B-A3B MoE (reasoning sweet spot), DeepSeek-R1-14B (reasoning)
+  • Inference server: SGLang / vLLM (production), Ollama (dev)
+  • AI coding agents: Gemini CLI (open-source, terminal), Cursor, Aider
   • Prompt opt:      DSPy (compiled prompts, replaces hand-tuning)
   • Multi-LLM:       LiteLLM (swap providers with one line)
   • Observability:   Arize Phoenix (open-source), LangSmith
@@ -52,9 +55,9 @@
   • Security is integrated (OWASP LLM Top 10), not bolted on later
 -->
 
-> **Last updated:** 2026-04-29 | **Current phase:** Phase 2 — Python LLM App Development
+> **Last updated:** 2026-04-30 | **Current phase:** Phase 2 — Python LLM App Development
 >
-> Verified against: OpenAI Responses API docs, LangChain Academy, Anthropic docs, Google A2A spec, LangGraph v1.1, PydanticAI v1.88, DeepEval v3.9. Key changes: Responses API is now the primary interface (Chat Completions still valid but Assistants API deprecated); MCP has become the industry standard tool layer; GraphRAG added to Phase 3; CI/CD + Security moved to Phase 5 as first-class skills.
+> Verified against: OpenAI Responses API docs, LangChain Academy, Anthropic docs, Google A2A spec, LangGraph v1.1, PydanticAI v1.88, DeepEval v3.9, Qwen3 release (April 2025), Gemini 3.1 Flash release notes (March 2026), DeepLearning.AI new courses (April 2026). Key changes: Responses API is now the primary interface (Chat Completions still valid but Assistants API deprecated); MCP has become the industry standard tool layer; **Qwen3 is now the recommended open-weights model** (hybrid thinking/non-thinking modes, native MCP, 128K context, Apache 2.0); Gemini CLI added to Phase 7; E2B sandboxed code execution + Spec-Driven Dev added to Phase 6/7; **AI-900 cert retires June 30, 2026** — 2 months away.
 
 ## Goal
 Transition from Python Software Engineer to:
@@ -78,8 +81,11 @@ Transition from Python Software Engineer to:
 | **Evals-as-Code (EDD)** | AI is non-deterministic — treat prompts like code with CI-integrated test suites (DeepEval, LangSmith) | Phase 5 |
 | **AI Security & Prompt Injection** | OWASP LLM Top 10 — every production AI app needs guardrails | Phase 5 |
 | **CI/CD for AI Apps** | Automated eval pipelines on every PR, LLM-as-a-Judge regression checks | Phase 5 |
-| **Multimodal** (Vision, Audio, Video) | GPT-4o vision, Whisper STT, TTS — first-class in capstone projects | Phase 10 |
+| **Multimodal** (Vision, Audio, Video) | GPT-4o vision, Whisper STT, TTS — first-class in capstone projects | Phase 8 |
 | **Local Models** (Ollama, LM Studio, llama.cpp) | Cost/privacy/air-gap — know when open-weights beats hosted | Phases 2, 7 |
+| **Qwen3 & Hybrid Reasoning** | New open-weights SOTA: switchable thinking/non-thinking modes per prompt, native MCP support, 128K context, Apache 2.0 — replaces Qwen2.5 as default local recommendation | Phases 2, 7 |
+| **Vibe Coding & Spec-Driven Dev** | Write clear specs / prompts → let coding agents (Gemini CLI, Cursor, Aider) generate and iterate — shift from line-by-line coding to intent-driven engineering | Phase 7 |
+| **Sandboxed Code Execution** (E2B) | Agents that safely write and run code in isolated cloud sandboxes — mandatory for any autonomous coding agent | Phase 6 |
 
 ## What gets you hired after this roadmap:
 1. 2-3 polished GitHub repos that work end-to-end (not half-finished)
@@ -110,7 +116,7 @@ Optimize for:
 ---
 
 # PROGRESS TRACKER
-> Last updated: 2026-04-22
+> Last updated: 2026-04-30
 
 ## Current Focus
 **Phase:** Phase 2 — Python LLM App Development  
@@ -426,25 +432,32 @@ You understand practical LLM behavior and failure modes.
 
 ### Recommended Models to Try First (2026)
 
+> **Qwen3 is now the top recommendation.** Released April 2025, it features hybrid thinking/non-thinking modes (switchable per prompt), native MCP tool support, 128K context, and Apache 2.0 license. On M1 Max, Qwen3-14B is the best everyday model — fast, smart, and MCP-aware out of the box.
+
 ```bash
 # Install Ollama first: https://ollama.com
 brew install ollama
 
-# Best everyday model — fast + smart
+# ⭐ Best everyday model — fast + smart (Qwen3, hybrid thinking)
 ollama run qwen3:14b
 
-# Best coding model
-ollama run qwen3:14b  # or qwen2.5-coder:14b
+# ⭐ Best reasoning/coding sweet spot (MoE — only 3B active params!)
+ollama run qwen3:30b-a3b
 
-# Reasoning model (like a local o1)
+# Best dedicated coding model
+ollama run qwen2.5-coder:14b
+
+# Reasoning model (like a local o1) — transparent CoT
 ollama pull deepseek-r1:14b
 
 # Tiny but surprisingly capable
-ollama run phi4:latest
+ollama run qwen3:4b
 
 # Vision model (multimodal)
 ollama run llava:13b
 ```
+
+> **Qwen3 hybrid thinking tip:** By default, Qwen3 thinks step-by-step. Add `/no_think` to your prompt for instant responses, or `/think` to force deep reasoning. This eliminates the need for a separate reasoning model in most cases.
 
 ### MLX Setup (Fastest for Mac)
 ```bash
@@ -691,6 +704,10 @@ You can build assistants that do useful actions, not just chat.
   https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/
 - **Red Teaming LLM Applications** — Identify and fix vulnerabilities, jailbreaks, and prompt injection attacks.  
   https://www.deeplearning.ai/short-courses/red-teaming-llm-applications/
+- **Semantic Caching for AI Agents** (30min · Redis) — Speed up and reduce costs of AI agents using semantic caching that reuses responses based on meaning rather than exact text. Production-critical for high-traffic deployments.  
+  https://www.deeplearning.ai/short-courses/semantic-caching-for-ai-agents/
+- **NVIDIA NeMo Agent Toolkit: Making Agents Reliable** (45min · NVIDIA) — Turn proof-of-concept agent demos into production-ready systems using observability, evaluation, and deployment tools.  
+  https://www.deeplearning.ai/short-courses/nvidia-nat-making-agents-reliable/
 
 ### 🎓 LangChain Academy (free)
 - **Quickstart: LangSmith Essentials** (free · ~1h) — Practical tracing, feedback loops, and evaluation workflow for agent applications.  
@@ -840,6 +857,10 @@ You can evaluate, secure, and deploy an AI application like a production enginee
   https://www.deeplearning.ai/short-courses/build-ai-apps-with-mcp-server-working-with-box-files/
 - **A2A: The Agent2Agent Protocol** ⭐ NEW 2026 (1h27m · Intermediate) — Google Cloud + IBM Research. The open standard (donated to Linux Foundation) for **agent-to-agent communication**. Complements MCP: MCP connects agents to tools/data, A2A lets agents collaborate with each other across frameworks (LangGraph, ADK, CrewAI). **Must learn in 2026 — this is now part of every senior multi-agent system design.**  
   https://www.deeplearning.ai/short-courses/a2a-the-agent2agent-protocol/
+- **Building Coding Agents with Tool Execution** ⭐ NEW 2026 (1h · E2B) — Build AI agents that write and execute code safely in **sandboxed cloud environments**. E2B sandboxes are now the standard pattern for any agent that runs code — prevents local system damage, enables parallel execution.  
+  https://www.deeplearning.ai/short-courses/building-coding-agents-with-tool-execution/
+- **Agent Skills with Anthropic** (45min · Anthropic) — Equip agents with expert on-demand knowledge for reliable coding, research, and data analysis workflows using Claude’s tool use patterns.  
+  https://www.deeplearning.ai/short-courses/agent-skills-with-anthropic/
 - **Agentic AI** by Andrew Ng — Agentic design patterns: reflection, tool use, planning, multi-agent.  
   https://www.deeplearning.ai/courses/agentic-ai/
 - **Agent Memory: Building Memory-Aware Agents** — Memory types, in-context, external, episodic memory.  
@@ -967,7 +988,13 @@ You understand modern agentic systems, not just chatbot demos.
 - Individual lesson: **Creating a Generative AI Coding Assistant for VSCode Using Ollama** (6min)  
   https://platform.qa.com/course/creating-a-generative-ai-coding-assistant-for-vscode-using-ollama-1/
 
-### 📘 Official Docs (free)
+### � DeepLearning.AI (free)
+- **Gemini CLI: Code & Create with an Open-Source Agent** (1h · Beginner) — Build real-world applications from the command line using **Gemini CLI**, Google’s open-source agentic coding assistant that coordinates local tools and cloud services. Essential for 2026 vibe-coding workflows.  
+  https://www.deeplearning.ai/short-courses/gemini-cli-code-and-create-with-an-open-source-agent/
+- **Spec-Driven Development with Coding Agents** (45min · JetBrains) — Move beyond vibe coding: write clear specs that give your coding agent the context it needs to build intentional, maintainable software. The professional approach to AI-assisted development.  
+  https://www.deeplearning.ai/short-courses/spec-driven-development-with-coding-agents/
+
+### �📘 Official Docs (free)
 - GitHub Copilot docs: https://docs.github.com/en/copilot
 - Ollama (run local models): https://ollama.com/
 - Ollama tool calling docs: https://docs.ollama.com/capabilities/tool-calling
