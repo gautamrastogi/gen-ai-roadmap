@@ -2,7 +2,7 @@
 
 > A structured, project-driven learning path for building production-grade Generative AI applications — from Python fundamentals through multi-agent orchestration, local model inference, and cloud certification.
 
-[![GitHub Pages](https://img.shields.io/badge/Dashboard-Live-8b5cf6?style=flat-square&logo=github)](https://gautamrastogi.github.io/gen-ai-roadmap/)
+[![GitHub Pages](https://img.shields.io/badge/Dashboard-Live-8b5cf6?style=flat-square&logo=github)](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/)
 [![Phases](https://img.shields.io/badge/Phases-12-ec4899?style=flat-square)](#roadmap-structure)
 [![Projects](https://img.shields.io/badge/Projects-39-10b981?style=flat-square)](#roadmap-structure)
 [![Courses](https://img.shields.io/badge/Courses-86+-3b82f6?style=flat-square)](#roadmap-structure)
@@ -11,7 +11,7 @@
 
 ## 📊 Interactive Dashboard
 
-**[→ Open Dashboard](https://gautamrastogi.github.io/gen-ai-roadmap/)**
+**[→ Open Dashboard](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/)**
 
 The dashboard is a fully client-side web app (no backend, no login) that lets you:
 
@@ -73,11 +73,26 @@ The dashboard supports syncing your progress to a private GitHub Gist so it pers
 
 ---
 
+## 🛠️ Setup
+
+First, configure the repository for your personal use:
+
+```bash
+# Run the setup script to personalize URLs and create config files
+./setup.sh
+```
+
+This will:
+- Replace `YOUR_USERNAME` and `YOUR_REPO_NAME` placeholders with your GitHub details
+- Create `config.env` from template for API keys
+- Create `.cursor/mcp.json` for Cursor MCP integration
+- Update all documentation with your information
+
 ## 🛠️ Local Development
 
 ```bash
 # Clone
-git clone https://github.com/gautamrastogi/gen-ai-roadmap.git
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
 cd gen-ai-roadmap
 
 # Serve locally (any static file server works)
@@ -157,6 +172,32 @@ See `projects/local-agent/README.md` for setup instructions.
 
 ---
 
-## 📝 License
+## � Cross-Device Usage
+
+This roadmap supports seamless development across multiple devices:
+
+### Progress Sync (GitHub Gist)
+- Dashboard progress automatically syncs via private GitHub Gist
+- Works across Mac, Windows, Linux devices
+- No manual export/import needed
+
+### Environment Setup
+- **macOS/Linux**: Use `./setup.sh` and standard Python venv
+- **Windows**: Use `setup.bat` (create from `setup.sh` template) and `python -m venv .venv`
+- All scripts are designed to work on both Unix and Windows
+
+### Local Agent Compatibility
+- MCP server runs on all platforms (Python 3.8+)
+- LM Studio available for macOS, Windows, Linux
+- Cursor IDE supports MCP on all platforms
+
+### Configuration
+- `config.env` contains all environment-specific settings
+- `.cursor/mcp.json` configures Cursor MCP integration
+- Both are gitignored for personal customization
+
+---
+
+## �📝 License
 
 MIT — use this roadmap however you like. If you find it useful, ⭐ the repo!

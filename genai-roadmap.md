@@ -6,7 +6,7 @@
   This is the primary roadmap document for a structured self-study program
   to transition from Python Software Engineer to GenAI / Agentic Systems Engineer.
 
-  Owner:        Gautam Rastogi
+  Owner:        YOUR_NAME
   Hardware:     Apple M1 Max, 32 GB unified memory (strong local AI capability)
   OS:           macOS (Apple Silicon)
   Primary IDE:  VS Code + GitHub Copilot, Antigravity AI assistant
@@ -14,8 +14,8 @@
   Package mgr:  uv + pip inside project .venv
   Local models: LM Studio (GUI) + Ollama (API), both installed
   Cloud models: OpenAI (GPT-4o, o3), Anthropic (Claude Sonnet)
-  Repo:         https://github.com/gautamrastogi/gen-ai-roadmap
-  Dashboard:    https://gautamrastogi.github.io/gen-ai-roadmap/
+  Repo:         https://github.com/YOUR_USERNAME/YOUR_REPO_NAME
+  Dashboard:    https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/
 
   HOW TO READ THIS FILE
   ─────────────────────

@@ -3,7 +3,7 @@
 Sends the input text through one or all rewrite tones.
 
 Auth priority: HF_TOKEN → OPENAI_API_KEY.
-HuggingFace routes via ``router.huggingface.co`` — reachable on Danske network.
+HuggingFace routes via ``router.huggingface.co`` — reachable on corporate networks.
 """
 
 import ssl

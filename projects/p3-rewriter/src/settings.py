@@ -1,7 +1,7 @@
 """Rewriter — settings.
 
 Reads configuration from environment variables or a ``.env`` file.
-Either ``HF_TOKEN`` (recommended on corporate/Danske networks) or
+Either ``HF_TOKEN`` (recommended on corporate networks) or
 ``OPENAI_API_KEY`` must be set.
 """
 

@@ -51,14 +51,26 @@ Policy control:
 
 ### 1) Run checks
 
+**macOS/Linux:**
 ```bash
-local-agent/run_checks.sh
+./run_checks.sh
+```
+
+**Windows:**
+```cmd
+run_checks.bat
 ```
 
 ### 2) Start local MCP server manually
 
+**macOS/Linux:**
 ```bash
-local-agent/start_local_agent.sh
+./start_local_agent.sh
+```
+
+**Windows:**
+```cmd
+start_local_agent.bat
 ```
 
 ### 3) Verify in Cursor

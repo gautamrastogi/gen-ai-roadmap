@@ -4,7 +4,7 @@ Sends a task through every registered strategy and returns results.
 Supports three auth paths (checked in priority order):
 
 * **HuggingFace** (``HF_TOKEN``) — calls ``router.huggingface.co``.
-  Free tier, reachable on the Danske/Zscaler network.  Default.
+  Free tier, reachable on corporate networks.  Default.
 * **GitHub Models** (``GITHUB_TOKEN``) — calls ``models.inference.ai.azure.com``.
   Requires a personal github.com PAT (not enterprise GHE).
 * **OpenAI direct** (``OPENAI_API_KEY``) — standard ``api.openai.com`` path.

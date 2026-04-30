@@ -1,7 +1,7 @@
 """Prompt Playground — settings.
 
 Reads configuration from environment variables or a ``.env`` file.
-One of ``HF_TOKEN`` (recommended on corporate/Danske networks),
+One of ``HF_TOKEN`` (recommended on corporate networks),
 ``GITHUB_TOKEN``, or ``OPENAI_API_KEY`` must be set.
 """
 
@@ -15,7 +15,7 @@ class Settings(pydantic_settings.BaseSettings):
     Priority order: HF_TOKEN > GITHUB_TOKEN > OPENAI_API_KEY.
 
     :param hf_token: HuggingFace access token.  Routes calls through
-        ``router.huggingface.co`` — reachable on the Danske network.
+        ``router.huggingface.co`` — reachable on corporate networks.
         Free at huggingface.co/settings/tokens.
     :param github_token: GitHub PAT (legacy option, enterprise-blocked).
     :param openai_api_key: Direct OpenAI API key (home/personal networks).
@@ -36,7 +36,7 @@ class Settings(pydantic_settings.BaseSettings):
     )
     github_token: pydantic.SecretStr = pydantic.Field(
         default=pydantic.SecretStr(""),
-        description="GitHub PAT (legacy, enterprise-blocked on Danske network).",
+        description="GitHub PAT (legacy, enterprise-blocked on corporate networks).",
     )
     openai_api_key: pydantic.SecretStr = pydantic.Field(
         default=pydantic.SecretStr(""),
@@ -67,7 +67,7 @@ class Settings(pydantic_settings.BaseSettings):
         has_oai = bool(self.openai_api_key.get_secret_value().strip())
         if not has_hf and not has_gh and not has_oai:
             raise ValueError(
-                "Set HF_TOKEN (recommended on Danske network) or OPENAI_API_KEY in your .env file.\n"
+                "Set HF_TOKEN (recommended on corporate networks) or OPENAI_API_KEY in your .env file.\n"
                 "See .env.example for instructions."
             )
         return self

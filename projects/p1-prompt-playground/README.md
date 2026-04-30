@@ -2,7 +2,7 @@
 
 Compare four prompt strategies on any task — zero-shot, few-shot, system-role, and chain-of-thought — side by side in the terminal.
 
-**Corporate / Danske Bank network:** uses HuggingFace Inference API (`router.huggingface.co`) — not blocked by Zscaler. Free tier, no OpenAI account needed.
+**Corporate networks:** uses HuggingFace Inference API (`router.huggingface.co`) — not blocked by corporate firewalls. Free tier, no OpenAI account needed.
 
 ## Quickstart
 

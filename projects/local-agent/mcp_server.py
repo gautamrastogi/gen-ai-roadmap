@@ -20,15 +20,16 @@ from mcp.server.fastmcp import FastMCP
 
 # Workspace root can be overridden from Cursor mcp.json env.
 WORKSPACE = Path(
-    os.getenv("WORKSPACE_ROOT", Path(__file__).resolve().parent.parent)
+    os.getenv("WORKSPACE_ROOT", Path(__file__).resolve().parent.parent.parent)
 ).resolve()
+MCP_BASE_DIR = Path(os.getenv("MCP_BASE_DIR", Path(__file__).resolve().parent))
 LM_STUDIO_BASE_URL = os.getenv("LM_STUDIO_BASE_URL", "http://127.0.0.1:1234")
 MAX_FILE_READ_CHARS = 20_000
 MAX_COMMAND_OUTPUT_CHARS = 8_000
 MAX_WEB_RESULTS = 5
 HTTP_RETRY_ATTEMPTS = 3
 HTTP_RETRY_BACKOFF_SECONDS = 0.6
-LOG_DIR = WORKSPACE / "local-agent" / "logs"
+LOG_DIR = MCP_BASE_DIR / "logs"
 LOG_FILE = LOG_DIR / "mcp_server.log"
 REDACT_KEYS = {"api_key", "token", "authorization", "password", "secret"}
 

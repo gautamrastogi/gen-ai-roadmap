@@ -1,13 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VENV_DIR="$ROOT_DIR/local-agent/.venv"
-PYTHON_BIN="$VENV_DIR/bin/python"
-REQ_FILE="$ROOT_DIR/local-agent/requirements.txt"
-SERVER_FILE="$ROOT_DIR/local-agent/mcp_server.py"
+# Get script directory and project root
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-export WORKSPACE_ROOT="${WORKSPACE_ROOT:-$ROOT_DIR}"
+# Configurable base directory for MCP server
+MCP_BASE_DIR="${MCP_BASE_DIR:-$SCRIPT_DIR}"
+
+VENV_DIR="$MCP_BASE_DIR/.venv"
+PYTHON_BIN="$VENV_DIR/bin/python"
+REQ_FILE="$MCP_BASE_DIR/requirements.txt"
+SERVER_FILE="$MCP_BASE_DIR/mcp_server.py"
+
+export WORKSPACE_ROOT="${WORKSPACE_ROOT:-$PROJECT_ROOT}"
+export MCP_BASE_DIR="${MCP_BASE_DIR:-$SCRIPT_DIR}"
 export LM_STUDIO_BASE_URL="${LM_STUDIO_BASE_URL:-http://127.0.0.1:1234}"
 
 if [[ ! -x "$PYTHON_BIN" ]]; then
