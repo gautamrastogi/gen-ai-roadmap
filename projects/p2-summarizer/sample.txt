@@ -1,0 +1,15 @@
+Transformer models use a self-attention mechanism to process sequences in parallel,
+making them far more efficient than the recurrent architectures they replaced.
+They were first described in the 2017 paper "Attention Is All You Need" by Vaswani et al.
+The architecture relies on three core components: multi-head attention, position-wise
+feed-forward layers, and positional encodings that inject sequence order information.
+
+BERT (Bidirectional Encoder Representations from Transformers) pre-trains on masked
+language modelling and is widely used for classification and question-answering tasks.
+GPT (Generative Pre-trained Transformer) uses a causal language model objective and
+excels at text generation, code completion, and summarisation.
+
+Teams adopting transformer-based models should audit their existing data pipelines for
+tokenisation compatibility, retrain or fine-tune any legacy RNN-based classifiers, and
+update their serving infrastructure to handle the higher memory footprint.
+All documentation for retired RNN systems should be archived within the next quarter.

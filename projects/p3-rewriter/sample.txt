@@ -1,0 +1,8 @@
+Our quarterly roadmap review is done and we have a lot of stuff to cover.
+We need to finish the new customer portal by end of Q2.
+The backend team is a bit behind schedule because of some unexpected bugs.
+We also need to update the mobile app to support the new API.
+There's a team meeting next Monday at 10am to go over priorities.
+Everyone should come prepared with their current blockers.
+We also want to kick off the data migration project — someone needs to own it.
+The deadline for the security audit response is Friday.
