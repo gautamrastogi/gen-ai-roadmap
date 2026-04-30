@@ -653,7 +653,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
     </div>
     <div class="progress-bar"><div class="progress-fill" id="fill" style="width:0%"></div></div>
     <div class="stat-sub" id="stat-sub">0 / 39 Projects &bull; 0 / 86 Courses</div>
-    <div id="stat-time" class="stat-sub" style="font-size:.65rem;margin-top:.25rem;opacity:.75">⏱ Loading…</div>
+    <div id="stat-time" class="stat-sub" style="font-size:.65rem;margin-top:.25rem;opacity:.75">Loading…</div>
     
     <div id="sidebar-current" style="display:none">
       <span class="nav-label">Current Focus</span>
@@ -678,27 +678,27 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   </div>
   <div class="sync-config" id="sync-detail">Click to configure cloud sync</div>
 </div>
-    <button class="theme-btn" id="themeBtn" title="Toggle theme">☀️</button>
+    <button class="theme-btn" id="themeBtn" title="Toggle theme">◑</button>
   </div>
 </aside>
 
 <main id="main">
   <div class="export-bar">
-    <span class="export-info" id="export-info">Progress saved locally. Export to sync across devices.</span>
-    <button class="btn" onclick="exportProgress()">⬇ Export</button>
-    <label class="btn" style="cursor:pointer">⬆ Import<input type="file" accept=".json" style="display:none" onchange="importProgress(event)"></label>
-    <button class="btn btn-info" onclick="masterAllProjects()" title="Mark all PROJECTS as complete">🚀 Master Projects</button>
-    <button class="btn btn-success" onclick="masterAllCourses()" title="Mark all COURSES as complete">📚 Master Courses</button>
-    <button class="btn btn-primary" onclick="masterAll()" title="Mark EVERYTHING as complete">🏆 Master All</button>
-    <button class="btn" onclick="expandEverything()" title="Expand all sections and cards">↔️ Expand All</button>
-    <button class="btn" onclick="resetProgress()" style="color:#ef4444">↺ Reset</button>
+    <span class="export-info" id="export-info">Progress saved locally</span>
+    <button class="btn" onclick="exportProgress()">Export</button>
+    <label class="btn" style="cursor:pointer">Import<input type="file" accept=".json" style="display:none" onchange="importProgress(event)"></label>
+    <button class="btn btn-info" onclick="masterAllProjects()" title="Mark all projects as complete">Mark Projects Done</button>
+    <button class="btn btn-success" onclick="masterAllCourses()" title="Mark all courses as complete">Mark Courses Done</button>
+    <button class="btn btn-primary" onclick="masterAll()" title="Mark everything as complete">Mark All Done</button>
+    <button class="btn" onclick="expandEverything()" title="Expand all sections">Expand All</button>
+    <button class="btn" onclick="resetProgress()" style="color:#ef4444">Reset</button>
   </div>
   <div id="content"></div>
 
 <!-- Settings modal -->
 <div class="modal-bg" id="modal-bg">
   <div class="modal">
-    <h2>☁️ GitHub Gist Sync</h2>
+    <h2>Cloud Sync</h2>
     <p>Sync your progress across all devices using a private GitHub Gist — no backend needed.</p>
     <div class="modal-note">
       1. Go to <strong>github.com → Settings → Developer settings → Personal access tokens → Tokens (classic)</strong><br>
@@ -1277,7 +1277,7 @@ function checkCelebrate(id){
       particleCount: 150,
       spread: 70,
       origin: { y: 0.6 },
-      colors: [ph.color, '#8b5cf6', '#ec4899']
+      colors: [ph.color, '#8b5cf6', '#6366f1']
     });
   } else if(id.includes('-p')) {
     // Smaller celebration for individual projects
@@ -1339,7 +1339,7 @@ function fmtHrs(mins){
 // ---- Apply theme ----
 function applyTheme(){
   document.body.classList.toggle('light', theme==='light');
-  document.getElementById('themeBtn').textContent = theme==='light' ? '🌙' : '☀️';
+  document.getElementById('themeBtn').textContent = theme==='light' ? '◐' : '◑';
 }
 document.getElementById('themeBtn').addEventListener('click',()=>{
   theme = theme==='light'?'dark':'light';
@@ -1356,7 +1356,7 @@ function updateSidebar(){
   document.getElementById('stat-sub').innerHTML=`${dp} / ${tp} Projects &bull; ${dc} / ${tc} Courses`;
   const dm=totalDoneMins(), tm=totalEstMins();
   const timeEl=document.getElementById('stat-time');
-  if(timeEl) timeEl.innerHTML=`⏱ ${fmtHrs(dm)} done &bull; ${fmtHrs(tm-dm)} left`;
+  if(timeEl) timeEl.innerHTML=`${fmtHrs(dm)} done &bull; ${fmtHrs(tm-dm)} remaining`;
   document.getElementById('export-info').textContent=`${dp} projects complete &bull; ${dc} courses complete &bull; Saved locally`;
 }
 
@@ -1385,7 +1385,7 @@ function buildNav(filter=''){
           <div class="nav-progress-inner" style="width:${phasePct(ph)}%"></div>
         </div>
       </div>
-      <span class="nav-badge${phaseAllDone(ph)?' done-badge':''}">${phaseAllDone(ph)?'✓ Done':phaseDone(ph)+'/'+ph.projects.length}</span>
+      <span class="nav-badge${phaseAllDone(ph)?' done-badge':''}">${phaseAllDone(ph)?'Done':phaseDone(ph)+'/'+ph.projects.length}</span>
     </div>`).join('');
 }
 
@@ -1403,40 +1403,40 @@ function renderPhase(ph){
   return `
   <div class="phase-header">
     <div style="flex:1">
-      <div class="phase-label">${ph.label}${phaseAllDone(ph)?'<span class="phase-done-badge">✓ Complete</span>':''}</div>
+      <div class="phase-label">${ph.label}${phaseAllDone(ph)?'<span class="phase-done-badge">Complete</span>':''}</div>
       <h1 class="phase-title">${ph.name}</h1>
       <div class="phase-meta">
         <span class="phase-stat"><span class="phase-stat-dot" style="background:${ph.color}"></span>${done}/${total} projects complete</span>
         <span class="phase-stat"><span class="phase-stat-dot" style="background:#3b82f6"></span>${doneC}/${allC.length} courses done</span>
-        <span class="phase-stat" style="color:var(--warning)"><span style="margin-right:.3rem">⏱</span>${fmtHrs(phaseDoneMins(ph))} / ${fmtHrs(phaseEstMins(ph))}</span>
+        <span class="phase-stat">${fmtHrs(phaseDoneMins(ph))} / ${fmtHrs(phaseEstMins(ph))} est.</span>
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn" onclick="markAllCourses('${ph.id}')" title="Toggle all courses in this phase">✓ All Courses</button>
-      <button class="btn" onclick="markAllProjects('${ph.id}')" title="Toggle all projects in this phase">✓ All Projects</button>
-      <button class="btn btn-accent" onclick="markPhaseComplete('${ph.id}')" title="Mark entire phase complete">⚡ Complete Phase</button>
+      <button class="btn" onclick="markAllCourses('${ph.id}')" title="Toggle all courses in this phase">All Courses</button>
+      <button class="btn" onclick="markAllProjects('${ph.id}')" title="Toggle all projects in this phase">All Projects</button>
+      <button class="btn btn-accent" onclick="markPhaseComplete('${ph.id}')" title="Mark entire phase complete">Complete Phase</button>
       <button class="btn${state._currentPhase===ph.id?' btn-current':''}" onclick="setCurrentPhase('${ph.id}')" title="Mark this as your current active phase" style="min-width:auto">
-        ${state._currentPhase===ph.id ? '📍 Current Phase' : '📍 Set Phase Current'}
+        ${state._currentPhase===ph.id ? 'Active Phase' : 'Set as Current'}
       </button>
     </div>
   </div>
 
   <div id="current-focus-summary" style="padding:1rem 2.5rem; background:rgba(139,92,246,0.03); border-bottom:1px solid var(--border); ${!state._currentItem ? 'display:none' : 'display:flex'}; align-items:center; gap:1rem; flex-wrap:wrap">
     <div style="flex:1">
-      <span style="font-size:.65rem; text-transform:uppercase; letter-spacing:.08em; color:var(--text-3); font-weight:700">🎯 Current Goal</span>
+      <span style="font-size:.58rem; text-transform:uppercase; letter-spacing:.11em; color:var(--text-3); font-weight:700; font-family:'JetBrains Mono',monospace">Current Goal</span>
       <div id="current-focus-text" style="font-size:1rem; font-weight:700; color:var(--accent); margin-top:.2rem">
         ${state._currentItem ? findItemName(state._currentItem) : 'None selected'}
       </div>
     </div>
     <div style="display:flex; gap:.5rem">
-      <button class="btn" style="padding:.3rem .7rem; font-size:.7rem" onclick="jumpToCurrent()">🚀 Jump to Item</button>
+      <button class="btn" style="padding:.3rem .7rem; font-size:.7rem" onclick="jumpToCurrent()">Jump to Item</button>
       <button class="btn" style="padding:.3rem .7rem; font-size:.7rem" onclick="setCurrentItem(null)">✕ Clear</button>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
-      <span>📚 Courses & Resources</span>
+      <span>Courses & Resources</span>
       <button class="btn" style="font-size:.65rem;padding:.25rem .65rem" onclick="toggleAllPlatforms('${ph.id}', this)">Expand All</button>
     </div>
     <div class="courses-list">
@@ -1458,7 +1458,7 @@ function renderPhase(ph){
                 <div class="course-info">
                   <div class="course-name">
                     <a href="${c.url}" target="_blank" rel="noopener">${c.name}</a>
-                    ${isCurrent(cid)?'<span class="item-current-badge">📍 Current</span>':''}
+                    ${isCurrent(cid)?'<span class="item-current-badge">Active</span>':''}
                   </div>
                   <div class="course-details">
                     <span class="tag ${c.free?'free':'paid'}">${c.free?'FREE':'PAID'}</span>
@@ -1484,7 +1484,7 @@ function renderPhase(ph){
 
   <div class="section">
     <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
-      <span>🚀 Projects</span>
+      <span>Projects</span>
       <button class="btn" style="font-size:.65rem;padding:.25rem .65rem" onclick="toggleAllCards('${ph.id}', this)">Collapse All</button>
     </div>
 
@@ -1494,20 +1494,20 @@ function renderPhase(ph){
           <div class="card-header">
             <span class="card-id">${p.id}</span>
             <div style="display:flex;align-items:center;gap:.4rem">
-              <span style="font-size:.65rem;color:var(--warning);opacity:.8">⏱ ${p.hrs||4}h</span>
+              <span style="font-size:.6rem;color:var(--text-3);font-family:'JetBrains Mono',monospace">${p.hrs||4}h</span>
               <div class="card-check">${isDone(p.id)?'✓':''}</div>
             </div>
           </div>
           <div class="card-title">
             ${p.level ? `<span class="card-level level-${p.level.toLowerCase()}">${p.level}</span>` : ''}
             ${p.name} 
-            ${isCurrent(p.id)?'<span class="item-current-badge">📍 Current</span>':''}
+            ${isCurrent(p.id)?'<span class="item-current-badge">Active</span>':''}
           </div>
           <div class="card-desc" style="font-weight:500; color:var(--text); margin-bottom:.5rem">${p.desc}</div>
           
           ${p.businessValue ? `
             <div class="business-value-box">
-              <div class="business-value-title">💼 Business Value</div>
+              <div class="business-value-title">Business Value</div>
               <div class="guide-text">${p.businessValue}</div>
             </div>
           ` : ''}
@@ -1520,7 +1520,7 @@ function renderPhase(ph){
 
             ${p.tips ? `
               <div class="tips-list">
-                <div class="tips-title">💡 Expert Tips</div>
+                <div class="tips-title">Tips</div>
                 <ul>${p.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
               </div>
             ` : ''}
@@ -1540,7 +1540,7 @@ function renderPhase(ph){
           
           <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.75rem">
             <button class="card-current-btn ${isCurrent(p.id)?'active':''}" onclick="event.stopPropagation(); setCurrentItem('${p.id}')" style="position:static">
-              ${isCurrent(p.id)?'📍 Current Goal':'📍 Set Current'}
+              ${isCurrent(p.id)?'Active Goal':'Set as Current'}
             </button>
             <button class="card-share-btn" onclick="event.stopPropagation(); copyProjectLink('${p.id}')" title="Copy link to this project">
               <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
@@ -1723,7 +1723,7 @@ function masterAll(){
     particleCount: 500,
     spread: 160,
     origin: { y: 0.5 },
-    colors: ['#8b5cf6', '#ec4899', '#10b981', '#3b82f6', '#f59e0b']
+    colors: ['#8b5cf6', '#6366f1', '#10b981', '#3b82f6', '#f59e0b']
   });
 }
 function expandEverything(){
