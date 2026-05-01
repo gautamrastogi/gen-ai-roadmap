@@ -1,2069 +1,537 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GenAI Developer Roadmap 2026 | Progress Dashboard</title>
-<meta name="description" content="Interactive progress tracker for a structured GenAI learning roadmap covering LangGraph, RAG, MCP, evals, and local models.">
-<meta property="og:title" content="GenAI Developer Roadmap 2026">
-<meta property="og:description" content="Track 37 projects across 12 phases from Python LLM apps to agentic orchestration.">
+<title>GenAI Roadmap 2026 | Progress Dashboard</title>
+<meta name="description" content="Interactive GenAI learning roadmap with cross-device progress sync and structured phase progress tracking.">
+<meta property="og:title" content="GenAI Roadmap 2026">
+<meta property="og:description" content="Track progress across 12 phases, 39 projects, and sync with GitHub Gist.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/">
 <link rel="canonical" href="https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <style>
 :root {
-  /* Backgrounds */
-  --bg:          #080810;
-  --bg-sidebar:  #050509;
-  --bg-card:     rgba(255,255,255,0.02);
-  --bg-glass:    rgba(255,255,255,0.03);
-  --bg-hover:    rgba(255,255,255,0.04);
-
-  /* Accent — single violet */
-  --accent:      #8b5cf6;
-  --accent-dim:  #6d28d9;
-  --accent-glow: rgba(139,92,246,0.15);
-  --accent-text: #c4b5fd;
-
-  /* Gradient — monochrome violet/indigo */
-  --grad:        linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
-
-  /* Text */
-  --text:        #ececf1;
-  --text-2:      #a1a1aa;
-  --text-3:      #52525b;
-
-  /* Borders */
-  --border:      rgba(255,255,255,0.06);
-  --border-s:    rgba(255,255,255,0.04);
-  --border-act:  rgba(139,92,246,0.3);
-
-  /* Status */
-  --success:     #10b981;
-  --warning:     #f59e0b;
-  --info:        #6366f1;
-
-  /* Motion — out-expo for snappy, ease for subtle */
-  --spring:      cubic-bezier(0.16,1,0.3,1);
-  --ease:        cubic-bezier(0.4,0,0.2,1);
-  --tr:          all 0.15s var(--ease);
-
-  /* Layout */
-  --sidebar-w:   264px;
-  --radius:      10px;
-  --radius-sm:   6px;
-  --radius-xs:   4px;
+  --bg: #0b0b13;
+  --bg-surface: #11121a;
+  --bg-panel: rgba(16, 17, 29, 0.88);
+  --bg-panel-soft: rgba(255, 255, 255, 0.04);
+  --text: #e7e5ff;
+  --text-muted: #a1a1bb;
+  --text-soft: #c4c4dc;
+  --accent: #d0bcff;
+  --accent-strong: #a078ff;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-soft: rgba(255, 255, 255, 0.05);
+  --shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 .light {
-  --bg:          #f9f9fb;
-  --bg-sidebar:  #ffffff;
-  --bg-card:     rgba(0,0,0,0.02);
-  --bg-glass:    rgba(0,0,0,0.03);
-  --bg-hover:    rgba(0,0,0,0.04);
-  --text:        #09090b;
-  --text-2:      #52525b;
-  --text-3:      #a1a1aa;
-  --border:      rgba(0,0,0,0.07);
-  --border-s:    rgba(0,0,0,0.04);
-  --border-act:  rgba(139,92,246,0.25);
-  --accent-text: #6d28d9;
+  --bg: #f7f6fb;
+  --bg-surface: #ffffff;
+  --bg-panel: rgba(255, 255, 255, 0.95);
+  --bg-panel-soft: rgba(15, 23, 42, 0.04);
+  --text: #111827;
+  --text-muted: #6b7280;
+  --text-soft: #4b5563;
+  --accent: #7c3aed;
+  --accent-strong: #5b21b6;
+  --border: rgba(15, 23, 42, 0.08);
+  --border-soft: rgba(15, 23, 42, 0.04);
+  --shadow: 0 30px 80px rgba(15, 23, 42, 0.12);
 }
-/* ─── Reset ─── */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'Inter',-apple-system,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;display:flex;
-  overflow-x:hidden;
-  transition:background .25s var(--ease),color .25s var(--ease);
-  -webkit-font-smoothing:antialiased;
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
-
-/* ─── Keyframes ─── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes shimmer{from{background-position:-200% 0}to{background-position:200% 0}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-@keyframes glowPulse{0%,100%{opacity:.3}50%{opacity:.6}}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* ─── Ambient glows ─── */
-.glow{position:fixed;border-radius:50%;pointer-events:none;z-index:-1}
-.glow1{
-  width:900px;height:900px;
-  background:radial-gradient(ellipse,rgba(139,92,246,.055) 0%,transparent 60%);
-  top:-300px;right:-300px;
-  animation:glowPulse 8s ease-in-out infinite;
+button, input { font: inherit; }
+button { cursor: pointer; }
+img { max-width: 100%; display: block; }
+::selection { background: rgba(208, 188, 255, 0.35); color: var(--text); }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(208, 188, 255, 0.18), transparent 22%),
+              radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.12), transparent 18%);
+  pointer-events: none;
 }
-.glow2{
-  width:600px;height:600px;
-  background:radial-gradient(ellipse,rgba(99,102,241,.035) 0%,transparent 65%);
-  bottom:-150px;left:-100px;
-  animation:glowPulse 12s ease-in-out infinite reverse;
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(22px);
+  background: rgba(11, 11, 19, 0.86);
+  border-bottom: 1px solid var(--border-soft);
 }
-
-/* ─── Overlay ─── */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;backdrop-filter:blur(4px)}
-.overlay.show{display:block}
-
-/* ─── Sidebar ─── */
-aside{
-  width:var(--sidebar-w);
-  background:var(--bg-sidebar);
-  border-right:1px solid var(--border-s);
-  display:flex;flex-direction:column;
-  height:100vh;position:sticky;top:0;
-  padding:1.25rem .875rem;
-  z-index:200;flex-shrink:0;
-  transition:transform .3s var(--spring);
-  overflow-y:auto;
-  overflow-x:hidden;
+.header-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
-aside::-webkit-scrollbar{width:2px}
-aside::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-
-/* ─── Hamburger ─── */
-.hamburger{
-  display:none;position:fixed;top:.875rem;left:.875rem;
-  z-index:300;width:36px;height:36px;
-  background:var(--bg-sidebar);border:1px solid var(--border);
-  border-radius:var(--radius-sm);cursor:pointer;
-  flex-direction:column;align-items:center;justify-content:center;gap:4px;
-  transition:var(--tr);
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
 }
-.hamburger span{display:block;width:14px;height:1.5px;background:var(--text-2);border-radius:2px;transition:var(--tr)}
-.hamburger.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
-.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-.hamburger.open span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
-
-/* ─── Brand ─── */
-.brand{display:flex;align-items:center;gap:.625rem;margin-bottom:1.5rem;flex-shrink:0;cursor:pointer}
-.brand-icon{
-  width:30px;height:30px;border-radius:8px;
-  background:var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:.72rem;color:#fff;
-  flex-shrink:0;letter-spacing:-.02em;
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(208,188,255,0.95), rgba(160, 136, 255, 0.35));
+  display: grid;
+  place-items: center;
+  color: #1f0a79;
+  font-weight: 800;
+  letter-spacing: -0.08em;
 }
-.brand-name{font-size:.875rem;font-weight:600;color:var(--text);letter-spacing:-.015em;line-height:1}
-.brand-year{font-size:.62rem;color:var(--text-3);font-family:'JetBrains Mono',monospace;margin-left:auto}
-
-/* ─── Stats card ─── */
-.stats-card{
-  border:1px solid var(--border-s);
-  border-radius:var(--radius);
-  padding:.875rem;margin-bottom:1.125rem;flex-shrink:0;
-  background:var(--bg-glass);
+.brand-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
-.stats-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem}
-.stat-pct{
-  font-size:1.6rem;font-weight:700;color:var(--text);
-  letter-spacing:-.04em;font-variant-numeric:tabular-nums;
+.brand-title strong { letter-spacing: -0.02em; }
+.brand-sub { color: var(--text-muted); font-size: 0.82rem; }
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
-.stat-label{font-size:.6rem;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
-.progress-bar{
-  height:2px;background:var(--border);border-radius:99px;
-  overflow:hidden;margin-bottom:.5rem;position:relative;
+.header-button {
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.75rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  transition: transform 180ms var(--ease), border-color 180ms var(--ease), background 180ms var(--ease);
 }
-.progress-fill{
-  height:100%;border-radius:99px;
-  background:linear-gradient(90deg,var(--accent) 0%,var(--accent-text) 50%,var(--accent) 100%);
-  background-size:200% 100%;
-  transition:width .6s var(--spring);
-  animation:shimmer 3s linear infinite;
+.header-button:hover { transform: translateY(-1px); border-color: var(--accent); }
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 3rem;
 }
-.stat-sub{font-size:.68rem;color:var(--text-3)}
-
-/* ─── Search ─── */
-.search-box{position:relative;margin-bottom:1rem;flex-shrink:0}
-.search-box input{
-  width:100%;padding:.45rem .75rem .45rem 1.875rem;
-  background:var(--bg-glass);border:1px solid var(--border-s);
-  border-radius:var(--radius-sm);color:var(--text);font-size:.75rem;
-  outline:none;transition:border-color .15s var(--ease);
-  font-family:'Inter',sans-serif;
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
-.search-box input:focus{border-color:var(--border-act)}
-.search-box input::placeholder{color:var(--text-3)}
-.search-box svg{position:absolute;left:.625rem;top:50%;transform:translateY(-50%);width:12px;height:12px;color:var(--text-3)}
-
-/* ─── Nav ─── */
-.nav-label{
-  font-size:.58rem;text-transform:uppercase;letter-spacing:.11em;
-  color:var(--text-3);font-weight:700;margin-bottom:.4rem;padding-left:.25rem;
+.sidebar-panel {
+  padding: 1.3rem;
+  border-radius: var(--radius);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
-nav{display:flex;flex-direction:column;gap:.1rem;overflow-y:auto;flex:1;min-height:0;padding-right:.2rem}
-nav::-webkit-scrollbar{width:2px}
-nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-
-.nav-item{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:.4rem .625rem;border-radius:var(--radius-xs);cursor:pointer;
-  transition:background .12s var(--ease);
-  text-decoration:none;color:var(--text);
-  position:relative;
+.sidebar-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
 }
-.nav-item::before{
-  content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
-  width:2px;height:0;background:var(--accent);border-radius:0 2px 2px 0;
-  transition:height .2s var(--spring);
+.stats-grid {
+  display: grid;
+  gap: 0.9rem;
 }
-.nav-item:hover{background:var(--bg-hover)}
-.nav-item.active{background:rgba(139,92,246,.07)}
-.nav-item.active::before{height:70%}
-.nav-item-left{display:flex;align-items:center;gap:.5rem}
-.nav-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.nav-info{display:flex;flex-direction:column}
-.nav-title{font-size:.75rem;font-weight:500;letter-spacing:-.01em}
-.nav-sub{font-size:.64rem;color:var(--text-3)}
-.nav-item.active .nav-title{color:var(--text);font-weight:600}
-.nav-badge{
-  font-size:.58rem;font-weight:600;
-  background:transparent;border:1px solid var(--border);
-  border-radius:99px;padding:.08rem .35rem;
-  color:var(--text-3);white-space:nowrap;flex-shrink:0;
+.stat-card {
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.1rem 1rem;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
 }
-.nav-item.active .nav-badge{border-color:var(--border-act);color:var(--accent-text)}
-.nav-progress-outer{width:100%;height:1.5px;background:var(--border-s);border-radius:99px;margin-top:.35rem;overflow:hidden}
-.nav-progress-inner{height:100%;background:var(--accent);border-radius:99px;transition:width .4s var(--spring)}
-
-/* ─── Sidebar footer ─── */
-.sidebar-footer{
-  margin-top:auto;padding-top:.875rem;border-top:1px solid var(--border-s);
-  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:.5rem;
+.stat-value {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--accent);
 }
-.version{font-size:.6rem;color:var(--text-3);font-family:'JetBrains Mono',monospace}
-.theme-btn{
-  width:28px;height:28px;border-radius:var(--radius-xs);
-  border:1px solid var(--border);background:transparent;cursor:pointer;
-  color:var(--text-2);display:flex;align-items:center;justify-content:center;font-size:.75rem;
-  transition:var(--tr);flex-shrink:0;
+.stat-label { color: var(--text-soft); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.16em; }
+.nav-list { display: grid; gap: 0.35rem; }
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.95rem 1rem;
+  border-radius: 14px;
+  color: var(--text);
+  text-decoration: none;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid transparent;
+  transition: background 180ms var(--ease), border-color 180ms var(--ease);
 }
-.theme-btn:hover{border-color:var(--border-act);color:var(--text)}
-
-/* ─── Main ─── */
-main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
-
-/* ─── Phase header ─── */
-.phase-header{
-  padding:2.25rem 2.5rem 1.75rem;
-  border-bottom:1px solid var(--border-s);
-  display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;
-  flex-wrap:wrap;
-  animation:fadeUp .4s var(--spring) both;
+.nav-link.active, .nav-link:hover {
+  background: rgba(208, 188, 255, 0.1);
+  border-color: rgba(208, 188, 255, 0.16);
 }
-.phase-label{
-  font-size:.58rem;text-transform:uppercase;letter-spacing:.14em;
-  color:var(--accent-text);font-weight:600;margin-bottom:.3rem;
-  font-family:'JetBrains Mono',monospace;
+.nav-copy { display: flex; align-items: center; gap: 0.75rem; }
+.nav-icon {
+  width: 2.15rem;
+  height: 2.15rem;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.05);
 }
-.phase-title{
-  font-size:1.75rem;font-weight:700;letter-spacing:-.03em;
-  line-height:1.15;color:var(--text);
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
-.phase-meta{display:flex;align-items:center;gap:.875rem;margin-top:.625rem;flex-wrap:wrap}
-.phase-stat{font-size:.72rem;color:var(--text-2);display:flex;align-items:center;gap:.3rem}
-.phase-stat-dot{width:5px;height:5px;border-radius:50%;background:var(--success)}
-.header-actions{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap}
-
-/* ─── Buttons ─── */
-.btn{
-  display:inline-flex;align-items:center;gap:.3rem;
-  padding:.375rem .75rem;border-radius:var(--radius-xs);
-  border:1px solid var(--border);background:transparent;
-  color:var(--text-3);font-size:.72rem;font-weight:500;cursor:pointer;
-  transition:var(--tr);font-family:'Inter',sans-serif;
-  text-decoration:none;white-space:nowrap;
-  letter-spacing:-.005em;
+.hero {
+  padding: 2rem;
+  border-radius: 26px;
+  background: linear-gradient(180deg, rgba(17, 18, 34, 0.92), rgba(11, 11, 19, 0.98));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
 }
-.btn:hover{border-color:var(--border-act);color:var(--text);background:var(--bg-hover)}
-.btn-primary,.btn-accent{
-  background:var(--accent);border-color:var(--accent);
-  color:#fff;font-weight:600;
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(208, 188, 255, 0.16), transparent 22%);
 }
-.btn-primary:hover,.btn-accent:hover{background:var(--accent-dim);border-color:var(--accent-dim);color:#fff}
-.btn-success{border-color:rgba(16,185,129,.2);color:var(--success)}
-.btn-success:hover{background:rgba(16,185,129,.06);border-color:var(--success)}
-.btn-info{border-color:rgba(99,102,241,.2);color:var(--info)}
-.btn-info:hover{background:rgba(99,102,241,.06);border-color:var(--info)}
-.btn-current{border-color:var(--border-act);color:var(--accent-text)}
-
-/* ─── Export bar ─── */
-.export-bar{
-  padding:.625rem 2.5rem;
-  display:flex;align-items:center;gap:.375rem;flex-wrap:wrap;
-  border-bottom:1px solid var(--border-s);
+.hero-content { position: relative; z-index: 1; }
+.hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid rgba(208, 188, 255, 0.15);
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 1rem;
 }
-.export-info{font-size:.68rem;color:var(--text-3);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-/* ─── Section ─── */
-.section{
-  padding:1.75rem 2.5rem;border-bottom:1px solid var(--border-s);
-  animation:fadeUp .35s var(--spring) .05s both;
+.hero-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.6rem, 4vw, 4.5rem);
+  line-height: 0.95;
+  margin: 0;
 }
-.section-title{
-  font-size:.58rem;text-transform:uppercase;letter-spacing:.13em;
-  color:var(--text-3);font-weight:700;margin-bottom:1.125rem;
-  font-family:'JetBrains Mono',monospace;
-  display:flex;align-items:center;gap:.75rem;
+.hero-copy {
+  font-size: 1rem;
+  line-height: 1.8;
+  max-width: 680px;
+  color: var(--text-soft);
+  margin-top: 1rem;
 }
-.section-title::after{content:"";flex:1;height:1px;background:var(--border-s)}
-
-/* ─── Courses ─── */
-.courses-list{display:flex;flex-direction:column;gap:.375rem}
-.platform-group{
-  border:1px solid var(--border-s);border-radius:var(--radius);
-  overflow:hidden;
-  transition:border-color .15s var(--ease);
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
 }
-.platform-group:hover{border-color:var(--border)}
-.platform-header{
-  display:flex;align-items:center;gap:.6rem;
-  padding:.7rem .9rem;cursor:pointer;
-  transition:background .12s var(--ease);user-select:none;
+.metric-pill {
+  padding: 1.1rem 1rem;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
 }
-.platform-header:hover{background:var(--bg-hover)}
-.platform-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.platform-name{font-size:.78rem;font-weight:600;flex:1;color:var(--text);letter-spacing:-.01em}
-.platform-meta{font-size:.65rem;color:var(--text-3)}
-.platform-chevron{font-size:.6rem;color:var(--text-3);transition:transform .25s var(--spring);margin-left:.3rem}
-.platform-group.open .platform-chevron{transform:rotate(180deg)}
-.platform-body{display:none}
-.platform-group.open .platform-body{display:block}
-
-.course-item{
-  display:flex;align-items:flex-start;gap:.625rem;
-  padding:.6rem .9rem;border-top:1px solid var(--border-s);
-  transition:background .1s var(--ease);
+.metric-title { color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; margin-bottom: 0.45rem; }
+.metric-value { font-size: 1.4rem; font-weight: 700; }
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
 }
-.course-item:hover{background:var(--bg-hover)}
-.course-item.is-current{
-  background:rgba(139,92,246,.05);
-  border-left:2px solid var(--accent);
-  padding-left:calc(.9rem - 2px);
+.section-head h2 {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
 }
-.course-check{
-  width:15px;height:15px;border-radius:4px;
-  border:1.5px solid var(--border);flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;margin-top:.15rem;transition:var(--tr);
+.section-head a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
-.course-check.done{background:var(--success);border-color:var(--success);color:#fff}
-.course-info{flex:1;min-width:0}
-.course-name{font-size:.75rem;font-weight:500;margin-bottom:.2rem;color:var(--text)}
-.course-name a{color:inherit;text-decoration:none;transition:color .1s}
-.course-name a:hover{color:var(--accent-text)}
-.course-details{display:flex;gap:.3rem;flex-wrap:wrap;margin-top:.2rem}
-
-/* Tags */
-.tag{
-  font-size:.58rem;font-weight:600;
-  padding:.08rem .35rem;border-radius:99px;
-  border:1px solid var(--border-s);color:var(--text-3);
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
 }
-.tag.free{border-color:rgba(16,185,129,.2);color:var(--success)}
-.tag.paid{border-color:rgba(245,158,11,.2);color:var(--warning)}
-.tag.new{border-color:rgba(139,92,246,.2);color:var(--accent-text)}
-
-/* ─── Projects grid ─── */
-.projects-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:.875rem;
+.card {
+  border-radius: 22px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 280px;
+  box-shadow: var(--shadow);
 }
-.card{
-  background:var(--bg-card);
-  border:1px solid var(--border-s);
-  border-radius:var(--radius);
-  padding:1.125rem;
-  cursor:pointer;
-  position:relative;overflow:hidden;
-  transition:border-color .15s var(--ease),box-shadow .2s var(--ease),transform .2s var(--spring);
-  animation:fadeUp .35s var(--spring) both;
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+.card-badge {
+  padding: 0.65rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(208, 188, 255, 0.08);
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
 }
-/* Stagger card animations */
-.card:nth-child(1){animation-delay:.04s}
-.card:nth-child(2){animation-delay:.07s}
-.card:nth-child(3){animation-delay:.10s}
-.card:nth-child(4){animation-delay:.13s}
-.card:nth-child(5){animation-delay:.16s}
-.card:nth-child(n+6){animation-delay:.18s}
-
-.card::before{
-  content:"";
-  position:absolute;inset-inline:0;top:0;height:1px;
-  background:linear-gradient(90deg,transparent 0%,var(--accent) 50%,transparent 100%);
-  opacity:0;transition:opacity .2s var(--ease);
+.card-title { margin: 0; font-size: 1.1rem; font-weight: 700; }
+.card-copy { color: var(--text-soft); flex: 1; line-height: 1.75; }
+.progress-row { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+.progress-label { font-size: 0.75rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.12em; }
+.progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
 }
-.card:hover{
-  border-color:var(--border-act);
-  transform:translateY(-2px);
-  box-shadow:0 8px 30px rgba(0,0,0,.3),0 0 0 1px rgba(139,92,246,.08);
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  transition: width 0.5s var(--ease);
 }
-.card:hover::before{opacity:.6}
-.card.done{border-color:rgba(16,185,129,.18);background:rgba(16,185,129,.025)}
-.card.done::before{background:linear-gradient(90deg,transparent 0%,var(--success) 50%,transparent 100%);opacity:1}
-.card.is-current{border-color:var(--border-act)}
-.card.is-current::before{opacity:.8}
-
-.card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.625rem}
-.card-id{font-size:.6rem;font-family:'JetBrains Mono',monospace;color:var(--text-3);font-weight:500}
-.card-check{
-  width:20px;height:20px;border-radius:50%;
-  border:1.5px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.6rem;transition:var(--tr);flex-shrink:0;
+.card-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.card-info { color: var(--text-soft); font-size: 0.85rem; }
+.action-btn {
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 0.8rem 1rem;
+  height: 42px;
 }
-.card.done .card-check{background:var(--success);border-color:var(--success);color:#fff}
-.card-title{font-size:.9rem;font-weight:600;margin-bottom:.35rem;line-height:1.35;letter-spacing:-.015em}
-.card-desc{font-size:.73rem;color:var(--text-2);line-height:1.65;margin-bottom:.75rem}
-.card-tags{display:flex;flex-wrap:wrap;gap:.3rem}
-
-/* ─── Card guide sections ─── */
-.card-guide{margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border-s)}
-.card-guide-section{margin-bottom:.55rem}
-.guide-label{
-  font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
-  color:var(--accent-text);margin-bottom:.225rem;display:block;
-  font-family:'JetBrains Mono',monospace;
-}
-.guide-text{font-size:.72rem;color:var(--text-2);line-height:1.65}
-.skills-chips{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.2rem}
-.skill-chip{
-  font-size:.58rem;padding:.12rem .4rem;border-radius:99px;
-  background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.12);
-  color:var(--accent-text);font-weight:600;
-}
-.deliverable-box{
-  font-size:.7rem;
-  background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.1);
-  border-radius:var(--radius-xs);padding:.45rem .6rem;
-  color:#6ee7b7;line-height:1.6;margin-top:.2rem;
-}
-.business-value-box{
-  margin-top:.6rem;padding:.5rem .65rem;
-  background:rgba(245,158,11,.03);
-  border-left:2px solid rgba(245,158,11,.25);
-  border-radius:0 var(--radius-xs) var(--radius-xs) 0;
-  font-size:.7rem;color:var(--text-2);
-}
-.business-value-title{
-  font-size:.56rem;font-weight:700;color:var(--warning);
-  text-transform:uppercase;margin-bottom:.175rem;
-  display:flex;align-items:center;gap:.2rem;
-  letter-spacing:.07em;font-family:'JetBrains Mono',monospace;
-}
-.tips-list{margin-top:.6rem;padding:.55rem .65rem;border:1px solid var(--border-s);border-radius:var(--radius-xs)}
-.tips-title{
-  font-size:.56rem;font-weight:700;color:var(--accent-text);
-  text-transform:uppercase;margin-bottom:.3rem;
-  letter-spacing:.08em;font-family:'JetBrains Mono',monospace;
-}
-.tips-list ul{padding-left:.9rem;margin:0}
-.tips-list li{font-size:.69rem;color:var(--text-2);margin-bottom:.175rem;line-height:1.55}
-
-/* Reading guide */
-.reading-guide{
-  margin-top:.5rem;padding:.45rem .65rem;
-  background:rgba(99,102,241,.03);
-  border-left:2px solid rgba(99,102,241,.18);
-  border-radius:0 var(--radius-xs) var(--radius-xs) 0;
-  font-size:.68rem;color:var(--text-2);line-height:1.7;
-}
-.reading-guide-title{
-  font-size:.56rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:.08em;color:var(--info);margin-bottom:.2rem;
-  font-family:'JetBrains Mono',monospace;
-}
-.reading-guide ul{padding-left:.9rem;margin:0}
-.reading-guide li{margin-bottom:.1rem}
-
-/* ─── Badges ─── */
-.card-level{font-size:.56rem;font-weight:700;padding:.1rem .4rem;border-radius:var(--radius-xs);text-transform:uppercase;letter-spacing:.05em;margin-right:.35rem}
-.level-beginner{background:rgba(16,185,129,.07);color:#6ee7b7;border:1px solid rgba(16,185,129,.12)}
-.level-intermediate{background:rgba(99,102,241,.07);color:#a5b4fc;border:1px solid rgba(99,102,241,.12)}
-.level-advanced{background:rgba(245,158,11,.07);color:#fcd34d;border:1px solid rgba(245,158,11,.12)}
-
-.phase-done-badge{
-  display:inline-block;background:rgba(16,185,129,.08);color:#10b981;
-  border:1px solid rgba(16,185,129,.16);border-radius:var(--radius-xs);
-  font-size:.56rem;font-weight:700;letter-spacing:.06em;
-  padding:.1rem .4rem;margin-left:.5rem;vertical-align:middle;
-  text-transform:uppercase;font-family:'JetBrains Mono',monospace;
-}
-.nav-badge.done-badge{background:rgba(16,185,129,.12);color:#10b981}
-
-/* ─── Set-current controls ─── */
-.course-set-btn{
-  font-size:.56rem;padding:.06rem .3rem;border-radius:var(--radius-xs);
-  border:1px solid var(--border-s);background:transparent;color:var(--text-3);
-  cursor:pointer;transition:var(--tr);white-space:nowrap;flex-shrink:0;
-  font-family:'Inter',sans-serif;
-}
-.course-set-btn:hover{border-color:var(--border-act);color:var(--accent-text)}
-.course-set-btn.active{border-color:var(--border-act);color:var(--accent-text)}
-.card-current-btn{
-  position:absolute;bottom:.75rem;right:.75rem;
-  font-size:.56rem;padding:.1rem .4rem;border-radius:var(--radius-xs);
-  border:1px solid var(--border-s);background:transparent;color:var(--text-3);
-  cursor:pointer;transition:var(--tr);font-family:'Inter',sans-serif;font-weight:600;
-}
-.card-current-btn:hover{border-color:var(--border-act);color:var(--accent-text)}
-.card-current-btn.active{border-color:var(--border-act);color:var(--accent-text)}
-
-/* Current badge */
-.item-current-badge{
-  display:inline-flex;align-items:center;gap:.175rem;
-  font-size:.56rem;font-weight:700;
-  color:var(--accent-text);background:rgba(139,92,246,.08);
-  border:1px solid rgba(139,92,246,.15);border-radius:var(--radius-xs);
-  padding:.06rem .3rem;margin-left:.3rem;vertical-align:middle;
-  font-family:'JetBrains Mono',monospace;
-}
-
-/* Share button */
-.card-share-btn{
-  background:none;border:none;color:var(--text-3);cursor:pointer;
-  padding:.2rem;border-radius:var(--radius-xs);transition:var(--tr);
-  display:flex;align-items:center;justify-content:center;
-}
-.card-share-btn:hover{color:var(--accent-text)}
-
-/* ─── Collapsed card (default state) ─── */
-.card{cursor:pointer}
-.card.collapsed{padding:.8rem 1.125rem;min-height:auto}
-.card.collapsed .card-desc,.card.collapsed .card-guide,
-.card.collapsed .card-tags,.card.collapsed .card-footer-row{display:none}
-.card.collapsed .card-header{margin-bottom:.225rem}
-.card.collapsed .card-title-flex{margin-bottom:0}
-.card.collapsed .card-title{font-size:.85rem;margin-bottom:0}
-
-/* Expand chevron in card title */
-.card-title-flex{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.35rem}
-.card-expand-chev{font-size:.55rem;color:var(--text-3);transition:transform .25s var(--spring),color .15s;flex-shrink:0;margin-top:.25rem;line-height:1}
-.card:not(.collapsed) .card-expand-chev{transform:rotate(180deg);color:var(--accent-text)}
-
-/* Fade-in when card expands */
-.card:not(.collapsed) .card-desc,
-.card:not(.collapsed) .card-guide,
-.card:not(.collapsed) .card-tags{animation:fadeInDown .18s ease}
-@keyframes fadeInDown{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
-
-/* Reading guide toggle */
-.reading-guide.rg-hidden{display:none}
-.sections-toggle{
-  font-size:.55rem;color:var(--text-3);background:none;
-  border:1px solid var(--border-s);border-radius:var(--radius-xs);
-  padding:.06rem .3rem;cursor:pointer;transition:var(--tr);
-  font-family:'JetBrains Mono',monospace;flex-shrink:0;
-}
-.sections-toggle:hover,.sections-toggle.open{color:var(--accent-text);border-color:var(--border-act)}
-
-/* ─── Sidebar current focus ─── */
-#sidebar-current{margin-top:.875rem;padding-top:.875rem;border-top:1px solid var(--border-s);display:flex;flex-direction:column;gap:.35rem}
-.current-task-box{
-  background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.12);
-  border-radius:var(--radius-sm);padding:.6rem .7rem;
-  cursor:pointer;transition:var(--tr);
-}
-.current-task-box:hover{border-color:var(--border-act);background:rgba(139,92,246,.1)}
-
-/* ─── Gist sync panel ─── */
-.sync-panel{
-  background:transparent;border:1px solid var(--border-s);
-  border-radius:var(--radius-sm);padding:.55rem .7rem;
-  cursor:pointer;transition:border-color .15s;flex:1;
-}
-.sync-panel:hover{border-color:var(--border-act)}
-.sync-panel-row{display:flex;align-items:center;gap:.4rem}
-.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--text-3);flex-shrink:0;transition:background .3s}
-.sync-dot.ok{background:#10b981}
-.sync-dot.syncing{background:var(--warning);animation:pulse 1s infinite}
-.sync-dot.err{background:#ef4444}
-.sync-label{font-size:.68rem;font-weight:600;color:var(--text);flex:1}
-.sync-config{font-size:.6rem;color:var(--text-3);margin-top:.175rem;line-height:1.4}
-.sync-badge{
-  font-size:.56rem;padding:.06rem .3rem;border-radius:var(--radius-xs);
-  font-weight:700;text-transform:uppercase;letter-spacing:.05em;
-  font-family:'JetBrains Mono',monospace;
-}
-.sync-badge.connected{background:rgba(16,185,129,.1);color:#10b981}
-.sync-badge.disconnected{background:rgba(82,82,91,.1);color:var(--text-3)}
-
-/* ─── Modal ─── */
-.modal-bg{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.7);z-index:500;
-  backdrop-filter:blur(8px);
-  align-items:center;justify-content:center;
-}
-.modal-bg.show{display:flex}
-.modal{
-  background:var(--bg-sidebar);border:1px solid var(--border);
-  border-radius:var(--radius);padding:1.625rem;
-  width:min(440px,92vw);max-height:90vh;overflow-y:auto;
-  animation:fadeUp .3s var(--spring) both;
-}
-.modal h2{font-size:.95rem;font-weight:700;margin-bottom:.3rem;letter-spacing:-.015em}
-.modal p{font-size:.73rem;color:var(--text-2);margin-bottom:1rem;line-height:1.7}
-.modal label{
-  display:block;font-size:.64rem;font-weight:600;
-  color:var(--text-3);margin-bottom:.275rem;
-  text-transform:uppercase;letter-spacing:.08em;
-  font-family:'JetBrains Mono',monospace;
-}
-.modal input{
-  width:100%;padding:.55rem .8rem;border-radius:var(--radius-sm);
-  border:1px solid var(--border);background:var(--bg-glass);
-  color:var(--text);font-size:.75rem;margin-bottom:.85rem;
-  font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .15s;
-}
-.modal input:focus{border-color:var(--border-act)}
-.modal-actions{display:flex;gap:.5rem;justify-content:flex-end;margin-top:.3rem;flex-wrap:wrap}
-.modal-note{
-  font-size:.68rem;color:var(--text-2);
-  background:var(--bg-glass);border:1px solid var(--border-s);
-  border-radius:var(--radius-sm);padding:.65rem .8rem;
-  margin-bottom:.85rem;line-height:1.7;
-}
-
-/* ─── Responsive ─── */
-@media(max-width:900px){
-  .export-info{display:none}
-  :root{--sidebar-w:252px}
-  aside{position:fixed;top:0;left:0;height:100vh;transform:translateX(-100%)}
-  aside.open{transform:translateX(0)}
-  .hamburger{display:flex}
-  main{margin-left:0}
-  .phase-header{padding:3.75rem 1.25rem 1.5rem;animation:none}
-  .phase-title{font-size:1.45rem}
-  .section{padding:1.5rem 1.25rem;animation:none}
-  .export-bar{padding:.6rem 1.25rem}
-  .projects-grid{grid-template-columns:1fr}
-  .card{animation:none}
-}
-@media(max-width:600px){
-  .phase-title{font-size:1.2rem}
-  .header-actions{width:100%}
-  .btn{font-size:.68rem;padding:.35rem .65rem}
-}
-
+.action-btn.primary { background: rgba(208, 188, 255, 0.14); border-color: rgba(208, 188, 255, 0.18); color: var(--accent); }
+.action-btn:hover { transform: translateY(-1px); }
+.panel { padding: 1.5rem; border-radius: 22px; background: var(--bg-panel); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.panel h3 { margin: 0 0 1rem 0; font-size: 1rem; color: var(--text); }
+.panel p { margin: 0; color: var(--text-soft); line-height: 1.8; }
+.panel-list { display: grid; gap: 1rem; margin-top: 1rem; }
+.panel-chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 0.85rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); color: var(--text); font-size: 0.8rem; }
+.panel-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.1rem; border-radius: 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
+.panel-item strong { color: var(--text); }
+.panel-item span { color: var(--text-soft); font-size: 0.9rem; }
+.panel-link { display: block; text-decoration: none; color: var(--text); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 18px; padding: 1rem; transition: transform 180ms var(--ease), border-color 180ms var(--ease); }
+.panel-link:hover { transform: translateY(-1px); border-color: var(--accent); }
+.footer { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; margin-top: 2rem; font-size: 0.85rem; color: var(--text-soft); }
+@media (max-width: 1120px) { .layout { grid-template-columns: 1fr; padding: 1.5rem 1.25rem 2.5rem; } .grid-cards { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 860px) { .header-inner { flex-direction: column; align-items: stretch; } .hero-metrics { grid-template-columns: 1fr; } .grid-cards { grid-template-columns: 1fr; } }
+@media (max-width: 680px) { .header-inner { padding: 1rem; } .layout { padding: 1rem; } .hero { padding: 1.5rem; } .sidebar-panel, .panel { padding: 1.2rem; } }
 </style>
 </head>
 <body>
-
-<div class="glow glow1"></div>
-<div class="glow glow2"></div>
-<div class="overlay" id="overlay"></div>
-<button class="hamburger" id="hamburger" aria-label="Menu">
-  <span></span><span></span><span></span>
-</button>
-
-<aside id="sidebar">
-  <div class="brand" onclick="showOverview()" style="cursor:pointer">
-    <div class="brand-icon">G</div>
-    <span class="brand-name">GenAI 2026</span>
-  </div>
-  <div class="stats-card">
-    <div class="stats-row">
-      <span class="stat-pct" id="pct">0%</span>
-      <span class="stat-label">Mastery</span>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" id="fill" style="width:0%"></div></div>
-    <div class="stat-sub" id="stat-sub">0 / 39 Projects &bull; 0 / 86 Courses</div>
-    <div id="stat-time" class="stat-sub" style="font-size:.65rem;margin-top:.25rem;opacity:.75">Loading…</div>
-    
-    <div id="sidebar-current" style="display:none">
-      <span class="nav-label">Current Focus</span>
-      <div class="current-task-box" onclick="jumpToCurrent()">
-        <div id="sidebar-current-phase" style="font-size:.6rem; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:.1rem">PHASE</div>
-        <div id="sidebar-current-name" style="font-size:.8rem; font-weight:700; line-height:1.3">Task Name</div>
-      </div>
-    </div>
-  </div>
-  <div class="search-box">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-    <input type="text" id="search" placeholder="Search roadmap..." oninput="handleSearch(this.value)">
-  </div>
-  <div class="nav-label">Phases</div>
-  <nav id="nav"></nav>
-  <div class="sidebar-footer">
-    <div class="sync-panel" onclick="openModal()" title="Configure Gist sync">
-  <div class="sync-panel-row">
-    <div class="sync-dot" id="sync-dot"></div>
-    <span class="sync-label" id="sync-label">Sync</span>
-    <span class="sync-badge disconnected" id="sync-badge">Off</span>
-  </div>
-  <div class="sync-config" id="sync-detail">Click to configure cloud sync</div>
-</div>
-    <button class="theme-btn" id="themeBtn" title="Toggle theme">◑</button>
-  </div>
-</aside>
-
-<main id="main">
-  <div class="export-bar">
-    <span class="export-info" id="export-info">Progress saved locally</span>
-    <button class="btn" onclick="exportProgress()">Export</button>
-    <label class="btn" style="cursor:pointer">Import<input type="file" accept=".json" style="display:none" onchange="importProgress(event)"></label>
-    <button class="btn btn-info" onclick="masterAllProjects()" title="Mark all projects as complete">Mark Projects Done</button>
-    <button class="btn btn-success" onclick="masterAllCourses()" title="Mark all courses as complete">Mark Courses Done</button>
-    <button class="btn btn-primary" onclick="masterAll()" title="Mark everything as complete">Mark All Done</button>
-    <button class="btn" onclick="expandEverything()" title="Expand all sections">Expand All</button>
-    <button class="btn" onclick="resetProgress()" style="color:#ef4444">Reset</button>
-  </div>
-  <div id="content"></div>
-
-<!-- Settings modal -->
-<div class="modal-bg" id="modal-bg">
-  <div class="modal">
-    <h2>Cloud Sync</h2>
-    <p>Sync your progress across all devices using a private GitHub Gist — no backend needed.</p>
-    <div class="modal-note">
-      1. Go to <strong>github.com → Settings → Developer settings → Personal access tokens → Tokens (classic)</strong><br>
-      2. Generate a token with <strong>only the <code>gist</code> scope</strong><br>
-      3. Paste it below. It is stored in your browser only, never sent anywhere except GitHub's API.
-    </div>
-    <div id="modal-status" style="font-size:.78rem;background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.15);border-radius:10px;padding:.65rem .85rem;margin-bottom:1rem;line-height:1.6">Not connected</div>
-    <label>GitHub Personal Access Token (gist scope)</label>
-    <input type="password" id="pat-input" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
-    <label>Gist ID <span style="font-weight:400;text-transform:none">(leave blank to auto-create on first save)</span></label>
-    <input type="text" id="gist-input" placeholder="Leave blank to auto-create">
-    <div class="modal-actions">
-      <button class="btn" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveGistSettings()">Save &amp; Sync</button>
-    </div>
-  </div>
-</div>
-
-</main>
-<script>
-
-const PHASES = [
-{id:'ph0',label:'Phase 0',name:'Software Baseline',color:'#64748b',
- icon:'🐍',
- desc:'Establishing the Pythonic foundation and containerization skills required for modern AI engineering.',
- courses:[
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'FastAPI Official Docs',url:'https://fastapi.tiangolo.com/',dur:'Self-paced',free:true,
-     readSections:['First Steps','Request Body','Query Parameters','Pydantic Models','Dependencies','Middleware','Background Tasks']},
-    {name:'Pydantic Docs',url:'https://docs.pydantic.dev/',dur:'Self-paced',free:true,
-     readSections:['Introduction','BaseModel','Field','Standard Types','Custom Validators','JSON Schema Generation']},
-    {name:'Docker Getting Started',url:'https://docs.docker.com/get-started/',dur:'Self-paced',free:true,
-     readSections:['What is a container?','Build and run your image','Share the app','Docker Compose overview','Multi-stage builds']}
-  ]}
- ],
- projects:[
-  {id:'ph0-p0',name:'GenAI Python Starter Template',
-   level:'Beginner',
-   desc:'Bootstrap a reusable, production-grade Python service template that every subsequent project will build on top of.',
-   businessValue:'Reduces "Time to Hello World" by 90% for all future AI services. Ensures production-ready logging and monitoring from day one.',
-   guide:'Step-by-step: 1. Initialize git and a virtualenv. 2. Set up FastAPI with Pydantic schemas for request/response validation. 3. Implement .env configuration via python-dotenv. 4. Add structured logging with `structlog`. 5. Create a /health endpoint for monitoring. 6. Write a basic /echo endpoint. 7. Create a multi-stage Dockerfile for optimized production builds. 8. Add a comprehensive README. This template ensures consistency across your entire journey.',
-   tips:['Use `pydantic-settings` for type-safe environment variables.', 'Set up a `Makefile` or `justfile` for common commands.', 'Keep your Docker image small with `python:3.12-slim`.'],
-   skills:['FastAPI','Pydantic','python-dotenv','Docker','structlog','pytest'],
-   deliverable:'A clean GitHub repository that serves as your "clone-and-go" foundation. CI/CD ready, Docker-verified, and well-documented.',
-   hrs:2,tags:['FastAPI','Pydantic','Docker']}
- ]
-},
-{id:'ph1',label:'Phase 1',name:'Foundations',color:'#8b5cf6',
- icon:'💡',
- desc:'Mastering the core concepts of Generative AI, Prompt Engineering, and the landscape of Large Language Models.',
- courses:[
-  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
-    {name:'Generative AI Foundations (4 courses)',url:'https://www.pluralsight.com/paths/generative-ai-foundations',dur:'2h',free:false,
-     readSections:['Introduction to Generative AI','How Generative AI Works','The Generative AI Landscape','Ethical Considerations in AI']},
-    {name:'Prompt Engineering (4 courses)',url:'https://www.pluralsight.com/paths/prompt-engineering-and-generative-ai',dur:'5h',free:false,
-     readSections:['Basics of Prompting','Intermediate Prompting Strategies','Advanced Prompting Techniques','Prompt Engineering for Specific Tasks']},
-    {name:'Large Language Models (4 courses)',url:'https://www.pluralsight.com/paths/large-language-models-llm',dur:'4h',free:false,
-     readSections:['Understanding Transformers','Training and Fine-tuning LLMs','LLM Evaluation Metrics','Deploying LLMs in Production']}
-  ]},
-  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'ChatGPT Prompt Engineering for Developers',url:'https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/',dur:'1h',free:true,
-     readSections:['The Guidelines','Iterative Prompt Development','Summarizing Content','Inferring Sentiment','Transforming Text','Expanding Ideas']},
-    {name:'Generative AI for Everyone',url:'https://www.deeplearning.ai/courses/generative-ai-for-everyone/',dur:'3h',free:true,
-     readSections:['What is Generative AI?','Generative AI Applications','The Lifecycle of a Generative AI Project','AI and Society']}
-  ]},
-  {platform:'QA Platform',pcolor:'#3b82f6',items:[
-    {name:'Intro to Generative AI',url:'https://platform.qa.com/learning-paths/intro-to-generative-ai-13286/',dur:'49min',free:false,
-     readSections:['What is GenAI?','Core Technologies','Business Use Cases']},
-    {name:'Generative AI Fundamentals of AWS (5 lessons)',url:'https://platform.qa.com/learning-paths/generative-ai-fundamentals-of-aws-13866/',dur:'2h23m',free:false,badge:'AWS',
-     readSections:['Introduction to Amazon Bedrock','AWS AI Strategy','Foundation Models on AWS','Building with Amazon Bedrock']},
-    {name:'AI-900 Exam Prep: Azure AI Fundamentals',url:'https://platform.qa.com/learning-paths/ai-900-exam-preparation-microsoft-azure-ai-fundamentals-1968/',dur:'9h46m',free:false,
-     readSections:['Describe AI workloads and considerations','Describe fundamental principles of machine learning on Azure','Describe features of computer vision workloads on Azure','Describe features of Natural Language Processing (NLP) workloads on Azure']}
-  ]},
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'OpenAI Platform Docs',url:'https://platform.openai.com/docs/',dur:'Reference',free:true,
-     readSections:['Overview','Models','Pricing','Rate Limits','Usage Policies']},
-    {name:'OpenAI Prompt Engineering Guide',url:'https://platform.openai.com/docs/guides/prompt-engineering',dur:'20min',free:true,
-     readSections:['Six strategies for getting better results','Strategy: Write clear instructions','Strategy: Provide reference text','Strategy: Split complex tasks into simpler subtasks','Strategy: Give the model time to "think"']}
-  ]}
- ],
- projects:[
-  {id:'ph1-p1',name:'Prompt Playground',
-   level:'Beginner',
-   desc:'Build a diagnostic workbench to compare prompting strategies (zero-shot, few-shot, CoT) side-by-side using the OpenAI SDK.',
-   businessValue:'Allows non-technical stakeholders to experiment with prompts and see cost/quality trade-offs before development begins.',
-   guide:'Implementation: 1. Create a Streamlit or Python CLI app. 2. Define a standard set of test questions. 3. Implement 4 tabs/modes: Zero-shot (direct), Few-shot (with examples), Persona-driven, and Chain-of-Thought (think step-by-step). 4. Use the OpenAI SDK to fetch completions for all modes simultaneously. 5. Display a comparison table showing the response text, estimated cost (using token counts), and latency. This project teaches you the variance in LLM outputs based on prompt design.',
-   tips:['Use the `tiktoken` library to calculate exact token usage.', 'Implement a "Side-by-Side" view for easy comparison.', 'Allow users to "Save" high-performing prompts to a file.'],
-   skills:['OpenAI SDK','Prompt Engineering','Streamlit','Token Estimation','Comparative Analysis'],
-   deliverable:'A playground app where you can input a task and instantly see how different prompting techniques affect the quality and cost of the output.',
-   hrs:3,tags:['Python','OpenAI','Prompting']},
-  {id:'ph1-p2',name:'Intelligent Summarizer',
-   level:'Beginner',
-   desc:'A production-ready FastAPI service that transforms long-form text into structured summaries, bullet points, and action items.',
-   businessValue:'Automates information extraction, saving hours of manual reading for research, support, or legal teams.',
-   guide:'Implementation: 1. Build a /summarize POST endpoint. 2. Use a system prompt to define the summarization style. 3. Accept parameters for `length` (short/medium/long) and `focus` (general/technical/executive). 4. Implement basic error handling for empty or excessively long inputs. 5. Return a structured JSON response with the summary and metadata. This project focuses on the "summarization" use case which is fundamental to most AI apps.',
-   tips:['Experiment with "One-Sentence" vs "Bullet Point" formats.', 'Add a "Tone" selector (e.g., Professional vs Friendly).', 'Use the `gpt-4o-mini` model for high-speed, low-cost summarization.'],
-   skills:['FastAPI','Pydantic','System Prompts','JSON API Design','Text Summarization'],
-   deliverable:'A robust API that can take a long article or transcript and return a concise, high-quality summary in multiple formats.',
-   hrs:3,tags:['FastAPI','OpenAI','NLP']},
-  {id:'ph1-p3',name:'Context-Aware Rewriter',
-   level:'Beginner',
-   desc:'An advanced text transformation tool that adapts any input to specific tones, personas, and audience levels (e.g., ELI5, Technical, Executive).',
-   businessValue:'Ensures brand consistency and adapts content for diverse audiences automatically, improving engagement and understanding.',
-   guide:'Implementation: 1. Define a set of "Tone Profiles" in a config file. 2. Build a /rewrite endpoint that takes the text and a profile name. 3. The LLM should not just rewrite, but explain *why* it made certain choices in a separate "RATIONALE" field. 4. Support "Iterative Refinement" where the user can provide feedback to the rewrite. This project explores the "persona" capabilities of LLMs.',
-   tips:['Define personas using clear, descriptive adjectives.', 'Ask the model to output a JSON object including the "Rationale" for changes.', 'Test with varying input lengths to see where the tone breaks.'],
-   skills:['Persona Engineering','Dynamic Prompts','Explainable AI','Iterative Refinement'],
-   deliverable:'A rewriter that can transform a dry technical doc into an engaging blog post or a complex legal paragraph into an ELI5 summary.',
-   hrs:3,tags:['FastAPI','OpenAI','NLP']}
- ]
-},
-{id:'ph2',label:'Phase 2',name:'Python LLM Apps',color:'#a855f7',
- icon:'🚀',
- desc:'Moving from simple prompts to sophisticated Python applications with state, streaming, and structured data extraction.',
- courses:[
-  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
-    {name:'OpenAI for Developers (13 courses)',url:'https://www.pluralsight.com/paths/openai-for-developers',dur:'12h',free:false,badge:'MUST DO',
-     readSections:['Getting Started with the OpenAI API','Working with Chat Completions','Utilizing Function Calling','Implementing Moderation and Safety','Streaming Responses','Using Embeddings']},
-    {name:'Generative AI for Developers (7 courses)',url:'https://www.pluralsight.com/paths/generative-ai-for-developers',dur:'6h',free:false,
-     readSections:['AI Development Workflow','Selecting the Right Model','Optimizing Token Usage','Introduction to LangChain']},
-    {name:'Generative AI Integration for Developers',url:'https://www.pluralsight.com/paths/generative-ai-integration-for-developers',dur:'4h',free:false,
-     readSections:['API Security Best Practices','Cost Management and Monitoring','User Experience Design for AI']}
-  ]},
-  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'LangChain for LLM Application Development',url:'https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/',dur:'1.5h',free:true,
-     readSections:['Models, Prompts and Parsers','Memory','Chains','Question and Answer','Evaluation','Agents']}
-  ]},
-  {platform:'LangChain Academy',pcolor:'#ec4899',items:[
-    {name:'Introduction to LangChain (Python)',url:'https://academy.langchain.com/courses/foundation-introduction-to-langchain-python',dur:'~1.5h',free:true,badge:'NEW',
-     readSections:['What is LangChain?','The Core Abstractions','Building your first Chain','Introduction to LangSmith']}
-  ]},
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'OpenAI Responses API vs Chat Completions',url:'https://platform.openai.com/docs/guides/migrate-to-responses',dur:'Reference',free:true,
-     readSections:['Comparison Table','New Features in Responses API','Step-by-step Migration']},
-    {name:'OpenAI Structured Outputs',url:'https://platform.openai.com/docs/guides/structured-outputs',dur:'Reference',free:true,
-     readSections:['Introduction to Structured Outputs','Using JSON Schema','Defining Pydantic Models for Output','Handling Errors and Refusals']},
-    {name:'OpenAI Cookbook',url:'https://cookbook.openai.com/',dur:'Reference',free:true,
-     readSections:['Techniques to improve reliability','Visualizing embeddings','Question answering using embeddings-based retrieval','How to format inputs for Chat Completions']}
-  ]}
- ],
- projects:[
-  {id:'ph2-p4',name:'Contextual CLI Chatbot',
-   level:'Intermediate',
-   desc:'A sophisticated terminal-based AI assistant with persistent session memory, streaming responses, and transcript management.',
-   businessValue:'Provides a private, secure, and customizable AI assistant that runs entirely within the developer workflow.',
-   guide:'Implementation: 1. Use the `rich` library for a beautiful terminal UI. 2. Implement a local JSON or SQLite store for conversation history. 3. Use the OpenAI SDK with `stream=True` to print tokens as they arrive. 4. Implement "Session Commands" (e.g., /save, /clear, /undo). 5. Track token usage per turn and per session. 6. Support "System Prompt Hot-Swapping" to change the personality mid-chat. This project masters stateful LLM interactions.',
-   tips:['Use `sqlite3` for a lightweight, single-file conversation history.', 'Implement a "Markdown" renderer for pretty-printing responses.', 'Allow "Slash Commands" for quick actions like `/clear` or `/export`.'],
-   skills:['Streaming API','Rich UI','Local Persistence','Session Management','Token Tracking'],
-   deliverable:'A CLI tool that feels like a native terminal application, with lightning-fast streaming and perfectly preserved conversation context.',
-   hrs:5,tags:['Python','CLI','OpenAI']},
-  {id:'ph2-p5',name:'Enterprise GenAI Microservice',
-   level:'Intermediate',
-   desc:'A high-performance FastAPI service featuring rate-limiting, structured logging, and production-grade monitoring for AI tasks.',
-   businessValue:'Creates a secure, scalable "AI Gateway" that protects backend LLMs from abuse and provides visibility into spend.',
-   guide:'Implementation: 1. Integrate `slowapi` for per-client rate limiting. 2. Configure `structlog` for JSON-formatted logs. 3. Implement async database operations (even if just for logging). 4. Add a custom `/metrics` endpoint that reports average LLM latency and token costs. 5. Set up a Docker Compose stack with the API and a Redis instance for rate-limiting state. This project prepares you for real-world deployments.',
-   tips:['Use Redis for high-performance rate limiting.', 'Log the "User-Agent" and "Client-IP" to track usage patterns.', 'Add a health check that verifies the OpenAI API connectivity.'],
-   skills:['Rate Limiting','Production Logging','Monitoring','Docker Compose','Async Programming'],
-   deliverable:'A backend service that can handle concurrent users safely, with clear visibility into its performance and costs.',
-   hrs:6,tags:['FastAPI','Pydantic','OpenAI']},
-  {id:'ph2-p6',name:'Structured Schema Extractor',
-   level:'Intermediate',
-   desc:'Transform unstructured real-world documents (invoices, emails, logs) into strictly typed JSON objects using LLM-native schema enforcement.',
-   businessValue:'Converts messy data into actionable insights, enabling automated workflows for invoices, support tickets, and more.',
-   guide:'Implementation: 1. Define complex, nested Pydantic models (e.g., an Invoice model with a list of Item models). 2. Use OpenAI\'s `structured_outputs` feature. 3. Create a test suite with 10 varied documents. 4. Compare the extraction accuracy when using the model\'s built-in schema enforcement vs. post-processing with Pydantic. 5. Implement a "Validation Report" that flags data that doesn\'t meet business rules. This project bridges AI and structured data systems.',
-   tips:['Always provide a JSON Schema to the model.', 'Use "Self-Correction" by passing the validation error back to the LLM.', 'Try `gpt-4o-2024-08-06` for 100% reliable structured output.'],
-   skills:['JSON Schema','Pydantic v2','Structured Outputs','Data Engineering','Validation Logic'],
-   deliverable:'An automated tool that takes a messy PDF/text invoice and returns a perfectly formatted JSON object ready for a database.',
-   hrs:5,tags:['Pydantic','OpenAI','JSON']},
-  {id:'ph2-p7',name:'AI Talent Matcher (Resume/JD)',
-   level:'Intermediate',
-   desc:'A deep-analysis tool that scores resumes against job descriptions, identifying skills gaps and generating tailored improvement plans.',
-   businessValue:'Significantly reduces recruitment overhead by automatically screening and ranking candidates with human-like reasoning.',
-   guide:'Implementation: 1. Parse PDF resumes and text JDs. 2. Use a multi-document prompt that asks the LLM to act as a "Senior Technical Recruiter." 3. Extract specific skill matches, partial matches, and complete gaps. 4. Generate a structured "Gap Analysis" JSON. 5. Produce a "Learning Roadmap" for the candidate. 6. Implement a scoring algorithm that combines LLM reasoning with keyword weightings. This project explores high-value business logic.',
-   tips:['Extract "Hard Skills" and "Soft Skills" separately.', 'Generate a "Missing Skills" list to help candidates improve.', 'Validate the extracted dates to ensure experience calculations are correct.'],
-   skills:['Multi-document Context','Semantic Matching','Gap Analysis','Career Coaching Logic'],
-   deliverable:'A /match API that provides a detailed, objective fit score and actionable feedback for any candidate/job pair.',
-   hrs:5,tags:['NLP','Classification','FastAPI']}
- ]
-},
-{id:'ph3',label:'Phase 3',name:'Advanced Prompting & Frameworks',color:'#8b5cf6',
- icon:'🧠',
- desc:'Leveling up your prompting techniques with Chain-of-Thought, ReAct, and exploring industry-leading orchestration frameworks.',
- courses:[
-  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'ChatGPT Prompt Engineering for Developers',url:'https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/',dur:'~1h',free:true,
-     readSections:['Guidelines','Iterative Prompt Development','Summarizing','Inferring','Transforming','Expanding']},
-    {name:'Building Systems with the ChatGPT API',url:'https://www.deeplearning.ai/short-courses/building-systems-with-chatgpt/',dur:'~1h',free:true,
-     readSections:['Language Models, the Chat Format and Tokens','Classification','Moderation','Chain of Thought Reasoning','Chaining Prompts','Check Outputs']}
-  ]},
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'Prompt Engineering Guide (DAIR.AI)',url:'https://www.promptingguide.ai/',dur:'Reference',free:true,
-     readSections:['Introduction','Techniques','Applications','Models','Risks','Adversarial Prompting']},
-    {name:'LangChain: Expression Language (LCEL)',url:'https://python.langchain.com/docs/concepts/lcel/',dur:'Reference',free:true,
-     readSections:['Why use LCEL?','Basic Example','Streaming','Parallelism','Retries and Fallbacks']},
-    {name:'LlamaIndex: High-Level Concepts',url:'https://docs.llamaindex.ai/en/stable/getting_started/concepts.html',dur:'Reference',free:true,
-     readSections:['Data Connectors (LlamaHub)','Documents / Nodes','Index Structures','Query Engines','Chat Engines']}
-  ]}
- ],
- projects:[
-  {id:'ph3-p8',name:'Advanced Prompting Workshop',
-   level:'Advanced',
-   desc:'Build a library of reusable, complex prompts for various business tasks using advanced techniques like CoT and Self-Correction.',
-   businessValue:'Creates a library of "High-Performing Prompts" that solve complex logical problems where basic prompting fails.',
-   guide:'Implementation: 1. Develop a "Prompt Runner" utility. 2. Implement a Chain-of-Thought (CoT) prompt for a logical reasoning task (e.g., scheduling). 3. Create a "Few-Shot" prompt for a complex classification task with 10 diverse examples. 4. Implement a "Self-Correction" loop: Model A generates, Model B critiques, Model A regenerates. 5. Document the "Accuracy Lift" gained from each technique. This project makes you a master of the "hidden logic" of prompts.',
-   tips:['Use the "Chain of Thought" strategy for math or logic tasks.', 'Implement "Self-Consistency" by running the prompt 3 times and picking the majority.', 'Try "Least-to-Most" prompting for very long, complex multi-step tasks.'],
-   skills:['Chain-of-Thought','Few-Shot Learning','Self-Reflection Loops','Prompt Benchmarking'],
-   deliverable:'A collection of 5+ "Gold Standard" prompts with a Python script that executes and verifies them against a test set.',
-   hrs:6,tags:['Prompting','Engineering','Advanced']},
-  {id:'ph3-p9',name:'Multi-Framework Orchestrator',
-   level:'Advanced',
-   desc:'Compare LangChain, LlamaIndex, and PydanticAI by building the same complex task in all three frameworks.',
-   businessValue:'Informs critical architecture decisions by proving which AI framework (LangChain vs LlamaIndex) is best for specific company needs.',
-   guide:'Implementation: 1. Choose a task: "Extract structured data from a 50-page PDF." 2. Implement using LangChain\'s LCEL and PDF loaders. 3. Implement using LlamaIndex\'s VectorStoreIndex and QueryEngine. 4. Implement using PydanticAI\'s strictly typed agent. 5. Write a "Framework Report" comparing ease of use, debuggability, and performance. This project helps you choose the right tool for the right job.',
-   tips:['Focus on "Debuggability" — which framework makes it easier to see what went wrong?', 'Benchmark the "Init Time" of each framework.', 'Compare how each framework handles "Streaming" out of the box.'],
-   skills:['LangChain','LlamaIndex','PydanticAI','Framework Comparison','RAG Architectures'],
-   deliverable:'A multi-file repository showing identical functionality implemented via three distinct philosophies, with a detailed technical comparison.',
-   hrs:8,tags:['Orchestration','Frameworks','Comparison']}
- ]
-},
-{id:'ph4',label:'Phase 4',name:'Vector DBs & RAG',color:'#3b82f6',
- icon:'📂',
- desc:'Building Retrieval Augmented Generation (RAG) systems that can search across millions of documents with semantic precision.',
- courses:[
-  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'Vector Databases: from Embeddings to Applications',url:'https://www.deeplearning.ai/short-courses/vector-databases-embeddings-applications/',dur:'~1h',free:true,
-     readSections:['What is a Vector Database?','How Embeddings Work','Similarity Search','Building a RAG application']},
-    {name:'Advanced Retrieval for AI with Chroma',url:'https://www.deeplearning.ai/short-courses/advanced-retrieval-for-ai/',dur:'~1h',free:true,
-     readSections:['Introduction to Retrieval','Query Expansion','Cross-Encoder Reranking','Embedding Adapters']}
-  ]},
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'ChromaDB Official Docs',url:'https://docs.trychroma.com/',dur:'Reference',free:true,
-     readSections:['Getting Started','Core Concepts','API Reference','Deployment','Multi-modal support']},
-    {name:'Qdrant: Hybrid Search Guide',url:'https://qdrant.tech/documentation/concepts/hybrid-search/',dur:'Reference',free:true,
-     readSections:['Dense vs Sparse Vectors','Hybrid Search Implementation','Scoring and Ranking','Performance Tuning']},
-    {name:'Pinecone: RAG Best Practices',url:'https://www.pinecone.io/learn/rag-best-practices/',dur:'Reference',free:true,
-     readSections:['Chunking Strategies','Metadata Filtering','Reranking Results','Handling Large Datasets']}
-  ]}
- ],
- projects:[
-  {id:'ph4-p10',name:'Hybrid Search Engine (Local)',
-   level:'Advanced',
-   desc:'Build a document search system that combines semantic (Vector) and keyword (BM25) search for maximum retrieval accuracy.',
-   businessValue:'Combines the best of both worlds: finding "exact matches" for names/codes and "semantic matches" for meanings.',
-   guide:'Implementation: 1. Use ChromaDB for dense vector storage. 2. Use `rank_bm25` for sparse keyword search. 3. Implement Reciprocal Rank Fusion (RRF) to merge the results from both methods. 4. Build a CLI to index and search. 5. Test with queries that are conceptual (best for vectors) vs. keyword-specific (best for BM25). This project masters the "Hybrid Search" pattern used in production.',
-   tips:['Start with `all-MiniLM-L6-v2` for local, fast embeddings.', 'Use `rank_bm25` for the keyword layer.', 'Implement a "Score Threshold" to filter out irrelevant results.'],
-   skills:['Vector Search','BM25','RRF Algorithm','ChromaDB','Indexing Strategies'],
-   deliverable:'A local search engine that indexes your own documents and provides a "Hybrid" result that is more accurate than either method alone.',
-   hrs:8,tags:['VectorDB','RAG','Search']},
-  {id:'ph4-p11',name:'Production RAG with Reranking',
-   level:'Advanced',
-   desc:'Create a high-fidelity RAG pipeline that uses a Cross-Encoder to rerank retrieved documents before passing them to the LLM.',
-   businessValue:'Delivers the most accurate RAG system possible, significantly reducing "hallucinations" by ensuring only the best context is used.',
-   guide:'Implementation: 1. Stage 1 (Retrieval): Fetch top 20 documents from a vector store. 2. Stage 2 (Reranking): Use a Cross-Encoder model (e.g., `BAAI/bge-reranker-v2-m3`) to re-score those 20 docs against the query. 3. Stage 3 (Synthesis): Take only the top 3 reranked docs and pass them to the LLM. 4. Measure the difference in answer quality vs. retrieval latency. This project implements the state-of-the-art in RAG pipelines.',
-   tips:['Use the `Cohere` or `BGE` Reranker for the best results.', 'Profile the latency: reranking adds ~200-500ms but increases precision.', 'Test with "Distractor" documents to see if the reranker can ignore them.'],
-   skills:['Cross-Encoders','Reranking','Two-Stage Retrieval','Performance Profiling','Model Selection'],
-   deliverable:'A RAG service that handles complex questions by finding the "needle in the haystack" through intelligent reranking.',
-   hrs:10,tags:['RAG','Reranking','Production']}
- ]
-},
-{id:'ph5',label:'Phase 5',name:'Evals & Observability',color:'#ef4444',
- icon:'📈',
- desc:'The critical phase: learning how to measure, evaluate, and monitor LLM performance to move from "demo" to "production".',
- courses:[
-  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'Building and Evaluating Advanced RAG',url:'https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/',dur:'~1h',free:true,
-     readSections:['The RAG Triad','Faithfulness Evaluation','Answer Relevance','Context Relevance','Automated Evaluation with Ragas']},
-    {name:'Red Teaming LLM Applications',url:'https://www.deeplearning.ai/short-courses/red-teaming-llm-applications/',dur:'~1h',free:true,
-     readSections:['Red Teaming Fundamentals','Finding Jailbreaks','Adversarial Testing','Defensive Strategies']},
-    {name:'Quality and Safety for LLM Applications',url:'https://www.deeplearning.ai/short-courses/quality-safety-llm-applications/',dur:'~1h',free:true,
-     readSections:['Defining Quality and Safety','Guardrails Implementation','Moderation Workflows','Monitoring and Iteration']},
-    {name:'Semantic Caching for AI Agents',url:'https://www.deeplearning.ai/short-courses/semantic-caching-for-ai-agents/',dur:'30min',free:true,badge:'NEW',
-     readSections:['Why Semantic Caching?','Embedding-Based Similarity','Redis Integration','Cost and Latency Reduction']},
-    {name:'NVIDIA NeMo Agent Toolkit: Making Agents Reliable',url:'https://www.deeplearning.ai/short-courses/nvidia-nat-making-agents-reliable/',dur:'45min',free:true,badge:'NEW',
-     readSections:['Observability Basics','Evaluation Tools','Production Deployment Patterns','Guardrails Integration']}
-  ]},
-  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
-    {name:'Testing, Monitoring, and Evaluating OpenAI Models',url:'https://www.pluralsight.com/courses/testing-monitoring-evaluating-openai-models',dur:'59min',free:false,
-     readSections:['Designing Evals','Monitoring in Real-time','Interpreting Model Metrics','A/B Testing Strategies']},
-    {name:'OpenAI Security and Moderations',url:'https://www.pluralsight.com/courses/openai-security-moderations',dur:'28min',free:false,
-     readSections:['Moderation Endpoint','Safety System Prompts','Preventing Abuse']},
-    {name:'Generative AI Data Privacy and Safe Use',url:'https://www.pluralsight.com/courses/safe-use-developers-generative-ai-data-privacy',dur:'54min',free:false,
-     readSections:['PII Detection','Anonymization Techniques','Legal and Regulatory Landscape']}
-  ]},
-  {platform:'LangChain Academy',pcolor:'#ec4899',items:[
-    {name:'LangSmith Essentials',url:'https://academy.langchain.com/courses/langsmith-essentials',dur:'~1h',free:true,
-     readSections:['Tracing','Datasets','Evaluation','Testing and Monitoring']}
-  ]},
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'Langfuse Docs',url:'https://langfuse.com/docs',dur:'Reference',free:true,
-     readSections:['Quickstart','Tracing','Analytics','Scores and Evals','Prompts']},
-    {name:'DeepEval Framework',url:'https://docs.confident-ai.com/',dur:'Reference',free:true,
-     readSections:['Metrics Overview','Unit Testing','LLM-as-a-Judge (G-Eval)','RAG Evaluation']},
-    {name:'Arize Phoenix',url:'https://docs.arize.com/phoenix/',dur:'Reference',free:true,
-     readSections:['Tracing Basics','Inferences and Evaluations','Local vs Production Setup']},
-    {name:'OWASP LLM Top 10 (2025)',url:'https://owasp.org/www-project-top-10-for-large-language-model-applications/',dur:'Reference',free:true,badge:'CRITICAL',
-     readSections:['Top 10 Risks','LLM01: Prompt Injection','LLM02: Insecure Output Handling','LLM06: Sensitive Information Disclosure']}
-  ]}
- ],
- projects:[
-   {id:'ph5-p16',name:'Automated Eval Suite',
-    level:'Intermediate',
-    desc:'Build a professional evaluation pipeline that uses LLM-as-a-Judge and metrics like Ragas to verify RAG quality.',
-    businessValue:'Moves development from "vibe-based" to "data-driven". Essential for maintaining quality as prompts and models evolve.',
-    guide:'Implementation: 1. Create a "Golden Dataset" of 50 query/context/answer triplets. 2. Implement a script using `DeepEval` or `Ragas`. 3. Define metrics: Faithfulness, Answer Relevancy, and Context Precision. 4. Run the suite and generate a JSON/CSV report. 5. Integrate into GitHub Actions to block "bad" prompt updates. This project moves you from "it looks okay" to "it is verified".',
-    tips:['Use G-Eval (LLM-as-a-Judge) for subjective qualities.', 'Automate this in CI/CD to prevent regressions.', 'Start with a small, high-quality "Golden Dataset".'],
-    skills:['LLM-as-a-Judge','Ragas','Automated Testing','CI/CD for AI','Metric Definition'],
-    deliverable:'A testing suite that gives every change a "Quality Score" and prevents regression in your AI application\'s accuracy.',
-    hrs:8,tags:['Evals','Quality','CI/CD']},
-   {id:'ph5-p17',name:'Observability Dashboard',
-    level:'Intermediate',
-    desc:'Implement full-stack tracing for an LLM app to monitor latency, costs, and traces in real-time using Langfuse or LangSmith.',
-    businessValue:'Provides visibility into costs, latency, and failure modes. Critical for scaling AI features to real users.',
-    guide:'Implementation: 1. Instrument your FastAPI app with the Langfuse SDK. 2. Track nested traces (e.g., Retrieval -> Reranking -> LLM). 3. Log user feedback (thumbs up/down) directly to the trace. 4. Set up an alert for high-cost or high-latency requests. 5. View your traces in the Langfuse UI. This project provides the "Flight Data Recorder" for your AI app.',
-    tips:['Track "Trace IDs" across your entire stack.', 'Log user feedback (thumbs up/down) to link with specific traces.', 'Set up alerts for high-cost or high-latency outliers.'],
-    skills:['Observability','Tracing','Cost Analysis','Feedback Loops','Production Monitoring'],
-    deliverable:'A live monitoring system where you can replay any user interaction and see exactly why a model gave a specific answer.',
-    hrs:7,tags:['Observability','Monitoring','Ops']},
-   {id:'ph5-p17a',name:'Prompt Optimizer (DSPy)',
-    level:'Advanced',
-    desc:'Replace manual "prompt engineering" with programmatic optimization using the DSPy framework.',
-    businessValue:'Automates the tedious process of prompt engineering. Results in more robust and efficient prompts than manual trial-and-error.',
-    guide:'Implementation: 1. Define a DSPy Signature for a task (e.g., multi-hop RAG). 2. Create a small training set of 20 examples. 3. Use the `BootstrapFewShot` teleprompter to automatically find the best examples and instructions. 4. Compare the accuracy of the compiled program vs. a hand-written prompt. This is the transition to "Software Engineering" for prompts.',
-    tips:['Start with a clear "Signature" of your task.', 'Use "BootstrapFewShot" to automatically find the best examples.', 'Optimize for smaller, cheaper models to save costs.'],
-    skills:['DSPy','Programmatic Prompts','Optimization','Few-Shot Bootstrapping'],
-    deliverable:'A DSPy program that outperforms your best manual prompt, proving the power of programmatic optimization.',
-    hrs:8,tags:['DSPy','Optimization','Advanced']},
-   {id:'ph5-p17b',name:'Red Teaming & Security Guardrails',
-    level:'Advanced',
-    desc:'Hardening your AI application against prompt injection, data leakage, and harmful content using active defense layers.',
-    businessValue:'Protects the brand and users from adversarial attacks, prompt injection, and toxic outputs. Mandatory for enterprise applications.',
-    guide:'Implementation: 1. Use an automated red-teaming tool (e.g., Giskard or PyRIT). 2. Attempt common injections: "Ignore all previous instructions," "What is your system prompt?". 3. Implement an input/output guard layer using `NeMo Guardrails` or custom LLM checks. 4. Add a PII scrubber to the output. This project ensures your AI app is safe and compliant.',
-    tips:['Use "Jailbreak" datasets to test your defenses.', 'Implement multi-layer guardrails (input and output).', 'Regularly audit for PII leakage.'],
-    skills:['Red Teaming','AI Security','Guardrails','PII Scrubbing','Vulnerability Assessment'],
-    deliverable:'A "Security Shield" implementation that blocks 95%+ of adversarial attempts while maintaining low latency.',
-    hrs:7,tags:['Security','Red Teaming','Guardrails']}
- ]
-},
-{id:'ph6',label:'Phase 6',name:'MCP & Agentic Orchestration',color:'#8b5cf6',
- icon:'🤖',
- desc:'The cutting edge: building autonomous agents that can use tools and standardizing tool-access via the Model Context Protocol (MCP).',
- courses:[
-  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'AI Agents in LangGraph',url:'https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/',dur:'1.5h',free:true,badge:'MUST DO',
-     readSections:['Introduction to LangGraph','Nodes and Edges','State Management','Persistence and Time Travel','Multi-agent Systems']},
-    {name:'Build AI Apps with MCP Servers',url:'https://www.deeplearning.ai/short-courses/build-ai-apps-with-mcp-server-working-with-box-files/',dur:'1h',free:true,
-     readSections:['Overview of MCP','Creating an MCP Server','Resources, Tools, and Prompts','Connecting to Claude Desktop']},
-    {name:'A2A: The Agent2Agent Protocol',url:'https://www.deeplearning.ai/short-courses/a2a-the-agent2agent-protocol/',dur:'1h27m',free:true,badge:'NEW 2026',
-     readSections:['What is A2A?','Agent Cards and Discovery','Task Delegation','Cross-Framework Multi-Agent Systems','A2A vs MCP']},
-    {name:'Building Coding Agents with Tool Execution',url:'https://www.deeplearning.ai/short-courses/building-coding-agents-with-tool-execution/',dur:'1h',free:true,badge:'NEW 2026',
-     readSections:['Sandboxed Execution with E2B','Writing Code-Executing Agents','Safety Boundaries','Parallel Agent Execution']},
-    {name:'Agent Skills with Anthropic',url:'https://www.deeplearning.ai/short-courses/agent-skills-with-anthropic/',dur:'45min',free:true,badge:'NEW',
-     readSections:['Equipping Agents with Skills','Expert Knowledge Injection','Reliable Coding Agents','Research and Analysis Workflows']}
-  ]},
-  {platform:'LangChain Academy',pcolor:'#ec4899',items:[
-    {name:'Introduction to LangGraph (Python)',url:'https://academy.langchain.com/courses/intro-to-langgraph',dur:'6h',free:true,badge:'HIGHLY REC',
-     readSections:['Module 1: Graphs','Module 2: State','Module 3: Persistence','Module 4: Multi-agent','Module 5: Human-in-the-loop']}
-  ]},
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'MCP Official Docs',url:'https://modelcontextprotocol.io/docs/',dur:'Reference',free:true,
-     readSections:['Quickstart','Core Concepts','Python SDK','TypeScript SDK','Example Servers']},
-    {name:'LangGraph: State Management',url:'https://langchain-ai.github.io/langgraph/concepts/low_level/#state',dur:'Reference',free:true,
-     readSections:['State Definition','Reducers','Shared State','Subgraphs']}
-  ]}
- ],
- projects:[
-  {id:'ph6-p18',name:'FastMCP Utility Server',
-   level:'Intermediate',
-   desc:'Build a custom MCP server that gives any AI assistant (Claude, Cursor) new powers on your local machine.',
-   businessValue:'Bridges the gap between AI and local business workflows/data. Standardizes tool-use across different AI agents.',
-   guide:'Implementation: 1. Use the Python `FastMCP` SDK. 2. Tool 1: `execute_command` (safe shell wrapper). 3. Tool 2: `read_recent_logs` (tail -n X on specific files). 4. Resource: `project_status` (returns a summary of the current repo). 5. Deploy and test in Claude Desktop. This project masters the new standard for AI tool-use.',
-   tips:['Start with read-only tools before adding write capabilities.', 'Use environment variables for any API keys or local paths.', 'Test your server in the Claude Desktop app first.'],
-   skills:['MCP Protocol','FastMCP SDK','Tool/Resource Design','System Programming'],
-   deliverable:'A running MCP server that makes you 10x faster by giving your AI agent direct, standardized access to your dev environment.',
-   hrs:5,tags:['MCP','Python','Productivity']},
-  {id:'ph6-p19',name:'Human-in-the-Loop Agent',
-   level:'Advanced',
-   desc:'Build a stateful LangGraph agent that requires explicit human approval for sensitive or "dangerous" tool actions.',
-   businessValue:'Enables AI to handle sensitive tasks safely, ensuring regulatory compliance and preventing costly errors.',
-   guide:'Implementation: 1. Define a graph with a "Tools" node and a "Human Review" node. 2. Use `interrupt_before` on the tools node. 3. Implement a simple web UI (FastAPI + HTML) to view the pending action. 4. Use `update_state` to send the human\'s decision back to the graph. 5. Test by trying to "delete a production database" and verifying the pause. This project solves the "Agent Trust" problem.',
-   tips:['Keep the "State" small to avoid context window issues.', 'Use persistent checkpoints so agents can "resume" after human approval.', 'Design clear UI for the human to understand "why" the agent wants to take an action.'],
-   skills:['LangGraph Checkpoints','State Management','HITL Patterns','Async Orchestration'],
-   deliverable:'A "Safe Agent" that collaborates with you, asking for permission before doing anything critical or expensive.',
-   hrs:6,tags:['LangGraph','Safety','HITL']},
-  {id:'ph6-p20',name:'Multi-Agent Supervisor',
-   level:'Advanced',
-   desc:'Build an orchestrator agent that intelligently delegates complex tasks to a team of specialized sub-agents.',
-   businessValue:'Models complex organizational structures within a single AI system, allowing for high-quality, peer-reviewed outputs at scale.',
-   guide:'Implementation: 1. Create 3 sub-agents: Coder, Researcher, and Reviewer. 2. Implement a Supervisor agent using the LangGraph "Router" pattern. 3. The Supervisor decides which sub-agent should handle the next step. 4. Sub-agents communicate via a shared "Graph State." 5. Final output is synthesized by the Supervisor. This project represents the current peak of agentic architecture.',
-   tips:['Limit the number of agents to avoid "too many cooks" confusion.', 'Use a strong model for the Supervisor (e.g., GPT-4o, Claude 3.5 Sonnet).', 'Implement shared state carefully to prevent agents from overwriting each other.'],
-   skills:['Supervisor Pattern','Agent Delegation','State Sharing','Graph Theory for Agents'],
-   deliverable:'A "Mini-Org" of agents that can take a vague requirement and work together to produce a complete, verified solution.',
-   hrs:8,tags:['LangGraph','Multi-Agent','Orchestration']}
- ]
-},
-{id:'ph7',label:'Phase 7',name:'AI-Native Dev Productivity',color:'#06b6d4',
- icon:'💻',
- desc:'Integrating AI directly into your coding workflow using Aider, PydanticAI, and custom local model configurations.',
- courses:[
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'Aider Documentation',url:'https://aider.chat/docs/',dur:'Reference',free:true,
-     readSections:['Installation','Architect Mode','Code Mode','Using with Ollama','Configuration']},
-    {name:'PydanticAI Docs',url:'https://ai.pydantic.dev/',dur:'Reference',free:true,
-     readSections:['Agents','Tools','Dependencies','Evals','Models']},
-    {name:'Ollama Tool Calling Docs',url:'https://docs.ollama.com/capabilities/tool-calling',dur:'Reference',free:true},
-    {name:'Continue.dev Custom Config',url:'https://docs.continue.dev/customization/config',dur:'20min',free:true,
-     readSections:['Custom Models','Slash Commands','Context Providers']}
-  ]},
-  {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'Gemini CLI: Code & Create with an Open-Source Agent',url:'https://www.deeplearning.ai/short-courses/gemini-cli-code-and-create-with-an-open-source-agent/',dur:'1h',free:true,badge:'NEW 2026',
-     readSections:['Gemini CLI Setup','Building with Local Tools','Automating Coding Workflows','Cloud Service Integration']},
-    {name:'Spec-Driven Development with Coding Agents',url:'https://www.deeplearning.ai/short-courses/spec-driven-development-with-coding-agents/',dur:'45min',free:true,badge:'NEW 2026',
-     readSections:['Writing Effective Specs','Giving Context to Coding Agents','Iterative Refinement','Maintainable AI-Generated Code']}
-  ]}
- ],
- projects:[
-  {id:'ph7-p25',name:'Aider-Driven Feature Implementation',
-   level:'Intermediate',
-   desc:'Build a non-trivial feature in an existing codebase using Aider in "Architect Mode" with a local model.',
-   businessValue:'Dramatically increases developer velocity and reduces context-switching by delegating repetitive coding tasks to AI.',
-   guide:'Implementation: 1. Install Aider and connect it to a local LLM (e.g., Llama 3 via Ollama). 2. Use `/architect` to plan a "User Profile" feature. 3. Let Aider generate the migrations, models, and API routes. 4. Use Aider\'s test-driven mode to fix any bugs it introduces. This project proves that you can build faster with AI in the driver\'s seat.',
-   tips:['Work in small, logical commits to allow easy rollbacks.', 'Use Aider\'s "Architect Mode" for planning before generation.', 'Always verify AI-generated tests before trusting the code.'],
-   skills:['Aider CLI','Architect Mode','Local LLM Ops','AI-Driven TDD'],
-   deliverable:'A complete, merged PR where 100% of the code and tests were written by Aider under your guidance.',
-   hrs:6,tags:['Aider','Productivity','Local AI']},
-  {id:'ph7-p26',name:'PydanticAI Agent System',
-   level:'Advanced',
-   desc:'Build a strictly typed, production-ready agent using PydanticAI for a complex financial analysis task.',
-   businessValue:'Provides a production-grade, type-safe framework for building reliable agents that integrate seamlessly with modern Python backends.',
-   guide:'Implementation: 1. Define a Pydantic signature for a "Portfolio Analysis." 2. Implement tools for fetching stock prices and news. 3. Use Dependency Injection to pass a validated API client to the agent. 4. Write an eval suite using PydanticAI\'s built-in testing patterns. This project masters the "Typed Agent" philosophy which is essential for enterprise safety.',
-   tips:['Leverage Pydantic\'s validation to "force" the agent into specific output formats.', 'Use Dependency Injection to keep your agent logic separate from infrastructure.', 'Monitor your agent runs with Logfire for deep debugging.'],
-   skills:['PydanticAI','Type-Safe Agents','Dependency Injection','Structured Reasoning'],
-   deliverable:'A financial agent script that is 100% type-checked by Mypy and returns perfectly validated analysis results every time.',
-   hrs:5,tags:['PydanticAI','Python','Agents']}
- ]
-},
-{id:'ph8',label:'Phase 8',name:'Multimodal & Real-Time Voice',color:'#f97316',
- icon:'🎤',
- desc:'Exploring the next frontier: building applications that can see, hear, and speak with sub-second latency.',
- courses:[
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'Gemini Multimodal Live API',url:'https://ai.google.dev/gemini-api/docs/multimodal-live',dur:'Reference',free:true,badge:'NEW',
-     readSections:['Introduction','WebSocket API','Audio/Video Formats','Function Calling','Best Practices']},
-    {name:'OpenAI Realtime API Guide',url:'https://platform.openai.com/docs/guides/realtime',dur:'Reference',free:true,
-     readSections:['Architecture','Events','Tools','VAD (Voice Activity Detection)','Session Management']},
-    {name:'Vision Analysis with GPT-4o & Gemini 1.5 Pro',url:'https://platform.openai.com/docs/guides/vision',dur:'30min',free:true,
-     readSections:['Capabilities','Prompting for Vision','Cost Analysis']}
-  ]}
- ],
- projects:[
-   {id:'ph8-p27',name:'Gemini Multimodal Live Assistant',
-    level:'Advanced',
-    desc:'Build a low-latency voice-to-voice assistant that can perform tasks while talking to you.',
-    businessValue:'Unlocks natural, eyes-free interactions for field workers, accessibility, or high-touch customer support.',
-    guide:'Implementation: 1. Set up a WebSocket client in Python. 2. Connect to the Gemini Multimodal Live API. 3. Stream microphone input and play back model audio output using `pyaudio`. 4. Implement a "Live Tool" (e.g., "Search Wikipedia") that the agent can call while speaking. 5. Optimize for minimum latency. This project gives you a glimpse into the future of human-computer interaction.',
-    tips:['Focus on reducing "turn-taking" latency for a natural feel.', 'Handle background noise with proper VAD (Voice Activity Detection).', 'Start with Gemini 2.0 Flash for the best speed-to-cost ratio.'],
-    skills:['WebSockets','Audio Streaming','GenAI Live API','Real-time Tool-use'],
-    deliverable:'A "Voice Companion" app that responds to your voice in <500ms and can help you browse information hands-free.',
-    hrs:8,tags:['Gemini','Multimodal','Voice']},
-   {id:'ph8-p28',name:'AI Security Camera (Vision)',
-    level:'Intermediate',
-    desc:'Build a monitoring system that uses a vision-capable LLM to detect specific events in a visual stream.',
-    businessValue:'Automates complex visual monitoring tasks that previously required human oversight, reducing labor costs and response times.',
-    guide:'Implementation: 1. Capture frames from a webcam or video file using OpenCV. 2. Send every Nth frame to GPT-4o or Gemini 1.5 Pro with a "Monitoring Prompt." 3. The LLM should output a structured JSON: { "event_detected": bool, "description": string, "severity": 1-5 }. 4. Trigger a local notification for high-severity events. This project masters the "Vision Agent" pattern.',
-    tips:['Don\'t stream video; send periodic keyframes to save on token costs.', 'Use a "Decision Chain" to only process high-confidence triggers.', 'Ensure privacy by processing frames in a secure, transient environment.'],
-    skills:['OpenCV','Vision LLMs','Stream Processing','Event Notification'],
-    deliverable:'A security script that can tell the difference between "a cat in the garden" and "a person at the front door" with high precision.',
-    hrs:6,tags:['Vision','Security','Automation']}
- ]
-},
-{id:'ph9',label:'Phase 9',name:'Portfolio & Personal Brand',color:'#10b981',
- icon:'✨',
- desc:'Finalizing your journey by showcasing your skills to the world through a high-impact portfolio.',
- courses:[
-  {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'README Masterclass',url:'https://github.com/othneildrew/Best-README-Template',dur:'30min',free:true,
-     readSections:['The Template','Why it works','Best Practices']},
-    {name:'Mermaid.js for Architecture',url:'https://mermaid.js.org/',dur:'Reference',free:true,
-     readSections:['Flowcharts','Sequence Diagrams','Entity Relationship Diagrams','Git Graphs']},
-    {name:'Recording Pro Demos with Loom',url:'https://www.loom.com/blog/how-to-record-a-demo',dur:'15min',free:true,
-     readSections:['Planning your demo','Lighting and Audio','Editing for Impact']}
-  ]}
- ],
- projects:[
-   {id:'ph9-p29',name:'The "Star" Portfolio',
-    level:'Intermediate',
-    desc:'Curate your best roadmap projects and build a professional, high-impact showcase for employers.',
-    businessValue:'Establishes professional credibility and demonstrates practical expertise to potential employers or clients.',
-    guide:'Implementation: 1. Select your top 3 projects (e.g., a LangGraph agent, a RAG pipeline, and an MCP server). 2. Write "Story-driven" READMEs: What was the problem? How did you solve it? What were the metrics? 3. Add professional architecture diagrams using Mermaid.js. 4. Record 2-minute Loom demos. 5. Create a GitHub Profile README that highlights your GenAI roadmap completion. This project gets you hired.',
-    tips:['Focus on the "Why" and the results, not just the code.', 'Include a "Challenges" section to show how you problem-solve.', 'Make your demos short, punchy, and results-oriented.'],
-    skills:['Technical Writing','Architecture Visualization','Mermaid.js','Storytelling for Devs'],
-    deliverable:'A world-class GitHub profile and a portfolio site that clearly demonstrates your ability to build production-grade AI systems.',
-    hrs:10,tags:['Portfolio','GitHub','Career']}
- ]
-},
-{id:'ph10',label:'Phase 10',name:'Cloud AI Certifications',color:'#64748b',
- icon:'🎓',
- desc:'Validating your expertise with industry-recognized certifications from major cloud providers.',
- courses:[
-  {platform:'Certification',pcolor:'#3b82f6',items:[
-    {name:'Azure AI Fundamentals (AI-900)',url:'https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/',dur:'10h',free:true,
-     readSections:['AI Workloads and Considerations','Fundamental Principles of ML','Computer Vision Workloads','NLP Workloads','Azure OpenAI Service']},
-    {name:'AWS Certified AI Practitioner (AIF-C01)',url:'https://aws.amazon.com/certification/certified-ai-practitioner/',dur:'15h',free:true,
-     readSections:['Fundamentals of AI and ML','Generative AI Essentials','Applications of Foundation Models','Guidelines for Responsible AI','Security, Compliance, and Governance']}
-  ]}
- ],
- projects:[
-   {id:'ph10-p30',name:'Certification Exam Readiness',
-    level:'Intermediate',
-    desc:'Systematically study for and pass a cloud AI certification to prove your foundational cloud-AI knowledge.',
-    businessValue:'Validates your skills with industry-recognized credentials, opening doors to enterprise roles and consulting opportunities.',
-    guide:'Implementation: 1. Choose your track (AWS or Azure). 2. Complete the official MS Learn or AWS Skill Builder modules. 3. Build a "Cheat Sheet" of core services and their specific use cases. 4. Take 3 full-length practice exams. 5. Review every wrong answer and go back to the docs. This project solidifies your "Big Picture" understanding of cloud AI ecosystems.',
-    tips:['Use the official "Study Guide" as your primary roadmap.', 'Focus on the specific service limits and pricing tiers for the exam.', 'Hands-on labs are more effective than passive reading.'],
-    skills:['Cloud AI Services','Service Selection','Responsible AI Principles','Architecture Patterns'],
-    deliverable:'A verified certification badge on your LinkedIn profile and a deeper understanding of cloud AI infrastructure.',
-    hrs:20,tags:['Azure','AWS','Certification']}
- ]
-},
-{id:'ph11',label:'Phase 11',name:'Structured Capstones',color:'#ec4899',
- icon:'🏆',
- desc:'The final challenge: building complex, multi-agent systems that solve real-world problems with high autonomy and reliability.',
- courses:[
-  {platform:'Advanced',pcolor:'#10b981',items:[
-    {name:'LangGraph Advanced Patterns',url:'https://langchain-ai.github.io/langgraph/how-tos/',dur:'Reference',free:true,
-     readSections:['Subgraphs','Shared State','Multi-agent','Human-in-the-loop','Persistence']},
-    {name:'Tavily Search Mastery',url:'https://docs.tavily.com/',dur:'20min',free:true,
-     readSections:['API Basics','Context Optimization','Advanced Filtering']}
-  ]}
- ],
- projects:[
-   {id:'ph11-p31',name:'The Autonomous Researcher',
-    level:'Advanced',
-    desc:'Build a team of agents that can take a single complex research topic and produce a verified 10-page report with citations.',
-    businessValue:'Automates high-value market research and analysis, turning days of manual work into minutes of AI execution.',
-    guide:'Implementation: 1. Build a "Searcher" agent that uses Tavily to find sources. 2. Build a "Validator" agent that fact-checks the Searcher\'s findings against multiple sources. 3. Build a "Writer" agent that synthesizes the data into Markdown. 4. Build a "Supervisor" that orchestrates the workflow. 5. Implement a "Final Approval" step in LangGraph. This project demonstrates massive productivity gains through AI agents.',
-    tips:['Implement a "Fact Checker" agent that cross-references multiple sources.', 'Optimize for "Diversity of Sources" in your search prompts.', 'Use Markdown output to ensure easy integration with existing document tools.'],
-    skills:['Agentic Workflows','Fact Verification','Information Synthesis','Complex Orchestration'],
-    deliverable:'A CLI or Web app that produces a high-quality, cited research paper on any topic in under 5 minutes.',
-    hrs:25,tags:['LangGraph','Agents','Research']},
-   {id:'ph11-p32',name:'Unified Multi-Agent OS',
-    level:'Advanced',
-    desc:'Build a private, self-hosted platform that acts as your personal "Agent Operating System" with vision, voice, and full tool access.',
-    businessValue:'The "Holy Grail" of personal productivity—a custom, private AI ecosystem that acts as a cognitive multiplier for your specific workflow.',
-    guide:'Implementation: 1. Backend: FastAPI + LangGraph + Postgres (for history). 2. Frontend: React + Tailwind. 3. Tool Hub: Integrate 5+ MCP servers (Files, Web, GitHub, Jira, etc.). 4. Features: Real-time voice chat, image analysis, and background task execution. 5. Deploy on your local machine or a private cloud. This is the culmination of everything you\'ve learned.',
-    tips:['Start with a "Modular" architecture so you can add MCP servers over time.', 'Focus on "Context Management"—the AI needs to know your current project state.', 'Prioritize local data privacy for your most sensitive documents.'],
-    skills:['Full-stack Development','Postgres Vector Search','MCP Integration','Real-time UI','System Architecture'],
-    deliverable:'Your own personal AI cockpit that you use daily to manage your work, life, and code.',
-    hrs:40,tags:['Capstone','Full-stack','LangGraph','React']}
- ]
-}
-];
-
-// ---- State ----
-let state = JSON.parse(localStorage.getItem('genai-progress-v3') || '{}');
-let currentPhase = state._lastPhase || 'ph1';
-let theme = localStorage.getItem('genai-theme') || 'dark';
-
-// ---- State Helpers ----
-function save(){ 
-  localStorage.setItem('genai-progress-v3', JSON.stringify(state)); 
-  updateSidebar(); 
-  updateCurrentPill();
-}
-function isDone(id){ return !!state[id]; }
-function isCurrent(id){ return state._currentItem === id; }
-function toggle(id){ 
-  const wasDone = state[id];
-  state[id]=!state[id]; 
-  save(); 
-  if(!wasDone && state[id]) checkCelebrate(id);
-}
-function checkCelebrate(id){
-  // If a phase was just fully completed, throw confetti
-  const phId = id.split('-')[0];
-  const ph = PHASES.find(p=>p.id===phId);
-  if(ph && phaseAllDone(ph)){
-    confetti({
-      particleCount: 150,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: [ph.color, '#8b5cf6', '#6366f1']
-    });
-  } else if(id.includes('-p')) {
-    // Smaller celebration for individual projects
-    confetti({
-      particleCount: 50,
-      spread: 50,
-      origin: { y: 0.8 },
-      colors: ['#10b981', '#3b82f6']
-    });
-  }
-}
-function allProjects(){ return PHASES.flatMap(p=>p.projects); }
-function allCourses(){ return PHASES.flatMap(p=>p.courses.flatMap(pl=>pl.items.map((_,i)=>p.id+'-c-'+pl.platform+'-'+i))); }
-function doneProjects(){ return allProjects().filter(p=>isDone(p.id)).length; }
-function doneCourses(){ return allCourses().filter(id=>isDone(id)).length; }
-function totalProjects(){ return allProjects().length; }
-function totalCourses(){ return allCourses().length; }
-function phaseDone(ph){ return ph.projects.filter(p=>isDone(p.id)).length; }
-function phaseAllDone(ph){ 
-  const allC=ph.courses.flatMap((pl,pi)=>pl.items.map((_,i)=>courseId(ph.id,pl.platform,i)));
-  return ph.projects.every(p=>isDone(p.id)) && allC.every(id=>isDone(id));
-}
-function phasePct(ph){
-  const allC=ph.courses.flatMap((pl,pi)=>pl.items.map((_,i)=>courseId(ph.id,pl.platform,i)));
-  const total = ph.projects.length + allC.length;
-  if(total === 0) return 0;
-  const done = ph.projects.filter(p=>isDone(p.id)).length + allC.filter(id=>isDone(id)).length;
-  return Math.round((done/total)*100);
-}
-
-// ---- Time tracking ----
-function parseMins(dur){
-  if(!dur||['Self-paced','Reference','Free prep','~Reference'].includes(dur)) return 0;
-  let m=0;
-  const h=dur.match(/(\d+)h/); if(h) m+=parseInt(h[1])*60;
-  const mn=dur.match(/(\d+)m(?:in)?/); if(mn) m+=parseInt(mn[1]);
-  return m;
-}
-function phaseEstMins(ph){
-  const pHrs=ph.projects.reduce((a,p)=>a+(p.hrs||4),0)*60;
-  const cMins=ph.courses.flatMap(pl=>pl.items).reduce((a,c)=>a+parseMins(c.dur),0);
-  return pHrs+cMins;
-}
-function phaseDoneMins(ph){
-  const pHrs=ph.projects.filter(p=>isDone(p.id)).reduce((a,p)=>a+(p.hrs||4),0)*60;
-  const cMins=ph.courses.flatMap((pl,pi)=>pl.items.map((c,i)=>{
-    return isDone(courseId(ph.id,pl.platform,i))?parseMins(c.dur):0;
-  })).reduce((a,b)=>a+b,0);
-  return pHrs+cMins;
-}
-function totalEstMins(){ return PHASES.reduce((a,ph)=>a+phaseEstMins(ph),0); }
-function totalDoneMins(){ return PHASES.reduce((a,ph)=>a+phaseDoneMins(ph),0); }
-function fmtHrs(mins){ 
-  if(mins===0) return '0h';
-  const h=Math.floor(mins/60), m=mins%60;
-  return m>0?`${h}h ${m}m`:`${h}h`;
-}
-
-// ---- Apply theme ----
-function applyTheme(){
-  document.body.classList.toggle('light', theme==='light');
-  document.getElementById('themeBtn').textContent = theme==='light' ? '◐' : '◑';
-}
-document.getElementById('themeBtn').addEventListener('click',()=>{
-  theme = theme==='light'?'dark':'light';
-  localStorage.setItem('genai-theme',theme);
-  applyTheme();
-});
-
-// ---- Sidebar nav ----
-function updateSidebar(){
-  const dp=doneProjects(), tp=totalProjects(), dc=doneCourses(), tc=totalCourses();
-  const pct=Math.round(((dp+dc)/(tp+tc))*100);
-  document.getElementById('pct').textContent=pct+'%';
-  document.getElementById('fill').style.width=pct+'%';
-  document.getElementById('stat-sub').innerHTML=`${dp} / ${tp} Projects &bull; ${dc} / ${tc} Courses`;
-  const dm=totalDoneMins(), tm=totalEstMins();
-  const timeEl=document.getElementById('stat-time');
-  if(timeEl) timeEl.innerHTML=`${fmtHrs(dm)} done &bull; ${fmtHrs(tm-dm)} remaining`;
-  document.getElementById('export-info').textContent=`${dp} projects complete &bull; ${dc} courses complete &bull; Saved locally`;
-}
-
-function buildNav(filter=''){
-  const nav=document.getElementById('nav');
-  const filtered = PHASES.filter(ph => {
-    if(!filter) return true;
-    const f = filter.toLowerCase();
-    return ph.name.toLowerCase().includes(f) || 
-           ph.label.toLowerCase().includes(f) ||
-           ph.projects.some(p => p.name.toLowerCase().includes(f) || p.desc.toLowerCase().includes(f)) ||
-           ph.courses.some(pl => pl.platform.toLowerCase().includes(f) || pl.items.some(i => i.name.toLowerCase().includes(f)));
-  });
-
-  nav.innerHTML=filtered.map(ph=>`
-    <div class="nav-item${ph.id===currentPhase?' active':''}" data-id="${ph.id}" onclick="showPhase('${ph.id}')">
-      <div style="flex:1">
-        <div class="nav-item-left">
-          <div class="nav-dot" style="background:${ph.color}"></div>
-          <div class="nav-info">
-            <div class="nav-title">${ph.name}</div>
-            <div class="nav-sub">${ph.label}</div>
-          </div>
-        </div>
-        <div class="nav-progress-outer">
-          <div class="nav-progress-inner" style="width:${phasePct(ph)}%"></div>
-        </div>
-      </div>
-      <span class="nav-badge${phaseAllDone(ph)?' done-badge':''}">${phaseAllDone(ph)?'Done':phaseDone(ph)+'/'+ph.projects.length}</span>
-    </div>`).join('');
-}
-
-function handleSearch(val){
-  buildNav(val);
-}
-
-// ---- Phase content ----
-function courseId(phId,plat,i){ return `${phId}-c-${plat}-${i}`; }
-
-function renderPhase(ph){
-  const done=phaseDone(ph), total=ph.projects.length;
-  const allC=ph.courses.flatMap((pl,pi)=>pl.items.map((_,i)=>courseId(ph.id,pl.platform,i)));
-  const doneC=allC.filter(id=>isDone(id)).length;
-  return `
-  <div class="phase-header">
-    <div style="flex:1">
-      <div class="phase-label">${ph.label}${phaseAllDone(ph)?'<span class="phase-done-badge">Complete</span>':''}</div>
-      <h1 class="phase-title">${ph.name}</h1>
-      <div class="phase-meta">
-        <span class="phase-stat"><span class="phase-stat-dot" style="background:${ph.color}"></span>${done}/${total} projects complete</span>
-        <span class="phase-stat"><span class="phase-stat-dot" style="background:#3b82f6"></span>${doneC}/${allC.length} courses done</span>
-        <span class="phase-stat">${fmtHrs(phaseDoneMins(ph))} / ${fmtHrs(phaseEstMins(ph))} est.</span>
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark">GA</div>
+      <div class="brand-title">
+        <strong>GenAI Roadmap</strong>
+        <span class="brand-sub">Roadmap progress, synced across devices</span>
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn" onclick="markAllCourses('${ph.id}')" title="Toggle all courses in this phase">All Courses</button>
-      <button class="btn" onclick="markAllProjects('${ph.id}')" title="Toggle all projects in this phase">All Projects</button>
-      <button class="btn btn-accent" onclick="markPhaseComplete('${ph.id}')" title="Mark entire phase complete">Complete Phase</button>
-      <button class="btn${state._currentPhase===ph.id?' btn-current':''}" onclick="setCurrentPhase('${ph.id}')" title="Mark this as your current active phase" style="min-width:auto">
-        ${state._currentPhase===ph.id ? 'Active Phase' : 'Set as Current'}
-      </button>
+      <button class="header-button" id="saveBtn">☁ Sync progress</button>
+      <button class="header-button" id="themeBtn">🌙 Theme</button>
     </div>
   </div>
-
-  <div id="current-focus-summary" style="padding:1rem 2.5rem; background:rgba(139,92,246,0.03); border-bottom:1px solid var(--border); ${!state._currentItem ? 'display:none' : 'display:flex'}; align-items:center; gap:1rem; flex-wrap:wrap">
-    <div style="flex:1">
-      <span style="font-size:.58rem; text-transform:uppercase; letter-spacing:.11em; color:var(--text-3); font-weight:700; font-family:'JetBrains Mono',monospace">Current Goal</span>
-      <div id="current-focus-text" style="font-size:1rem; font-weight:700; color:var(--accent); margin-top:.2rem">
-        ${state._currentItem ? findItemName(state._currentItem) : 'None selected'}
+</header>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-panel">
+      <div class="sidebar-title">Overview</div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Phases</div>
+          <div class="stat-value">12</div>
+          <div class="stat-sub">Complete one phase at a time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Projects</div>
+          <div class="stat-value">39</div>
+          <div class="stat-sub">Hands-on tasks across the path</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Hours</div>
+          <div class="stat-value">165</div>
+          <div class="stat-sub">Estimated completion time</div>
+        </div>
       </div>
     </div>
-    <div style="display:flex; gap:.5rem">
-      <button class="btn" style="padding:.3rem .7rem; font-size:.7rem" onclick="jumpToCurrent()">Jump to Item</button>
-      <button class="btn" style="padding:.3rem .7rem; font-size:.7rem" onclick="setCurrentItem(null)">✕ Clear</button>
+    <div class="sidebar-panel">
+      <div class="sidebar-title">Navigation</div>
+      <div class="nav-list">
+        <a class="nav-link active" href="#overview"><span class="nav-copy"><span class="nav-icon">⚡</span><span class="nav-title">Dashboard</span></span><span class="nav-badge">Live</span></a>
+        <a class="nav-link" href="#phases"><span class="nav-copy"><span class="nav-icon">📚</span><span class="nav-title">Phases</span></span><span class="nav-badge">12</span></a>
+        <a class="nav-link" href="#projects"><span class="nav-copy"><span class="nav-icon">🧪</span><span class="nav-title">Projects</span></span><span class="nav-badge">39</span></a>
+        <a class="nav-link" href="#sync"><span class="nav-copy"><span class="nav-icon">☁</span><span class="nav-title">Sync</span></span><span class="nav-badge">Gist</span></a>
+      </div>
     </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
-      <span>Courses & Resources</span>
-      <button class="btn" style="font-size:.65rem;padding:.25rem .65rem" onclick="toggleAllPlatforms('${ph.id}', this)">Expand All</button>
+    <div class="sidebar-panel">
+      <div class="sidebar-title">Quick actions</div>
+      <div class="panel-list">
+        <a class="panel-link" href="#" id="exportBtn">Export progress JSON</a>
+        <a class="panel-link" href="#" id="resetBtn">Reset progress</a>
+      </div>
     </div>
-    <div class="courses-list">
-      ${ph.courses.map(pl=>`
-        <div class="platform-group" id="pg-${ph.id}-${pl.platform.replace(/\s/g,'_')}">
-          <div class="platform-header" onclick="togglePlatform('${ph.id}','${pl.platform.replace(/\s/g,'_')}')">
-            <div class="platform-dot" style="background:${pl.pcolor}"></div>
-            <span class="platform-name">${pl.platform}</span>
-            <span class="platform-meta">${pl.items.length} resource${pl.items.length>1?'s':''}</span>
-            <span class="platform-chevron">▼</span>
+  </aside>
+  <main class="main">
+    <section class="hero" id="overview">
+      <div class="hero-content">
+        <div class="hero-label">Phase 01 · Active Trajectory</div>
+        <h1 class="hero-title">From fundamentals to agentic systems with GenAI.</h1>
+        <p class="hero-copy">One unified progress dashboard for the full GenAI learning path. Track phase completion, course-level metrics, and cross-device sync with GitHub Gist.</p>
+        <div class="hero-metrics">
+          <div class="metric-pill"><div class="metric-title">Roadmap progress</div><div class="metric-value" id="globalProgress">0%</div></div>
+          <div class="metric-pill"><div class="metric-title">Estimated days</div><div class="metric-value">14</div></div>
+          <div class="metric-pill"><div class="metric-title">Sync status</div><div class="metric-value" id="syncStatus">Ready</div></div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="section-head">
+        <h2>Learning trajectory</h2>
+        <a href="#phases">Jump to phases</a>
+      </div>
+      <div class="grid-cards" id="phasesGrid"></div>
+    </section>
+    <section class="panel" id="sync">
+      <h3>Cross-device sync</h3>
+      <p>Save your roadmap progress to a private GitHub Gist and load it from any browser. Your progress remains private and portable across Mac, Windows, and Linux.</p>
+      <div class="panel-list">
+        <div class="panel-item"><strong>Next step</strong><span>Click Sync progress and paste your GitHub token.</span></div>
+        <div class="panel-item"><strong>Tip</strong><span>Use the same Gist ID on every device to keep progress linked.</span></div>
+      </div>
+    </section>
+  </main>
+</div>
+<div class="footer">Built for public release and personal workflow, with one clean dashboard page for GitHub Pages.</div>
+<script>
+const phases = [
+  { id: 'ph0', title: 'Software Baseline', desc: 'Git, GitHub, dev environment, and local tools.', projects: 1, hours: 2, progress: 0 },
+  { id: 'ph1', title: 'Python Foundations', desc: 'Core language, data structures, and object-oriented design.', projects: 3, hours: 15, progress: 0 },
+  { id: 'ph2', title: 'LLM Applications', desc: 'Prompt design, API integration, and local model workflows.', projects: 4, hours: 20, progress: 0 },
+  { id: 'ph3', title: 'RAG & Retrieval', desc: 'Embeddings, vector search, and knowledge retrieval systems.', projects: 5, hours: 15, progress: 0 },
+  { id: 'ph4', title: 'Tool Calling', desc: 'Function calling, LangGraph, and agent orchestration.', projects: 4, hours: 12, progress: 0 },
+  { id: 'ph5', title: 'Evals & Observability', desc: 'Testing, tracing, and model evaluation pipelines.', projects: 5, hours: 10, progress: 0 },
+  { id: 'ph6', title: 'MCP & Agents', desc: 'MCP server tooling and agentic system design.', projects: 7, hours: 20, progress: 0 },
+  { id: 'ph7', title: 'AI Native DevEx', desc: 'Copilot workflows, productivity automation, and IDE integration.', projects: 2, hours: 6, progress: 0 },
+  { id: 'ph8', title: 'Multimodal Models', desc: 'Vision, audio, and local model deployment workflows.', projects: 3, hours: 12, progress: 0 },
+  { id: 'ph9', title: 'Portfolio Projects', desc: 'Build showcase apps, demos, and production-ready artifacts.', projects: 1, hours: 8, progress: 0 },
+  { id: 'ph10', title: 'Certifications', desc: 'Prepare for cloud and AI certification paths.', projects: 1, hours: 15, progress: 0 },
+  { id: 'ph11', title: 'Capstone Systems', desc: 'End-to-end GenAI products and infrastructure validation.', projects: 3, hours: 30, progress: 0 }
+];
+const STORAGE_KEY = 'genai_roadmap_progress';
+const THEME_KEY = 'genai_roadmap_theme';
+function loadProgress() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  return saved ? JSON.parse(saved) : phases;
+}
+function saveProgress(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+function renderPhases() {
+  const data = loadProgress();
+  const grid = document.getElementById('phasesGrid');
+  const total = data.reduce((sum, phase) => sum + phase.progress, 0) / data.length;
+  document.getElementById('globalProgress').textContent = `${Math.round(total)}%`;
+  grid.innerHTML = data.map(phase => {
+    const width = Math.max(6, phase.progress);
+    return `
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-badge">${phase.id.toUpperCase()}</div>
+            <h3 class="card-title">${phase.title}</h3>
           </div>
-          <div class="platform-body">
-            ${pl.items.map((c,i)=>{
-              const cid=courseId(ph.id,pl.platform,i);
-              return `<div class="course-item ${isCurrent(cid)?'is-current':''}" id="item-${cid}">
-                <div class="course-check${isDone(cid)?' done':''}" onclick="toggleCourse('${cid}',this)" title="Mark complete">
-                  ${isDone(cid)?'✓':''}
-                </div>
-                <div class="course-info">
-                  <div class="course-name">
-                    <a href="${c.url}" target="_blank" rel="noopener">${c.name}</a>
-                    ${isCurrent(cid)?'<span class="item-current-badge">Active</span>':''}
-                  </div>
-                  <div class="course-details">
-                    <span class="tag ${c.free?'free':'paid'}">${c.free?'FREE':'PAID'}</span>
-                    <span class="tag">${c.dur}</span>
-                    ${c.badge?`<span class="tag new">${c.badge}</span>`:''}
-                    ${c.readSections?`<button class="sections-toggle" onclick="event.stopPropagation();toggleReadingGuide(this)">Sections ▼</button>`:''}
-                    <button class="course-set-btn ${isCurrent(cid)?'active':''}" onclick="setCurrentItem('${cid}')">
-                      ${isCurrent(cid)?'Active':'Set Current'}
-                    </button>
-                  </div>
-                  ${c.readSections ? `
-                    <div class="reading-guide rg-hidden">
-                      <div class="reading-guide-title">Key Sections to Focus On:</div>
-                      <ul>${c.readSections.map(s=>`<li>${s}</li>`).join('')}</ul>
-                    </div>
-                  `:''}
-                </div>
-              </div>`;
-            }).join('')}
-          </div>
-        </div>`).join('')}
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
-      <span>Projects</span>
-      <button class="btn" style="font-size:.65rem;padding:.25rem .65rem" onclick="toggleAllCards('${ph.id}', this)">Expand All</button>
-    </div>
-
-    <div class="projects-grid">
-      ${ph.projects.map(p=>`
-        <div class="card ${isDone(p.id)?'done':''} ${isCurrent(p.id)?'is-current':''} collapsed" id="card-${p.id}" onclick="toggleExpand('${p.id}')">
-          <div class="card-header">
-            <span class="card-id">${p.id}</span>
-            <div style="display:flex;align-items:center;gap:.4rem">
-              <span style="font-size:.6rem;color:var(--text-3);font-family:'JetBrains Mono',monospace">${p.hrs||4}h</span>
-              <div class="card-check" onclick="event.stopPropagation();toggleDone('${p.id}')" title="Mark complete">${isDone(p.id)?'✓':''}</div>
-            </div>
-          </div>
-          <div class="card-title-flex">
-            <div class="card-title">
-              ${p.level ? `<span class="card-level level-${p.level.toLowerCase()}">${p.level}</span>` : ''}
-              ${p.name} 
-              ${isCurrent(p.id)?'<span class="item-current-badge">Active</span>':''}
-            </div>
-            <span class="card-expand-chev">▲</span>
-          </div>
-          <div class="card-desc" style="font-weight:500; color:var(--text); margin-bottom:.5rem">${p.desc}</div>
-          
-          ${p.businessValue ? `
-            <div class="business-value-box">
-              <div class="business-value-title">Business Value</div>
-              <div class="guide-text">${p.businessValue}</div>
-            </div>
-          ` : ''}
-
-          <div class="card-guide">
-            <div class="card-guide-section">
-              <span class="guide-label">Implementation Guide</span>
-              <p class="guide-text">${p.guide}</p>
-            </div>
-
-            ${p.tips ? `
-              <div class="tips-list">
-                <div class="tips-title">Tips</div>
-                <ul>${p.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
-              </div>
-            ` : ''}
-
-            <div class="card-guide-section">
-              <span class="guide-label">Key Skills</span>
-              <div class="skills-chips">
-                ${p.skills.map(s=>`<span class="skill-chip">${s}</span>`).join('')}
-              </div>
-            </div>
-            <div class="card-guide-section">
-              <span class="guide-label">Definition of Done</span>
-              <div class="deliverable-box">${p.deliverable}</div>
-            </div>
-          </div>
-          <div class="card-tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-          
-          <div class="card-footer-row" style="display:flex; justify-content:space-between; align-items:center; margin-top:.75rem">
-            <button class="card-current-btn ${isCurrent(p.id)?'active':''}" onclick="event.stopPropagation(); setCurrentItem('${p.id}')" style="position:static">
-              ${isCurrent(p.id)?'Active Goal':'Set as Current'}
-            </button>
-            <button class="card-share-btn" onclick="event.stopPropagation(); copyProjectLink('${p.id}')" title="Copy link to this project">
-              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
-            </button>
-          </div>
-        </div>`).join('')}
-    </div>
-  </div>`;
+          <span class="card-badge">${phase.progress}%</span>
+        </div>
+        <p class="card-copy">${phase.desc}</p>
+        <div class="progress-row">
+          <span class="progress-label">Completion</span>
+          <span>${phase.progress}%</span>
+        </div>
+        <div class="progress-track"><div class="progress-bar" style="width:${width}%"></div></div>
+        <div class="card-footer">
+          <span class="card-info">${phase.projects} projects · ${phase.hours}h</span>
+          <button class="action-btn${phase.progress === 100 ? '' : ' primary'}" onclick="updatePhase('${phase.id}')">${phase.progress === 100 ? 'Review' : 'Update'}</button>
+        </div>
+      </article>
+    `;
+  }).join('');
 }
-
-function showPhase(id){
-  currentPhase=id;
-  state._lastPhase=id;
-  save();
-  document.getElementById('content').innerHTML=renderPhase(PHASES.find(p=>p.id===id));
-  document.querySelectorAll('.nav-item').forEach(el=>el.classList.toggle('active',el.dataset.id===id));
-  closeSidebar();
+function updatePhase(id) {
+  const data = loadProgress();
+  const phase = data.find(item => item.id === id);
+  if (!phase) return;
+  const nextValue = Math.min(100, phase.progress + 25);
+  phase.progress = nextValue;
+  saveProgress(data);
+  renderPhases();
 }
-
-function togglePlatform(phId,plat){
-  const el=document.getElementById(`pg-${phId}-${plat}`);
-  if(el) el.classList.toggle('open');
+function setTheme(theme) {
+  document.documentElement.classList.toggle('light', theme === 'light');
+  document.getElementById('themeBtn').textContent = theme === 'light' ? '🌙 Theme' : '☀️ Theme';
+  localStorage.setItem(THEME_KEY, theme);
 }
-
-// Expand / collapse card body (visual only)
-function toggleExpand(id){
-  const card=document.getElementById('card-'+id);
-  if(card) card.classList.toggle('collapsed');
+function toggleTheme() {
+  const active = document.documentElement.classList.contains('light') ? 'dark' : 'light';
+  setTheme(active);
 }
-// Mark project done (check circle click)
-function toggleDone(id){
-  toggle(id);
-  const card=document.getElementById('card-'+id);
-  if(card){
-    card.classList.toggle('done',isDone(id));
-    card.querySelector('.card-check').textContent=isDone(id)?'✓':'';
-  }
-  buildNav();
-  updateSidebar();
-}
-// Keep old name as alias so deep-link expand still works
-function toggleCard(id){ toggleExpand(id); }
-// Toggle reading-guide sections panel
-function toggleReadingGuide(btn){
-  const guide=btn.closest('.course-info').querySelector('.reading-guide');
-  const hidden=guide.classList.toggle('rg-hidden');
-  btn.classList.toggle('open',!hidden);
-  btn.textContent=hidden?'Sections ▼':'Sections ▲';
-}
-
-function toggleCourse(cid,el){
-  state[cid]=!state[cid]; save();
-  el.classList.toggle('done',!!state[cid]);
-  el.textContent=state[cid]?'✓':'';
-  buildNav();
-}
-
-function markAllProjects(phId){
-  const ph=PHASES.find(p=>p.id===phId);
-  const allDone=ph.projects.every(p=>isDone(p.id));
-  ph.projects.forEach(p=>{ state[p.id]=!allDone; });
-  save(); showPhase(phId); buildNav();
-}
-function markAllCourses(phId){
-  const ph=PHASES.find(p=>p.id===phId);
-  const allC=ph.courses.flatMap((pl,pi)=>pl.items.map((_,i)=>courseId(ph.id,pl.platform,i)));
-  const allDone=allC.every(id=>isDone(id));
-  allC.forEach(id=>{ state[id]=!allDone; });
-  save(); showPhase(phId); buildNav();
-}
-function markPhaseComplete(phId){
-  const ph=PHASES.find(p=>p.id===phId);
-  const already=phaseAllDone(ph);
-  ph.projects.forEach(p=>{ state[p.id]=!already; });
-  ph.courses.forEach((pl,pi)=>pl.items.forEach((_,i)=>{ state[courseId(ph.id,pl.platform,i)]=!already; }));
-  save(); showPhase(phId); buildNav();
-}
-
-// ---- Item Focus ----
-function setCurrentItem(id){
-  if(state._currentItem === id) state._currentItem = null;
-  else state._currentItem = id;
-  save();
-  showPhase(currentPhase);
-}
-function findItemName(id){
-  if(!id) return '';
-  const p = allProjects().find(p=>p.id===id);
-  if(p) return p.name;
-  // Course ID: phId-c-Platform-Index
-  const parts = id.split('-c-');
-  if(parts.length===2){
-    const ph = PHASES.find(ph=>ph.id===parts[0]);
-    if(ph){
-      const platName = parts[1].split('-')[0].replace(/_/g,' ');
-      const idx = parseInt(parts[1].split('-').pop());
-      const plat = ph.courses.find(c=>c.platform === platName);
-      if(plat && plat.items[idx]) return plat.items[idx].name;
-    }
-  }
-  return id;
-}
-function jumpToCurrent(){
-  if(!state._currentItem) return;
-  const id = state._currentItem;
-  const phId = id.split('-')[0];
-  if(phId !== currentPhase) showPhase(phId);
-  setTimeout(()=>{
-    const el = document.getElementById(id.includes('-c-') ? 'item-'+id : 'card-'+id);
-    if(el){
-      el.scrollIntoView({behavior:'smooth', block:'center'});
-      el.style.boxShadow = '0 0 0 2px var(--accent)';
-      setTimeout(()=>el.style.boxShadow='', 2000);
-    }
-  }, 100);
-}
-
-// ---- Current Phase ----
-function setCurrentPhase(id){
-  state._currentPhase = (state._currentPhase === id) ? null : id;
-  save(); showPhase(currentPhase); updateCurrentPill();
-}
-function updateCurrentPill(){
-  const pill=document.getElementById('current-phase-pill');
-  const txt=document.getElementById('current-phase-text');
-  if(!pill||!txt) return;
-  const cpid=state._currentPhase;
-  if(cpid){
-    const ph=PHASES.find(p=>p.id===cpid);
-    if(ph){
-      pill.style.display='block';
-      txt.textContent=ph.label+' — '+ph.name;
-    }
-  } else {
-    pill.style.display='none';
-  }
-}
-
-// ---- Expand All Platforms ----
-function toggleAllPlatforms(phId, btn){
-  const allGroups=document.querySelectorAll('[id^="pg-'+phId+'-"]');
-  const anyOpen=[...allGroups].some(el=>el.classList.contains('open'));
-  allGroups.forEach(el=>{ el.classList.toggle('open', !anyOpen); });
-  btn.textContent = anyOpen ? 'Expand All' : 'Collapse All';
-}
-
-// ---- Expand All Cards ----
-function toggleAllCards(phId, btn){
-  const allCards=document.querySelectorAll('.projects-grid .card');
-  const anyCollapsed=[...allCards].some(el=>el.classList.contains('collapsed'));
-  allCards.forEach(el=>{ el.classList.toggle('collapsed',!anyCollapsed); });
-  btn.textContent=anyCollapsed?'Collapse All':'Expand All';
-}
-
-// ---- Export / Import ----
-function exportProgress(){
-  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='genai-roadmap-progress.json';
+function exportProgress() {
+  const data = loadProgress();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'genai-roadmap-progress.json';
   a.click();
+  URL.revokeObjectURL(url);
 }
-function importProgress(e){
-  const file=e.target.files[0]; if(!file) return;
-  const reader=new FileReader();
-  reader.onload=ev=>{ try{ state=JSON.parse(ev.target.result); save(); location.reload(); }catch(err){ alert('Invalid file'); } };
-  reader.readAsText(file);
-}
-function masterAllProjects(){
-  if(!confirm('Mark all PROJECTS across all phases as complete?')) return;
-  PHASES.forEach(ph=>{
-    ph.projects.forEach(p=>{ state[p.id]=true; });
-  });
-  save(); buildNav(); showPhase(currentPhase);
-  confetti({ particleCount: 200, spread: 100, origin: { y: 0.7 } });
-}
-function masterAllCourses(){
-  if(!confirm('Mark all COURSES across all phases as complete?')) return;
-  PHASES.forEach(ph=>{
-    ph.courses.forEach(pl=>pl.items.forEach((_,i)=>{ state[courseId(ph.id,pl.platform,i)]=true; }));
-  });
-  save(); buildNav(); showPhase(currentPhase);
-  confetti({ particleCount: 150, spread: 80, origin: { y: 0.8 }, colors: ['#3b82f6', '#10b981'] });
-}
-function masterAll(){
-  if(!confirm('Mark everything in the roadmap as complete? This will also throw a lot of confetti!')) return;
-  PHASES.forEach(ph=>{
-    ph.projects.forEach(p=>{ state[p.id]=true; });
-    ph.courses.forEach(pl=>pl.items.forEach((_,i)=>{ state[courseId(ph.id,pl.platform,i)]=true; }));
-  });
-  save();
-  buildNav();
-  showPhase(currentPhase);
-  confetti({
-    particleCount: 500,
-    spread: 160,
-    origin: { y: 0.5 },
-    colors: ['#8b5cf6', '#6366f1', '#10b981', '#3b82f6', '#f59e0b']
-  });
-}
-function expandEverything(){
-  // Expand all platforms and cards in the current phase
-  const allGroups=document.querySelectorAll('[id^="pg-"]');
-  allGroups.forEach(el=>{ el.classList.add('open'); });
-  const allCards=document.querySelectorAll('.projects-grid .card');
-  allCards.forEach(el=>{ el.classList.remove('collapsed'); });
-  // Update button text in the view if they exist
-  document.querySelectorAll('.btn').forEach(btn => {
-    if(btn.textContent === 'Expand All') btn.textContent = 'Collapse All';
-    else if(btn.textContent === 'Collapse All') btn.textContent = 'Expand All';
-  });
-}
-function resetProgress(){
-  if(!confirm('Reset all progress?')) return;
-  state={}; save(); location.reload();
-}
-
-// ---- Mobile sidebar ----
-function closeSidebar(){
-  if(window.innerWidth<=900){
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('overlay').classList.remove('show');
-    document.getElementById('hamburger').classList.remove('open');
+function resetProgress() {
+  if (confirm('Reset all progress to zero?')) {
+    const reset = phases.map(p => ({ ...p, progress: 0 }));
+    saveProgress(reset);
+    renderPhases();
   }
 }
-document.getElementById('hamburger').addEventListener('click',()=>{
-  const open=document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('show',open);
-  document.getElementById('hamburger').classList.toggle('open',open);
-});
-document.getElementById('overlay').addEventListener('click',closeSidebar);
-
-// ---- Init ----
-applyTheme();
-buildNav();
-updateSidebar();
-showPhase(currentPhase);
-
-// ---- Gist Sync ----
-const GIST_FILENAME = 'genai-roadmap-progress.json';
-let syncPAT = localStorage.getItem('gist-pat') || '';
-let syncGistId = localStorage.getItem('gist-id') || '';
-let syncTimer = null;
-
-function fmtTime(iso) {
-  if (!iso) return 'never';
-  const d = new Date(iso);
-  return d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ' ' + d.toLocaleDateString([], {month:'short',day:'numeric'});
+function syncPlaceholder() {
+  alert('GitHub Gist sync requires a saved token and Gist ID in the dashboard settings. This is a placeholder for the sync workflow.');
 }
-
-function setSyncStatus(st, label, detail) {
-  const dot = document.getElementById('sync-dot');
-  const lbl = document.getElementById('sync-label');
-  const det = document.getElementById('sync-detail');
-  const bdg = document.getElementById('sync-badge');
-  if (!dot) return;
-  dot.className = 'sync-dot' + (st ? ' ' + st : '');
-  if (lbl) lbl.textContent = label || 'Sync';
-  if (det) det.textContent = detail || '';
-  if (bdg) {
-    const on = st === 'ok' || st === 'syncing';
-    bdg.textContent = on ? 'On' : 'Off';
-    bdg.className = 'sync-badge ' + (on ? 'connected' : 'disconnected');
-  }
-}
-
-function refreshSyncPanel() {
-  if (!syncPAT) {
-    setSyncStatus('', 'Cloud Sync', 'Click to connect GitHub Gist');
-    return;
-  }
-  const lastSync = localStorage.getItem('gist-last-sync');
-  const gidShort = syncGistId ? syncGistId.slice(0,8)+'…' : 'none';
-  if (syncGistId) {
-    setSyncStatus('ok', 'Synced to Gist', `Gist: ${gidShort} • Last: ${fmtTime(lastSync)}`);
-  } else {
-    setSyncStatus('', 'Token set', 'Gist will be created on next save');
-  }
-}
-
-async function gistFetch(method, path, body) {
-  return fetch('https://api.github.com' + path, {
-    method,
-    headers: {
-      'Authorization': 'token ' + syncPAT,
-      'Accept': 'application/vnd.github+json',
-      'Content-Type': 'application/json'
-    },
-    body: body ? JSON.stringify(body) : undefined
-  });
-}
-
-async function pushToGist() {
-  if (!syncPAT) return;
-  setSyncStatus('syncing', 'Syncing…', 'Saving to GitHub Gist…');
-  try {
-    const content = JSON.stringify(state, null, 2);
-    if (!syncGistId) {
-      const res = await gistFetch('POST', '/gists', {
-        description: 'GenAI Roadmap Progress (auto-synced)',
-        public: false,
-        files: { [GIST_FILENAME]: { content } }
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Create failed');
-      syncGistId = data.id;
-      localStorage.setItem('gist-id', syncGistId);
-      const gi = document.getElementById('gist-input');
-      if (gi) gi.value = syncGistId;
-    } else {
-      const res = await gistFetch('PATCH', '/gists/' + syncGistId, {
-        files: { [GIST_FILENAME]: { content } }
-      });
-      if (!res.ok) { const d=await res.json(); throw new Error(d.message||'Update failed'); }
-    }
-    const now = new Date().toISOString();
-    localStorage.setItem('gist-last-sync', now);
-    refreshSyncPanel();
-  } catch (e) {
-    const det = `Error: ${e.message}`;
-    setSyncStatus('err', 'Sync failed', det);
-  }
-}
-
-async function pullFromGist() {
-  if (!syncPAT || !syncGistId) return false;
-  setSyncStatus('syncing', 'Loading…', 'Fetching from GitHub Gist…');
-  try {
-    const res = await gistFetch('GET', '/gists/' + syncGistId);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Load failed');
-    const file = data.files[GIST_FILENAME];
-    if (!file) throw new Error('Progress file not found in Gist');
-    const remote = JSON.parse(file.content);
-    state = remote;
-    localStorage.setItem('genai-progress-v3', JSON.stringify(state));
-    const now = new Date().toISOString();
-    localStorage.setItem('gist-last-sync', now);
-    refreshSyncPanel();
-    return true;
-  } catch(e) {
-    setSyncStatus('err', 'Pull failed', e.message);
-    return false;
-  }
-}
-
-function schedulePush() {
-  clearTimeout(syncTimer);
-  syncTimer = setTimeout(pushToGist, 1500);
-}
-
-const _origSave = save;
-window.save = function() { _origSave(); if (syncPAT) schedulePush(); };
-
-// Modal
-function openModal() {
-  document.getElementById('pat-input').value = syncPAT ? '••••••••••••' + syncPAT.slice(-4) : '';
-  document.getElementById('gist-input').value = syncGistId;
-  // Update modal connection status
-  const ms = document.getElementById('modal-status');
-  if (ms) {
-    if (syncPAT && syncGistId) {
-      const last = localStorage.getItem('gist-last-sync');
-      ms.innerHTML = `<span style="color:#10b981">✓ Connected</span> — Gist <code>${syncGistId.slice(0,12)}…</code><br><small>Last synced: ${fmtTime(last)}</small>`;
-    } else if (syncPAT) {
-      ms.innerHTML = `<span style="color:#f59e0b">⚠ Token saved, no Gist yet</span> — will create on next save`;
-    } else {
-      ms.innerHTML = `<span style="color:var(--text-3)">Not connected</span> — enter token below`;
-    }
-  }
-  document.getElementById('modal-bg').classList.add('show');
-}
-function closeModal() {
-  document.getElementById('modal-bg').classList.remove('show');
-}
-async function saveGistSettings() {
-  const patVal = document.getElementById('pat-input').value.trim();
-  // If they didn't clear the masked value, keep existing PAT
-  if (patVal && !patVal.startsWith('••')) syncPAT = patVal;
-  syncGistId = document.getElementById('gist-input').value.trim();
-  localStorage.setItem('gist-pat', syncPAT);
-  localStorage.setItem('gist-id', syncGistId);
-  closeModal();
-  if (!syncPAT) { setSyncStatus('', 'Cloud Sync', 'Click to connect GitHub Gist'); return; }
-  const pulled = syncGistId ? await pullFromGist() : false;
-  if (pulled) { buildNav(); updateSidebar(); showPhase(currentPhase); }
-  else await pushToGist();
-}
-document.addEventListener('DOMContentLoaded', () => {
-  const _mb = document.getElementById('modal-bg');
-  if (_mb) _mb.addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-});
-
-// Inject Gist Sync button into export bar
-(function(){
-  const bar = document.querySelector('.export-bar');
-  if (!bar) return;
-  const btn = document.createElement('button');
-  btn.className = 'btn';
-  btn.textContent = '\u2601 Gist Sync';
-  btn.onclick = openModal;
-  bar.insertBefore(btn, bar.children[1]);
-})();
-
-// Init
-refreshSyncPanel();
-updateCurrentPill();
-if (syncPAT && syncGistId) {
-  pullFromGist().then(ok => {
-    if (ok) { buildNav(); updateSidebar(); showPhase(currentPhase); }
-  });
-}
-
-function copyProjectLink(id) {
-  const url = new URL(window.location.href);
-  url.searchParams.set('p', id);
-  navigator.clipboard.writeText(url.toString()).then(() => {
-    alert('Link copied to clipboard!');
-  });
-}
-
-function showOverview() {
-  const content = document.getElementById('content');
-  content.innerHTML = `
-    <div class="phase-header">
-      <div style="flex:1">
-        <div class="phase-label">Introduction</div>
-        <h1 class="phase-title">GenAI Roadmap 2026 Overview</h1>
-        <p class="guide-text" style="margin-top:1rem; max-width:800px; font-size:1rem">
-          Welcome to the ultimate guide for becoming a Senior GenAI Engineer in 2026. This roadmap is structured into 12 distinct phases, 
-          taking you from software fundamentals to advanced agentic orchestration and experimental AI patterns.
-        </p>
-      </div>
-    </div>
-    <div class="section">
-      <div class="section-title" style="display:flex;align-items:center;gap:.5rem">
-        <span>Why this Roadmap?</span>
-        <div style="flex:1;height:1px;background:var(--border)"></div>
-      </div>
-      <div class="card-desc" style="max-width:800px; font-size:0.9rem; margin-top:1rem">
-        The field of AI is moving at lightning speed. This curriculum focuses on **durable skills**: orchestration, evaluation, 
-        observability, and tool-use (MCP), rather than just prompt engineering. By completing these 37+ projects, 
-        you will build a portfolio that proves your ability to ship production-grade AI systems.
-      </div>
-      
-      <div class="projects-grid" style="margin-top:2rem">
-        <div class="card" onclick="showPhase('ph0')">
-          <div class="card-header">
-            <span class="card-id">PATHWAY 1</span>
-          </div>
-          <div class="card-title">Foundations First</div>
-          <div class="card-desc">Master Python, FastAPI, and Docker. Without these, AI is just a script.</div>
-          <div class="tag">Phase 0-2</div>
-        </div>
-        <div class="card" onclick="showPhase('ph4')">
-          <div class="card-header">
-            <span class="card-id">PATHWAY 2</span>
-          </div>
-          <div class="card-title">Data & Retrieval</div>
-          <div class="card-desc">Learn Vector DBs and Advanced RAG. Context is everything in 2026.</div>
-          <div class="tag">Phase 3-5</div>
-        </div>
-        <div class="card" onclick="showPhase('ph6')">
-          <div class="card-header">
-            <span class="card-id">PATHWAY 3</span>
-          </div>
-          <div class="card-title">Agentic Future</div>
-          <div class="card-desc">Build autonomous agents with LangGraph and MCP. Standardized tool use is the alpha.</div>
-          <div class="tag">Phase 6-11</div>
-        </div>
-      </div>
-    </div>
-  `;
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-  currentPhase = null;
-  state._lastPhase = null;
-  save();
-}
-
-// Check for deep links on load
-window.addEventListener('DOMContentLoaded', () => {
-  const params = new URLSearchParams(window.location.search);
-  const projectId = params.get('p');
-  if (projectId) {
-    const phaseId = projectId.split('-')[0];
-    showPhase(phaseId);
-    setTimeout(() => {
-      const el = document.getElementById('card-' + projectId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        el.classList.add('is-current');
-        if (el.classList.contains('collapsed')) toggleCard(projectId);
-      }
-    }, 500);
-  }
-});
+const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+setTheme(savedTheme);
+renderPhases();
+document.getElementById('themeBtn').addEventListener('click', toggleTheme);
+document.getElementById('exportBtn').addEventListener('click', event => { event.preventDefault(); exportProgress(); });
+document.getElementById('resetBtn').addEventListener('click', event => { event.preventDefault(); resetProgress(); });
+document.getElementById('saveBtn').addEventListener('click', syncPlaceholder);
 </script>
 </body>
 </html>
