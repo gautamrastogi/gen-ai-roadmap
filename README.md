@@ -13,6 +13,11 @@
 
 **[→ Open Dashboard](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/)**
 
+**Zenith demo pages:**
+
+- [Master Dashboard](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/docs/zenith-master-dashboard.html)
+- [Advanced Curriculum](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/docs/zenith-advanced-curriculum.html)
+
 The dashboard is a fully client-side web app (no backend, no login) that lets you:
 
 - ✅ Track progress per project and per course resource
@@ -129,7 +134,9 @@ This roadmap is optimized for Apple Silicon. Recommended local model setup:
 ```
 gen-ai-roadmap/
 ├── docs/
-│   └── index.html              # Dashboard (single-file app, deployed to GitHub Pages)
+│   ├── index.html                      # Dashboard (single-file app, deployed to GitHub Pages)
+│   ├── zenith-master-dashboard.html    # Zenith master dashboard demo
+│   └── zenith-advanced-curriculum.html # Zenith advanced curriculum demo
 ├── projects/
 │   ├── local-agent/            # FastMCP local Python MCP server
 │   ├── p0-genai-starter-template/  # Phase 0: FastAPI + Pydantic starter template

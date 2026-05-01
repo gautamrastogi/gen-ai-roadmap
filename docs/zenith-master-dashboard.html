@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Master Dashboard - Zenith</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#372464",
+                    "primary-container": "#a078ff",
+                    "outline": "#958ea0",
+                    "on-error": "#690005",
+                    "inverse-on-surface": "#2f3037",
+                    "on-primary": "#3c0091",
+                    "primary": "#d0bcff",
+                    "on-primary-fixed": "#23005c",
+                    "on-secondary-fixed": "#220b4e",
+                    "inverse-primary": "#6d3bd7",
+                    "on-primary-container": "#340080",
+                    "surface-container-lowest": "#0c0e14",
+                    "secondary-fixed": "#e9ddff",
+                    "secondary": "#d0bcff",
+                    "on-error-container": "#ffdad6",
+                    "inverse-surface": "#e2e1eb",
+                    "surface-container": "#1e1f26",
+                    "primary-fixed-dim": "#d0bcff",
+                    "tertiary-fixed-dim": "#ffb869",
+                    "surface-variant": "#33343c",
+                    "on-tertiary-fixed": "#2c1700",
+                    "surface": "#12131a",
+                    "secondary-container": "#513e7f",
+                    "on-secondary-container": "#c3adf7",
+                    "tertiary-fixed": "#ffdcbb",
+                    "on-tertiary-container": "#3f2300",
+                    "on-tertiary": "#482900",
+                    "on-surface-variant": "#cbc3d7",
+                    "secondary-fixed-dim": "#d0bcff",
+                    "on-surface": "#e2e1eb",
+                    "tertiary-container": "#ca801e",
+                    "on-primary-fixed-variant": "#5516be",
+                    "on-background": "#e2e1eb",
+                    "surface-container-highest": "#33343c",
+                    "surface-container-high": "#282a31",
+                    "error": "#ffb4ab",
+                    "background": "#12131a",
+                    "primary-fixed": "#e9ddff",
+                    "surface-container-low": "#1a1b22",
+                    "surface-dim": "#12131a",
+                    "on-tertiary-fixed-variant": "#673d00",
+                    "tertiary": "#ffb869",
+                    "surface-bright": "#383940",
+                    "outline-variant": "#494454",
+                    "on-secondary-fixed-variant": "#4e3b7c",
+                    "surface-tint": "#d0bcff",
+                    "error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "section-gap": "128px",
+                    "container-max": "1440px",
+                    "unit": "8px",
+                    "margin-page": "64px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "label-caps": [
+                            "Space Grotesk"
+                    ],
+                    "display-lg": [
+                            "Space Grotesk"
+                    ],
+                    "body-sm": [
+                            "Inter"
+                    ],
+                    "headline-sm": [
+                            "Space Grotesk"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Space Grotesk"
+                    ]
+            },
+            "fontSize": {
+                    "label-caps": [
+                            "12px",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "0.1em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-sm": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.4",
+                                    "letterSpacing": "0.02em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "0.03em",
+                                    "fontWeight": "500"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-background antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col md:flex-row">
+<!-- SideNavBar (WEB) -->
+<nav class="hidden md:flex flex-col py-8 bg-[#0c0c0c] text-[#8B5CF6] font-['Space_Grotesk'] uppercase text-[12px] tracking-[0.2em] fixed left-0 top-0 h-full w-64 border-r border-r border-white/5 shadow-none z-40">
+<div class="px-8 mb-12">
+<h1 class="text-white font-black tracking-tighter text-xl uppercase">RESEARCH_OPS</h1>
+<p class="text-zinc-500 mt-2 text-[10px]">Expert Grade</p>
+</div>
+<ul class="flex flex-col space-y-2 flex-grow px-4">
+<li class="group">
+<a class="flex items-center px-4 py-3 text-[#8B5CF6] border-r-2 border-[#8B5CF6] bg-gradient-to-r from-[#8B5CF6]/5 to-transparent transition-all duration-300 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li class="group">
+<a class="flex items-center px-4 py-3 text-zinc-500 hover:bg-white/5 hover:text-zinc-200 transition-all transition-all duration-300 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="auto_stories">auto_stories</span>
+                    Course Path
+                </a>
+</li>
+<li class="group">
+<a class="flex items-center px-4 py-3 text-zinc-500 hover:bg-white/5 hover:text-zinc-200 transition-all transition-all duration-300 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="biotech">biotech</span>
+                    Project Lab
+                </a>
+</li>
+<li class="group">
+<a class="flex items-center px-4 py-3 text-zinc-500 hover:bg-white/5 hover:text-zinc-200 transition-all transition-all duration-300 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="psychology">psychology</span>
+                    Model Zoo
+                </a>
+</li>
+</ul>
+<div class="mt-auto px-4">
+<div class="h-px w-full bg-white/5 my-4"></div>
+<ul class="flex flex-col space-y-2">
+<li class="group">
+<a class="flex items-center px-4 py-2 text-zinc-500 hover:bg-white/5 hover:text-zinc-200 transition-all transition-all duration-300 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined mr-4 text-[16px]" data-icon="description">description</span>
+                        Documentation
+                    </a>
+</li>
+<li class="group">
+<a class="flex items-center px-4 py-2 text-zinc-500 hover:bg-white/5 hover:text-zinc-200 transition-all transition-all duration-300 ease-in-out cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined mr-4 text-[16px]" data-icon="contact_support">contact_support</span>
+                        Support
+                    </a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- TopAppBar (MOBILE) -->
+<header class="md:hidden bg-[#0c0c0c]/80 backdrop-blur-2xl text-[#8B5CF6] font-['Space_Grotesk'] tracking-tight fixed top-0 w-full z-50 border-b border-white/5 shadow-none flex justify-between items-center h-16 px-8 max-w-[1440px] mx-auto">
+<div class="flex items-center">
+<span class="text-xl font-bold tracking-tighter text-white uppercase">ZENITH</span>
+</div>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-zinc-400 hover:text-white transition-colors duration-300 cursor-pointer active:scale-95" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-zinc-400 hover:text-white transition-colors duration-300 cursor-pointer active:scale-95" data-icon="settings">settings</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow md:ml-64 pt-20 md:pt-0 p-margin-page min-h-screen">
+<div class="max-w-container-max mx-auto space-y-section-gap">
+<!-- Hero Section: Phase 01 -->
+<section class="relative border border-white/5 bg-[#0c0c0c]/70 backdrop-blur-[20px] rounded p-12 overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/10 to-transparent pointer-events-none"></div>
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+<div class="space-y-6 max-w-2xl">
+<div class="flex items-center space-x-4">
+<span class="font-label-caps text-label-caps text-primary px-3 py-1 border border-primary/20 rounded bg-primary/5 uppercase">Phase 01</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant flex items-center">
+<span class="w-2 h-2 rounded-full bg-primary-container mr-2 animate-pulse"></span> Active Trajectory
+                            </span>
+</div>
+<h2 class="font-display-lg text-display-lg text-on-surface">Foundations of Intelligence</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                            Establishing the mathematical and programmatic core required for advanced generative modeling. Focus on linear algebra, calculus, and foundational neural network architectures.
+                        </p>
+</div>
+<!-- Metrics -->
+<div class="grid grid-cols-2 md:grid-cols-3 gap-8 w-full md:w-auto">
+<div class="space-y-2">
+<p class="font-label-caps text-label-caps text-outline-variant uppercase">Global Progress</p>
+<p class="font-headline-md text-headline-md text-on-surface">34<span class="text-on-surface-variant text-lg">%</span></p>
+<div class="w-full h-1 bg-surface-container rounded-full overflow-hidden mt-2">
+<div class="h-full bg-primary-container w-[34%]"></div>
+</div>
+</div>
+<div class="space-y-2">
+<p class="font-label-caps text-label-caps text-outline-variant uppercase">Est. Completion</p>
+<p class="font-headline-md text-headline-md text-on-surface">14<span class="text-on-surface-variant text-lg"> Days</span></p>
+</div>
+<div class="space-y-2 col-span-2 md:col-span-1">
+<p class="font-label-caps text-label-caps text-outline-variant uppercase">Compute Credits</p>
+<p class="font-headline-md text-headline-md text-on-surface flex items-center">
+<span class="material-symbols-outlined text-primary-container mr-2" data-icon="token">token</span>
+                                8,420
+                            </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Learning Trajectory Grid -->
+<section class="space-y-8">
+<div class="flex justify-between items-end border-b border-white/5 pb-4">
+<h3 class="font-headline-md text-headline-md text-on-surface">Learning Trajectory</h3>
+<a class="font-label-caps text-label-caps text-primary hover:text-primary-container transition-colors uppercase flex items-center" href="#">
+                        View Full Path <span class="material-symbols-outlined ml-1 text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Course Card 1 -->
+<div class="border border-white/5 bg-[#0c0c0c]/70 backdrop-blur-[20px] rounded p-6 group hover:border-primary/30 transition-colors duration-300 flex flex-col h-full relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 rounded border border-white/10 flex items-center justify-center bg-surface-container">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="calculate">calculate</span>
+</div>
+<span class="font-label-caps text-label-caps text-primary px-2 py-1 bg-primary/10 rounded uppercase">Core</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Linear Algebra &amp; Vectors</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-8 flex-grow">Mastering vector spaces, matrices, and eigenvalues for high-dimensional data manipulation.</p>
+<div class="space-y-4 mt-auto">
+<div class="flex justify-between text-xs text-outline-variant">
+<span>Progress</span>
+<span class="text-on-surface">100%</span>
+</div>
+<div class="w-full h-0.5 bg-surface-container">
+<div class="h-full bg-primary-container w-full"></div>
+</div>
+<button class="w-full py-2 bg-surface border border-white/5 rounded font-label-caps text-label-caps text-outline-variant uppercase hover:text-on-surface transition-colors">Review Module</button>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="border border-primary/20 bg-[#0c0c0c]/70 backdrop-blur-[20px] rounded p-6 group hover:border-primary/50 transition-colors duration-300 flex flex-col h-full relative overflow-hidden shadow-[0_0_30px_rgba(139,92,246,0.05)]">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 rounded border border-primary/20 flex items-center justify-center bg-primary/5">
+<span class="material-symbols-outlined text-primary-container" data-icon="functions">functions</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface px-2 py-1 bg-surface-container rounded uppercase flex items-center">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container mr-2 animate-pulse"></span> Active
+                            </span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Multivariable Calculus</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-8 flex-grow">Gradients, partial derivatives, and optimization algorithms essential for backpropagation.</p>
+<div class="space-y-4 mt-auto">
+<div class="flex justify-between text-xs text-outline-variant">
+<span>Progress</span>
+<span class="text-on-surface">45%</span>
+</div>
+<div class="w-full h-0.5 bg-surface-container">
+<div class="h-full bg-primary-container w-[45%]"></div>
+</div>
+<button class="w-full py-2 bg-primary-container/10 border border-primary-container/30 rounded font-label-caps text-label-caps text-primary-container uppercase hover:bg-primary-container/20 transition-colors">Continue Learning</button>
+</div>
+</div>
+<!-- Course Card 3 -->
+<div class="border border-white/5 bg-[#0c0c0c]/40 backdrop-blur-[20px] rounded p-6 group hover:border-white/10 transition-colors duration-300 flex flex-col h-full relative overflow-hidden opacity-75 grayscale hover:grayscale-0 transition-all">
+<div class="flex justify-between items-start mb-6">
+<div class="w-10 h-10 rounded border border-white/10 flex items-center justify-center bg-surface-container">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="network_node">network_node</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="lock">lock</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Neural Network Architecture</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-8 flex-grow">Designing from scratch: perceptrons, activation functions, and deep layer topologies.</p>
+<div class="space-y-4 mt-auto">
+<div class="flex justify-between text-xs text-outline-variant">
+<span>Prerequisite Required</span>
+</div>
+<div class="w-full h-0.5 bg-surface-container">
+<div class="h-full bg-primary-container w-0"></div>
+</div>
+<button class="w-full py-2 bg-transparent border border-white/5 rounded font-label-caps text-label-caps text-outline-variant uppercase cursor-not-allowed">Locked</button>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Insight Panel -->
+<section class="border border-white/5 bg-surface-container-lowest/50 backdrop-blur-md rounded p-8 flex flex-col md:flex-row items-start gap-6 relative">
+<div class="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary-container to-transparent rounded-l"></div>
+<div class="p-3 bg-primary/10 rounded-full border border-primary/20 shrink-0">
+<span class="material-symbols-outlined text-primary-container" data-icon="tips_and_updates">tips_and_updates</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-2">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Optimization Insight</h4>
+<span class="font-label-caps text-[10px] text-primary-container border border-primary-container/30 rounded px-1.5 py-0.5 bg-primary-container/5 shadow-[0_0_8px_rgba(160,120,255,0.2)]">AI GENERATED</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-3xl leading-relaxed">
+                        Your completion rate in matrix multiplication modules is 15% above the cohort average. Consider accelerating through the 'Tensor Operations' sub-module to dedicate more compute credits towards the upcoming 'Backpropagation' practical lab.
+                    </p>
+</div>
+</section>
+</div>
+</main>
+</body></html>
