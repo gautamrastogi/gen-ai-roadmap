@@ -8,8 +8,8 @@
 <meta property="og:title" content="GenAI Roadmap 2026">
 <meta property="og:description" content="Track progress across 12 phases, 39 projects, and sync with GitHub Gist.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/">
-<link rel="canonical" href="https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/">
+<meta property="og:url" content="https://gautamrastogi.github.io/gen-ai-roadmap/">
+<link rel="canonical" href="https://gautamrastogi.github.io/gen-ai-roadmap/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -56,7 +56,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
-button, input { font: inherit; }
+button, input, select { font: inherit; }
 button { cursor: pointer; }
 img { max-width: 100%; display: block; }
 ::selection { background: rgba(208, 188, 255, 0.35); color: var(--text); }
@@ -111,6 +111,7 @@ header {
 .header-actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
 }
 .header-button {
@@ -264,6 +265,7 @@ header {
   justify-content: space-between;
   gap: 1rem;
   align-items: baseline;
+  margin-bottom: 1rem;
 }
 .section-head h2 {
   margin: 0;
@@ -281,6 +283,11 @@ header {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
+}
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
 }
 .card {
   border-radius: 22px;
@@ -335,16 +342,35 @@ header {
 .panel h3 { margin: 0 0 1rem 0; font-size: 1rem; color: var(--text); }
 .panel p { margin: 0; color: var(--text-soft); line-height: 1.8; }
 .panel-list { display: grid; gap: 1rem; margin-top: 1rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 .panel-chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 0.85rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); color: var(--text); font-size: 0.8rem; }
 .panel-item { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.1rem; border-radius: 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); }
 .panel-item strong { color: var(--text); }
 .panel-item span { color: var(--text-soft); font-size: 0.9rem; }
 .panel-link { display: block; text-decoration: none; color: var(--text); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 18px; padding: 1rem; transition: transform 180ms var(--ease), border-color 180ms var(--ease); }
 .panel-link:hover { transform: translateY(-1px); border-color: var(--accent); }
-.footer { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; margin-top: 2rem; font-size: 0.85rem; color: var(--text-soft); }
+.project-link { min-height: auto; padding: 1rem; gap: 0.6rem; text-decoration: none; color: var(--text); }
+.project-link .card-badge { width: fit-content; }
+.project-link .card-copy { font-size: 0.86rem; line-height: 1.5; margin: 0; }
+.sync-form { display: grid; gap: 1rem; margin-top: 1rem; }
+.form-row { display: grid; gap: 0.45rem; }
+.form-row label { color: var(--text-muted); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.12em; }
+.form-row input, .form-row select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  background: rgba(255,255,255,0.04);
+  padding: 0.75rem 0.85rem;
+}
+.form-row input:focus, .form-row select:focus { outline: 2px solid rgba(208, 188, 255, 0.28); border-color: var(--accent); }
+.form-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.footer { max-width: 1440px; margin: 0 auto; padding: 0 2rem 2rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; font-size: 0.85rem; color: var(--text-soft); }
 @media (max-width: 1120px) { .layout { grid-template-columns: 1fr; padding: 1.5rem 1.25rem 2.5rem; } .grid-cards { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 860px) { .header-inner { flex-direction: column; align-items: stretch; } .hero-metrics { grid-template-columns: 1fr; } .grid-cards { grid-template-columns: 1fr; } }
-@media (max-width: 680px) { .header-inner { padding: 1rem; } .layout { padding: 1rem; } .hero { padding: 1.5rem; } .sidebar-panel, .panel { padding: 1.2rem; } }
+@media (max-width: 1120px) { .mini-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 860px) { .header-inner { flex-direction: column; align-items: stretch; } .hero-metrics { grid-template-columns: 1fr; } .grid-cards, .mini-grid { grid-template-columns: 1fr; } }
+@media (max-width: 680px) { .header-inner { padding: 1rem; } .layout { padding: 1rem; } .hero { padding: 1.5rem; } .sidebar-panel, .panel { padding: 1.2rem; } .footer { padding: 0 1rem 1.5rem; } .panel-item { align-items: flex-start; flex-direction: column; } }
 </style>
 </head>
 <body>
@@ -398,7 +424,9 @@ header {
       <div class="sidebar-title">Quick actions</div>
       <div class="panel-list">
         <a class="panel-link" href="#" id="exportBtn">Export progress JSON</a>
+        <a class="panel-link" href="#" id="importBtn">Import progress JSON</a>
         <a class="panel-link" href="#" id="resetBtn">Reset progress</a>
+        <input class="visually-hidden" type="file" id="importInput" accept="application/json,.json">
       </div>
     </div>
   </aside>
@@ -415,18 +443,67 @@ header {
         </div>
       </div>
     </section>
-    <section>
+    <section id="phases">
       <div class="section-head">
         <h2>Learning trajectory</h2>
         <a href="#phases">Jump to phases</a>
       </div>
       <div class="grid-cards" id="phasesGrid"></div>
     </section>
+    <section id="projects">
+      <div class="section-head">
+        <h2>Project workspaces</h2>
+        <a href="#overview">Back to top</a>
+      </div>
+      <div class="mini-grid">
+        <a class="card project-link" href="https://github.com/gautamrastogi/gen-ai-roadmap/tree/main/projects/p0-genai-starter-template">
+          <div class="card-badge">P0</div>
+          <h3 class="card-title">Starter Template</h3>
+          <p class="card-copy">FastAPI, Pydantic settings, testing, and production-style layout.</p>
+        </a>
+        <a class="card project-link" href="https://github.com/gautamrastogi/gen-ai-roadmap/tree/main/projects/p1-prompt-playground">
+          <div class="card-badge">P1</div>
+          <h3 class="card-title">Prompt Playground</h3>
+          <p class="card-copy">Compare prompt strategies and runner behavior.</p>
+        </a>
+        <a class="card project-link" href="https://github.com/gautamrastogi/gen-ai-roadmap/tree/main/projects/p2-summarizer">
+          <div class="card-badge">P2</div>
+          <h3 class="card-title">Summarizer</h3>
+          <p class="card-copy">LLM-powered summarization workflow with prompt tests.</p>
+        </a>
+        <a class="card project-link" href="https://github.com/gautamrastogi/gen-ai-roadmap/tree/main/projects/p3-rewriter">
+          <div class="card-badge">P3</div>
+          <h3 class="card-title">Rewriter</h3>
+          <p class="card-copy">Tone and style rewriting service with structured prompts.</p>
+        </a>
+      </div>
+    </section>
     <section class="panel" id="sync">
       <h3>Cross-device sync</h3>
       <p>Save your roadmap progress to a private GitHub Gist and load it from any browser. Your progress remains private and portable across Mac, Windows, and Linux.</p>
+      <div class="sync-form">
+        <div class="form-row">
+          <label for="gistToken">GitHub token</label>
+          <input id="gistToken" type="password" autocomplete="off" placeholder="Token with gist scope">
+        </div>
+        <div class="form-row">
+          <label for="gistId">Gist ID</label>
+          <input id="gistId" type="text" autocomplete="off" placeholder="Leave blank to create a private Gist">
+        </div>
+        <div class="form-row">
+          <label for="syncMode">Sync action</label>
+          <select id="syncMode">
+            <option value="save">Save this browser progress to Gist</option>
+            <option value="load">Load progress from existing Gist</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button class="action-btn primary" id="syncFormBtn" type="button">Run sync</button>
+          <button class="action-btn" id="clearSyncBtn" type="button">Clear saved sync settings</button>
+        </div>
+      </div>
       <div class="panel-list">
-        <div class="panel-item"><strong>Next step</strong><span>Click Sync progress and paste your GitHub token.</span></div>
+        <div class="panel-item"><strong>Next step</strong><span>Paste a token with gist scope, then run sync.</span></div>
         <div class="panel-item"><strong>Tip</strong><span>Use the same Gist ID on every device to keep progress linked.</span></div>
       </div>
     </section>
@@ -449,13 +526,109 @@ const phases = [
   { id: 'ph11', title: 'Capstone Systems', desc: 'End-to-end GenAI products and infrastructure validation.', projects: 3, hours: 30, progress: 0 }
 ];
 const STORAGE_KEY = 'genai_roadmap_progress';
+const LEGACY_STORAGE_KEY = 'genai-progress-v3';
 const THEME_KEY = 'genai_roadmap_theme';
+const GIST_TOKEN_KEY = 'genai_roadmap_gist_token';
+const GIST_ID_KEY = 'genai_roadmap_gist_id';
+const GIST_LAST_SYNC_KEY = 'genai_roadmap_gist_last_sync';
+const GIST_FILENAME = 'genai-roadmap-progress.json';
+
+function clonePhases() {
+  return phases.map(phase => ({ ...phase }));
+}
+
+function readStorage(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch (error) {
+    console.warn(`Unable to read ${key} from localStorage`, error);
+    return null;
+  }
+}
+
+function writeStorage(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (error) {
+    console.warn(`Unable to write ${key} to localStorage`, error);
+  }
+}
+
+function removeStorage(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.warn(`Unable to remove ${key} from localStorage`, error);
+  }
+}
+
+function normalizeProgress(raw) {
+  const defaults = clonePhases();
+  if (!raw) return defaults;
+
+  let parsed;
+  try {
+    parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+  } catch (error) {
+    console.warn('Ignoring unreadable roadmap progress payload', error);
+    return defaults;
+  }
+
+  if (Array.isArray(parsed)) {
+    const byId = new Map(parsed.filter(Boolean).map(phase => [phase.id, phase]));
+    return defaults.map(phase => {
+      const saved = byId.get(phase.id) || {};
+      const progress = Number(saved.progress);
+      return {
+        ...phase,
+        ...saved,
+        id: phase.id,
+        projects: phase.projects,
+        hours: phase.hours,
+        progress: Number.isFinite(progress) ? Math.min(100, Math.max(0, Math.round(progress))) : phase.progress
+      };
+    });
+  }
+
+  if (typeof parsed === 'object') {
+    const completedByPhase = defaults.map(phase => {
+      const legacyIndex = phase.id.replace('ph', '');
+      const possibleProjectPrefix = legacyIndex === '0' ? 'p0' : `p${legacyIndex}-`;
+      const completed = Object.entries(parsed).filter(([key, value]) => (
+        value === true && (key.startsWith(`${phase.id}-`) || key.startsWith(possibleProjectPrefix))
+      )).length;
+      const progress = phase.projects ? Math.round((completed / phase.projects) * 100) : 0;
+      return { ...phase, progress: Math.min(100, Math.max(0, progress)) };
+    });
+    return completedByPhase;
+  }
+
+  return defaults;
+}
+
 function loadProgress() {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  return saved ? JSON.parse(saved) : phases;
+  const saved = readStorage(STORAGE_KEY) || readStorage(LEGACY_STORAGE_KEY);
+  const normalized = normalizeProgress(saved);
+  saveProgress(normalized);
+  return normalized;
 }
 function saveProgress(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  writeStorage(STORAGE_KEY, JSON.stringify(normalizeProgress(data)));
+}
+function updateSyncStatus(label) {
+  const status = document.getElementById('syncStatus');
+  if (status) status.textContent = label;
+}
+function formatSyncTime(value) {
+  if (!value) return 'Ready';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return 'Ready';
+  return `Synced ${date.toLocaleDateString([], { month: 'short', day: 'numeric' })}`;
+}
+function updateNavActive(targetId) {
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === `#${targetId}`);
+  });
 }
 function renderPhases() {
   const data = loadProgress();
@@ -495,11 +668,12 @@ function updatePhase(id) {
   phase.progress = nextValue;
   saveProgress(data);
   renderPhases();
+  updateSyncStatus('Saved locally');
 }
 function setTheme(theme) {
   document.documentElement.classList.toggle('light', theme === 'light');
   document.getElementById('themeBtn').textContent = theme === 'light' ? '🌙 Theme' : '☀️ Theme';
-  localStorage.setItem(THEME_KEY, theme);
+  writeStorage(THEME_KEY, theme);
 }
 function toggleTheme() {
   const active = document.documentElement.classList.contains('light') ? 'dark' : 'light';
@@ -515,23 +689,161 @@ function exportProgress() {
   a.click();
   URL.revokeObjectURL(url);
 }
+function importProgress(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = event => {
+    try {
+      JSON.parse(event.target.result);
+      const imported = normalizeProgress(event.target.result);
+      saveProgress(imported);
+      renderPhases();
+      updateSyncStatus('Imported');
+    } catch (error) {
+      updateSyncStatus('Import failed');
+      alert('That file is not valid JSON progress data.');
+    }
+  };
+  reader.onerror = () => alert('Unable to read that progress file.');
+  reader.readAsText(file);
+}
 function resetProgress() {
   if (confirm('Reset all progress to zero?')) {
-    const reset = phases.map(p => ({ ...p, progress: 0 }));
+    const reset = clonePhases().map(p => ({ ...p, progress: 0 }));
     saveProgress(reset);
     renderPhases();
+    updateSyncStatus('Reset locally');
   }
 }
-function syncPlaceholder() {
-  alert('GitHub Gist sync requires a saved token and Gist ID in the dashboard settings. This is a placeholder for the sync workflow.');
+async function gistRequest(method, path, token, body) {
+  const response = await fetch(`https://api.github.com${path}`, {
+    method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.message || `GitHub returned ${response.status}`);
+  return data;
 }
-const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+async function pushToGist(token, gistId) {
+  const content = JSON.stringify(loadProgress(), null, 2);
+  if (gistId) {
+    await gistRequest('PATCH', `/gists/${gistId}`, token, {
+      files: { [GIST_FILENAME]: { content } }
+    });
+    return gistId;
+  }
+  const gist = await gistRequest('POST', '/gists', token, {
+    description: 'GenAI Roadmap Progress',
+    public: false,
+    files: { [GIST_FILENAME]: { content } }
+  });
+  return gist.id;
+}
+async function pullFromGist(token, gistId) {
+  const gist = await gistRequest('GET', `/gists/${gistId}`, token);
+  const file = gist.files && gist.files[GIST_FILENAME];
+  if (!file || !file.content) throw new Error(`Could not find ${GIST_FILENAME} in that Gist`);
+  const remote = normalizeProgress(file.content);
+  saveProgress(remote);
+  renderPhases();
+}
+async function syncProgress() {
+  const tokenField = document.getElementById('gistToken');
+  const gistField = document.getElementById('gistId');
+  const modeField = document.getElementById('syncMode');
+  const savedToken = readStorage(GIST_TOKEN_KEY) || '';
+  const token = tokenField.value.trim() || savedToken;
+  if (!token) {
+    updateSyncStatus('Token needed');
+    document.getElementById('sync').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    tokenField.focus();
+    return;
+  }
+
+  const gistId = gistField.value.trim();
+  const action = modeField.value;
+  if (action === 'load' && !gistId) {
+    updateSyncStatus('Gist ID needed');
+    gistField.focus();
+    return;
+  }
+
+  updateSyncStatus('Syncing...');
+  try {
+    writeStorage(GIST_TOKEN_KEY, token);
+    let activeGistId = gistId;
+    if (action === 'load') {
+      await pullFromGist(token, gistId);
+    } else {
+      activeGistId = await pushToGist(token, gistId);
+    }
+    writeStorage(GIST_ID_KEY, activeGistId);
+    writeStorage(GIST_LAST_SYNC_KEY, new Date().toISOString());
+    gistField.value = activeGistId;
+    tokenField.value = '';
+    tokenField.placeholder = 'Saved locally in this browser';
+    updateSyncStatus('Synced');
+  } catch (error) {
+    updateSyncStatus('Sync failed');
+    alert(`Sync failed: ${error.message}`);
+  }
+}
+function clearSyncSettings() {
+  removeStorage(GIST_TOKEN_KEY);
+  removeStorage(GIST_ID_KEY);
+  removeStorage(GIST_LAST_SYNC_KEY);
+  document.getElementById('gistToken').value = '';
+  document.getElementById('gistToken').placeholder = 'Token with gist scope';
+  document.getElementById('gistId').value = '';
+  updateSyncStatus('Ready');
+}
+function hydrateSyncForm() {
+  const savedToken = readStorage(GIST_TOKEN_KEY);
+  const savedGistId = readStorage(GIST_ID_KEY);
+  const lastSync = readStorage(GIST_LAST_SYNC_KEY);
+  if (savedToken) document.getElementById('gistToken').placeholder = 'Saved locally in this browser';
+  if (savedGistId) document.getElementById('gistId').value = savedGistId;
+  updateSyncStatus(formatSyncTime(lastSync));
+}
+function bindNavLinks() {
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const id = link.getAttribute('href').slice(1);
+      updateNavActive(id);
+    });
+  });
+
+  const sections = ['overview', 'phases', 'projects', 'sync']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+  if (!('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver(entries => {
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visible) updateNavActive(visible.target.id);
+  }, { rootMargin: '-20% 0px -65% 0px', threshold: [0.1, 0.25, 0.5] });
+  sections.forEach(section => observer.observe(section));
+}
+const savedTheme = readStorage(THEME_KEY) || 'dark';
 setTheme(savedTheme);
 renderPhases();
+hydrateSyncForm();
+bindNavLinks();
 document.getElementById('themeBtn').addEventListener('click', toggleTheme);
 document.getElementById('exportBtn').addEventListener('click', event => { event.preventDefault(); exportProgress(); });
+document.getElementById('importBtn').addEventListener('click', event => { event.preventDefault(); document.getElementById('importInput').click(); });
+document.getElementById('importInput').addEventListener('change', event => importProgress(event.target.files[0]));
 document.getElementById('resetBtn').addEventListener('click', event => { event.preventDefault(); resetProgress(); });
-document.getElementById('saveBtn').addEventListener('click', syncPlaceholder);
+document.getElementById('saveBtn').addEventListener('click', syncProgress);
+document.getElementById('syncFormBtn').addEventListener('click', syncProgress);
+document.getElementById('clearSyncBtn').addEventListener('click', clearSyncSettings);
 </script>
 </body>
 </html>
