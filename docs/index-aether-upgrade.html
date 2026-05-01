@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GenAI Developer Roadmap 2026 | AETHER Progress Dashboard</title>
+  <meta name="description" content="Interactive progress tracker for 12 phases, 39 projects across GenAI learning path with Gist sync.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      /* Material Design 3 Dark Theme — Adapted for GenAI */
+      --surface-dim: #12131a;
+      --surface: #12131a;
+      --surface-bright: #383940;
+      --surface-container-lowest: #0c0e14;
+      --surface-container-low: #1a1b22;
+      --surface-container: #1e1f26;
+      --surface-container-high: #282a31;
+      --surface-container-highest: #33343c;
+      
+      --primary: #d0bcff;
+      --primary-container: #a078ff;
+      --on-primary: #3c0091;
+      --on-primary-container: #340080;
+      
+      --secondary: #d0bcff;
+      --secondary-container: #513e7f;
+      --on-secondary: #372464;
+      
+      --tertiary: #ffb869;
+      --tertiary-container: #ca801e;
+      
+      --background: #12131a;
+      --on-background: #e2e1eb;
+      --on-surface: #e2e1eb;
+      --on-surface-variant: #cbc3d7;
+      
+      --outline: #958ea0;
+      --outline-variant: #494454;
+      
+      --success: #10b981;
+      --warning: #f59e0b;
+      
+      /* Typography Scale */
+      --fs-display-lg: 48px;
+      --fs-headline-md: 24px;
+      --fs-headline-sm: 18px;
+      --fs-body-lg: 16px;
+      --fs-body-sm: 14px;
+      --fs-label-caps: 12px;
+      
+      /* Motion */
+      --spring: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--background);
+      color: var(--on-background);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Typography */
+    .display-lg { font: 500 var(--fs-display-lg) / 1.1 'Space Grotesk'; letter-spacing: 0.05em; }
+    .headline-md { font: 500 var(--fs-headline-md) / 1.2 'Space Grotesk'; letter-spacing: 0.03em; }
+    .headline-sm { font: 600 var(--fs-headline-sm) / 1.4 'Space Grotesk'; letter-spacing: 0.02em; }
+    .body-lg { font: 400 var(--fs-body-lg) / 1.6 'Inter'; letter-spacing: 0.01em; }
+    .body-sm { font: 400 var(--fs-body-sm) / 1.5 'Inter'; }
+    .label-caps { font: 600 var(--fs-label-caps) / 1 'Space Grotesk'; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* Glass Panel */
+    .glass-panel {
+      background: rgba(12, 14, 20, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    .hairline-border { border: 1px solid rgba(255, 255, 255, 0.08); }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+      background: rgba(25, 25, 32, 0.7);
+      backdrop-filter: blur(40px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0 2rem;
+      height: 6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: -0.02em;
+      color: #fafafa;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .theme-toggle, .settings-btn {
+      background: none;
+      border: none;
+      color: #a1a1aa;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      font-size: 1.5rem;
+    }
+
+    .theme-toggle:hover, .settings-btn:hover {
+      color: var(--primary);
+    }
+
+    /* Sidebar */
+    aside {
+      position: fixed;
+      left: 0;
+      top: 6rem;
+      width: 16rem;
+      height: calc(100vh - 6rem);
+      background: var(--surface-container-low);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2rem 1.5rem;
+      overflow-y: auto;
+      z-index: 40;
+    }
+
+    .sidebar-section {
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-title {
+      color: var(--outline-variant);
+      margin-bottom: 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      background: transparent;
+      border: none;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      border-radius: 6px;
+      text-align: left;
+      transition: all 0.3s var(--ease);
+      font-size: 0.875rem;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--on-surface);
+    }
+
+    .sidebar-link.active {
+      background: rgba(208, 188, 255, 0.1);
+      color: var(--primary);
+      border-left: 2px solid var(--primary);
+      padding-left: calc(1rem - 2px);
+    }
+
+    /* Main Content */
+    main {
+      margin-left: 16rem;
+      margin-top: 6rem;
+      min-height: calc(100vh - 6rem);
+      padding: 2rem 3rem;
+      max-width: 1600px;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 2rem;
+      margin-bottom: 4rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-content h1 {
+      color: #fafafa;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      color: var(--on-surface-variant);
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      flex-shrink: 0;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 1.5rem 2rem;
+      background: rgba(12, 14, 20, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      backdrop-filter: blur(20px);
+    }
+
+    .stat-card .value {
+      display: block;
+      font: 500 var(--fs-headline-md) / 1 'Space Grotesk';
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card .label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--on-surface-variant);
+    }
+
+    /* Phase Grid */
+    .phases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .phase-card {
+      padding: 2rem;
+      background: rgba(12, 14, 20, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      backdrop-filter: blur(20px);
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phase-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: transparent;
+      transition: background 0.3s var(--ease);
+    }
+
+    .phase-card:hover {
+      border-color: rgba(255, 255, 255, 0.1);
+      background: rgba(12, 14, 20, 0.9);
+    }
+
+    .phase-card:hover::before {
+      background: rgba(208, 188, 255, 0.5);
+    }
+
+    .phase-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: rgba(208, 188, 255, 0.1);
+      border: 1px solid rgba(208, 188, 255, 0.2);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .phase-card h3 {
+      color: var(--on-surface);
+      margin-bottom: 0.75rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .phase-card p {
+      color: var(--on-surface-variant);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .phase-meta {
+      display: flex;
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.8rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      margin-bottom: 1rem;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-container) 100%);
+      box-shadow: 0 0 8px rgba(208, 188, 255, 0.6);
+      transition: width 0.6s var(--spring);
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      background: var(--surface-container-highest);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--on-surface);
+      border-radius: 6px;
+      cursor: pointer;
+      font: inherit;
+      transition: all 0.3s var(--ease);
+    }
+
+    button:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 12px rgba(208, 188, 255, 0.2);
+    }
+
+    button.primary {
+      background: rgba(208, 188, 255, 0.1);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    button.primary:hover {
+      background: rgba(208, 188, 255, 0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      aside { display: none; }
+      main { margin-left: 0; }
+      .phases-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      header { height: 5rem; padding: 0 1rem; }
+      main { padding: 1.5rem; }
+      .hero { flex-direction: column; }
+      .hero-stats { gap: 1rem; width: 100%; }
+      .stat-card { flex: 1; }
+    }
+
+    /* Keyframes */
+    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .phase-card { animation: slideUp 0.5s var(--ease) backwards; }
+    .phase-card:nth-child(n) { animation-delay: calc(50ms * var(--index, 0)); }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>AETHER</h1>
+    <div class="header-right">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
+      <button class="settings-btn" title="Settings">⚙️</button>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Navigation</div>
+      <button class="sidebar-link active">Progress</button>
+      <button class="sidebar-link">Phases</button>
+      <button class="sidebar-link">Projects</button>
+      <button class="sidebar-link">Resources</button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">Sync</div>
+      <button class="sidebar-link" id="syncGist">↑ Sync to Gist</button>
+      <button class="sidebar-link" id="loadGist">↓ Load from Gist</button>
+      <button class="sidebar-link" id="exportBtn">📥 Export Data</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
+          <span class="label-caps" style="color: var(--primary);">Phase 01</span>
+          <div style="width: 12px; height: 1px; background: rgba(255, 255, 255, 0.2);"></div>
+          <span class="label-caps" style="color: var(--on-surface-variant);">0% Completed</span>
+        </div>
+        <h1 class="display-lg">Foundations of GenAI</h1>
+        <p class="body-lg">A structured, project-driven learning path covering Python fundamentals, LLM applications, RAG systems, MCP integration, and production-grade AI deployment across 12 phases.</p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="label-caps" style="color: var(--on-surface-variant);">Phases</span>
+          <span class="value">12</span>
+        </div>
+        <div class="stat-card">
+          <span class="label-caps" style="color: var(--on-surface-variant);">Projects</span>
+          <span class="value">39</span>
+        </div>
+        <div class="stat-card">
+          <span class="label-caps" style="color: var(--on-surface-variant);">Est. Hours</span>
+          <span class="value">165</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phases Grid -->
+    <section>
+      <h2 class="headline-md" style="margin-bottom: 2rem; color: var(--on-surface);">Learning Trajectory</h2>
+      <div class="phases-grid" id="phasesGrid"></div>
+    </section>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="primary" id="continueBtn">Continue Learning →</button>
+      <button id="resetBtn">Reset Progress</button>
+    </div>
+  </main>
+
+  <script>
+    // Phase data
+    const phases = [
+      { id: 'ph0', name: 'Software Baseline', desc: 'Git, GitHub, dev environment setup', projects: 1, hours: 2, progress: 0 },
+      { id: 'ph1', name: 'Python Foundations', desc: 'Core language, data structures, OOP', projects: 3, hours: 15, progress: 0 },
+      { id: 'ph2', name: 'LLM Applications', desc: 'Prompt engineering, API integration', projects: 4, hours: 20, progress: 0 },
+      { id: 'ph3', name: 'RAG & Embeddings', desc: 'Vector DBs, retrieval, semantic search', projects: 5, hours: 15, progress: 0 },
+      { id: 'ph4', name: 'Tool Calling', desc: 'Function calling, workflows, LangGraph', projects: 4, hours: 12, progress: 0 },
+      { id: 'ph5', name: 'Evals & Observability', desc: 'Testing, monitoring, tracing', projects: 5, hours: 10, progress: 0 },
+      { id: 'ph6', name: 'MCP & Agents', desc: 'Model Context Protocol, agentic patterns', projects: 7, hours: 20, progress: 0 },
+      { id: 'ph7', name: 'AI-Native DevEx', desc: 'Copilot integration, productivity', projects: 2, hours: 6, progress: 0 },
+      { id: 'ph8', name: 'Multimodal & SLMs', desc: 'Vision, audio, local models', projects: 3, hours: 12, progress: 0 },
+      { id: 'ph9', name: 'Portfolio & Jobs', desc: 'Resume, interview prep, projects', projects: 1, hours: 8, progress: 0 },
+      { id: 'ph10', name: 'Certifications', desc: 'Google, AWS, specialized certs', projects: 1, hours: 15, progress: 0 },
+      { id: 'ph11', name: 'Capstone Projects', desc: 'Build production-grade systems', projects: 3, hours: 30, progress: 0 }
+    ];
+
+    // Load progress from localStorage
+    function loadProgress() {
+      const saved = localStorage.getItem('genai_roadmap_progress');
+      return saved ? JSON.parse(saved) : phases;
+    }
+
+    // Save progress to localStorage
+    function saveProgress(updatedPhases) {
+      localStorage.setItem('genai_roadmap_progress', JSON.stringify(updatedPhases));
+    }
+
+    // Render phases grid
+    function renderPhases() {
+      const phaseData = loadProgress();
+      const grid = document.getElementById('phasesGrid');
+      grid.innerHTML = phaseData.map((phase, idx) => `
+        <div class="phase-card" style="--index: ${idx}">
+          <div class="phase-badge">${phase.id.toUpperCase()}</div>
+          <h3>${phase.name}</h3>
+          <p>${phase.desc}</p>
+          <div class="progress-container">
+            <div class="progress-label">
+              <span>Progress</span>
+              <span>${phase.progress}%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${phase.progress}%"></div>
+            </div>
+          </div>
+          <div class="phase-meta">
+            <span>📚 ${phase.projects} Projects</span>
+            <span>⏱️ ${phase.hours}h</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      document.documentElement.classList.toggle('light');
+      localStorage.setItem('genai_roadmap_theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+    });
+
+    // Load theme from localStorage
+    if (localStorage.getItem('genai_roadmap_theme') === 'light') {
+      document.documentElement.classList.add('light');
+    }
+
+    // Sync to Gist placeholder
+    document.getElementById('syncGist').addEventListener('click', () => {
+      alert('Gist sync functionality requires GitHub Personal Access Token configuration. See README for setup.');
+    });
+
+    // Export data
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const data = loadProgress();
+      const json = JSON.stringify(data, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'genai-roadmap-progress.json';
+      a.click();
+    });
+
+    // Reset progress
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      if (confirm('Reset all progress?')) {
+        localStorage.removeItem('genai_roadmap_progress');
+        renderPhases();
+      }
+    });
+
+    // Initial render
+    renderPhases();
+  </script>
+</body>
+</html>
