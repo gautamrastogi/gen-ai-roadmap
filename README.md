@@ -84,9 +84,11 @@ First, configure the repository for your personal use:
 
 This will:
 - Replace `YOUR_USERNAME` and `YOUR_REPO_NAME` placeholders with your GitHub details
-- Create `config.env` from template for API keys
+- Create `config.env` from `templates/config.env.template`
 - Create `.cursor/mcp.json` for Cursor MCP integration
 - Update all documentation with your information
+
+For the full environment guide, see `docs/setup.md`.
 
 ## 🛠️ Local Development
 
@@ -129,16 +131,19 @@ This roadmap is optimized for Apple Silicon. Recommended local model setup:
 ```
 gen-ai-roadmap/
 ├── docs/
-│   └── index.html              # Dashboard (single-file app, deployed to GitHub Pages)
+│   ├── index.html              # Dashboard (single-file app, deployed to GitHub Pages)
+│   └── setup.md                # Local environment setup guide
 ├── projects/
 │   ├── local-agent/            # FastMCP local Python MCP server
 │   ├── p0-genai-starter-template/  # Phase 0: FastAPI + Pydantic starter template
 │   ├── p1-prompt-playground/   # Phase 1: Prompt strategy comparison app
 │   ├── p2-summarizer/          # Phase 1: FastAPI summarization service
 │   └── p3-rewriter/            # Phase 1: Tone/style rewriter service
+├── templates/                  # Copyable local config templates
 ├── genai-roadmap.md            # Full roadmap content (source of truth)
-├── .env                        # Local secrets (gitignored)
+├── .env.example                # Root environment variable example
 ├── .gitignore
+├── setup.sh / setup.bat        # Repo personalization scripts
 └── README.md
 ```
 
@@ -152,12 +157,13 @@ The `projects/local-agent/` folder contains a **FastMCP Python server** that run
 
 | Tool | Description |
 |------|-------------|
-| `run_python` | Execute Python code in a sandboxed subprocess |
-| `shell` | Run shell commands with output capture |
+| `run_command` | Run allowlisted shell commands with output capture |
 | `read_file` / `write_file` | Safe file I/O |
-| `list_dir` | Directory listing |
-| `lm_studio_chat` | Route prompts to a local LM Studio model |
-| `search_web` | DuckDuckGo search without API key |
+| `git_status_and_diff` | Inspect git status and a bounded diff preview |
+| `roadmap_status` / `roadmap_next_task` / `roadmap_phase_details` | Read-only roadmap coach helpers |
+| `call_local_model` | Route prompts to LM Studio or Ollama via an OpenAI-compatible API |
+| `web_search` | DuckDuckGo search without API key |
+| `health_check` / `list_tool_capabilities` | Diagnostics and capability map |
 
 See `projects/local-agent/README.md` for setup instructions.
 
@@ -172,7 +178,7 @@ See `projects/local-agent/README.md` for setup instructions.
 
 ---
 
-## � Cross-Device Usage
+## Cross-Device Usage
 
 This roadmap supports seamless development across multiple devices:
 
@@ -183,7 +189,7 @@ This roadmap supports seamless development across multiple devices:
 
 ### Environment Setup
 - **macOS/Linux**: Use `./setup.sh` and standard Python venv
-- **Windows**: Use `setup.bat` (create from `setup.sh` template) and `python -m venv .venv`
+- **Windows**: Use `setup.bat` and `python -m venv .venv`
 - All scripts are designed to work on both Unix and Windows
 
 ### Local Agent Compatibility
@@ -198,6 +204,6 @@ This roadmap supports seamless development across multiple devices:
 
 ---
 
-## �📝 License
+## 📝 License
 
 MIT — use this roadmap however you like. If you find it useful, ⭐ the repo!

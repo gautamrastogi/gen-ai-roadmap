@@ -72,6 +72,7 @@ projects/dashboard/launchd.err.log
 .env
 .env.*
 !.env.example
+config.env
 
 # API keys / secrets
 *.pem

@@ -41,15 +41,16 @@ powershell -Command "(Get-Content LICENSE) -replace 'YOUR_NAME', '%FULL_NAME%' |
 REM Copy configuration template
 echo Setting up configuration...
 if not exist "config.env" (
-    copy config.env.template config.env
+    copy templates\config.env.template config.env
     echo ✓ Created config.env from template
 ) else (
     echo ⚠ config.env already exists, skipping
 )
 
 REM Copy MCP configuration template
+if not exist ".cursor" mkdir .cursor
 if not exist ".cursor\mcp.json" (
-    copy .cursor\mcp.json.template .cursor\mcp.json
+    copy templates\cursor-mcp.json.template .cursor\mcp.json
     echo ✓ Created .cursor\mcp.json from template
 ) else (
     echo ⚠ .cursor\mcp.json already exists, skipping
@@ -61,7 +62,7 @@ echo.
 echo Next steps:
 echo 1. Edit config.env with your API keys
 echo 2. Run: python -m venv .venv && .venv\Scripts\activate && pip install -r requirements.txt
-echo 3. For local agent: cd projects\local-agent && start_local_agent.bat
+echo 3. For local agent: cd projects\local-agent && scripts\start_local_agent.bat
 echo 4. Open dashboard: python -m http.server 8000 (then visit http://localhost:8000/docs/)
 echo.
 echo Repository is now configured for: https://%GITHUB_USERNAME%.github.io/%REPO_NAME%

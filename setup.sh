@@ -49,15 +49,16 @@ sed -i.bak "s/YOUR_NAME/$FULL_NAME/g" LICENSE
 # Copy configuration template
 echo -e "${BLUE}Setting up configuration...${NC}"
 if [[ ! -f "config.env" ]]; then
-    cp config.env.template config.env
+    cp templates/config.env.template config.env
     echo -e "${GREEN}✓ Created config.env from template${NC}"
 else
     echo -e "${YELLOW}⚠ config.env already exists, skipping${NC}"
 fi
 
 # Copy MCP configuration template
+mkdir -p .cursor
 if [[ ! -f ".cursor/mcp.json" ]]; then
-    cp .cursor/mcp.json.template .cursor/mcp.json
+    cp templates/cursor-mcp.json.template .cursor/mcp.json
     echo -e "${GREEN}✓ Created .cursor/mcp.json from template${NC}"
 else
     echo -e "${YELLOW}⚠ .cursor/mcp.json already exists, skipping${NC}"
@@ -72,7 +73,7 @@ echo ""
 echo -e "${YELLOW}Next steps:${NC}"
 echo "1. Edit config.env with your API keys"
 echo "2. Run: python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt"
-echo "3. For local agent: cd projects/local-agent && ./start_local_agent.sh"
+echo "3. For local agent: cd projects/local-agent && ./scripts/start_local_agent.sh"
 echo "4. Open dashboard: python3 -m http.server 8000 (then visit http://localhost:8000/docs/)"
 echo ""
 echo -e "${BLUE}Repository is now configured for: https://$GITHUB_USERNAME.github.io/$REPO_NAME/${NC}"
