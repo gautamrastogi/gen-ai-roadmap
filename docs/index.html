@@ -96,6 +96,11 @@ body::before{
     radial-gradient(circle at 28% 18%, rgba(99,102,241,.12), transparent 18%);
   pointer-events:none;
 }
+.light body::before{
+  background:
+    radial-gradient(circle at top right, rgba(124,58,237,.12), transparent 24%),
+    radial-gradient(circle at 28% 18%, rgba(59,130,246,.08), transparent 18%);
+}
 
 /* ─── Keyframes ─── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -117,6 +122,12 @@ body::before{
   background:radial-gradient(ellipse,rgba(99,102,241,.035) 0%,transparent 65%);
   bottom:-150px;left:-100px;
   animation:glowPulse 12s ease-in-out infinite reverse;
+}
+.light .glow1{
+  background:radial-gradient(ellipse,rgba(124,58,237,.08) 0%,transparent 60%);
+}
+.light .glow2{
+  background:radial-gradient(ellipse,rgba(59,130,246,.07) 0%,transparent 65%);
 }
 
 /* ─── Overlay ─── */
@@ -275,6 +286,10 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;
   flex-wrap:wrap;
   animation:fadeUp .4s var(--spring) both;
+}
+.light .phase-header{
+  background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(246,244,255,.95));
+  box-shadow:0 20px 50px rgba(15,23,42,.08);
 }
 .phase-label{
   font-size:.58rem;text-transform:uppercase;letter-spacing:.14em;
@@ -595,6 +610,10 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   cursor:pointer;transition:var(--tr);
 }
 .current-task-box:hover{border-color:var(--border-act);background:rgba(139,92,246,.1)}
+.light .current-task-box{
+  background:rgba(124,58,237,.08);
+  border-color:rgba(124,58,237,.18);
+}
 
 /* ─── Gist sync panel ─── */
 .sync-panel{
@@ -617,6 +636,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 }
 .sync-badge.connected{background:rgba(16,185,129,.1);color:#10b981}
 .sync-badge.disconnected{background:rgba(82,82,91,.1);color:var(--text-3)}
+.light .sync-badge.disconnected{background:rgba(15,23,42,.08)}
 
 /* ─── Modal ─── */
 .modal-bg{
@@ -626,6 +646,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   align-items:center;justify-content:center;
 }
 .modal-bg.show{display:flex}
+.light .modal-bg{background:rgba(15,23,42,.24)}
 .modal{
   background:var(--bg-sidebar);border:1px solid var(--border);
   border-radius:22px;padding:1.625rem;
@@ -733,11 +754,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
     <span class="export-info" id="export-info">Progress saved locally</span>
     <button class="btn" onclick="exportProgress()">Export</button>
     <label class="btn" style="cursor:pointer">Import<input type="file" accept=".json" style="display:none" onchange="importProgress(event)"></label>
-    <button class="btn btn-info" onclick="masterAllProjects()" title="Mark all projects as complete">Mark Projects Done</button>
-    <button class="btn btn-success" onclick="masterAllCourses()" title="Mark all courses as complete">Mark Courses Done</button>
-    <button class="btn btn-primary" onclick="masterAll()" title="Mark everything as complete">Mark All Done</button>
-    <button class="btn" onclick="expandEverything()" title="Expand all sections">Expand All</button>
-    <button class="btn" onclick="resetProgress()" style="color:#ef4444">Reset</button>
+    <button class="btn" onclick="resetProgress()">Reset</button>
   </div>
   <div id="content"></div>
 
