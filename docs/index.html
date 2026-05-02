@@ -384,6 +384,9 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   border-left:2px solid var(--accent);
   padding-left:calc(.9rem - 2px);
 }
+.light .course-item.is-current{
+  background:rgba(124,58,237,.12);
+}
 .course-check{
   width:15px;height:15px;border-radius:4px;
   border:1.5px solid var(--border);flex-shrink:0;
@@ -490,6 +493,10 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   border-radius:0 var(--radius-xs) var(--radius-xs) 0;
   font-size:.7rem;color:var(--text-2);
 }
+.light .business-value-box{
+  background:rgba(245,158,11,.09);
+  border-left-color:rgba(245,158,11,.45);
+}
 .business-value-title{
   font-size:.56rem;font-weight:700;color:var(--warning);
   text-transform:uppercase;margin-bottom:.175rem;
@@ -512,6 +519,10 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   border-left:2px solid rgba(99,102,241,.18);
   border-radius:0 var(--radius-xs) var(--radius-xs) 0;
   font-size:.68rem;color:var(--text-2);line-height:1.7;
+}
+.light .reading-guide{
+  background:rgba(59,130,246,.09);
+  border-left-color:rgba(59,130,246,.35);
 }
 .reading-guide-title{
   font-size:.56rem;font-weight:700;text-transform:uppercase;
@@ -562,6 +573,10 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   border:1px solid rgba(139,92,246,.15);border-radius:var(--radius-xs);
   padding:.06rem .3rem;margin-left:.3rem;vertical-align:middle;
   font-family:'JetBrains Mono',monospace;
+}
+.light .item-current-badge{
+  background:rgba(124,58,237,.16);
+  border-color:rgba(124,58,237,.28);
 }
 
 /* Share button */
@@ -1443,6 +1458,16 @@ function buildNav(filter=''){
            ph.courses.some(pl => pl.platform.toLowerCase().includes(f) || pl.items.some(i => i.name.toLowerCase().includes(f)));
   });
 
+  if(!filtered.length){
+    nav.innerHTML = `<div class="nav-item" style="cursor:default;opacity:.8">
+      <div class="nav-info">
+        <div class="nav-title">No Matches</div>
+        <div class="nav-sub">Try another keyword</div>
+      </div>
+    </div>`;
+    return;
+  }
+
   nav.innerHTML=filtered.map(ph=>`
     <div class="nav-item${ph.id===currentPhase?' active':''}" data-id="${ph.id}" onclick="showPhase('${ph.id}')">
       <div style="flex:1">
@@ -1484,9 +1509,9 @@ function renderPhase(ph){
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn" onclick="markAllCourses('${ph.id}')" title="Toggle all courses in this phase">All Courses</button>
-      <button class="btn" onclick="markAllProjects('${ph.id}')" title="Toggle all projects in this phase">All Projects</button>
-      <button class="btn btn-accent" onclick="markPhaseComplete('${ph.id}')" title="Mark entire phase complete">Complete Phase</button>
+      <button class="btn" onclick="markAllCourses('${ph.id}')" title="Toggle all courses in this phase">Toggle Courses</button>
+      <button class="btn" onclick="markAllProjects('${ph.id}')" title="Toggle all projects in this phase">Toggle Projects</button>
+      <button class="btn btn-accent" onclick="markPhaseComplete('${ph.id}')" title="Toggle entire phase completion">Toggle Phase Done</button>
       <button class="btn${state._currentPhase===ph.id?' btn-current':''}" onclick="setCurrentPhase('${ph.id}')" title="Mark this as your current active phase" style="min-width:auto">
         ${state._currentPhase===ph.id ? 'Active Phase' : 'Set as Current'}
       </button>
@@ -1816,50 +1841,6 @@ function importProgress(e){
   const reader=new FileReader();
   reader.onload=ev=>{ try{ state=JSON.parse(ev.target.result); save(); location.reload(); }catch(err){ alert('Invalid file'); } };
   reader.readAsText(file);
-}
-function masterAllProjects(){
-  if(!confirm('Mark all PROJECTS across all phases as complete?')) return;
-  PHASES.forEach(ph=>{
-    ph.projects.forEach(p=>{ state[p.id]=true; });
-  });
-  save(); buildNav(); showPhase(currentPhase || 'ph1');
-  confetti({ particleCount: 200, spread: 100, origin: { y: 0.7 } });
-}
-function masterAllCourses(){
-  if(!confirm('Mark all COURSES across all phases as complete?')) return;
-  PHASES.forEach(ph=>{
-    ph.courses.forEach(pl=>pl.items.forEach((_,i)=>{ state[courseId(ph.id,pl.platform,i)]=true; }));
-  });
-  save(); buildNav(); showPhase(currentPhase || 'ph1');
-  confetti({ particleCount: 150, spread: 80, origin: { y: 0.8 }, colors: ['#3b82f6', '#10b981'] });
-}
-function masterAll(){
-  if(!confirm('Mark everything in the roadmap as complete? This will also throw a lot of confetti!')) return;
-  PHASES.forEach(ph=>{
-    ph.projects.forEach(p=>{ state[p.id]=true; });
-    ph.courses.forEach(pl=>pl.items.forEach((_,i)=>{ state[courseId(ph.id,pl.platform,i)]=true; }));
-  });
-  save();
-  buildNav();
-  showPhase(currentPhase || 'ph1');
-  confetti({
-    particleCount: 500,
-    spread: 160,
-    origin: { y: 0.5 },
-    colors: ['#8b5cf6', '#6366f1', '#10b981', '#3b82f6', '#f59e0b']
-  });
-}
-function expandEverything(){
-  // Expand all platforms and cards in the current phase
-  const allGroups=document.querySelectorAll('[id^="pg-"]');
-  allGroups.forEach(el=>{ el.classList.add('open'); });
-  const allCards=document.querySelectorAll('.projects-grid .card');
-  allCards.forEach(el=>{ el.classList.remove('collapsed'); });
-  // Update button text in the view if they exist
-  document.querySelectorAll('.btn').forEach(btn => {
-    if(btn.textContent === 'Expand All') btn.textContent = 'Collapse All';
-    else if(btn.textContent === 'Collapse All') btn.textContent = 'Expand All';
-  });
 }
 function resetProgress(){
   if(!confirm('Reset all progress?')) return;
