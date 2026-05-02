@@ -54,6 +54,7 @@ logs/
 
 # Test artifacts
 test_output.txt
+projects/local-agent/tmp/
 .pytest_cache/
 htmlcov/
 .coverage

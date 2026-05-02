@@ -24,6 +24,8 @@ from mcp_server import (
     write_file,
 )
 
+TEST_OUTPUT_PATH = "projects/local-agent/tmp/test_output.txt"
+
 
 def pretty(raw: str) -> str:
     try:
@@ -35,11 +37,11 @@ def test_tools():
     """Test the tools directly."""
 
     print("Testing write_file...")
-    result = write_file("test_output.txt", "Hello from MCP test!\nThis file was created by the local agent.")
+    result = write_file(TEST_OUTPUT_PATH, "Hello from MCP test!\nThis file was created by the local agent.")
     print("Result:\n", pretty(result))
 
     print("\nTesting read_file...")
-    result = read_file("test_output.txt")
+    result = read_file(TEST_OUTPUT_PATH)
     print("Result:\n", pretty(result))
 
     print("\nTesting run_command...")
@@ -82,7 +84,14 @@ def test_tools():
     result = list_tool_capabilities()
     print("Result:\n", pretty(result))
 
-    print("\nTest complete. Check for test_output.txt file.")
+    output_path = Path(__file__).resolve().parents[1] / "tmp" / "test_output.txt"
+    output_path.unlink(missing_ok=True)
+    try:
+        output_path.parent.rmdir()
+    except OSError:
+        pass
+
+    print("\nTest complete. Temporary smoke-test file cleaned up.")
 
 if __name__ == "__main__":
     test_tools()
