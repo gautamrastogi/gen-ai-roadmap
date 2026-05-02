@@ -1,4 +1,4 @@
-# Local Agent MCP Server + Roadmap Coach
+# Local Agent + Roadmap Coach
 
 This folder contains a local MCP server and a small LLM-backed roadmap coach:
 
@@ -6,7 +6,7 @@ This folder contains a local MCP server and a small LLM-backed roadmap coach:
 - `roadmap_coach.py` helps answer "What should I do next?" for this roadmap.
 - LM Studio or Ollama can provide local OpenAI-compatible model inference.
 
-## What You Built
+## What It Contains
 
 `mcp_server.py` now includes:
 
@@ -141,10 +141,13 @@ projects/local-agent/
 |-- scripts/                       # Startup, checks, model helpers, reports
 |-- tests/                         # Smoke and unit tests
 |-- templates/                     # Copyable local config/progress templates
-|-- docs/                          # Notes and implementation docs
-|-- demos/                         # Small standalone local-agent demos
-`-- data/                          # Local metrics/tracking templates
+|-- docs/                          # Human notes: setup, prompts, plans
+|-- demos/                         # Small standalone tool-calling demos
+`-- data/                          # Small tracking templates
 ```
+
+Tracked files are kept in those folders. Runtime noise such as `.venv/`, `logs/`, and
+`__pycache__/` is intentionally ignored by git.
 
 ## Local Model Requirements
 
@@ -210,7 +213,7 @@ How to measure in your workflow:
 
 `savings_percent = (baseline_tokens - hybrid_tokens) / baseline_tokens * 100`
 
-Use `projects/local-agent/data/TOKEN_SAVINGS_TRACKER.csv` to log each baseline vs hybrid task pair.
+Use `projects/local-agent/data/token-savings-tracker.csv` to log each baseline vs hybrid task pair.
 
 Generate a quick report:
 
