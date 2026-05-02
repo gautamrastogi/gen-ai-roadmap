@@ -12,7 +12,7 @@ Use these templates when you want predictable tool behavior.
 
 ## 3) Refactor flow
 
-`Refactor this safely. Use local MCP for reading/writing files and running checks. Keep changes minimal and run local-agent/run_checks.sh before finalizing.`
+`Refactor this safely. Use local MCP for reading/writing files and running checks. Keep changes minimal and run projects/local-agent/scripts/run_checks.sh before finalizing.`
 
 ## 4) Fast review
 

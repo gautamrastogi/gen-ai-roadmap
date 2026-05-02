@@ -3,7 +3,7 @@
 This is the smallest useful version of a local agent:
 
 - local model server: `Ollama` or `LM Studio`
-- agent loop: `local_agent_demo.py`
+- agent loop: `demos/local_agent_demo.py`
 - tools: time, list files, read file
 
 ## What this proves
@@ -21,7 +21,7 @@ ollama pull qwen3
 Run the demo:
 
 ```bash
-python3 local_agent_demo.py --base-url http://127.0.0.1:11434/v1 --model qwen3
+python3 demos/local_agent_demo.py --base-url http://127.0.0.1:11434/v1 --model qwen3
 ```
 
 ## Option 2: LM Studio
@@ -34,7 +34,7 @@ python3 local_agent_demo.py --base-url http://127.0.0.1:11434/v1 --model qwen3
 Then run:
 
 ```bash
-python3 local_agent_demo.py --base-url http://127.0.0.1:1234/v1 --model <your-model-name>
+python3 demos/local_agent_demo.py --base-url http://127.0.0.1:1234/v1 --model <your-model-name>
 ```
 
 ## Good test prompts

@@ -50,18 +50,20 @@ Policy control:
 
 ## Quick Start
 
+Commands in this section assume you are in `projects/local-agent`.
+
 ### 1) Start or verify a local model
 
 LM Studio:
 
 ```bash
-./ensure_local_model.sh lmstudio
+./scripts/ensure_local_model.sh lmstudio
 ```
 
 Ollama:
 
 ```bash
-LOCAL_MODEL_NAME=qwen3 ./ensure_local_model.sh ollama
+LOCAL_MODEL_NAME=qwen3 ./scripts/ensure_local_model.sh ollama
 ```
 
 ### 2) Ask the roadmap coach
@@ -82,24 +84,24 @@ python roadmap_coach.py next --no-llm
 
 **macOS/Linux:**
 ```bash
-./run_checks.sh
+./scripts/run_checks.sh
 ```
 
 **Windows:**
 ```cmd
-run_checks.bat
+scripts\run_checks.bat
 ```
 
 ### 4) Start local MCP server manually
 
 **macOS/Linux:**
 ```bash
-./start_local_agent.sh
+./scripts/start_local_agent.sh
 ```
 
 **Windows:**
 ```cmd
-start_local_agent.bat
+scripts\start_local_agent.bat
 ```
 
 ### 5) Verify in Cursor
@@ -126,7 +128,22 @@ python roadmap_coach.py init --print-template
 For personalized progress, create a local gitignored copy:
 
 ```bash
-cp roadmap-progress.example.json roadmap-progress.local.json
+cp templates/roadmap-progress.example.json roadmap-progress.local.json
+```
+
+## Folder Structure
+
+```text
+projects/local-agent/
+|-- mcp_server.py                  # MCP server entrypoint
+|-- roadmap_coach.py               # CLI roadmap coach entrypoint
+|-- roadmap_agent/                 # Shared roadmap parsing + model orchestration
+|-- scripts/                       # Startup, checks, model helpers, reports
+|-- tests/                         # Smoke and unit tests
+|-- templates/                     # Copyable local config/progress templates
+|-- docs/                          # Notes and implementation docs
+|-- demos/                         # Small standalone local-agent demos
+`-- data/                          # Local metrics/tracking templates
 ```
 
 ## Local Model Requirements
@@ -143,8 +160,8 @@ Supported first-class local providers:
 Use the generic helper:
 
 ```bash
-./ensure_local_model.sh lmstudio
-./ensure_local_model.sh ollama
+./scripts/ensure_local_model.sh lmstudio
+./scripts/ensure_local_model.sh ollama
 ```
 
 Configure the provider with OpenAI-compatible environment variables:
@@ -157,10 +174,10 @@ export LOCAL_MODEL_NAME="qwen/qwen3.5-9b"
 export LOCAL_MODEL_BASE_URL="http://127.0.0.1:11434/v1"
 export LOCAL_MODEL_NAME="qwen3"
 
-local-agent/start_local_agent.sh
+projects/local-agent/scripts/start_local_agent.sh
 ```
 
-`./ensure_lm_studio.sh` is kept as an LM Studio-specific convenience wrapper.
+`./scripts/ensure_lm_studio.sh` is kept as an LM Studio-specific convenience wrapper.
 
 ## Known Notes
 
@@ -171,7 +188,7 @@ local-agent/start_local_agent.sh
 
 1. Keep LM Studio or Ollama running.
 2. Use Cursor agent/chat with local MCP tools.
-3. Run `local-agent/run_checks.sh` after server changes.
+3. Run `projects/local-agent/scripts/run_checks.sh` after server changes.
 4. Review `local-agent/logs/mcp_server.log` for request traces.
 
 ## Token Savings Tracking
@@ -193,10 +210,10 @@ How to measure in your workflow:
 
 `savings_percent = (baseline_tokens - hybrid_tokens) / baseline_tokens * 100`
 
-Use `local-agent/TOKEN_SAVINGS_TRACKER.csv` to log each baseline vs hybrid task pair.
+Use `projects/local-agent/data/TOKEN_SAVINGS_TRACKER.csv` to log each baseline vs hybrid task pair.
 
 Generate a quick report:
 
 ```bash
-local-agent/.venv/bin/python local-agent/report_token_savings.py
+projects/local-agent/.venv/bin/python projects/local-agent/scripts/report_token_savings.py
 ```

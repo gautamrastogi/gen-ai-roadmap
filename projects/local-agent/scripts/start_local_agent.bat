@@ -1,19 +1,19 @@
 @echo off
 REM Local Agent MCP Server — Windows Startup Script
 
-REM Get script directory and project root
 set "SCRIPT_DIR=%~dp0"
-set "PROJECT_ROOT=%SCRIPT_DIR%.."
+set "LOCAL_AGENT_DIR=%SCRIPT_DIR%.."
+set "WORKSPACE_ROOT_DEFAULT=%LOCAL_AGENT_DIR%\..\.."
 
 REM Configurable base directory for MCP server
-if "%MCP_BASE_DIR%"=="" set "MCP_BASE_DIR=%SCRIPT_DIR%"
+if "%MCP_BASE_DIR%"=="" set "MCP_BASE_DIR=%LOCAL_AGENT_DIR%\"
 
 set "VENV_DIR=%MCP_BASE_DIR%.venv"
 set "PYTHON_BIN=%VENV_DIR%\Scripts\python.exe"
 set "REQ_FILE=%MCP_BASE_DIR%requirements.txt"
 set "SERVER_FILE=%MCP_BASE_DIR%mcp_server.py"
 
-set "WORKSPACE_ROOT=%PROJECT_ROOT%"
+if "%WORKSPACE_ROOT%"=="" set "WORKSPACE_ROOT=%WORKSPACE_ROOT_DEFAULT%"
 if "%LOCAL_MODEL_BASE_URL%"=="" set "LOCAL_MODEL_BASE_URL=http://127.0.0.1:1234"
 
 if not exist "%PYTHON_BIN%" (

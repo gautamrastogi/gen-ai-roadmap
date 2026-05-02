@@ -15,7 +15,7 @@ WORKSPACE = LOCAL_AGENT_DIR.parent.parent
 ROADMAP_PATH = WORKSPACE / "genai-roadmap.md"
 PROJECTS_DIR = WORKSPACE / "projects"
 DEFAULT_PROGRESS_PATH = LOCAL_AGENT_DIR / "roadmap-progress.local.json"
-EXAMPLE_PROGRESS_PATH = LOCAL_AGENT_DIR / "roadmap-progress.example.json"
+EXAMPLE_PROGRESS_PATH = LOCAL_AGENT_DIR / "templates" / "roadmap-progress.example.json"
 LOCAL_MODEL_BASE_URL = os.getenv(
     "LOCAL_MODEL_BASE_URL",
     os.getenv("LM_STUDIO_BASE_URL", "http://127.0.0.1:1234"),

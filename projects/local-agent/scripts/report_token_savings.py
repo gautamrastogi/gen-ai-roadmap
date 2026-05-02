@@ -5,7 +5,7 @@ import csv
 from pathlib import Path
 
 
-TRACKER_PATH = Path(__file__).resolve().parent / "TOKEN_SAVINGS_TRACKER.csv"
+TRACKER_PATH = Path(__file__).resolve().parent.parent / "data" / "TOKEN_SAVINGS_TRACKER.csv"
 
 
 def parse_int(value: str) -> int:

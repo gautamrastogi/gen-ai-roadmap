@@ -8,7 +8,7 @@ Ship a reliable daily-driver hybrid assistant where Cursor handles reasoning and
 2. Add `call_local_model` for LM Studio.
 3. Standardize responses to JSON (`ok`, payload, `error`).
 4. Configure Cursor MCP in `.cursor/mcp.json`.
-5. Add and run smoke tests (`test_mcp.py`).
+5. Add and run smoke tests (`tests/test_mcp.py`).
 
 ## Phase 2 (Next): Reliability
 1. Add request IDs and structured logging for every tool call.

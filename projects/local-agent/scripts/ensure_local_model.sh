@@ -12,7 +12,7 @@ case "$PROVIDER" in
     BASE_URL="${LOCAL_MODEL_BASE_URL:-http://127.0.0.1:11434/v1}"
     if ! command -v ollama >/dev/null 2>&1; then
       echo "Missing Ollama CLI: ollama"
-      echo "Install Ollama or use: ./ensure_local_model.sh lmstudio"
+      echo "Install Ollama or use: ./scripts/ensure_local_model.sh lmstudio"
       exit 1
     fi
     if ! curl -fsS --max-time 2 "$BASE_URL/models" >/dev/null 2>&1; then
