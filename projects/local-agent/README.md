@@ -1,10 +1,10 @@
-# Local Agent MCP Server
+# Local Agent MCP Server + Roadmap Coach
 
-This folder contains your local MCP server for a hybrid coding assistant:
+This folder contains a local MCP server and a small LLM-backed roadmap coach:
 
-- cloud model for planning/reasoning
-- local MCP tools for deterministic execution
-- LM Studio for local model inference
+- Cloud assistants can use MCP tools for local files, commands, git, web search, and model calls.
+- `roadmap_coach.py` helps answer "What should I do next?" for this roadmap.
+- LM Studio or Ollama can provide local OpenAI-compatible model inference.
 
 ## What You Built
 
@@ -13,8 +13,9 @@ This folder contains your local MCP server for a hybrid coding assistant:
 - safe file tools: `write_file`, `read_file`
 - guarded command tool: `run_command` (allowlist + no `shell=True`)
 - git insight tool: `git_status_and_diff`
+- roadmap coach tools: `roadmap_status`, `roadmap_next_task`, `roadmap_phase_details`
 - web search tool: `web_search` (URL encoding + retries)
-- local model tool: `call_local_model` (LM Studio OpenAI-compatible API)
+- local model tool: `call_local_model` (OpenAI-compatible local API)
 - diagnostics tool: `health_check`
 - capability map tool: `list_tool_capabilities`
 - structured JSON responses (`ok`, `request_id`, payload/error)
@@ -49,7 +50,35 @@ Policy control:
 
 ## Quick Start
 
-### 1) Run checks
+### 1) Start or verify a local model
+
+LM Studio:
+
+```bash
+./ensure_local_model.sh lmstudio
+```
+
+Ollama:
+
+```bash
+LOCAL_MODEL_NAME=qwen3 ./ensure_local_model.sh ollama
+```
+
+### 2) Ask the roadmap coach
+
+The default `next` command uses the local model when available:
+
+```bash
+python roadmap_coach.py next
+```
+
+Use deterministic mode when you explicitly do not want an LLM call:
+
+```bash
+python roadmap_coach.py next --no-llm
+```
+
+### 3) Run checks
 
 **macOS/Linux:**
 ```bash
@@ -61,7 +90,7 @@ Policy control:
 run_checks.bat
 ```
 
-### 2) Start local MCP server manually
+### 4) Start local MCP server manually
 
 **macOS/Linux:**
 ```bash
@@ -73,25 +102,65 @@ run_checks.bat
 start_local_agent.bat
 ```
 
-### 3) Verify in Cursor
+### 5) Verify in Cursor
 
 Try prompts like:
 
 - `Run health_check from local-agent and summarize issues.`
 - `Use git_status_and_diff and summarize current changes.`
+- `Use roadmap_next_task and tell me what to do next.`
 - `Use call_local_model to summarize genai-roadmap.md into 5 bullets.`
 
-## LM Studio Requirements
+## Roadmap Coach V1
 
-- LM Studio running at `http://127.0.0.1:1234`
-- at least one loaded model (you already have `qwen/qwen3.5-9b`)
-
-If needed, override base URL before startup:
+The tiny roadmap coach is intentionally read-only. It gathers deterministic repo facts, sends a compact prompt to your local model, and falls back to deterministic output if the model is unavailable.
 
 ```bash
-export LM_STUDIO_BASE_URL="http://127.0.0.1:1234"
+python roadmap_coach.py status
+python roadmap_coach.py next          # local-model backed
+python roadmap_coach.py next --no-llm # deterministic fallback only
+python roadmap_coach.py phase --id 2
+python roadmap_coach.py init --print-template
+```
+
+For personalized progress, create a local gitignored copy:
+
+```bash
+cp roadmap-progress.example.json roadmap-progress.local.json
+```
+
+## Local Model Requirements
+
+The local model is optional for low-level deterministic tools, but the roadmap coach uses it by default for the richer `next` response.
+
+Supported first-class local providers:
+
+| Provider | Base URL | Example model |
+|---|---|---|
+| LM Studio | `http://127.0.0.1:1234` | `qwen/qwen3.5-9b` |
+| Ollama | `http://127.0.0.1:11434/v1` | `qwen3` |
+
+Use the generic helper:
+
+```bash
+./ensure_local_model.sh lmstudio
+./ensure_local_model.sh ollama
+```
+
+Configure the provider with OpenAI-compatible environment variables:
+
+```bash
+export LOCAL_MODEL_BASE_URL="http://127.0.0.1:1234"      # LM Studio
+export LOCAL_MODEL_NAME="qwen/qwen3.5-9b"
+
+# or Ollama
+export LOCAL_MODEL_BASE_URL="http://127.0.0.1:11434/v1"
+export LOCAL_MODEL_NAME="qwen3"
+
 local-agent/start_local_agent.sh
 ```
+
+`./ensure_lm_studio.sh` is kept as an LM Studio-specific convenience wrapper.
 
 ## Known Notes
 
@@ -100,7 +169,7 @@ local-agent/start_local_agent.sh
 
 ## Daily Workflow
 
-1. Keep LM Studio running.
+1. Keep LM Studio or Ollama running.
 2. Use Cursor agent/chat with local MCP tools.
 3. Run `local-agent/run_checks.sh` after server changes.
 4. Review `local-agent/logs/mcp_server.log` for request traces.

@@ -20,5 +20,6 @@ if not exist "%VENV_PY%" (
 
 echo Running local-agent smoke checks...
 "%VENV_PY%" "%TEST_SCRIPT%"
+"%VENV_PY%" -m unittest "%MCP_BASE_DIR%test_roadmap_agent.py"
 echo All checks completed.
 pause

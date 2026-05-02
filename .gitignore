@@ -59,6 +59,10 @@ htmlcov/
 .coverage
 coverage.xml
 
+# Local planning notes
+2026-focus-private.md
+projects/local-agent/roadmap-progress.local.json
+
 # Dashboard runtime files
 projects/dashboard/tracker.db
 projects/dashboard/launchd.out.log

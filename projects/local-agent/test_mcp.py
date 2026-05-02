@@ -12,6 +12,9 @@ from mcp_server import (
     health_check,
     list_tool_capabilities,
     read_file,
+    roadmap_next_task,
+    roadmap_phase_details,
+    roadmap_status,
     run_command,
     web_search,
     write_file,
@@ -49,6 +52,18 @@ def test_tools():
 
     print("\nTesting web_search...")
     result = web_search("what is AI")
+    print("Result:\n", pretty(result))
+
+    print("\nTesting roadmap_status...")
+    result = roadmap_status()
+    print("Result:\n", pretty(result))
+
+    print("\nTesting roadmap_next_task...")
+    result = roadmap_next_task()
+    print("Result:\n", pretty(result))
+
+    print("\nTesting roadmap_phase_details...")
+    result = roadmap_phase_details(2)
     print("Result:\n", pretty(result))
 
     print("\nTesting call_local_model...")

@@ -1,0 +1,12 @@
+{
+  "current_phase": 2,
+  "current_project": "p2-summarizer",
+  "completed_projects": [
+    "p0-genai-starter-template",
+    "p1-prompt-playground"
+  ],
+  "focus": "finish roadmap first",
+  "notes": [
+    "Use local-agent only as roadmap support, not a detour."
+  ]
+}

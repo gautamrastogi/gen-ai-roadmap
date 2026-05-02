@@ -15,7 +15,7 @@ SERVER_FILE="$MCP_BASE_DIR/mcp_server.py"
 
 export WORKSPACE_ROOT="${WORKSPACE_ROOT:-$PROJECT_ROOT}"
 export MCP_BASE_DIR="${MCP_BASE_DIR:-$SCRIPT_DIR}"
-export LM_STUDIO_BASE_URL="${LM_STUDIO_BASE_URL:-http://127.0.0.1:1234}"
+export LOCAL_MODEL_BASE_URL="${LOCAL_MODEL_BASE_URL:-${LM_STUDIO_BASE_URL:-http://127.0.0.1:1234}}"
 
 if [[ ! -x "$PYTHON_BIN" ]]; then
   echo "Creating virtual environment..."
@@ -28,5 +28,8 @@ echo "Installing/updating local-agent dependencies..."
 
 echo "Starting MCP server..."
 echo "WORKSPACE_ROOT=$WORKSPACE_ROOT"
-echo "LM_STUDIO_BASE_URL=$LM_STUDIO_BASE_URL"
+echo "LOCAL_MODEL_BASE_URL=$LOCAL_MODEL_BASE_URL"
+if [[ -n "${LOCAL_MODEL_NAME:-}" ]]; then
+  echo "LOCAL_MODEL_NAME=$LOCAL_MODEL_NAME"
+fi
 exec "$PYTHON_BIN" "$SERVER_FILE"

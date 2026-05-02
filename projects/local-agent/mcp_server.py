@@ -17,13 +17,18 @@ from uuid import uuid4
 from urllib import parse, request
 
 from mcp.server.fastmcp import FastMCP
+from roadmap_agent import core as roadmap_core
 
 # Workspace root can be overridden from Cursor mcp.json env.
 WORKSPACE = Path(
     os.getenv("WORKSPACE_ROOT", Path(__file__).resolve().parent.parent.parent)
 ).resolve()
 MCP_BASE_DIR = Path(os.getenv("MCP_BASE_DIR", Path(__file__).resolve().parent))
-LM_STUDIO_BASE_URL = os.getenv("LM_STUDIO_BASE_URL", "http://127.0.0.1:1234")
+LOCAL_MODEL_BASE_URL = os.getenv(
+    "LOCAL_MODEL_BASE_URL",
+    os.getenv("LM_STUDIO_BASE_URL", "http://127.0.0.1:1234"),
+).rstrip("/")
+LOCAL_MODEL_NAME = os.getenv("LOCAL_MODEL_NAME", "").strip()
 MAX_FILE_READ_CHARS = 20_000
 MAX_COMMAND_OUTPUT_CHARS = 8_000
 MAX_WEB_RESULTS = 5
@@ -219,6 +224,9 @@ def list_tool_capabilities() -> str:
         "git_status_and_diff": {"mode": "read", "network": False, "destructive": False},
         "web_search": {"mode": "read", "network": True, "destructive": False},
         "call_local_model": {"mode": "read", "network": True, "destructive": False},
+        "roadmap_status": {"mode": "read", "network": False, "destructive": False},
+        "roadmap_next_task": {"mode": "read", "network": False, "destructive": False},
+        "roadmap_phase_details": {"mode": "read", "network": False, "destructive": False},
         "health_check": {"mode": "read", "network": False, "destructive": False},
         "list_tool_capabilities": {"mode": "read", "network": False, "destructive": False},
     }
@@ -362,6 +370,63 @@ def git_status_and_diff(max_lines: int = 300) -> str:
         _log_event("git_status_and_diff", request_id, "error", {"error": str(exc)})
         return _json_response(False, request_id=request_id, error=f"git_status_and_diff failed: {exc}")
 
+
+@app.tool()
+def roadmap_status() -> str:
+    """
+    Return current roadmap coach status from local progress and repo inspection.
+    """
+    request_id = _request_id()
+    try:
+        status = roadmap_core.get_status()
+        _log_event("roadmap_status", request_id, "ok", {"progress_available": status["progress_available"]})
+        return _json_response(True, request_id=request_id, status=status)
+    except Exception as exc:
+        _log_event("roadmap_status", request_id, "error", {"error": str(exc)})
+        return _json_response(False, request_id=request_id, error=f"roadmap_status failed: {exc}")
+
+
+@app.tool()
+def roadmap_next_task() -> str:
+    """
+    Recommend one focused next roadmap task using the local LLM when available.
+    """
+    request_id = _request_id()
+    try:
+        task = roadmap_core.coach_next_task()
+        _log_event(
+            "roadmap_next_task",
+            request_id,
+            "ok",
+            {
+                "phase": task["current_phase"],
+                "project": task["current_project"],
+                "coach_mode": task["coach_mode"],
+            },
+        )
+        return _json_response(True, request_id=request_id, task=task)
+    except Exception as exc:
+        _log_event("roadmap_next_task", request_id, "error", {"error": str(exc)})
+        return _json_response(False, request_id=request_id, error=f"roadmap_next_task failed: {exc}")
+
+
+@app.tool()
+def roadmap_phase_details(phase_id: int) -> str:
+    """
+    Return compact details for a roadmap phase.
+
+    Args:
+        phase_id: Numeric phase id, for example 2.
+    """
+    request_id = _request_id()
+    try:
+        details = roadmap_core.get_phase_details(phase_id)
+        _log_event("roadmap_phase_details", request_id, "ok", {"phase_id": phase_id})
+        return _json_response(True, request_id=request_id, phase=details)
+    except Exception as exc:
+        _log_event("roadmap_phase_details", request_id, "error", {"phase_id": phase_id, "error": str(exc)})
+        return _json_response(False, request_id=request_id, error=f"roadmap_phase_details failed: {exc}")
+
 @app.tool()
 def web_search(query: str) -> str:
     """
@@ -418,11 +483,11 @@ def web_search(query: str) -> str:
 def call_local_model(
     prompt: str,
     system_prompt: str = "You are a concise local coding assistant.",
-    max_tokens: int = 400,
+    max_tokens: int = 800,
     temperature: float = 0.2,
 ) -> str:
     """
-    Call the local LM Studio OpenAI-compatible API.
+    Call a local OpenAI-compatible model API, such as LM Studio or Ollama.
 
     Args:
         prompt: User prompt for the local model
@@ -436,16 +501,24 @@ def call_local_model(
     request_id = _request_id()
     try:
         models_payload = _http_get_json(
-            f"{LM_STUDIO_BASE_URL}/v1/models",
+            f"{LOCAL_MODEL_BASE_URL}/v1/models",
             timeout=10,
             request_id=request_id,
             tool_name="call_local_model",
         )
         model_ids = [item["id"] for item in models_payload.get("data", []) if item.get("id")]
         if not model_ids:
-            return _json_response(False, error="No model loaded in LM Studio server")
+            return _json_response(False, error=f"No model available at {LOCAL_MODEL_BASE_URL}")
 
-        selected_model = model_ids[0]
+        chat_model_ids = [
+            model_id
+            for model_id in model_ids
+            if "embed" not in model_id.lower()
+        ]
+        if not chat_model_ids:
+            return _json_response(False, error=f"No chat model available at {LOCAL_MODEL_BASE_URL}")
+
+        selected_model = LOCAL_MODEL_NAME or chat_model_ids[0]
         payload = {
             "model": selected_model,
             "messages": [
@@ -456,9 +529,9 @@ def call_local_model(
             "temperature": temperature,
         }
         data = _http_post_json(
-            f"{LM_STUDIO_BASE_URL}/v1/chat/completions",
+            f"{LOCAL_MODEL_BASE_URL}/v1/chat/completions",
             payload=payload,
-            timeout=45,
+            timeout=90,
             request_id=request_id,
             tool_name="call_local_model",
         )
@@ -483,6 +556,7 @@ def call_local_model(
         return _json_response(
             True,
             request_id=request_id,
+            base_url=LOCAL_MODEL_BASE_URL,
             model=selected_model,
             output=content,
             finish_reason=data.get("choices", [{}])[0].get("finish_reason", ""),
@@ -545,7 +619,7 @@ def health_check() -> str:
 
         try:
             models_payload = _http_get_json(
-                f"{LM_STUDIO_BASE_URL}/v1/models",
+                f"{LOCAL_MODEL_BASE_URL}/v1/models",
                 timeout=8,
                 request_id=request_id,
                 tool_name="health_check",
@@ -553,15 +627,17 @@ def health_check() -> str:
             model_ids = [
                 item["id"] for item in models_payload.get("data", []) if isinstance(item, dict) and item.get("id")
             ]
-            checks["lm_studio"] = {
-                "base_url": LM_STUDIO_BASE_URL,
+            checks["local_model"] = {
+                "base_url": LOCAL_MODEL_BASE_URL,
+                "selected_model": LOCAL_MODEL_NAME or None,
                 "reachable": True,
-                "loaded_models": model_ids,
+                "available_models": model_ids,
             }
         except Exception as lm_exc:
             ok = False
-            checks["lm_studio"] = {
-                "base_url": LM_STUDIO_BASE_URL,
+            checks["local_model"] = {
+                "base_url": LOCAL_MODEL_BASE_URL,
+                "selected_model": LOCAL_MODEL_NAME or None,
                 "reachable": False,
                 "error": str(lm_exc),
             }
