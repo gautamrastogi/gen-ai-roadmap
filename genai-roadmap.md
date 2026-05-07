@@ -55,9 +55,9 @@
   • Security is integrated (OWASP LLM Top 10), not bolted on later
 -->
 
-> **Last updated:** 2026-04-30 | **Current phase:** Phase 2 — Python LLM App Development
+> **Last updated:** 2026-05-07 | **Current phase:** Phase 2 — Python LLM App Development
 >
-> Verified against: OpenAI Responses API docs, LangChain Academy, Anthropic docs, Google A2A spec, LangGraph v1.1, PydanticAI v1.88, DeepEval v3.9, Qwen3 release (April 2025), Gemini 3.1 Flash release notes (March 2026), DeepLearning.AI new courses (April 2026). Key changes: Responses API is now the primary interface (Chat Completions still valid but Assistants API deprecated); MCP has become the industry standard tool layer; **Qwen3 is now the recommended open-weights model** (hybrid thinking/non-thinking modes, native MCP, 128K context, Apache 2.0); Gemini CLI added to Phase 7; E2B sandboxed code execution + Spec-Driven Dev added to Phase 6/7; **AI-900 cert retires June 30, 2026** — 2 months away.
+> Verified May 2026. Key changes: **QA Platform removed** (lost access) — replaced by Microsoft Learn free paths + DLAI; course lists trimmed to essentials only (build-first approach); every doc resource now has specific sections to read; **AI-900 retires June 30, 2026** — 54 days away, act now if targeting it. Responses API is primary interface; Assistants API deprecated Aug 26, 2026.
 
 ## Goal
 Transition from Python Software Engineer to:
@@ -120,8 +120,8 @@ Optimize for:
 
 ## Current Focus
 **Phase:** Phase 2 — Python LLM App Development  
-**Working on:** Course 4/5 — Generative AI Fundamentals of AWS — **IN PROGRESS**
-**Status:** 🟡 In Progress — studying Phase 2 courses
+**Working on:** Project 4 — CLI Chatbot (Phase 2 courses complete — QA courses skipped, not accessible)
+**Status:** 🟡 In Progress — build Phase 2 projects
 
 ## ⚡ Next Action — Do This Now
 1. ✅ ~~Generative AI Foundations~~ — DONE
@@ -137,8 +137,9 @@ Optimize for:
     - ✅ ~~OpenAI for Developers~~ — DONE
     - ✅ ~~Generative AI for Developers~~ — DONE
     - ✅ ~~Generative AI Integration for Developers~~ — DONE
-    - ✅ ~~Generative AI Fundamentals of AWS~~ — DONE
-    - 📖 **Studying: Using Generative AI in Azure and Microsoft Power Platform** (QA Platform, ~1h 22m)
+    - ⏭️ ~~Generative AI Fundamentals of AWS~~ — SKIPPED (QA access lost)
+    - ⏭️ ~~Using Generative AI in Azure and Microsoft Power Platform~~ — SKIPPED (QA access lost)
+    - 🔨 **NOW → Build: Project 4 — CLI Chatbot**
 
 ## Phase Summary
 | Phase | Name | Status |
@@ -276,30 +277,32 @@ You can spin up a small Python AI service quickly.
 
 ## Resources
 
-### 🟡 Pluralsight (paid)
-- **Generative AI Foundations** (4 courses · 2h) — What GenAI is, prompt engineering basics, ethics, GenAI in action.  
-  https://www.pluralsight.com/paths/generative-ai-foundations
-- **Prompt Engineering** (4 courses · 2 labs · 5h) — Getting started, best practices, advanced techniques.  
-  https://www.pluralsight.com/paths/prompt-engineering-and-generative-ai
-- **Large Language Models (LLM)** (4 courses · 4h) — Transformers, RLHF, foundation models, practical LLM application.  
-  https://www.pluralsight.com/paths/large-language-models-llm
+> **Build-first rule:** Watch only what you need to unblock a project. For this phase, that's 2-3 hours max. Then build the 3 projects.
 
-### 🔵 QA Platform (paid)
-- **Intro to Generative AI** (49min · Beginner) — Gentle overview, business context, future of GenAI.  
-  https://platform.qa.com/learning-paths/intro-to-generative-ai-13286/
-- **AI-900 Exam Prep: Azure AI Fundamentals** (9h46m · Beginner) — Azure AI concepts, responsible AI principles.  
-  https://platform.qa.com/learning-paths/ai-900-exam-preparation-microsoft-azure-ai-fundamentals-1968/
+### 🟡 Pluralsight (paid)
+- **Generative AI Foundations** (4 courses · 2h) — What GenAI is, prompting basics, ethics, GenAI in action. **Watch this. Skip the rest.**  
+  https://www.pluralsight.com/paths/generative-ai-foundations  
+  → What to watch: all 4 courses — they're short (30min each)
 
 ### 🟢 DeepLearning.AI (free)
-- **ChatGPT Prompt Engineering for Developers** (1h · Beginner) — Andrew Ng + OpenAI. Zero-shot, few-shot, chain-of-thought prompting.  
+- **ChatGPT Prompt Engineering for Developers** (1h · Andrew Ng + OpenAI) — Zero-shot, few-shot, CoT. Do this back-to-back with projects 1-3.  
   https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/
-- **Generative AI for Everyone** (3h · Beginner) — Andrew Ng. Broad, accessible overview of GenAI concepts.  
-  https://www.deeplearning.ai/courses/generative-ai-for-everyone/
 
-### 📘 Official Docs (free)
-- OpenAI Platform Docs: https://platform.openai.com/docs/
-- OpenAI Prompt Engineering Guide: https://platform.openai.com/docs/guides/prompt-engineering
-- Microsoft Learn — AI Fundamentals path: https://learn.microsoft.com/en-us/training/paths/get-started-with-artificial-intelligence-on-azure/
+### 🔵 Microsoft Learn (free)
+- **AI concepts for developers and technology professionals** (3h17m · Beginner · free, interactive modules with sandboxes)  
+  https://learn.microsoft.com/en-us/training/paths/ai-concepts/  
+  → What to do: complete all modules — they're interactive, not just reading. Takes ~3h. Covers what you need for AI-900 too.
+
+### 📘 Docs — what to actually read
+- **OpenAI Prompt Engineering Guide** (~20min read) — read completely, it's one page  
+  https://platform.openai.com/docs/guides/prompt-engineering  
+  → Read: all 6 strategies. This is the definitive reference, bookmark it.
+- **OpenAI Models page** (~10min) — understand what's available and pricing  
+  https://platform.openai.com/docs/models  
+  → Read: GPT-4o, GPT-4o-mini, o1/o3 entries. Skip fine-tuned and legacy.
+- **OpenAI Platform Docs Overview** (~10min) — just get oriented  
+  https://platform.openai.com/docs/  
+  → Read: "Overview" and "Quickstart" only. Don't go deeper yet.
 
 ## Learn
 - AI vs ML vs LLM vs GenAI
@@ -342,35 +345,45 @@ You understand practical LLM behavior and failure modes.
 
 ## Resources
 
-### 🟡 Pluralsight (paid)
-- **Generative AI for Developers** (7 courses · 6h) — Models, parameters, vector DBs, embeddings, agentic AI concepts, data privacy, prompt engineering.  
-  https://www.pluralsight.com/paths/generative-ai-for-developers
-- **OpenAI for Developers** (13 courses · 2 labs · 12h) — Full OpenAI API: prompts, function calling, Responses API, Agents SDK, embeddings, moderation, evals, multimodal, Codex.  
-  https://www.pluralsight.com/paths/openai-for-developers
-- **Generative AI Integration for Developers** (6 courses · 4h) — Integrating GenAI, aligning with business cases, security, cost management, scaling.  
-  https://www.pluralsight.com/paths/generative-ai-integration-for-developers
+> **Build-first rule:** Watch "OpenAI for Developers" (Pluralsight) while building — watch a module, then immediately code the same thing. Skip the other Pluralsight paths until you need them.
 
-### 🔵 QA Platform (paid)
-- **Generative AI Fundamentals of AWS** (5 lessons · 2h23m · Beginner) — GenAI services and patterns on AWS.  
-  https://platform.qa.com/learning-paths/generative-ai-fundamentals-of-aws-13866/
-- **Using Generative AI in Azure and Microsoft Power Platform** (4 lessons · 1h22m · Beginner)  
-  https://platform.qa.com/learning-paths/using-generative-ai-in-azure-and-microsoft-power-platform-11921/
+### 🟡 Pluralsight (paid)
+- **OpenAI for Developers** (13 courses · 12h) — Full OpenAI API: Chat Completions, Responses API, function calling, Agents SDK, embeddings, streaming, evals, multimodal. **This is the main course for this phase.**  
+  https://www.pluralsight.com/paths/openai-for-developers  
+  → Watch in order. Key modules: "Chat Completions", "Function Calling", "Responses API & Agents SDK", "Embeddings", "Security and Moderation"
 
 ### 🟢 DeepLearning.AI (free)
-- **LangChain for LLM Application Development** (1h38m · Beginner) — Models, prompts, memory, chains, Q&A, and agents with LangChain. By Harrison Chase.  
+- **LangChain for LLM Application Development** (1h38m · Harrison Chase) — Models, prompts, memory, chains, Q&A, agents. Good overview before Phase 3.  
   https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/
 
 ### 🎓 LangChain Academy (free)
-- **Introduction to LangChain: Build AI Agents with Python** (free · ~1.5h) — Newer official LangChain Academy foundation course covering tools, short-term memory, MCP, multi-agent systems, and HITL patterns. Use this as a modern complement to the older DeepLearning.AI LangChain short course.  
+- **Introduction to LangChain: Build AI Agents with Python** (~1.5h · free) — Modern LangChain: tools, short-term memory, MCP, multi-agent, HITL.  
   https://academy.langchain.com/courses/foundation-introduction-to-langchain-python
 
-### 📘 Official Docs (free)
-- OpenAI API Reference: https://platform.openai.com/docs/api-reference/
-- OpenAI Cookbook (code examples): https://cookbook.openai.com/
-- OpenAI Responses vs Chat Completions: https://platform.openai.com/docs/guides/migrate-to-responses
-- OpenAI Structured Outputs guide: https://platform.openai.com/docs/guides/structured-outputs
-- openai-python library: https://github.com/openai/openai-python
-- Real Python async guide: https://realpython.com/async-io-python/
+### 🔵 Microsoft Learn (free)
+- **Get started with AI applications and agents on Azure** (4h59m · Beginner · free, hands-on labs)  
+  https://learn.microsoft.com/en-us/training/paths/get-started-ai-apps-agents/  
+  → Do this if you want Azure-specific context (Azure OpenAI, AI Foundry). Optional but useful for the day job.
+
+### 📘 Docs — what to actually read
+- **OpenAI API Reference: Chat Completions** (~30min) — the core endpoint you'll live in  
+  https://platform.openai.com/docs/api-reference/chat  
+  → Read: "Create chat completion", parameters (temperature, max_tokens, stream, tool_choice). Skip the deprecated `/completions` endpoint.
+- **OpenAI Responses API vs Chat Completions** (~15min) — understand when/why to use each  
+  https://platform.openai.com/docs/guides/migrate-to-responses  
+  → Read the whole page. New projects should default to Responses API.
+- **OpenAI Structured Outputs** (~20min)  
+  https://platform.openai.com/docs/guides/structured-outputs  
+  → Read: "How to use", "Supported schemas", "Refusals". Skip "Legacy JSON mode".
+- **OpenAI Cookbook** — practical code examples  
+  https://cookbook.openai.com/  
+  → Read: "How to format inputs to ChatGPT models", "Function calling with a weather API", "How to count tokens with tiktoken". Skip fine-tuning examples for now.
+- **openai-python library README** (~10min)  
+  https://github.com/openai/openai-python  
+  → Read: README and examples/ folder. Just get familiar with the client patterns.
+- **Real Python async guide** (~30min, optional) — if async feels unfamiliar  
+  https://realpython.com/async-io-python/  
+  → Read: "The asyncio package and async/await", "Async IO in Context". Skip the deep OS-level sections.
 
 ## Learn
 - Python API integration
@@ -534,43 +547,34 @@ You can build Python LLM services without framework magic.
 
 ## Resources
 
-### 🟡 Pluralsight (paid)
-- **Generative AI for Developers** — Includes "Vector Databases and Embeddings for Developers" module (43min).  
-  https://www.pluralsight.com/paths/generative-ai-for-developers
-- Individual course: **Vector Databases and Embeddings for Developers** (43min)  
-  https://www.pluralsight.com/courses/developers-vector-databases-embeddings
-- Individual course: **OpenAI Embeddings API** (31min)  
-  https://www.pluralsight.com/courses/openai-embeddings-api
+> **Build-first rule:** Watch the 52min DLAI course, then start Project 8. Debugging bad retrieval teaches more than any video.
 
-### 🔵 QA Platform (paid)
-- **Enhancing Generative AI Models with RAG** (hands-on lab · 30min · Beginner) — Build a RAG pipeline end-to-end.  
-  https://platform.qa.com/lab/enhancing-generative-ai-models-with-retrieval-augmented-generation-rag/
-- **Building Generative AI Applications with Amazon Bedrock** (10h28m · Intermediate) — Covers RAG patterns on AWS.  
-  https://platform.qa.com/learning-paths/building-generative-ai-applications-with-amazon-bedrock-14069/
+### 🟡 Pluralsight (paid)
+- **Vector Databases and Embeddings for Developers** (43min) — Embeddings, cosine similarity, vector stores. **Watch before Project 8.**  
+  https://www.pluralsight.com/courses/developers-vector-databases-embeddings
 
 ### 🟢 DeepLearning.AI (free)
-- **Advanced Retrieval for AI with Chroma** (52min · Intermediate) — Query expansion, cross-encoder reranking, embedding adapters. Production RAG techniques.  
+- **Advanced Retrieval for AI with Chroma** (52min · Intermediate) — Query expansion, cross-encoder reranking, embedding adapters.  
   https://www.deeplearning.ai/short-courses/advanced-retrieval-for-ai/
-- **Building and Evaluating Advanced RAG** — Sentence-window retrieval, auto-merging retrieval, RAG triad evaluation.  
+- **Building and Evaluating Advanced RAG** (1h · Intermediate) — Sentence-window retrieval, auto-merging, RAG triad evals.  
   https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/
 
-### 🤗 Hugging Face (free) ⭐ Don’t skip this
-- **sentence-transformers** — The industry-standard Python library for open-source embeddings. Used in production RAG everywhere. Faster and cheaper than OpenAI embeddings for high-volume use.  
-  https://sbert.net/ | install: `pip install sentence-transformers`
-- **Hugging Face Hub** — Browse 800K+ models. Know how to load an embedding model or a small LLM with `transformers` pipeline. Employers expect basic HF literacy.  
-  https://huggingface.co/docs/transformers/quicktour
-- **MTEB Leaderboard** — How to pick the best embedding model for your task.  
-  https://huggingface.co/spaces/mteb/leaderboard
-- **Ollama** — Run Llama 3, Mistral, Gemma, Phi-3 locally. Must-have for local RAG + cost experiments.  
-  https://ollama.com/
-
-### 📘 Official Docs (free)
-- LangChain RAG tutorial: https://python.langchain.com/docs/tutorials/rag/
-- Chroma docs: https://docs.trychroma.com/
-- Qdrant docs: https://qdrant.tech/documentation/
-- pgvector (Postgres vector): https://github.com/pgvector/pgvector
-- OpenAI embeddings guide: https://platform.openai.com/docs/guides/embeddings
-- OpenAI file search guide: https://platform.openai.com/docs/guides/tools-file-search
+### 📘 Docs — what to actually read
+- **OpenAI Embeddings guide** (~15min — read all, compact)  
+  https://platform.openai.com/docs/guides/embeddings  
+  → Know: use `text-embedding-3-small` by default, cosine similarity, chunk before embedding.
+- **Chroma quickstart** (~30min)  
+  https://docs.trychroma.com/  
+  → Read: "Getting started", "Creating collections", "Querying". Skip: cloud/deployment sections.
+- **LangChain RAG tutorial** (~45min including running code)  
+  https://python.langchain.com/docs/tutorials/rag/  
+  → Run: "Indexing" and "Retrieval and generation". Skip "Advanced" until after Project 9.
+- **sentence-transformers** (~15min — free local embeddings)  
+  https://sbert.net/  
+  → Read: "Getting started" and "Pretrained models". Use `all-MiniLM-L6-v2` for experiments.
+- **MTEB Leaderboard** — use when choosing an embedding model  
+  https://huggingface.co/spaces/mteb/leaderboard  
+  → Don't read linearly. Filter by "Retrieval" task type when picking a model.
 
 ## Learn
 - embeddings
@@ -630,22 +634,32 @@ You have a strong production-style RAG project with citations.
 - Individual course: **OpenAI Responses API and Agents SDK** (45min) — Tool calling via the new Responses API.  
   https://www.pluralsight.com/courses/openai-responses-api-agents-sdk
 
-### 🔵 QA Platform (paid)
-- **Employing Generative AI for Development with Amazon Bedrock** (lab · 1h30m · Beginner) — LLM development with tool-like patterns.  
-  https://platform.qa.com/lab/employing-generative-ai-for-development-with-amazon-bedrock/
+> **Build-first rule:** Read the function calling guide, then build Project 12. Tool calling clicks the first time you debug a failed tool call yourself.
+
+### 🟡 Pluralsight (paid)
+- **Function Calling and Tool Use with OpenAI** (38min) — This is all you need to watch.  
+  https://www.pluralsight.com/courses/function-calling-tool-use-openai  
+  → Watch all — it's only 38min.
+- **OpenAI Responses API and Agents SDK** (45min) — Tool calling via Responses API.  
+  https://www.pluralsight.com/courses/openai-responses-api-agents-sdk
 
 ### 🟢 DeepLearning.AI (free)
-- **Functions, Tools and Agents with LangChain** (1h44m · Intermediate) — Function calling, LCEL, tagging, extraction, tool routing, conversational agents. By Harrison Chase.  
+- **Functions, Tools and Agents with LangChain** (1h44m · Intermediate) — Function calling, LCEL, tagging, extraction, tool routing.  
   https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/
-- **LangChain for LLM Application Development** — Agents and tools section covers tool selection.  
-  https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/
 
-### 📘 Official Docs (free)
-- OpenAI Function Calling guide: https://platform.openai.com/docs/guides/function-calling
-- OpenAI Tools guide: https://platform.openai.com/docs/guides/tools
-- OpenAI remote MCP / connectors guide: https://platform.openai.com/docs/guides/tools-remote-mcp
-- LangChain tools docs: https://python.langchain.com/docs/concepts/tools/
-- OpenAI Agents SDK docs: https://openai.github.io/openai-agents-python/
+### 📘 Docs — what to actually read
+- **OpenAI Function Calling guide** (~30min — read all, moderate length)  
+  https://platform.openai.com/docs/guides/function-calling  
+  → Read: "Supported models", "Define functions", "Handle tool calls", "Parallel tool calling", "Edge cases". This is critical — read before starting Project 12.
+- **OpenAI Tools guide** (~20min)  
+  https://platform.openai.com/docs/guides/tools  
+  → Read all. Understand: built-in tools (file_search, code_interpreter, web_search) vs your own functions vs remote MCP.
+- **OpenAI Agents SDK docs** (~1h — skim structure, read key pages)  
+  https://openai.github.io/openai-agents-python/  
+  → Read: "Quick start", "Agents", "Tools", "Handoffs". Skip "Voice" for now.
+- **LangChain tools concepts** (~15min)  
+  https://python.langchain.com/docs/concepts/tools/  
+  → Read all. Short and useful.
 
 ## Learn
 - function/tool calling
@@ -693,12 +707,6 @@ You can build assistants that do useful actions, not just chat.
 - Individual course: **Generative AI Data Privacy and Safe Use for Developers** (54min)  
   https://www.pluralsight.com/courses/safe-use-developers-generative-ai-data-privacy
 
-### 🔵 QA Platform (paid)
-- Individual lesson: **Generative AI — Concerns and Ethics** (12min · Beginner)  
-  https://platform.qa.com/course/concerns-ethics-generative-ai-5034/
-- Individual lesson: **Designing Responsible Generative AI** (14min · Beginner)  
-  https://platform.qa.com/course/designing-responsible-generative-ai-1/
-
 ### 🟢 DeepLearning.AI (free)
 - **Building and Evaluating Advanced RAG** — RAG triad: answer relevance, context relevance, groundedness evals.  
   https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/
@@ -715,17 +723,30 @@ You can build assistants that do useful actions, not just chat.
 - **Foundation: Introduction to Agent Observability & Evaluations** (free) — Strong addition for 2026-style agent eval workflows.  
   https://academy.langchain.com/
 
-### 📘 Official Docs (free)
-- LangSmith docs (tracing + evals): https://docs.smith.langchain.com/
-- Langfuse docs (open-source observability): https://langfuse.com/docs
-- Arize Phoenix (open-source evals + tracing): https://docs.arize.com/phoenix
-- DeepEval framework (pytest-integrated evals): https://docs.confident-ai.com/
-- OpenAI moderation guide: https://platform.openai.com/docs/guides/moderation
-- OpenAI agent evals guide: https://platform.openai.com/docs/guides/agent-evals
-- OpenAI evals guide: https://platform.openai.com/docs/guides/evals
-- OpenAI evaluation best practices: https://platform.openai.com/docs/guides/evaluation-best-practices
-- OWASP LLM Top 10 (2025): https://owasp.org/www-project-top-10-for-large-language-model-applications/
-- GitHub Actions CI/CD docs: https://docs.github.com/en/actions
+> **Build-first rule:** Start Project 16 (eval suite) right after Phase 4. Evals are easier to understand once you have a working app to evaluate against.
+
+### 📘 Docs — what to actually read
+- **DeepEval quickstart** (~20min)  
+  https://docs.confident-ai.com/  
+  → Read: "Getting started", "Metrics overview", "Writing test cases". Run the quickstart example before Project 16.
+- **OpenAI evals guide** (~20min)  
+  https://platform.openai.com/docs/guides/evals  
+  → Read all. Understand: golden datasets, LLM-as-a-Judge, grading criteria.
+- **OWASP LLM Top 10** (~30min — scan all 10 items)  
+  https://owasp.org/www-project-top-10-for-large-language-model-applications/  
+  → Read: the description and impact of all 10. Focus on LLM01 (prompt injection) and LLM08 (excessive agency). Reference during Project 17c.
+- **LangSmith docs** (~30min — skim)  
+  https://docs.smith.langchain.com/  
+  → Read: "Quick start" and "Tracing overview". You'll use this actively in Project 17.
+- **Langfuse docs** (~20min — for open-source alternative)  
+  https://langfuse.com/docs  
+  → Read: "Getting started". Use this if you want self-hosted observability.
+- **GitHub Actions docs** (~20min)  
+  https://docs.github.com/en/actions  
+  → Read: "Quickstart", "Understanding GitHub Actions". Just enough to wire up Project 17b.
+- **OpenAI moderation guide** (~10min)  
+  https://platform.openai.com/docs/guides/moderation  
+  → Read all. Short. Use the moderation API in Project 17c.
 
 ## Learn: Evals & Reliability
 - evaluation datasets and golden test sets
@@ -834,19 +855,13 @@ You can evaluate, secure, and deploy an AI application like a production enginee
 
 ## Resources
 
-### 🟡 Pluralsight (paid)
-- Individual course: **Agentic AI for Developers** (1h24m · Intermediate) — Agentic patterns, tool use, orchestration loops.  
-  https://www.pluralsight.com/courses/agentic-ai-developers
-- Individual course: **OpenAI Responses API and Agents SDK** (45min) — Build agents with the official OpenAI SDK.  
-  https://www.pluralsight.com/courses/openai-responses-api-agents-sdk
-- Individual course: **Developing AI Agents with OpenAI AgentKit** (1h24m)  
-  https://www.pluralsight.com/courses/developing-ai-agents-openai-agentkit
+> **Build-first rule:** Do the LangGraph Academy course (55 lessons, ~6h) as your main input for this phase. Hands-on, not lecture-heavy.
 
-### 🔵 QA Platform (paid)
-- Individual lesson: **Extending Agents with AWS Lambda and Step Functions** (37min · Intermediate) — Serverless agent patterns.  
-  https://platform.qa.com/course/extending-agents-with-aws-lambda-and-step-functions/
-- Hands-on lab: **Orchestrating Generative AI Applications with AWS Step Functions and Amazon Bedrock** (1h15m) — Prompt chaining, stateful AI orchestration.  
-  https://platform.qa.com/lab/orchestrating-generative-ai-applications-with-aws-step-functions-and-amazon-bedrock/
+### 🟡 Pluralsight (paid)
+- **Agentic AI for Developers** (1h24m · Intermediate) — Agentic patterns, tool use, orchestration loops.  
+  https://www.pluralsight.com/courses/agentic-ai-developers
+- **OpenAI Responses API and Agents SDK** (45min) — Build agents with the official OpenAI SDK.  
+  https://www.pluralsight.com/courses/openai-responses-api-agents-sdk
 
 ### 🟢 DeepLearning.AI (free)
 - **AI Agents in LangGraph** (1h32m · Intermediate) — Build agents from scratch, LangGraph components, persistence, human-in-the-loop. By Harrison Chase (LangChain CEO).  
@@ -872,19 +887,28 @@ You can evaluate, secure, and deploy an AI application like a production enginee
 - **Quickstart: LangGraph Essentials** (free · ~1h) — Good fast-start companion before or during the full LangGraph course.  
   https://academy.langchain.com/courses/langgraph-essentials-python
 
-### 📘 Official Docs (free)
-- MCP official docs: https://modelcontextprotocol.io/docs/
-- Anthropic MCP docs: https://docs.anthropic.com/en/docs/mcp
-- Python MCP SDK: https://github.com/modelcontextprotocol/python-sdk
-- A2A Python SDK: https://github.com/google-a2a/a2a-python
-- A2A spec: https://google.github.io/A2A/
-- Google A2A announcement: https://developers.googleblog.com/es/a2a-a-new-era-of-agent-interoperability/
-- LangGraph docs: https://langchain-ai.github.io/langgraph/
-- LangGraph tutorials: https://langchain-ai.github.io/langgraph/tutorials/
-- OpenAI Agents SDK: https://openai.github.io/openai-agents-python/
-- OpenAI MCP guide: https://platform.openai.com/docs/mcp/
-- OpenAI remote MCP guide: https://platform.openai.com/docs/guides/tools-remote-mcp
-- Open WebUI MCP docs: https://docs.openwebui.com/features/extensibility/mcp/
+### 📘 Docs — what to actually read
+- **MCP official docs** (~1h — read core sections)  
+  https://modelcontextprotocol.io/docs/  
+  → Read: "Introduction", "Core architecture", "Writing your first server", "Tools", "Resources", "Prompts". Skip "Sampling" for now.
+- **Python MCP SDK** (~20min)  
+  https://github.com/modelcontextprotocol/python-sdk  
+  → Read README + run the quickstart example before Project 18.
+- **LangGraph docs — concepts** (~1h)  
+  https://langchain-ai.github.io/langgraph/concepts/  
+  → Read: "Why LangGraph?", "Low-level primer", "Persistence", "Human-in-the-loop", "Memory". Skip "Multi-agent" until Project 24.
+- **LangGraph tutorials** (~2h — run the code)  
+  https://langchain-ai.github.io/langgraph/tutorials/  
+  → Do: "Introduction to LangGraph", "Customer support bot". These are hands-on.
+- **OpenAI Agents SDK** (~45min — skim docs, run examples)  
+  https://openai.github.io/openai-agents-python/  
+  → Read: "Quick start", "Agents", "Tools", "Handoffs", "Guardrails". Run the examples.
+- **OpenAI MCP guide** (~15min)  
+  https://platform.openai.com/docs/mcp/  
+  → Read all. Understand how ChatGPT and the API can act as MCP clients.
+- **A2A spec overview** (~20min)  
+  https://google.github.io/A2A/  
+  → Read: "Introduction" and "Core concepts". This gives you the mental model for Project 24.
 
 > **2026 Note:** MCP has clearly crossed into the mainstream tooling layer. OpenAI now documents MCP for ChatGPT/API integrations, Anthropic documents MCP as a first-class protocol, and Google positions A2A as the complementary agent-to-agent layer. Learn all three ideas: tool calling, MCP, and A2A.
 
@@ -983,10 +1007,6 @@ You understand modern agentic systems, not just chatbot demos.
   https://www.pluralsight.com/courses/openai-codex
 - Individual course: **Enhancing Developer Workflows with OpenAI** (33min)  
   https://www.pluralsight.com/courses/enhancing-developer-workflows-openai
-
-### 🔵 QA Platform (paid)
-- Individual lesson: **Creating a Generative AI Coding Assistant for VSCode Using Ollama** (6min)  
-  https://platform.qa.com/course/creating-a-generative-ai-coding-assistant-for-vscode-using-ollama-1/
 
 ### � DeepLearning.AI (free)
 - **Gemini CLI: Code & Create with an Open-Source Agent** (1h · Beginner) — Build real-world applications from the command line using **Gemini CLI**, Google’s open-source agentic coding assistant that coordinates local tools and cloud services. Essential for 2026 vibe-coding workflows.  
@@ -1139,16 +1159,18 @@ You are interview-ready with real proof.
 
 ## Resources
 
-### 🔵 QA Platform (paid)
-- **AI-900 Exam Prep: Microsoft Azure AI Fundamentals** (15 lessons · 9h46m · Beginner) — Official cert prep with hands-on labs.  
-  https://platform.qa.com/learning-paths/ai-900-exam-preparation-microsoft-azure-ai-fundamentals-1968/
+### 🔵 Microsoft Learn (free) ⭐ Official prep
+- **Azure AI Fundamentals learning path** (free · interactive labs · official)  
+  https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/  
+  → This IS the official prep. The content map matches the exam. Do these modules in order.
+- **AI-900 study guide** (free PDF) — official exam skill outline  
+  https://aka.ms/ai900-StudyGuide  
+  → Download and use this as your checklist. Every bullet is fair game in the exam.
 
-### 📘 Official Docs (free)
-- Microsoft Learn — Azure AI Fundamentals learning path (free official prep):  
-  https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-fundamentals/
+### 📘 Other free resources
 - AWS Certified AI Practitioner (AIF-C01) exam guide:  
   https://aws.amazon.com/certification/certified-ai-practitioner/
-- AWS Skill Builder (free tier available): https://skillbuilder.aws/
+- AWS Skill Builder (free tier): https://skillbuilder.aws/
 
 ## Rule
 Certifications only after 2-3 strong projects.
@@ -1271,7 +1293,95 @@ An MCP server + agent that integrates into your daily developer life:
 
 ---
 
+# 8H/DAY EXECUTION PLAN — ALL-IN MODE
+
+> You have the time. Here's exactly how to use it. 8h/day, no bullshit.  
+> **Rule:** 20% watching/reading, 80% building. If you're not writing code, you're wasting time.
+
+## Week 1 — Foundation + first apps
+| Day | What | Hours |
+|-----|------|-------|
+| Mon | Pluralsight: GenAI Foundations (2h) + DLAI Prompt Engineering (1h) + read OpenAI prompt guide + Projects 1-2 (Prompt Playground + Summarizer) | 8h |
+| Tue | Finish Project 2, build Project 3 (Rewriter), read OpenAI docs overview + models page | 8h |
+| Wed | Pluralsight: OpenAI for Developers — first 5 courses (Chat Completions, Responses API, streaming, structured outputs) | 8h |
+| Thu | Pluralsight: OpenAI for Developers — next 5 courses (function calling, embeddings, moderation, evals) | 8h |
+| Fri | LangChain DLAI course (1.5h) + LangChain Academy intro (1.5h) + start Project 4 (CLI chatbot) | 8h |
+| Sat | Finish Project 4. Start Project 5 (FastAPI GenAI service) | 8h |
+| Sun | Finish Project 5. Polish both. Push to GitHub with clean READMEs. | 8h |
+
+## Week 2 — Structured extraction + RAG entry
+| Day | What | Hours |
+|-----|------|-------|
+| Mon | Projects 6 + 7 (Structured Extractor + Resume Analyzer) — build both | 8h |
+| Tue | Finish Projects 6 + 7. Read structured outputs docs fully. | 8h |
+| Wed | Pluralsight: Vector DBs (43min) + DLAI: Advanced Retrieval for Chroma (52min) + run LangChain RAG tutorial | 8h |
+| Thu | Project 8: Semantic Search Prototype — build + embed + query + score | 8h |
+| Fri | DLAI: Building and Evaluating Advanced RAG (1h) + Project 9 (PDF Q&A) start | 8h |
+| Sat | Finish Project 9. Citations, source attribution, chunking comparison | 8h |
+| Sun | Projects 10 + 11 (Docs Assistant + Support Bot) — build both | 8h |
+
+## Week 3 — Tool calling + workflow automation
+| Day | What | Hours |
+|-----|------|-------|
+| Mon | Read OpenAI function calling docs fully + Pluralsight function calling (38min) + Project 12 start | 8h |
+| Tue | Finish Project 12 (Tool-Using Assistant). 5 tools minimum. | 8h |
+| Wed | DLAI: Functions, Tools, Agents with LangChain (1h44m) + Project 13 (Research Assistant) start | 8h |
+| Thu | Finish Project 13. Web retrieval + synthesis + citations + "I don't know" handling | 8h |
+| Fri | Projects 14 + 15 (SQL Assistant + Ticket Triage) — build both | 8h |
+| Sat | Finish Projects 14 + 15. Push all Phase 4 projects. | 8h |
+| Sun | Read: OWASP LLM Top 10, DeepEval quickstart, OpenAI evals guide | 8h |
+
+## Week 4 — Evals + safety + observability
+| Day | What | Hours |
+|-----|------|-------|
+| Mon | Project 16: Eval Suite — build 30 test cases + pytest + DeepEval | 8h |
+| Tue | Add LLM-as-a-Judge metric, groundedness checks, CI integration | 8h |
+| Wed | Project 17: Productionize one app — logging, retries, caching, metrics | 8h |
+| Thu | Project 17a: DSPy optimizer + Project 17b: GitHub Actions CI/CD | 8h |
+| Fri | Project 17c: OWASP security scanner — prompt injection guards, tool scope limits | 8h |
+| Sat | DLAI: NeMo Agent Toolkit (45min) + Semantic Caching (30min) + Red Teaming (1h) | 8h |
+| Sun | LangSmith setup + add tracing to one existing app. Polish all Phase 5 work. | 8h |
+
+## Week 5 — MCP + LangGraph
+| Day | What | Hours |
+|-----|------|-------|
+| Mon | Read MCP docs (all core sections) + Python SDK quickstart + Projects 18-19 (MCP servers) | 8h |
+| Tue | LangGraph Academy: Introduction to LangGraph (~6h self-paced) — do all 55 lessons | 8h |
+| Wed | Continue LangGraph Academy + run all code examples | 8h |
+| Thu | Project 20 (MCP-Powered Agent) + DLAI: AI Agents in LangGraph (1.5h) | 8h |
+| Fri | Projects 21 + 22 (HITL SQL + HITL File Agent) | 8h |
+| Sat | Project 23 (Stateful Research Workflow — resume after interrupt) | 8h |
+| Sun | Project 24 (Multi-Agent orchestration with LangGraph) | 8h |
+
+## Week 6 — Agents, multimodal, AI dev productivity
+| Day | What | Hours |
+|-----|------|-------|
+| Mon | DLAI: A2A Protocol (1h27m) + Gemini CLI (1h) + Spec-Driven Dev (45min) | 8h |
+| Tue | Project 25: Personal Dev Productivity Agent | 8h |
+| Wed | Project 26: Local AI Coding Utility (Ollama + MCP + tool call loop) | 8h |
+| Thu | DLAI: E2B Coding Agents (1h) + Project 27: Vision-Based Data Extractor | 8h |
+| Fri | Project 28: Real-Time Voice Assistant (Realtime API) | 8h |
+| Sat | Project 29: Local SLM Fine-Tuning (Unsloth + Llama 3.2 3B) | 8h |
+| Sun | Portfolio cleanup: pin 4 repos, write profile README, update all project READMEs | 8h |
+
+## Week 7-8 — Capstone projects
+| Period | What |
+|--------|------|
+| Days 1-4 | Project 30: Unified AI Assistant (voice + vision + files + web search) |
+| Days 5-8 | Project 31: Multi-Agent Research Platform (LangGraph + MCP + HITL) |
+| Days 9-12 | Project 32: Personal Dev Copilot (MCP server + FastAPI) |
+| Days 13-14 | AI-900 prep (MS Learn free path, ~8h) + take exam |
+
+---
+
+**Total time to portfolio-ready: ~8 weeks if you do the 8h/day.**  
+**The 3 capstone projects + 4 clean mid-phase repos = what you interview with.**
+
+---
+
 # 12-WEEK FAST EXECUTION VERSION
+
+> Legacy plan, kept for reference. Use the 8h/day plan above instead if you're serious about moving fast.
 
 ## Weeks 1-2
 - Foundations
@@ -1392,25 +1502,13 @@ Work through these in exact order. Each step tells you what URL to open, what to
 
 ---
 
-- [ ] **Step 6 — Watch: Python LLM App Development Courses** (~10h — spread over days)
-  🎯 Goal: Master the full OpenAI API before building more complex apps.
-
-  | Resource | Duration | Priority | URL |
-  |----------|----------|----------|-----|
-  | OpenAI for Developers 🟡 | ~12h · 13 courses | ⭐ MUST DO | https://www.pluralsight.com/paths/openai-for-developers |
-  | Generative AI for Developers 🟡 | ~6h · 7 courses | High | https://www.pluralsight.com/paths/generative-ai-for-developers |
-  | LangChain for LLM App Dev 🟢 | ~1h38m FREE | High | https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/ |
-
-  **Focus on inside the OpenAI path:**
-  - Function calling and tool use
-  - Responses API and Agents SDK
-  - Embeddings API
-  - Streaming responses
-  - Security and Moderation
+- [x] **Step 6 — ✅ DONE (partially) — Python LLM App Development Courses**
+  Completed: OpenAI for Developers (Pluralsight) + LangChain for LLM App Dev + LangChain Academy intro.  
+  Skipped: QA Platform courses (no access). That's fine — the Pluralsight path covers everything you need.
 
 ---
 
-- [ ] **Step 7 — Build Project 4: CLI Chatbot**
+- [ ] **Step 7 — Build Project 4: CLI Chatbot** ← **DO THIS NOW**
   **Tell Copilot:** `generate repo scaffold for phase 2 project 4`
   🎯 Goal: Build conversation history, personas, and a clean CLI interface.
 
