@@ -739,16 +739,26 @@ You can build assistants that do useful actions, not just chat.
 - **Langfuse docs** (~20min — for open-source alternative)  
   https://langfuse.com/docs  
   → Read: "Getting started". Use this if you want self-hosted observability.
-- **GitHub Actions docs** (~20min)  
-  https://docs.github.com/en/actions  
+- **GitHub Actions docs** (~20min)
+  https://docs.github.com/en/actions
   → Read: "Quickstart", "Understanding GitHub Actions". Just enough to wire up Project 17b.
-- **OpenAI moderation guide** (~10min)  
-  https://platform.openai.com/docs/guides/moderation  
+- **pytest-recording** (~15min) — record/replay third-party HTTP calls with VCR.py cassettes
+  https://pypi.org/project/pytest-recording/
+  → Read: "Usage", "Default recording mode", "Configuration", and "Blocking network access". Use this for ServiceNow/OpenAI/vendor API boundaries.
+- **Syrupy snapshot testing** (~15min) — external snapshots for structured Python objects
+  https://syrupy-project.github.io/syrupy/
+  → Read: CLI options, `--snapshot-update`, and filters like `props`/`paths`. Use this for internal API responses, DB state summaries, and async flow outputs.
+- **OpenAI moderation guide** (~10min)
+  https://platform.openai.com/docs/guides/moderation
   → Read all. Short. Use the moderation API in Project 17c.
 
 ## Learn: Evals & Reliability
 - evaluation datasets and golden test sets
 - regression tests for prompts — treat prompts as code with version control
+- deterministic API regression tests:
+  - use `pytest-recording` for third-party HTTP record/replay cassettes
+  - use `syrupy` for internal API response snapshots, DB state summaries, and async workflow results
+  - scrub secrets/headers and normalize dynamic fields before committing recordings or snapshots
 - groundedness checks
 - hallucination controls
 - **Eval-Driven Development (EDD):**
@@ -812,6 +822,7 @@ You can build assistants that do useful actions, not just chat.
   - Environment parity: dev/staging/prod
 - **Integration tests vs eval tests:**
   - Integration tests: check API contracts, response schema, latency thresholds (deterministic)
+  - Snapshot/regression tests: compare normalized internal API/DB flow outputs and replay third-party HTTP cassettes
   - Eval tests: check output quality on golden dataset (probabilistic, use threshold pass/fail)
 - **Rollback strategy:** canary deployments; monitor latency and quality metrics before full rollout
 
@@ -820,6 +831,8 @@ You can build assistants that do useful actions, not just chat.
 Create 30-50 test cases for one app:
 - golden dataset with expected outputs
 - pytest + DeepEval integration
+- `pytest-recording` cassettes for external API calls
+- `syrupy` snapshots for normalized API responses and DB state
 - LLM-as-a-Judge metric for subjective quality
 - groundedness check for any RAG outputs
 - CI-ready: run eval suite automatically on push
@@ -833,6 +846,7 @@ Add:
 - metrics
 - failure handling
 - prompt versioning (prompts as files, tracked in git)
+- regression test workflow: `make test`, `make test-record`, `make test-refresh`
 - README with cost/latency notes
 
 ### Project 17a: DSPy Prompt Optimizer

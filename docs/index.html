@@ -1070,6 +1070,8 @@ const PHASES = [
      readSections:['Metrics Overview','Unit Testing','LLM-as-a-Judge (G-Eval)','RAG Evaluation']},
     {name:'Arize Phoenix',url:'https://docs.arize.com/phoenix/',dur:'Reference',free:true,
      readSections:['Tracing Basics','Inferences and Evaluations','Local vs Production Setup']},
+    {name:'pytest-recording + Syrupy',url:'https://pypi.org/project/pytest-recording/',dur:'30min',free:true,badge:'REGRESSION',
+     readSections:['pytest-recording usage','Record modes and block-network','VCR filtering/redaction','Syrupy snapshot update and filters']},
     {name:'OWASP LLM Top 10 (2025)',url:'https://owasp.org/www-project-top-10-for-large-language-model-applications/',dur:'Reference',free:true,badge:'CRITICAL',
      readSections:['Top 10 Risks','LLM01: Prompt Injection','LLM02: Insecure Output Handling','LLM06: Sensitive Information Disclosure']}
   ]}
@@ -1079,9 +1081,9 @@ const PHASES = [
     level:'Intermediate',
     desc:'Build a professional evaluation pipeline that uses LLM-as-a-Judge and metrics like Ragas to verify RAG quality.',
     businessValue:'Moves development from "vibe-based" to "data-driven". Essential for maintaining quality as prompts and models evolve.',
-    guide:'Implementation: 1. Create a "Golden Dataset" of 50 query/context/answer triplets. 2. Implement a script using `DeepEval` or `Ragas`. 3. Define metrics: Faithfulness, Answer Relevancy, and Context Precision. 4. Run the suite and generate a JSON/CSV report. 5. Integrate into GitHub Actions to block "bad" prompt updates. This project moves you from "it looks okay" to "it is verified".',
-    tips:['Use G-Eval (LLM-as-a-Judge) for subjective qualities.', 'Automate this in CI/CD to prevent regressions.', 'Start with a small, high-quality "Golden Dataset".'],
-    skills:['LLM-as-a-Judge','Ragas','Automated Testing','CI/CD for AI','Metric Definition'],
+    guide:'Implementation: 1. Create a "Golden Dataset" of 50 query/context/answer triplets. 2. Implement a script using `DeepEval` or `Ragas`. 3. Add deterministic regression tests: `pytest-recording` for third-party HTTP cassettes and `syrupy` for normalized API/DB snapshots. 4. Define metrics: Faithfulness, Answer Relevancy, and Context Precision. 5. Run the suite and generate a JSON/CSV report. 6. Integrate into GitHub Actions to block "bad" prompt updates. This project moves you from "it looks okay" to "it is verified".',
+    tips:['Use G-Eval (LLM-as-a-Judge) for subjective qualities.', 'Automate this in CI/CD to prevent regressions.', 'Start with a small, high-quality "Golden Dataset".', 'Scrub secrets and normalize timestamps/IDs before committing cassettes or snapshots.'],
+    skills:['LLM-as-a-Judge','Ragas','Automated Testing','Snapshot Testing','CI/CD for AI','Metric Definition'],
     deliverable:'A testing suite that gives every change a "Quality Score" and prevents regression in your AI application\'s accuracy.',
     hrs:8,tags:['Evals','Quality','CI/CD']},
    {id:'ph5-p17',name:'Observability Dashboard',
