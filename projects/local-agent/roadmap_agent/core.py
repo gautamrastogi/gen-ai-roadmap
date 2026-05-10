@@ -72,7 +72,7 @@ def parse_phases(roadmap_path: Path = ROADMAP_PATH) -> list[Phase]:
         body = text[start:end].strip()
         projects = [
             item.strip()
-            for item in re.findall(r"^#{3,4}\s+Project\s+\d+:\s+(.+?)\s*$", body, re.MULTILINE)
+            for item in re.findall(r"^#{2,4}\s+Project\s+\d+[a-z]?:\s+(.+?)\s*$", body, re.MULTILINE)
         ]
         phases.append(
             Phase(

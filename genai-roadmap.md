@@ -57,7 +57,7 @@
 
 > **Last updated:** 2026-05-07 | **Current phase:** Phase 2 — Python LLM App Development
 >
-> Verified May 2026. Key changes: **QA Platform removed** (lost access) — replaced by Microsoft Learn free paths + DLAI; course lists trimmed to essentials only (build-first approach); every doc resource now has specific sections to read; **AI-900 retires June 30, 2026** — 54 days away, act now if targeting it. Responses API is primary interface; Assistants API deprecated Aug 26, 2026.
+> Verified May 2026. Key changes: inaccessible paid training was removed and replaced by Microsoft Learn free paths + DLAI; course lists trimmed to essentials only (build-first approach); every doc resource now has specific sections to read; **AI-900 retires June 30, 2026** — 54 days away, act now if targeting it. Responses API is primary interface; Assistants API deprecated Aug 26, 2026.
 
 ## Goal
 Transition from Python Software Engineer to:
@@ -120,7 +120,7 @@ Optimize for:
 
 ## Current Focus
 **Phase:** Phase 2 — Python LLM App Development  
-**Working on:** Project 4 — CLI Chatbot (Phase 2 courses complete — QA courses skipped, not accessible)
+**Working on:** Project 4 — CLI Chatbot (Phase 2 courses complete)
 **Status:** 🟡 In Progress — build Phase 2 projects
 
 ## ⚡ Next Action — Do This Now
@@ -137,8 +137,6 @@ Optimize for:
     - ✅ ~~OpenAI for Developers~~ — DONE
     - ✅ ~~Generative AI for Developers~~ — DONE
     - ✅ ~~Generative AI Integration for Developers~~ — DONE
-    - ⏭️ ~~Generative AI Fundamentals of AWS~~ — SKIPPED (QA access lost)
-    - ⏭️ ~~Using Generative AI in Azure and Microsoft Power Platform~~ — SKIPPED (QA access lost)
     - 🔨 **NOW → Build: Project 4 — CLI Chatbot**
 
 ## Phase Summary
@@ -157,7 +155,7 @@ Optimize for:
 | 10 | Certifications | ⬜ Not Started |
 | 11 | Capstone: Resume-Grade Projects | ⬜ Not Started |
 
-**Overall: 4 / 33 projects done**
+**Overall: 4 / 37 projects done**
 
 ## Project Checklist
 
@@ -1504,7 +1502,7 @@ Work through these in exact order. Each step tells you what URL to open, what to
 
 - [x] **Step 6 — ✅ DONE (partially) — Python LLM App Development Courses**
   Completed: OpenAI for Developers (Pluralsight) + LangChain for LLM App Dev + LangChain Academy intro.  
-  Skipped: QA Platform courses (no access). That's fine — the Pluralsight path covers everything you need.
+  The Pluralsight path plus free Microsoft Learn/DLAI resources covers what you need for this phase.
 
 ---
 

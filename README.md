@@ -4,8 +4,8 @@
 
 [![GitHub Pages](https://img.shields.io/badge/Dashboard-Live-8b5cf6?style=flat-square&logo=github)](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/)
 [![Phases](https://img.shields.io/badge/Phases-12-ec4899?style=flat-square)](#roadmap-structure)
-[![Projects](https://img.shields.io/badge/Projects-39-10b981?style=flat-square)](#roadmap-structure)
-[![Courses](https://img.shields.io/badge/Courses-86+-3b82f6?style=flat-square)](#roadmap-structure)
+[![Projects](https://img.shields.io/badge/Projects-37-10b981?style=flat-square)](#roadmap-structure)
+[![Courses](https://img.shields.io/badge/Courses-60+-3b82f6?style=flat-square)](#roadmap-structure)
 
 ---
 
@@ -40,11 +40,11 @@ The dashboard is a fully client-side web app (no backend, no login) that lets yo
 | 6 | MCP & Agentic Orchestration | 7 | ~20h |
 | 7 | AI-Native Dev Productivity | 2 | ~6h |
 | 8 | Multimodal, Real-Time & SLMs | 3 | ~12h |
-| 9 | Portfolio & Job Prep | 1 | ~8h |
-| 10 | Certification | 1 | ~15h |
+| 9 | Portfolio & Job Prep | Portfolio polish | ~8h |
+| 10 | Certification | Exam prep | ~15h |
 | 11 | Capstone Projects | 3 | ~30h |
 
-**Total: ~165 hours of structured learning + project building**
+**Total: ~165 hours of structured learning + 37 roadmap projects**
 
 ---
 
@@ -53,7 +53,8 @@ The dashboard is a fully client-side web app (no backend, no login) that lets yo
 Curated resources from:
 - **Pluralsight** — Structured video courses (paid)
 - **DeepLearning.AI** — Short courses on cutting-edge topics (mostly free)
-- **QA Platform** — Certification exam prep
+- **Microsoft Learn** — Free official Azure AI learning paths and certification prep
+- **LangChain Academy** — Free LangChain/LangGraph courses
 - **Official Docs** — OpenAI, LangChain, LangGraph, MCP, Hugging Face, Anthropic
 
 ---
