@@ -1,12 +1,15 @@
 {
   "current_phase": 2,
-  "current_project": "p2-summarizer",
+  "current_project": "p4-cli-chatbot",
   "completed_projects": [
     "p0-genai-starter-template",
-    "p1-prompt-playground"
+    "p1-prompt-playground",
+    "p2-summarizer",
+    "p3-rewriter"
   ],
   "focus": "finish roadmap first",
   "notes": [
-    "Use local-agent only as roadmap support, not a detour."
+    "Use local-agent only as roadmap support, not a detour.",
+    "Aim the portfolio toward AI backend/platform work for observability, incident automation, and safe ops workflows."
   ]
 }

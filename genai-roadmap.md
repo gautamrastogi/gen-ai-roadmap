@@ -4,7 +4,8 @@
   CONTEXT FOR LLMs READING THIS FILE
   ===================================
   This is the primary roadmap document for a structured self-study program
-  to transition from Python Software Engineer to GenAI / Agentic Systems Engineer.
+  to transition from Python Software Engineer to GenAI / Agentic Systems Engineer,
+  with a portfolio angle around observability, incident automation, and platform operations.
 
   Owner:        YOUR_NAME
   Hardware:     Apple M1 Max, 32 GB unified memory (strong local AI capability)
@@ -55,9 +56,9 @@
   • Security is integrated (OWASP LLM Top 10), not bolted on later
 -->
 
-> **Last updated:** 2026-05-07 | **Current phase:** Phase 2 — Python LLM App Development
+> **Last updated:** 2026-05-15 | **Current phase:** Phase 2 — Python LLM App Development
 >
-> Verified May 2026. Key changes: inaccessible paid training was removed and replaced by Microsoft Learn free paths + DLAI; course lists trimmed to essentials only (build-first approach); every doc resource now has specific sections to read; **AI-900 retires June 30, 2026** — 54 days away, act now if targeting it. Responses API is primary interface; Assistants API deprecated Aug 26, 2026.
+> Verified May 2026. Key changes: roadmap is now aligned to an AI backend/platform path for observability, incident automation, and on-call reliability; inaccessible paid training was removed and replaced by Microsoft Learn free paths + DLAI; course lists trimmed to essentials only (build-first approach); every doc resource now has specific sections to read. Responses API is primary interface; Assistants API deprecated Aug 26, 2026.
 
 ## Goal
 Transition from Python Software Engineer to:
@@ -65,7 +66,29 @@ Transition from Python Software Engineer to:
 - LLM Application Developer
 - Applied AI Engineer
 - AI Backend Engineer
+- GenAI Platform Engineer
 - Agentic Systems Engineer
+- AI for Observability / Incident Automation Engineer
+
+## Target Career Lane
+The roadmap is now intentionally aimed at the role shape that best matches the current background:
+
+**Senior Backend / Platform Engineer → GenAI Platform Engineer for observability and operations automation.**
+
+This means projects should not be random AI demos. They should increasingly look like safe, production-minded systems that can:
+- triage alerts and incidents
+- search runbooks, docs, and service ownership metadata
+- summarize incident timelines and handoffs
+- enrich tickets with evidence and suggested next actions
+- integrate safely with tools through MCP, function calling, and HITL approval gates
+- prove reliability through evals, snapshots, traces, and CI gates
+
+Portfolio theme:
+1. **RAG for runbooks and operational knowledge**
+2. **Tool calling for alert/ticket/workflow automation**
+3. **Agent orchestration with human approvals for critical actions**
+4. **Production reliability: tracing, evals, regression tests, security, rollback**
+5. **A capstone that feels like an AI operations console, not a toy chatbot**
 
 ## 2026 GenAI Industry Trends
 > These are the high-signal topics the industry is actively hiring and building around in 2026. Prioritize them.
@@ -77,6 +100,7 @@ Transition from Python Software Engineer to:
 | **A2A (Agent-to-Agent Protocol)** | Google/Linux Foundation standard for agents collaborating cross-framework (LangGraph ↔ CrewAI ↔ ADK) | Phase 6 |
 | **Reasoning-First Models** (o1/o3, DeepSeek-R1) | Chain-of-thought deliberation loops — know when to use expensive reasoning vs fast generalist models | Phase 2 |
 | **GraphRAG & Knowledge Fabrics** | Moving beyond flat vector search to handle multi-hop reasoning and entity relationships | Phase 3 |
+| **AI for Observability / AIOps** | LLMs summarizing alerts, incidents, logs, runbooks, and service context for faster on-call decisions | Phases 3-6, 11 |
 | **Programmatic Prompting** (DSPy) | Replacing manual prompt engineering with compiled, metric-optimized prompt weights | Phase 5 |
 | **Evals-as-Code (EDD)** | AI is non-deterministic — treat prompts like code with CI-integrated test suites (DeepEval, LangSmith) | Phase 5 |
 | **AI Security & Prompt Injection** | OWASP LLM Top 10 — every production AI app needs guardrails | Phase 5 |
@@ -97,7 +121,7 @@ Transition from Python Software Engineer to:
 **What this roadmap does NOT teach (and that's fine):**
 - Pre-training / fine-tuning large models from scratch (that's ML research, not applied AI engineering)
 - Deep ML maths (not needed for most GenAI roles)
-- Kubernetes / SRE (infrastructure — you'd learn that on the job)
+- Deep Kubernetes/SRE administration from scratch. You already have platform/on-call exposure; this roadmap uses that experience as domain leverage rather than turning into a pure infra syllabus.
 
 **Bottom line:** Complete Phases 1–8, have 3 public repos, and you will pass screening for applied AI/GenAI engineer roles at top tech companies.
 
@@ -177,29 +201,29 @@ Optimize for:
 - [ ] Project 8: Semantic Search Prototype
 - [ ] Project 9: PDF Q&A Assistant
 - [ ] Project 10: Docs Knowledge Assistant
-- [ ] Project 11: Support Knowledge Bot
+- [ ] Project 11: Runbook Knowledge Bot
 - [ ] Project 11a: GraphRAG Document Explorer
 
 ### Phase 4 — Tool Calling + Workflow Automation
 - [ ] Project 12: Tool-Using Assistant
 - [ ] Project 13: Research Assistant
 - [ ] Project 14: SQL / Reporting Assistant
-- [ ] Project 15: Ticket Triage Assistant
+- [ ] Project 15: Alert + Ticket Triage Assistant
 
 ### Phase 5 — Evals + Safety + Observability
 - [ ] Project 16: Eval Suite
-- [ ] Project 17: Productionize One App
+- [ ] Project 17: Productionize an On-call AI App
 - [ ] Project 17a: DSPy Prompt Optimizer
 - [ ] Project 17b: CI/CD Pipeline for AI
 - [ ] Project 17c: OWASP LLM Security Scanner
 
 ### Phase 6 — MCP + Agentic Orchestration
-- [ ] Project 18: Simple MCP Server
-- [ ] Project 19: Python MCP Utility Server
-- [ ] Project 20: MCP-Powered Agent Integration
+- [ ] Project 18: Simple Observability MCP Server
+- [ ] Project 19: On-call MCP Utility Server
+- [ ] Project 20: MCP-Powered Ops Agent Integration
 - [ ] Project 21: HITL SQL Assistant
 - [ ] Project 22: HITL File Action Agent
-- [ ] Project 23: Stateful Research Workflow
+- [ ] Project 23: Stateful Incident Workflow
 - [ ] Project 24: Orchestration & Multi-Agent
 
 ### Phase 7 — AI-Native Developer Productivity
@@ -212,9 +236,9 @@ Optimize for:
 - [ ] Project 29: Local SLM Fine-Tuning
 
 ### Phase 11 — Capstone: Resume-Grade Projects
-- [ ] Project 30: Unified AI Assistant (ChatGPT clone — voice, vision, files, memory)
-- [ ] Project 31: Multi-Agent Research & Report Platform
-- [ ] Project 32: Personal AI Dev Copilot
+- [ ] Project 30: AI Ops Command Center
+- [ ] Project 31: Multi-Agent Incident Review + Runbook Platform
+- [ ] Project 32: Personal AI Dev/Ops Copilot
 
 ---
 
@@ -607,13 +631,26 @@ Features:
 - answer with citations
 
 ### Project 10: Docs Knowledge Assistant
-Use markdown/docs/READMEs.
+Use markdown/docs/READMEs. Prefer docs that look like real operational material: service READMEs, API docs, deployment notes, troubleshooting pages, and architecture decisions.
 
-### Project 11: Support Knowledge Bot
-Answer from support docs only and refuse unsupported answers.
+### Project 11: Runbook Knowledge Bot
+Answer from runbooks and operational docs only, cite the exact source, and refuse unsupported answers.
+
+Must handle:
+- "what should I check first?"
+- "which service/team owns this?"
+- "what evidence supports this recommendation?"
+- "what should I not do without approval?"
 
 ### Project 11a: GraphRAG Document Explorer
-Build a knowledge graph to answer multi-hop reasoning questions over a complex text corpus using LightRAG or Microsoft GraphRAG principles.
+Build a knowledge graph to answer multi-hop reasoning questions over a complex operational corpus using LightRAG or Microsoft GraphRAG principles.
+
+Portfolio-safe dataset idea:
+- fake services
+- fake alerts
+- fake runbooks
+- fake ownership metadata
+- fake incident postmortems
 
 ## Completion goal
 You have a strong production-style RAG project with citations.
@@ -676,6 +713,8 @@ Tools:
 - notes tool
 - file lookup
 - mock calendar
+- mock alert lookup
+- mock ITSM-style ticket lookup
 
 ### Project 13: Research Assistant
 Retrieve docs/web content, synthesize, cite, and say when unsure.
@@ -683,8 +722,16 @@ Retrieve docs/web content, synthesize, cite, and say when unsure.
 ### Project 14: SQL / Reporting Assistant
 Generate read-only SQL safely.
 
-### Project 15: Ticket Triage Assistant
-Classify, prioritize, route, draft response.
+### Project 15: Alert + Ticket Triage Assistant
+Classify, prioritize, route, and draft a response for operational alerts/tickets.
+
+Must support:
+- severity recommendation with explanation
+- likely owner/team routing
+- runbook/doc suggestions
+- duplicate or related ticket detection
+- suggested next action
+- strict "no action taken automatically" mode
 
 ## Completion goal
 You can build assistants that do useful actions, not just chat.
@@ -744,7 +791,7 @@ You can build assistants that do useful actions, not just chat.
   → Read: "Quickstart", "Understanding GitHub Actions". Just enough to wire up Project 17b.
 - **pytest-recording** (~15min) — record/replay third-party HTTP calls with VCR.py cassettes
   https://pypi.org/project/pytest-recording/
-  → Read: "Usage", "Default recording mode", "Configuration", and "Blocking network access". Use this for ServiceNow/OpenAI/vendor API boundaries.
+  → Read: "Usage", "Default recording mode", "Configuration", and "Blocking network access". Use this for ITSM/OpenAI/vendor API boundaries.
 - **Syrupy snapshot testing** (~15min) — external snapshots for structured Python objects
   https://syrupy-project.github.io/syrupy/
   → Read: CLI options, `--snapshot-update`, and filters like `props`/`paths`. Use this for internal API responses, DB state summaries, and async flow outputs.
@@ -829,7 +876,7 @@ You can build assistants that do useful actions, not just chat.
 ## Projects
 ### Project 16: Eval Suite
 Create 30-50 test cases for one app:
-- golden dataset with expected outputs
+- golden dataset with expected outputs, preferably alert/runbook/ticket examples
 - pytest + DeepEval integration
 - `pytest-recording` cassettes for external API calls
 - `syrupy` snapshots for normalized API responses and DB state
@@ -837,7 +884,7 @@ Create 30-50 test cases for one app:
 - groundedness check for any RAG outputs
 - CI-ready: run eval suite automatically on push
 
-### Project 17: Productionize One App
+### Project 17: Productionize an On-call AI App
 Add:
 - logging
 - retries
@@ -845,6 +892,10 @@ Add:
 - caching
 - metrics
 - failure handling
+- trace IDs across request, retrieval, tool calls, and LLM calls
+- SLO notes: latency, cost, error rate, and quality thresholds
+- on-call runbook: how to diagnose common failures
+- safe degradation: return partial evidence instead of inventing answers
 - prompt versioning (prompts as files, tracked in git)
 - regression test workflow: `make test`, `make test-record`, `make test-refresh`
 - README with cost/latency notes
@@ -945,22 +996,38 @@ You already started MCP, and 2026 strongly rewards engineers who understand:
 - registry/ecosystem awareness
 
 ### MCP projects
-#### Project 18: Simple MCP Server
+#### Project 18: Simple Observability MCP Server
 Expose:
 - one tool
 - one resource
 - one prompt
-Use a simple local use case.
+Use a simple observability-flavored local use case.
 
-#### Project 19: Python MCP Utility Server
+Examples:
+- `list_services`
+- `read_runbook`
+- `search_alert_examples`
+- `summarize_recent_logs` over local sample files
+
+#### Project 19: On-call MCP Utility Server
 Examples:
 - local docs search
 - task tracker
 - local file summarizer
 - personal notes lookup
+- runbook lookup
+- fake incident/ticket lookup
+- recent alert timeline summary
 
-#### Project 20: MCP-Powered Agent Integration
+#### Project 20: MCP-Powered Ops Agent Integration
 Connect an agent/client to your MCP server and use it in a workflow.
+
+The workflow should look like:
+1. user gives an alert summary
+2. agent retrieves related runbooks/docs
+3. agent checks mock ticket/service metadata
+4. agent proposes next actions with citations
+5. human approves before any side-effect tool runs
 
 ## Learn agentic orchestration
 ### Topics
@@ -992,16 +1059,27 @@ Pause before execution, require approve/reject.
 ### Project 22: HITL File Action Agent
 Pause before write/delete/send actions.
 
-### Project 23: Stateful Research Workflow
+### Project 23: Stateful Incident Workflow
 Resume after interruption, persist state.
+
+Model a realistic on-call flow:
+- intake alert
+- gather evidence
+- search runbooks
+- propose severity and owner
+- wait for human approval
+- draft incident/ticket update
+- resume after interruption without losing context
 
 ### Project 24: Orchestration & Multi-Agent
 Implement using LangGraph, PydanticAI, or smolagents:
-- planner
-- tool call or code-execution
+- triage/planner agent
+- evidence retrieval agent
+- runbook/doc agent
+- critic/safety reviewer
 - approval gate
 - resume execution
-- final result synthesis
+- final incident summary synthesis
 
 ## Completion goal
 You understand modern agentic systems, not just chatbot demos.
@@ -1130,9 +1208,9 @@ You can handle vision, audio, and custom-trained local SLMs, matching the 2026 e
 
 ## Minimum portfolio target
 Finish with:
-- 1 strong RAG app
-- 1 tool-calling/workflow app
-- 1 MCP or orchestration project
+- 1 strong RAG app over runbooks/docs with citations
+- 1 alert/ticket triage workflow app
+- 1 MCP or orchestration project with HITL approvals
 - 1 productionized app **live at a real URL**
 - clean GitHub READMEs
 - screenshots / demos
@@ -1147,10 +1225,15 @@ Finish with:
 - **Profile photo + location + title** — set `AI / GenAI Engineer` as your headline on GitHub and LinkedIn simultaneously
 
 ## Best portfolio set
-1. RAG assistant with citations
-2. Tool-calling workflow assistant
-3. MCP-based utility or agent integration
-4. Productionized FastAPI AI app
+1. Runbook RAG assistant with citations
+2. Alert + ticket triage assistant with safe tool calling
+3. MCP-based on-call utility or agent integration
+4. Productionized FastAPI AI app with traces, evals, snapshots, and a runbook
+
+## Resume story to prove
+When these projects are done, the public story should read:
+
+> Built production-style GenAI systems for operational workflows: RAG over runbooks, alert/ticket triage, MCP tool integration, human approvals for sensitive actions, eval-gated CI, traceability, and on-call reliability patterns.
 
 ## For every repo include
 - problem statement
@@ -1223,52 +1306,51 @@ Recruiters look for projects they can understand and imagine using. A certificat
 
 ---
 
-## Project 30: Unified AI Assistant
-**"My ChatGPT" — the all-in-one AI platform**
+## Project 30: AI Ops Command Center
+**"On-call copilot" — an AI console for observability and incident workflows**
 
-Build a full-stack web AI assistant that rivals ChatGPT in features:
+Build a full-stack AI operations console that feels like a portfolio-safe version of real observability work:
 
 | Feature | Tech |
 |---------|------|
-| Text chat with memory | OpenAI GPT-4o + Redis or Postgres for session memory |
-| Voice input + output | OpenAI Whisper (STT) + TTS API — speak to it, it speaks back |
-| Image understanding | GPT-4o vision — paste or upload an image, ask questions |
-| File analysis | PDF, DOCX, Excel upload → RAG pipeline answers questions |
-| PowerPoint generation | python-pptx + LLM → auto-generate slides from a topic |
-| Video summary | yt-dlp + Whisper → transcribe + summarise YouTube videos |
-| Web search | Tool call → SerpAPI or Tavily for live web answers |
-| Persistent memory | Remembers who you are, your preferences, past conversations |
+| Alert intake | Paste JSON/webhook-style alerts, logs, or ticket text |
+| Runbook RAG | Retrieve runbooks, service docs, ownership metadata, previous incident notes |
+| Triage summary | Severity, likely owner, impact hypothesis, missing evidence |
+| Evidence timeline | Summarize events from logs, alerts, and ticket updates |
+| Suggested next actions | Read-only recommendations with citations and confidence |
+| HITL approval | Explicit approval before any side-effect action is proposed |
+| Observability | Langfuse/LangSmith traces, eval scores, latency/cost metrics |
 | FastAPI backend + React or Streamlit frontend | Clean, deployable, Docker |
 
 **Tell Copilot:** `generate repo scaffold for phase 11 project 30`  
-**You're done when:** You can record a 3-minute Loom demo showing voice in, image Q&A, file upload, and a web search.
+**You're done when:** You can record a 3-minute Loom demo: paste a critical alert → retrieve runbook evidence → produce a safe triage plan → show traces/eval results.
 
 ---
 
-## Project 31: Multi-Agent Research & Report Platform
-**"Deep Research" — automated intelligence briefing generator**
+## Project 31: Multi-Agent Incident Review + Runbook Platform
+**"Postmortem assistant" — automated incident analysis with human review**
 
-Given a topic, this system autonomously researches it and produces a polished report:
+Given a fake incident timeline, alerts, logs, and ticket updates, this system produces a polished incident review and updates the runbook knowledge base:
 
 | Feature | Tech |
 |---------|------|
-| Planner agent | Breaks topic into sub-questions |
-| Web search agents (parallel) | Each sub-question gets its own search agent via Tavily/SerpAPI |
-| Summariser agent | Condenses each source |
-| Critic / reflection agent | Checks gaps, requests more research if needed |
-| Writer agent | Assembles final report with citations |
-| Output formats | Markdown, PDF (via weasyprint), and optional PowerPoint |
-| Human-in-the-loop checkpoint | Approve/reject before final report is written |
+| Intake agent | Parses alert timeline, ticket comments, log snippets, and status updates |
+| Evidence agent | Finds supporting docs/runbooks and flags gaps |
+| Impact agent | Drafts customer/service impact and blast radius |
+| Action-item agent | Extracts remediations, owners, and follow-ups |
+| Critic/safety agent | Checks unsupported claims, blame language, and missing evidence |
+| Writer agent | Produces postmortem, executive summary, and runbook patch suggestion |
+| Human-in-the-loop checkpoint | Approve/reject before final report or runbook patch is written |
 | LangGraph orchestration | Full stateful multi-agent graph with persistence |
-| MCP server | Expose "run research" as an MCP tool usable from Claude Desktop |
+| MCP server | Expose "analyze incident" as an MCP tool usable from an IDE/agent |
 
 **Tell Copilot:** `generate repo scaffold for phase 11 project 31`  
-**You're done when:** You can demo "research the impact of GenAI on software engineering" → full PDF report in 2 minutes.
+**You're done when:** You can demo fake incident data → cited postmortem → approved runbook update proposal in under 5 minutes.
 
 ---
 
-## Project 32: Personal AI Dev Copilot
-**"My Copilot" — a coding + productivity assistant built for your own workflow**
+## Project 32: Personal AI Dev/Ops Copilot
+**"My Copilot" — a coding, on-call, and platform workflow assistant**
 
 An MCP server + agent that integrates into your daily developer life:
 
@@ -1277,6 +1359,8 @@ An MCP server + agent that integrates into your daily developer life:
 | Code review tool | Send a diff → get structured review with severity ratings |
 | PR description generator | Git diff input → professional PR description |
 | Ticket-to-code planner | Jira/GitHub issue → implementation plan + skeleton code |
+| Alert-to-investigation planner | Alert text → evidence checklist + likely runbooks |
+| Runbook generator | Incident notes → draft troubleshooting steps |
 | Doc generator | Python function → docstring + README section |
 | Daily standup generator | Git log + Jira comments → formats standup update |
 | Slack/Teams message drafter | Context → professional message |
@@ -1285,7 +1369,7 @@ An MCP server + agent that integrates into your daily developer life:
 | Configurable persona | System prompt tuned to your stack and preferences |
 
 **Tell Copilot:** `generate repo scaffold for phase 11 project 32`  
-**You're done when:** You use it yourself every day and it's in your GitHub profile README.
+**You're done when:** You use it yourself every day for coding and roadmap work, and it is in your GitHub profile README as a production-minded MCP project.
 
 ---
 
@@ -1330,7 +1414,7 @@ An MCP server + agent that integrates into your daily developer life:
 | Thu | Project 8: Semantic Search Prototype — build + embed + query + score | 8h |
 | Fri | DLAI: Building and Evaluating Advanced RAG (1h) + Project 9 (PDF Q&A) start | 8h |
 | Sat | Finish Project 9. Citations, source attribution, chunking comparison | 8h |
-| Sun | Projects 10 + 11 (Docs Assistant + Support Bot) — build both | 8h |
+| Sun | Projects 10 + 11 (Docs Assistant + Runbook Knowledge Bot) — build both | 8h |
 
 ## Week 3 — Tool calling + workflow automation
 | Day | What | Hours |
@@ -1339,16 +1423,16 @@ An MCP server + agent that integrates into your daily developer life:
 | Tue | Finish Project 12 (Tool-Using Assistant). 5 tools minimum. | 8h |
 | Wed | DLAI: Functions, Tools, Agents with LangChain (1h44m) + Project 13 (Research Assistant) start | 8h |
 | Thu | Finish Project 13. Web retrieval + synthesis + citations + "I don't know" handling | 8h |
-| Fri | Projects 14 + 15 (SQL Assistant + Ticket Triage) — build both | 8h |
+| Fri | Projects 14 + 15 (SQL Assistant + Alert/Ticket Triage) — build both | 8h |
 | Sat | Finish Projects 14 + 15. Push all Phase 4 projects. | 8h |
 | Sun | Read: OWASP LLM Top 10, DeepEval quickstart, OpenAI evals guide | 8h |
 
 ## Week 4 — Evals + safety + observability
 | Day | What | Hours |
 |-----|------|-------|
-| Mon | Project 16: Eval Suite — build 30 test cases + pytest + DeepEval | 8h |
+| Mon | Project 16: Eval Suite — build 30 alert/runbook/ticket test cases + pytest + DeepEval | 8h |
 | Tue | Add LLM-as-a-Judge metric, groundedness checks, CI integration | 8h |
-| Wed | Project 17: Productionize one app — logging, retries, caching, metrics | 8h |
+| Wed | Project 17: Productionize an on-call AI app — logging, retries, caching, metrics, runbook | 8h |
 | Thu | Project 17a: DSPy optimizer + Project 17b: GitHub Actions CI/CD | 8h |
 | Fri | Project 17c: OWASP security scanner — prompt injection guards, tool scope limits | 8h |
 | Sat | DLAI: NeMo Agent Toolkit (45min) + Semantic Caching (30min) + Red Teaming (1h) | 8h |
@@ -1357,12 +1441,12 @@ An MCP server + agent that integrates into your daily developer life:
 ## Week 5 — MCP + LangGraph
 | Day | What | Hours |
 |-----|------|-------|
-| Mon | Read MCP docs (all core sections) + Python SDK quickstart + Projects 18-19 (MCP servers) | 8h |
+| Mon | Read MCP docs (all core sections) + Python SDK quickstart + Projects 18-19 (observability/on-call MCP servers) | 8h |
 | Tue | LangGraph Academy: Introduction to LangGraph (~6h self-paced) — do all 55 lessons | 8h |
 | Wed | Continue LangGraph Academy + run all code examples | 8h |
-| Thu | Project 20 (MCP-Powered Agent) + DLAI: AI Agents in LangGraph (1.5h) | 8h |
+| Thu | Project 20 (MCP-Powered Ops Agent) + DLAI: AI Agents in LangGraph (1.5h) | 8h |
 | Fri | Projects 21 + 22 (HITL SQL + HITL File Agent) | 8h |
-| Sat | Project 23 (Stateful Research Workflow — resume after interrupt) | 8h |
+| Sat | Project 23 (Stateful Incident Workflow — resume after interrupt) | 8h |
 | Sun | Project 24 (Multi-Agent orchestration with LangGraph) | 8h |
 
 ## Week 6 — Agents, multimodal, AI dev productivity
@@ -1379,9 +1463,9 @@ An MCP server + agent that integrates into your daily developer life:
 ## Week 7-8 — Capstone projects
 | Period | What |
 |--------|------|
-| Days 1-4 | Project 30: Unified AI Assistant (voice + vision + files + web search) |
-| Days 5-8 | Project 31: Multi-Agent Research Platform (LangGraph + MCP + HITL) |
-| Days 9-12 | Project 32: Personal Dev Copilot (MCP server + FastAPI) |
+| Days 1-4 | Project 30: AI Ops Command Center (runbook RAG + alert triage + observability) |
+| Days 5-8 | Project 31: Multi-Agent Incident Review Platform (LangGraph + MCP + HITL) |
+| Days 9-12 | Project 32: Personal AI Dev/Ops Copilot (MCP server + FastAPI) |
 | Days 13-14 | AI-900 prep (MS Learn free path, ~8h) + take exam |
 
 ---
@@ -1415,7 +1499,7 @@ An MCP server + agent that integrates into your daily developer life:
 
 ## Weeks 7-8
 - docs assistant
-- support bot
+- runbook knowledge bot
 - tool calling
 - tool-using assistant
 
@@ -1426,8 +1510,8 @@ An MCP server + agent that integrates into your daily developer life:
 - production hardening start
 
 ## Weeks 11-12
-- MCP server
-- MCP agent integration
+- observability MCP server
+- MCP-powered ops agent integration
 - one HITL workflow
 - portfolio cleanup
 

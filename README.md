@@ -1,6 +1,6 @@
 # 🚀 GenAI Developer Roadmap 2026
 
-> A structured, project-driven learning path for building production-grade Generative AI applications — from Python fundamentals through multi-agent orchestration, local model inference, and cloud certification.
+> A structured, project-driven learning path for building production-grade Generative AI applications, with a portfolio angle around observability, incident automation, on-call reliability, agentic workflows, and cloud/platform engineering.
 
 [![GitHub Pages](https://img.shields.io/badge/Dashboard-Live-8b5cf6?style=flat-square&logo=github)](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/)
 [![Phases](https://img.shields.io/badge/Phases-12-ec4899?style=flat-square)](#roadmap-structure)
@@ -45,6 +45,16 @@ The dashboard is a fully client-side web app (no backend, no login) that lets yo
 | 11 | Capstone Projects | 3 | ~30h |
 
 **Total: ~165 hours of structured learning + 37 roadmap projects**
+
+---
+
+## 🎯 Target Profile
+
+This roadmap is tuned toward:
+
+**Senior Backend / Platform Engineer → GenAI Platform Engineer for observability and operations automation.**
+
+The strongest portfolio projects should prove you can build AI systems that search runbooks, triage alerts/tickets, summarize incident evidence, integrate safely with tools through MCP/function calling, and run with production habits like evals, traces, snapshots, CI gates, and human approvals.
 
 ---
 
@@ -175,7 +185,7 @@ See `projects/local-agent/README.md` for setup instructions.
 - **Build first, learn second** — every phase culminates in a real, deployable project
 - **Local-first** — run models on your own hardware before paying for APIs
 - **Agentic from day one** — tool-use, memory, and MCP show up early and throughout
-- **Production mindset** — evals, observability, and security are first-class citizens
+- **Production mindset** — evals, observability, on-call reliability, and security are first-class citizens
 
 ---
 
