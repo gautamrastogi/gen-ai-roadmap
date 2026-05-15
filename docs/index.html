@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GenAI Roadmap 2026 | Progress Dashboard</title>
-<meta name="description" content="Interactive progress tracker for a GenAI roadmap covering AI backend apps, observability automation, incident workflows, RAG, MCP, evals, and local models.">
+<meta name="description" content="Interactive progress tracker for a GenAI roadmap covering AI backend apps, enterprise workflow intelligence, RAG, MCP, evals, observability, and local models.">
 <meta property="og:title" content="GenAI Roadmap 2026">
-<meta property="og:description" content="Track projects and learning resources across 12 phases from Python LLM apps to AI ops and agentic orchestration.">
+<meta property="og:description" content="Track projects and learning resources across 12 phases from Python LLM apps to workflow intelligence and agentic orchestration.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://gautamrastogi.github.io/gen-ai-roadmap/">
 <link rel="canonical" href="https://gautamrastogi.github.io/gen-ai-roadmap/">
@@ -1024,15 +1024,15 @@ const PHASES = [
    skills:['Vector Search','BM25','RRF Algorithm','ChromaDB','Indexing Strategies'],
    deliverable:'A local search engine that indexes your own documents and provides a "Hybrid" result that is more accurate than either method alone.',
    hrs:8,tags:['VectorDB','RAG','Search']},
-	  {id:'ph4-p11',name:'Runbook RAG with Reranking',
+	  {id:'ph4-p11',name:'Enterprise Knowledge RAG',
 	   level:'Advanced',
-	   desc:'Create a high-fidelity RAG pipeline over runbooks, service docs, ownership metadata, and fake incident notes using reranking before generation.',
-	   businessValue:'Turns scattered operational knowledge into reliable on-call guidance with citations, reducing time-to-triage without inventing unsupported answers.',
-	   guide:'Implementation: 1. Stage 1 (Retrieval): Fetch top 20 runbook/service-doc chunks from a vector store. 2. Stage 2 (Reranking): Use a Cross-Encoder model (e.g., `BAAI/bge-reranker-v2-m3`) to re-score those chunks against the alert/question. 3. Stage 3 (Synthesis): Take only the top 3 reranked docs and pass them to the LLM. 4. Return citations, confidence, missing evidence, and "do not run without approval" notes. 5. Measure answer quality vs. retrieval latency. This project makes RAG feel like real observability work.',
-	   tips:['Use fake services/runbooks so the repo stays public-safe.', 'Add distractor runbooks to test whether reranking ignores wrong ownership.', 'Always show citations and a refusal when the docs do not support an answer.'],
-	   skills:['Cross-Encoders','Reranking','Runbook RAG','Operational Knowledge','Performance Profiling'],
-	   deliverable:'A RAG service that answers operational questions with cited runbook evidence and safe next-step suggestions.',
-	   hrs:10,tags:['RAG','Runbooks','Production']}
+	   desc:'Create a high-fidelity RAG pipeline over internal-style knowledge such as runbooks, support docs, API docs, policies, ownership metadata, and case notes.',
+	   businessValue:'Turns scattered enterprise knowledge into reliable, cited guidance for workflow decisions without inventing unsupported answers.',
+	   guide:'Implementation: 1. Stage 1 (Retrieval): Fetch top 20 knowledge chunks from a vector store. 2. Stage 2 (Reranking): Use a Cross-Encoder model (e.g., `BAAI/bge-reranker-v2-m3`) to re-score those chunks against the workflow item/question. 3. Stage 3 (Synthesis): Take only the top 3 reranked docs and pass them to the LLM. 4. Return citations, confidence, missing evidence, and "do not run without approval" notes. 5. Measure answer quality vs. retrieval latency. This project is generic enough for support, platform, docs, compliance, and observability workflows.',
+	   tips:['Use fake enterprise docs so the repo stays public-safe.', 'Add distractor docs to test whether reranking ignores wrong ownership or policy context.', 'Always show citations and a refusal when the docs do not support an answer.'],
+	   skills:['Cross-Encoders','Reranking','Enterprise RAG','Knowledge Management','Performance Profiling'],
+	   deliverable:'A RAG service that answers workflow questions with cited knowledge evidence and safe next-step suggestions.',
+	   hrs:10,tags:['RAG','Knowledge','Production']}
  ]
 },
 {id:'ph5',label:'Phase 5',name:'Evals & Observability',color:'#ef4444',
@@ -1079,21 +1079,21 @@ const PHASES = [
  projects:[
    {id:'ph5-p16',name:'Automated Eval Suite',
     level:'Intermediate',
-	   desc:'Build a professional evaluation pipeline that uses LLM-as-a-Judge and deterministic regression checks to verify alert/runbook/RAG quality.',
-	    businessValue:'Moves operational AI from "looks useful" to measurable quality. Essential when the output could influence on-call decisions.',
-	    guide:'Implementation: 1. Create a "Golden Dataset" of 50 fake alert, runbook, ticket, and answer examples. 2. Implement a script using `DeepEval` or `Ragas`. 3. Add deterministic regression tests: `pytest-recording` for third-party HTTP cassettes and `syrupy` for normalized API/DB snapshots. 4. Define metrics: Faithfulness, Answer Relevancy, Context Precision, unsafe-action refusal, and missing-evidence detection. 5. Run the suite and generate a JSON/CSV report. 6. Integrate into GitHub Actions to block "bad" prompt updates.',
+	   desc:'Build a professional evaluation pipeline that uses LLM-as-a-Judge and deterministic regression checks to verify workflow triage and RAG quality.',
+	    businessValue:'Moves AI workflow automation from "looks useful" to measurable quality. Essential when output influences business or platform decisions.',
+	    guide:'Implementation: 1. Create a "Golden Dataset" of 50 fake workflow items, knowledge docs, tickets, change requests, and answer examples. 2. Implement a script using `DeepEval` or `Ragas`. 3. Add deterministic regression tests: `pytest-recording` for third-party HTTP cassettes and `syrupy` for normalized API/DB snapshots. 4. Define metrics: Faithfulness, Answer Relevancy, Context Precision, unsafe-action refusal, and missing-evidence detection. 5. Run the suite and generate a JSON/CSV report. 6. Integrate into GitHub Actions to block "bad" prompt updates.',
 	    tips:['Use G-Eval (LLM-as-a-Judge) for subjective qualities.', 'Add explicit tests for unsupported answers and unsafe tool use.', 'Start with a small, high-quality "Golden Dataset".', 'Scrub secrets and normalize timestamps/IDs before committing cassettes or snapshots.'],
-	    skills:['LLM-as-a-Judge','Ragas','Automated Testing','Snapshot Testing','On-call Quality Gates','Metric Definition'],
-	    deliverable:'A testing suite that gives every change a quality score and prevents regressions in triage, RAG, and safety behavior.',
+	    skills:['LLM-as-a-Judge','Ragas','Automated Testing','Snapshot Testing','Workflow Quality Gates','Metric Definition'],
+	    deliverable:'A testing suite that gives every change a quality score and prevents regressions in workflow triage, RAG, and safety behavior.',
     hrs:8,tags:['Evals','Quality','CI/CD']},
-	   {id:'ph5-p17',name:'On-call AI Observability Dashboard',
+	   {id:'ph5-p17',name:'Workflow AI Observability Dashboard',
 	    level:'Intermediate',
-	    desc:'Implement full-stack tracing for an operational LLM app to monitor latency, costs, evidence retrieval, tool calls, and failure modes.',
+	    desc:'Implement full-stack tracing for a workflow AI app to monitor latency, costs, evidence retrieval, tool calls, and failure modes.',
 	    businessValue:'Provides the audit trail needed for production support: why the model said something, what evidence it used, and where the workflow failed.',
-	    guide:'Implementation: 1. Instrument your FastAPI app with the Langfuse SDK. 2. Track nested traces (Alert Intake -> Retrieval -> Reranking -> Tool Call -> LLM). 3. Log human feedback and approval/rejection decisions directly to the trace. 4. Set up alerts for high-cost, high-latency, low-confidence, or unsupported-answer outputs. 5. Add an on-call runbook explaining how to debug failures.',
+	    guide:'Implementation: 1. Instrument your FastAPI app with the Langfuse SDK. 2. Track nested traces (Item Intake -> Retrieval -> Reranking -> Tool Call -> LLM). 3. Log human feedback and approval/rejection decisions directly to the trace. 4. Set up alerts for high-cost, high-latency, low-confidence, or unsupported-answer outputs. 5. Add an operations guide explaining how to debug failures.',
 	    tips:['Track "Trace IDs" across request, retrieval, tool calls, and model output.', 'Log human approval decisions to link traces with safety behavior.', 'Add SLO notes for latency, cost, error rate, and answer quality.'],
-	    skills:['Observability','Tracing','On-call Runbooks','Cost Analysis','Production Monitoring'],
-	    deliverable:'A live monitoring system where you can replay an AI triage workflow and understand every retrieval, tool, and model decision.',
+	    skills:['Observability','Tracing','Operations Guides','Cost Analysis','Production Monitoring'],
+	    deliverable:'A live monitoring system where you can replay an AI workflow and understand every retrieval, tool, and model decision.',
     hrs:7,tags:['Observability','Monitoring','Ops']},
    {id:'ph5-p17a',name:'Prompt Optimizer (DSPy)',
     level:'Advanced',
@@ -1143,32 +1143,32 @@ const PHASES = [
   ]}
  ],
  projects:[
-	  {id:'ph6-p18',name:'Observability MCP Server',
+	  {id:'ph6-p18',name:'Workflow Context MCP Server',
 	   level:'Intermediate',
-	   desc:'Build a custom MCP server that exposes read-only operational context to an AI assistant: services, runbooks, fake alerts, and sample logs.',
+	   desc:'Build a custom MCP server that exposes read-only workflow context to an AI assistant: services, knowledge docs, fake work items, and sample logs.',
 	   businessValue:'Bridges AI and production-style workflows safely. It proves you can expose tools/data through MCP without giving an agent unsafe access.',
-	   guide:'Implementation: 1. Use the Python `FastMCP` SDK. 2. Tool 1: `search_runbooks`. 3. Tool 2: `read_recent_logs` over local sample files. 4. Tool 3: `lookup_service_owner` from fake metadata. 5. Resource: `current_alert_context`. 6. Deploy and test in Claude Desktop, Cursor, or your local agent. Keep V1 read-only.',
-	   tips:['Start with read-only tools before adding write capabilities.', 'Use fake operational datasets so the repo is public-safe.', 'Return structured JSON with citations and confidence fields.'],
-	   skills:['MCP Protocol','FastMCP SDK','Tool/Resource Design','Operational Context'],
-	   deliverable:'A running MCP server that lets an AI assistant inspect fake operational context and recommend safe next steps.',
-	   hrs:5,tags:['MCP','Observability','Python']},
-	  {id:'ph6-p19',name:'Human-in-the-Loop Ops Agent',
+	   guide:'Implementation: 1. Use the Python `FastMCP` SDK. 2. Tool 1: `search_knowledge_docs`. 3. Tool 2: `read_recent_logs` over local sample files. 4. Tool 3: `lookup_service_owner` from fake metadata. 5. Resource: `current_work_item_context`. 6. Deploy and test in Claude Desktop, Cursor, or your local agent. Keep V1 read-only.',
+	   tips:['Start with read-only tools before adding write capabilities.', 'Use fake workflow datasets so the repo stays public-safe.', 'Return structured JSON with citations and confidence fields.'],
+	   skills:['MCP Protocol','FastMCP SDK','Tool/Resource Design','Workflow Context'],
+	   deliverable:'A running MCP server that lets an AI assistant inspect fake workflow context and recommend safe next steps.',
+	   hrs:5,tags:['MCP','Workflow','Python']},
+	  {id:'ph6-p19',name:'Human-in-the-Loop Workflow Agent',
 	   level:'Advanced',
-	   desc:'Build a stateful LangGraph agent that requires explicit human approval before proposing ticket updates, notifications, or remediation actions.',
-	   businessValue:'Enables AI to assist sensitive operational workflows without excessive agency. This is the pattern enterprise teams need before trusting agents near production.',
-	   guide:'Implementation: 1. Define a graph with Alert Intake, Evidence Retrieval, Proposed Action, and Human Review nodes. 2. Use `interrupt_before` on action nodes. 3. Implement a simple web UI (FastAPI + HTML) to view pending action, evidence, confidence, and risk. 4. Use `update_state` to send the human decision back to the graph. 5. Test by trying to execute a mock remediation and verifying the pause.',
+	   desc:'Build a stateful LangGraph agent that requires explicit human approval before proposing updates, notifications, or remediation actions.',
+	   businessValue:'Enables AI to assist sensitive enterprise workflows without excessive agency. This is the pattern teams need before trusting agents near production systems or customer-facing work.',
+	   guide:'Implementation: 1. Define a graph with Work Item Intake, Evidence Retrieval, Proposed Action, and Human Review nodes. 2. Use `interrupt_before` on action nodes. 3. Implement a simple web UI (FastAPI + HTML) to view pending action, evidence, confidence, and risk. 4. Use `update_state` to send the human decision back to the graph. 5. Test by trying to execute a mock remediation or notification and verifying the pause.',
 	   tips:['Keep the graph state small and structured.', 'Use persistent checkpoints so workflows can resume after approval.', 'Show why the agent wants to act, not just what it wants to do.'],
-	   skills:['LangGraph Checkpoints','State Management','HITL Patterns','Operational Safety'],
-	   deliverable:'A safe ops agent that can investigate and recommend, but pauses before any critical or side-effectful action.',
+	   skills:['LangGraph Checkpoints','State Management','HITL Patterns','Workflow Safety'],
+	   deliverable:'A safe workflow agent that can investigate and recommend, but pauses before any critical or side-effectful action.',
 	   hrs:6,tags:['LangGraph','Safety','HITL']},
-	  {id:'ph6-p20',name:'Multi-Agent Incident Supervisor',
+	  {id:'ph6-p20',name:'Multi-Agent Workflow Supervisor',
 	   level:'Advanced',
-	   desc:'Build an orchestrator agent that delegates incident analysis to specialized agents for triage, evidence retrieval, runbooks, and safety review.',
-	   businessValue:'Models a realistic incident-response workflow where AI helps coordinate evidence and recommendations while a human remains accountable.',
-	   guide:'Implementation: 1. Create 4 sub-agents: Triage, Evidence, Runbook, and Safety Reviewer. 2. Implement a Supervisor agent using the LangGraph Router pattern. 3. The Supervisor decides which agent handles the next step. 4. Sub-agents communicate via shared graph state. 5. Final output is a cited incident summary with next actions and open questions.',
+	   desc:'Build an orchestrator agent that delegates workflow analysis to specialized agents for triage, evidence retrieval, knowledge lookup, and safety review.',
+	   businessValue:'Models a realistic enterprise workflow where AI helps coordinate evidence and recommendations while a human remains accountable.',
+	   guide:'Implementation: 1. Create 4 sub-agents: Triage, Evidence, Knowledge, and Safety Reviewer. 2. Implement a Supervisor agent using the LangGraph Router pattern. 3. The Supervisor decides which agent handles the next step. 4. Sub-agents communicate via shared graph state. 5. Final output is a cited workflow summary with next actions and open questions.',
 	   tips:['Limit the agents to clear responsibilities.', 'Use a strong model for the Supervisor and cheaper models for focused agents.', 'Prevent agents from overwriting shared evidence without provenance.'],
-	   skills:['Supervisor Pattern','Agent Delegation','Incident Workflows','State Sharing'],
-	   deliverable:'A multi-agent workflow that turns alert context into a cited triage summary, recommended owner, and human-reviewed next steps.',
+	   skills:['Supervisor Pattern','Agent Delegation','Workflow Automation','State Sharing'],
+	   deliverable:'A multi-agent workflow that turns work-item context into a cited triage summary, recommended owner, and human-reviewed next steps.',
 	   hrs:8,tags:['LangGraph','Multi-Agent','Orchestration']}
  ]
 },
@@ -1202,15 +1202,15 @@ const PHASES = [
    skills:['Aider CLI','Architect Mode','Local LLM Ops','AI-Driven TDD'],
    deliverable:'A complete, merged PR where 100% of the code and tests were written by Aider under your guidance.',
    hrs:6,tags:['Aider','Productivity','Local AI']},
-	  {id:'ph7-p26',name:'PydanticAI Ops Agent System',
+	  {id:'ph7-p26',name:'PydanticAI Workflow Agent System',
 	   level:'Advanced',
-	   desc:'Build a strictly typed, production-ready agent using PydanticAI for alert classification and runbook recommendation.',
+	   desc:'Build a strictly typed, production-ready agent using PydanticAI for workflow classification and knowledge recommendation.',
 	   businessValue:'Provides a production-grade, type-safe framework for reliable agents that integrate cleanly with Python backend services.',
-	   guide:'Implementation: 1. Define Pydantic models for Alert, ServiceMetadata, RunbookHit, TriageDecision, and HumanApprovalRequest. 2. Implement tools for fake service lookup and runbook search. 3. Use Dependency Injection to pass validated clients into the agent. 4. Write an eval suite using PydanticAI testing patterns. 5. Ensure the agent can return "insufficient evidence" instead of guessing.',
+	   guide:'Implementation: 1. Define Pydantic models for WorkItem, ServiceMetadata, KnowledgeHit, TriageDecision, and HumanApprovalRequest. 2. Implement tools for fake service lookup and knowledge search. 3. Use Dependency Injection to pass validated clients into the agent. 4. Write an eval suite using PydanticAI testing patterns. 5. Ensure the agent can return "insufficient evidence" instead of guessing.',
 	   tips:['Use Pydantic validation to force safe structured outputs.', 'Keep agent logic separate from infrastructure via Dependency Injection.', 'Monitor runs with Logfire or structured JSON logs.'],
-	   skills:['PydanticAI','Type-Safe Agents','Dependency Injection','Operational Reasoning'],
-	   deliverable:'A typed ops agent that returns validated triage decisions, cited runbook recommendations, and explicit uncertainty.',
-	   hrs:5,tags:['PydanticAI','Python','Ops']}
+	   skills:['PydanticAI','Type-Safe Agents','Dependency Injection','Workflow Reasoning'],
+	   deliverable:'A typed workflow agent that returns validated triage decisions, cited knowledge recommendations, and explicit uncertainty.',
+	   hrs:5,tags:['PydanticAI','Python','Workflow']}
  ]
 },
 {id:'ph8',label:'Phase 8',name:'Multimodal & Real-Time Voice',color:'#f97316',
@@ -1263,10 +1263,10 @@ const PHASES = [
  projects:[
    {id:'ph9-p29',name:'The "Star" Portfolio',
     level:'Intermediate',
-	    desc:'Curate your best roadmap projects into a focused portfolio for AI backend, platform, observability, and incident automation roles.',
+	    desc:'Curate your best roadmap projects into a focused portfolio for AI backend, platform, enterprise workflow intelligence, and agentic automation roles.',
 	    businessValue:'Establishes professional credibility and demonstrates practical expertise with production-minded AI systems, not just chatbot demos.',
-	    guide:'Implementation: 1. Select your top 3 projects: Runbook RAG, Alert/Ticket Triage, and MCP/HITL Ops Agent. 2. Write story-driven READMEs: What operational problem did it solve? How did you make it safe? What were the evals/traces? 3. Add Mermaid architecture and sequence diagrams. 4. Record 2-minute Loom demos. 5. Create a GitHub Profile README that highlights your GenAI + platform/observability direction.',
-	    tips:['Focus on the operational problem and safety boundaries.', 'Include eval metrics, trace screenshots, and failure modes.', 'Make your demos short, punchy, and results-oriented.'],
+	    guide:'Implementation: 1. Select your top 3 projects: Enterprise Knowledge RAG, Workflow Triage, and MCP/HITL Workflow Agent. 2. Write story-driven READMEs: What workflow problem did it solve? How did you make it safe? What were the evals/traces? 3. Add Mermaid architecture and sequence diagrams. 4. Record 2-minute Loom demos. 5. Create a GitHub Profile README that highlights your GenAI + platform/workflow intelligence direction.',
+	    tips:['Focus on the workflow problem and safety boundaries.', 'Include eval metrics, trace screenshots, and failure modes.', 'Make your demos short, punchy, and results-oriented.'],
     skills:['Technical Writing','Architecture Visualization','Mermaid.js','Storytelling for Devs'],
     deliverable:'A world-class GitHub profile and a portfolio site that clearly demonstrates your ability to build production-grade AI systems.',
     hrs:10,tags:['Portfolio','GitHub','Career']}
@@ -1297,7 +1297,7 @@ const PHASES = [
 },
 {id:'ph11',label:'Phase 11',name:'Structured Capstones',color:'#ec4899',
 	 icon:'🏆',
-	 desc:'The final challenge: building complex, production-minded GenAI systems for observability, incident automation, and safe agentic workflows.',
+	 desc:'The final challenge: building complex, production-minded GenAI systems for enterprise workflow intelligence and safe agentic automation.',
  courses:[
   {platform:'Advanced',pcolor:'#10b981',items:[
     {name:'LangGraph Advanced Patterns',url:'https://langchain-ai.github.io/langgraph/how-tos/',dur:'Reference',free:true,
@@ -1307,33 +1307,33 @@ const PHASES = [
   ]}
 	 ],
 	 projects:[
-	   {id:'ph11-p30',name:'AI Ops Command Center',
+	   {id:'ph11-p30',name:'Workflow Intelligence Command Center',
 	    level:'Advanced',
-	    desc:'Build a full-stack AI operations console that ingests fake alerts/log snippets, retrieves runbook evidence, and produces safe triage recommendations.',
-	    businessValue:'Turns your observability and on-call background into a sharp GenAI portfolio project: production context, safety, evidence, and operational UX.',
-	    guide:'Implementation: 1. Build FastAPI endpoints for alert intake, triage, runbook search, and feedback. 2. Create fake services, alerts, runbooks, ownership metadata, and incident notes. 3. Use RAG + reranking to retrieve cited evidence. 4. Produce severity, likely owner, impact hypothesis, missing evidence, and safe next actions. 5. Add Langfuse/LangSmith traces, evals, snapshot tests, and a README runbook.',
-	    tips:['Use only fake operational data.', 'Show citations, uncertainty, and "do not act without approval" notes.', 'Include trace screenshots and eval results in the README.'],
-	    skills:['FastAPI','Runbook RAG','Alert Triage','Observability','Eval-Gated CI'],
-	    deliverable:'A deployed or locally demoable AI ops console that turns a critical alert into a cited, safe triage plan.',
-	    hrs:25,tags:['Capstone','AIOps','RAG','FastAPI']},
-	   {id:'ph11-p31',name:'Multi-Agent Incident Review Platform',
+	    desc:'Build a full-stack AI workflow console that ingests fake work items, retrieves cited knowledge evidence, and produces safe triage recommendations.',
+	    businessValue:'Turns your backend/platform background into a sharp GenAI portfolio project: enterprise context, safety, evidence, and workflow UX.',
+	    guide:'Implementation: 1. Build FastAPI endpoints for work-item intake, triage, knowledge search, and feedback. 2. Create fake services, alerts, support tickets, change requests, docs, ownership metadata, and case notes. 3. Use RAG + reranking to retrieve cited evidence. 4. Produce priority/severity, likely owner, impact hypothesis, missing evidence, and safe next actions. 5. Add Langfuse/LangSmith traces, evals, snapshot tests, and an operations guide.',
+	    tips:['Use only fake enterprise data.', 'Show citations, uncertainty, and "do not act without approval" notes.', 'Include trace screenshots and eval results in the README.'],
+	    skills:['FastAPI','Enterprise RAG','Workflow Triage','Observability','Eval-Gated CI'],
+	    deliverable:'A deployed or locally demoable workflow console that turns a work item into a cited, safe triage plan.',
+	    hrs:25,tags:['Capstone','Workflow','RAG','FastAPI']},
+	   {id:'ph11-p31',name:'Multi-Agent Review + Knowledge Platform',
 	    level:'Advanced',
-	    desc:'Build a team of agents that converts a fake incident timeline into a cited postmortem, action items, and proposed runbook improvements.',
-	    businessValue:'Shows you can design AI systems for serious operational workflows: evidence gathering, synthesis, human approval, and continuous knowledge improvement.',
-	    guide:'Implementation: 1. Build Intake, Evidence, Impact, Action Item, Safety Reviewer, and Writer agents. 2. Use LangGraph for orchestration, persistence, and human approval. 3. Feed the workflow fake alerts, logs, ticket comments, and runbooks. 4. Generate a postmortem, executive summary, follow-up tasks, and a proposed runbook patch. 5. Require approval before writing any final artifact.',
-	    tips:['Make unsupported claims fail the safety review.', 'Track every claim back to evidence.', 'Keep the runbook patch proposal separate until approved.'],
-	    skills:['LangGraph','Incident Review','HITL','Agent Orchestration','Postmortems'],
-	    deliverable:'A CLI or web app that produces a high-quality incident review and approved runbook update proposal from fake operational data.',
-	    hrs:25,tags:['LangGraph','Agents','Incident Review']},
-	   {id:'ph11-p32',name:'Personal AI Dev/Ops Copilot',
+	    desc:'Build a team of agents that converts a fake workflow timeline into a cited review, action items, and proposed knowledge-base improvements.',
+	    businessValue:'Shows you can design AI systems for serious enterprise workflows: evidence gathering, synthesis, human approval, and continuous knowledge improvement.',
+	    guide:'Implementation: 1. Build Intake, Evidence, Impact, Action Item, Safety Reviewer, and Writer agents. 2. Use LangGraph for orchestration, persistence, and human approval. 3. Feed the workflow fake alerts, logs, ticket comments, support docs, and change requests. 4. Generate a review report, executive summary, follow-up tasks, and a proposed knowledge-base patch. 5. Require approval before writing any final artifact.',
+	    tips:['Make unsupported claims fail the safety review.', 'Track every claim back to evidence.', 'Keep the knowledge patch proposal separate until approved.'],
+	    skills:['LangGraph','Workflow Review','HITL','Agent Orchestration','Knowledge Management'],
+	    deliverable:'A CLI or web app that produces a high-quality workflow review and approved knowledge update proposal from fake enterprise data.',
+	    hrs:25,tags:['LangGraph','Agents','Workflow Review']},
+	   {id:'ph11-p32',name:'Personal AI Dev/Workflow Copilot',
 	    level:'Advanced',
-	    desc:'Build a private assistant that helps with coding, roadmap execution, PRs, runbooks, alert investigation plans, and local MCP workflows.',
-	    businessValue:'Combines developer productivity with platform/on-call workflows, proving you can build agentic systems you actually use.',
-	    guide:'Implementation: 1. Backend: FastAPI + LangGraph + Postgres for memory/history. 2. Tool Hub: integrate local MCP tools for files, git, roadmap, and fake operational data. 3. Features: PR review, ticket-to-code plan, alert-to-investigation plan, runbook generator, and daily standup helper. 4. Add HITL approvals for writes. 5. Run locally with Ollama/LM Studio support.',
+	    desc:'Build a private assistant that helps with coding, roadmap execution, PRs, knowledge docs, work-item investigation plans, and local MCP workflows.',
+	    businessValue:'Combines developer productivity with enterprise workflow automation, proving you can build agentic systems you actually use.',
+	    guide:'Implementation: 1. Backend: FastAPI + LangGraph + Postgres for memory/history. 2. Tool Hub: integrate local MCP tools for files, git, roadmap, and fake workflow data. 3. Features: PR review, ticket-to-code plan, work-item investigation plan, knowledge article generator, and daily standup helper. 4. Add HITL approvals for writes. 5. Run locally with Ollama/LM Studio support.',
 	    tips:['Start modular so you can add MCP tools over time.', 'Keep write actions behind approval.', 'Use it daily and document real productivity wins in the README.'],
 	    skills:['Full-stack Development','MCP Integration','LangGraph','Local Models','System Architecture'],
-	    deliverable:'A personal AI dev/ops cockpit that you use daily and can show as a serious MCP + agent portfolio project.',
-	    hrs:35,tags:['Capstone','MCP','LangGraph','DevOps']}
+	    deliverable:'A personal AI dev/workflow cockpit that you use daily and can show as a serious MCP + agent portfolio project.',
+	    hrs:35,tags:['Capstone','MCP','LangGraph','Workflow']}
 	 ]
 }
 ];
@@ -2079,7 +2079,7 @@ function showOverview() {
         <h1 class="phase-title">GenAI Roadmap 2026 Overview</h1>
         <p class="guide-text" style="margin-top:1rem; max-width:800px; font-size:1rem">
 	          Welcome to a focused path for becoming a production-minded GenAI backend/platform engineer in 2026. This roadmap is structured into 12 distinct phases,
-	          taking you from software fundamentals to AI systems for observability, incident automation, and safe agentic orchestration.
+	          taking you from software fundamentals to AI systems for enterprise workflow intelligence and safe agentic orchestration.
         </p>
       </div>
     </div>
@@ -2090,8 +2090,8 @@ function showOverview() {
       </div>
       <div class="card-desc" style="max-width:800px; font-size:0.9rem; margin-top:1rem">
 	        The field of AI is moving fast. This curriculum focuses on durable skills: orchestration, evaluation,
-	        observability, and tool-use (MCP), then applies them to runbook search, alert/ticket triage, incident summaries,
-	        and human-approved ops workflows. By completing the roadmap projects, you will build a portfolio that proves
+	        observability, and tool-use (MCP), then applies them to enterprise knowledge search, workflow triage, evidence summaries,
+	        and human-approved automation. By completing the roadmap projects, you will build a portfolio that proves
 	        your ability to ship production-grade AI systems.
       </div>
 
@@ -2108,15 +2108,15 @@ function showOverview() {
           <div class="card-header">
             <span class="card-id">PATHWAY 2</span>
           </div>
-	          <div class="card-title">Operational RAG</div>
-	          <div class="card-desc">Learn Vector DBs and Advanced RAG over runbooks, docs, service metadata, and incident notes.</div>
+	          <div class="card-title">Knowledge RAG</div>
+	          <div class="card-desc">Learn Vector DBs and Advanced RAG over docs, service metadata, policies, case notes, and runbooks.</div>
           <div class="tag">Phase 3-5</div>
         </div>
         <div class="card" onclick="showPhase('ph6')">
           <div class="card-header">
             <span class="card-id">PATHWAY 3</span>
           </div>
-	          <div class="card-title">Safe Ops Agents</div>
+	          <div class="card-title">Safe Workflow Agents</div>
 	          <div class="card-desc">Build LangGraph and MCP workflows with traces, evals, and human approval before sensitive actions.</div>
           <div class="tag">Phase 6-11</div>
         </div>

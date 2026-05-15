@@ -54,8 +54,8 @@ class RoadmapAgentTests(unittest.TestCase):
         phase_5 = next(phase for phase in phases if phase.id == 5)
         phase_11 = next(phase for phase in phases if phase.id == 11)
         self.assertIn("DSPy Prompt Optimizer", phase_5.projects)
-        self.assertIn("AI Ops Command Center", phase_11.projects)
-        self.assertIn("Multi-Agent Incident Review + Runbook Platform", phase_11.projects)
+        self.assertIn("Workflow Intelligence Command Center", phase_11.projects)
+        self.assertIn("Multi-Agent Review + Knowledge Platform", phase_11.projects)
 
     def test_next_task_output_has_required_sections(self) -> None:
         task = core.next_task()
