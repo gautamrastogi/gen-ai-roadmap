@@ -55,6 +55,7 @@ logs/
 # Test artifacts
 test_output.txt
 projects/local-agent/tmp/
+.ruff_cache/
 .pytest_cache/
 htmlcov/
 .coverage
@@ -63,6 +64,7 @@ coverage.xml
 # Local planning notes
 2026-focus-private.md
 projects/local-agent/roadmap-progress.local.json
+projects/p4-cli-chatbot/sessions/
 
 # Dashboard runtime files
 projects/dashboard/tracker.db

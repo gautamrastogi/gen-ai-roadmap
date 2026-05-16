@@ -149,7 +149,9 @@ gen-ai-roadmap/
 │   ├── p0-genai-starter-template/  # Phase 0: FastAPI + Pydantic starter template
 │   ├── p1-prompt-playground/   # Phase 1: Prompt strategy comparison app
 │   ├── p2-summarizer/          # Phase 1: FastAPI summarization service
-│   └── p3-rewriter/            # Phase 1: Tone/style rewriter service
+│   ├── p3-rewriter/            # Phase 1: Tone/style rewriter service
+│   ├── p4-cli-chatbot/         # Phase 2: Stateful CLI chatbot with personas
+│   └── p5-fastapi-genai-service/  # Phase 2: Multi-endpoint GenAI API service
 ├── templates/                  # Copyable local config templates
 ├── genai-roadmap.md            # Full roadmap content (source of truth)
 ├── .env.example                # Root environment variable example

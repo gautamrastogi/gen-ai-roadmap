@@ -24,11 +24,19 @@ WORKSPACE = Path(
     os.getenv("WORKSPACE_ROOT", Path(__file__).resolve().parent.parent.parent)
 ).resolve()
 MCP_BASE_DIR = Path(os.getenv("MCP_BASE_DIR", Path(__file__).resolve().parent))
-LOCAL_MODEL_BASE_URL = os.getenv(
-    "LOCAL_MODEL_BASE_URL",
-    os.getenv("LM_STUDIO_BASE_URL", "http://127.0.0.1:1234"),
-).rstrip("/")
-LOCAL_MODEL_NAME = os.getenv("LOCAL_MODEL_NAME", "").strip()
+
+
+def _normalize_local_model_base_url(value: str) -> str:
+    return value.strip().rstrip("/").removesuffix("/v1")
+
+
+LOCAL_MODEL_BASE_URL = _normalize_local_model_base_url(
+    os.getenv("LOCAL_MODEL_BASE_URL")
+    or os.getenv("OLLAMA_BASE_URL")
+    or os.getenv("LM_STUDIO_BASE_URL")
+    or "http://127.0.0.1:11434"
+)
+LOCAL_MODEL_NAME = os.getenv("LOCAL_MODEL_NAME", os.getenv("OLLAMA_MODEL", "")).strip()
 MAX_FILE_READ_CHARS = 20_000
 MAX_COMMAND_OUTPUT_CHARS = 8_000
 MAX_WEB_RESULTS = 5

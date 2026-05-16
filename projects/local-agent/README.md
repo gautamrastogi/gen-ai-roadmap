@@ -54,16 +54,16 @@ Commands in this section assume you are in `projects/local-agent`.
 
 ### 1) Start or verify a local model
 
+Ollama:
+
+```bash
+./scripts/ensure_local_model.sh ollama
+```
+
 LM Studio:
 
 ```bash
 ./scripts/ensure_local_model.sh lmstudio
-```
-
-Ollama:
-
-```bash
-LOCAL_MODEL_NAME=qwen3 ./scripts/ensure_local_model.sh ollama
 ```
 
 ### 2) Ask the roadmap coach
@@ -157,25 +157,25 @@ Supported first-class local providers:
 
 | Provider | Base URL | Example model |
 |---|---|---|
+| Ollama | `http://127.0.0.1:11434` | `qwen2.5:1.5b` |
 | LM Studio | `http://127.0.0.1:1234` | `qwen/qwen3.5-9b` |
-| Ollama | `http://127.0.0.1:11434/v1` | `qwen3` |
 
 Use the generic helper:
 
 ```bash
-./scripts/ensure_local_model.sh lmstudio
 ./scripts/ensure_local_model.sh ollama
+./scripts/ensure_local_model.sh lmstudio
 ```
 
 Configure the provider with OpenAI-compatible environment variables:
 
 ```bash
-export LOCAL_MODEL_BASE_URL="http://127.0.0.1:1234"      # LM Studio
-export LOCAL_MODEL_NAME="qwen/qwen3.5-9b"
+export LOCAL_MODEL_BASE_URL="http://127.0.0.1:11434" # Ollama
+export LOCAL_MODEL_NAME="qwen2.5:1.5b"
 
-# or Ollama
-export LOCAL_MODEL_BASE_URL="http://127.0.0.1:11434/v1"
-export LOCAL_MODEL_NAME="qwen3"
+# or LM Studio
+export LOCAL_MODEL_BASE_URL="http://127.0.0.1:1234"
+export LOCAL_MODEL_NAME="qwen/qwen3.5-9b"
 
 projects/local-agent/scripts/start_local_agent.sh
 ```

@@ -14,7 +14,7 @@ set "REQ_FILE=%MCP_BASE_DIR%requirements.txt"
 set "SERVER_FILE=%MCP_BASE_DIR%mcp_server.py"
 
 if "%WORKSPACE_ROOT%"=="" set "WORKSPACE_ROOT=%WORKSPACE_ROOT_DEFAULT%"
-if "%LOCAL_MODEL_BASE_URL%"=="" set "LOCAL_MODEL_BASE_URL=http://127.0.0.1:1234"
+if "%LOCAL_MODEL_BASE_URL%"=="" set "LOCAL_MODEL_BASE_URL=http://127.0.0.1:11434"
 
 if not exist "%PYTHON_BIN%" (
     echo Creating virtual environment...

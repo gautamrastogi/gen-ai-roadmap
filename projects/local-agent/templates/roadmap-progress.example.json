@@ -1,11 +1,13 @@
 {
   "current_phase": 2,
-  "current_project": "p4-cli-chatbot",
+  "current_project": "p6-structured-data-extractor",
   "completed_projects": [
     "p0-genai-starter-template",
     "p1-prompt-playground",
     "p2-summarizer",
-    "p3-rewriter"
+    "p3-rewriter",
+    "p4-cli-chatbot",
+    "p5-fastapi-genai-service"
   ],
   "focus": "finish roadmap first",
   "notes": [

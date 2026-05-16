@@ -60,6 +60,8 @@ class RoadmapAgentTests(unittest.TestCase):
     def test_next_task_output_has_required_sections(self) -> None:
         task = core.next_task()
 
+        self.assertEqual(task["current_phase"], 2)
+        self.assertEqual(task["current_project"], "p6-structured-data-extractor")
         self.assertTrue(task["files_to_inspect"])
         self.assertGreaterEqual(len(task["steps"]), 3)
         self.assertTrue(task["verification_commands"])
@@ -80,6 +82,26 @@ class RoadmapAgentTests(unittest.TestCase):
         self.assertEqual(task["coach_mode"], "fallback")
         self.assertIn("model offline", task["coach_error"])
         self.assertIn("Continue Phase", task["coach_response"])
+
+    def test_coach_falls_back_when_model_drifts_from_project(self) -> None:
+        original = core.call_local_model
+
+        def drifting_call(*_: object, **__: object) -> dict[str, object]:
+            return {
+                "ok": True,
+                "model": "tiny-local-model",
+                "output": "Next Move: add generic logging to some app.",
+            }
+
+        core.call_local_model = drifting_call
+        try:
+            task = core.coach_next_task()
+        finally:
+            core.call_local_model = original
+
+        self.assertEqual(task["coach_mode"], "fallback")
+        self.assertIn("drifted", task["coach_error"])
+        self.assertEqual(task["current_project"], "p6-structured-data-extractor")
 
     def test_clean_coach_output_prefers_final_answer(self) -> None:
         raw = """

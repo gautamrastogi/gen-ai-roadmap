@@ -141,11 +141,11 @@ Optimize for:
 ---
 
 # PROGRESS TRACKER
-> Last updated: 2026-04-30
+> Last updated: 2026-05-16
 
 ## Current Focus
 **Phase:** Phase 2 — Python LLM App Development  
-**Working on:** Project 4 — CLI Chatbot (Phase 2 courses complete)
+**Working on:** Project 6 — Structured Data Extractor
 **Status:** 🟡 In Progress — build Phase 2 projects
 
 ## ⚡ Next Action — Do This Now
@@ -162,7 +162,9 @@ Optimize for:
     - ✅ ~~OpenAI for Developers~~ — DONE
     - ✅ ~~Generative AI for Developers~~ — DONE
     - ✅ ~~Generative AI Integration for Developers~~ — DONE
-    - 🔨 **NOW → Build: Project 4 — CLI Chatbot**
+    - ✅ ~~Project 4 — CLI Chatbot~~ — DONE
+    - ✅ ~~Project 5 — FastAPI GenAI Service~~ — DONE
+    - 🔨 **NOW → Build: Project 6 — Structured Data Extractor**
 
 ## Phase Summary
 | Phase | Name | Status |
@@ -180,7 +182,7 @@ Optimize for:
 | 10 | Certifications | ⬜ Not Started |
 | 11 | Capstone: Resume-Grade Projects | ⬜ Not Started |
 
-**Overall: 4 / 37 projects done**
+**Overall: 6 / 37 projects done**
 
 ## Project Checklist
 
@@ -193,8 +195,8 @@ Optimize for:
 - [x] Project 3: Rewriter
 
 ### Phase 2 — Python LLM App Development
-- [ ] Project 4: CLI Chatbot
-- [ ] Project 5: FastAPI GenAI Service
+- [x] Project 4: CLI Chatbot
+- [x] Project 5: FastAPI GenAI Service
 - [ ] Project 6: Structured Data Extractor
 - [ ] Project 7: Resume vs JD Analyzer
 
@@ -1608,19 +1610,21 @@ Work through these in exact order. Each step tells you what URL to open, what to
 
 ---
 
-- [ ] **Step 7 — Build Project 4: CLI Chatbot** ← **DO THIS NOW**
+- [x] **Step 7 — Build Project 4: CLI Chatbot** — ✅ DONE
   **Tell Copilot:** `generate repo scaffold for phase 2 project 4`
   🎯 Goal: Build conversation history, personas, and a clean CLI interface.
 
   **Exact build:**
-  - CLI script: `python chatbot.py`
+  - CLI script: `python -m src.main`
   - Maintains conversation history (messages list pattern)
   - Switch persona via `--persona` flag (e.g. `--persona senior-engineer`)
-  - `--save` flag to write transcript to `transcript.json`
+  - Slash commands for save/export/stats/undo/clear
+  - ✅ Built at: `projects/p4-cli-chatbot/`
+  - ✅ Verified with local Ollama model: `qwen2.5:1.5b`
 
 ---
 
-- [ ] **Step 8 — Build Project 5: FastAPI GenAI Service**
+- [x] **Step 8 — Build Project 5: FastAPI GenAI Service** — ✅ DONE
   **Tell Copilot:** `generate repo scaffold for phase 2 project 5`
   🎯 Goal: Production-style multi-endpoint GenAI API — use p0 template as your base.
 
@@ -1629,10 +1633,13 @@ Work through these in exact order. Each step tells you what URL to open, what to
   - Pydantic schemas for all request/response types
   - Proper error handling, timeouts, retries
   - Docker ready + README with curl examples
+  - ✅ Built at: `projects/p5-fastapi-genai-service/`
+  - ✅ Verified with unit/API tests and local Ollama `/summarize` smoke test
+  - ⚠️ Dockerfile added; Docker build waits for Docker daemon/Desktop to be running
 
 ---
 
-- [ ] **Step 9 — Build Project 6: Structured Data Extractor**
+- [ ] **Step 9 — Build Project 6: Structured Data Extractor** ← **DO THIS NOW**
   **Tell Copilot:** `generate repo scaffold for phase 2 project 6`
   🎯 Goal: Extract structured JSON reliably from messy real-world text.
 

@@ -16,11 +16,7 @@ ROADMAP_PATH = WORKSPACE / "genai-roadmap.md"
 PROJECTS_DIR = WORKSPACE / "projects"
 DEFAULT_PROGRESS_PATH = LOCAL_AGENT_DIR / "roadmap-progress.local.json"
 EXAMPLE_PROGRESS_PATH = LOCAL_AGENT_DIR / "templates" / "roadmap-progress.example.json"
-LOCAL_MODEL_BASE_URL = os.getenv(
-    "LOCAL_MODEL_BASE_URL",
-    os.getenv("LM_STUDIO_BASE_URL", "http://127.0.0.1:1234"),
-).rstrip("/")
-LOCAL_MODEL_NAME = os.getenv("LOCAL_MODEL_NAME", "").strip()
+LOCAL_MODEL_NAME = os.getenv("LOCAL_MODEL_NAME", os.getenv("OLLAMA_MODEL", "")).strip()
 
 
 @dataclass(frozen=True)
@@ -29,6 +25,30 @@ class Phase:
     title: str
     body: str
     projects: list[str]
+
+
+@dataclass(frozen=True)
+class ProjectCandidate:
+    number: str
+    title: str
+    slug: str
+
+
+def _normalize_local_model_base_url(value: str) -> str:
+    return value.strip().rstrip("/").removesuffix("/v1")
+
+
+def _default_local_model_base_url() -> str:
+    raw = (
+        os.getenv("LOCAL_MODEL_BASE_URL")
+        or os.getenv("OLLAMA_BASE_URL")
+        or os.getenv("LM_STUDIO_BASE_URL")
+        or "http://127.0.0.1:11434"
+    )
+    return _normalize_local_model_base_url(raw)
+
+
+LOCAL_MODEL_BASE_URL = _default_local_model_base_url()
 
 
 def load_progress(progress_path: Path = DEFAULT_PROGRESS_PATH) -> dict[str, Any]:
@@ -129,6 +149,14 @@ def next_task(progress_path: Path = DEFAULT_PROGRESS_PATH) -> dict[str, Any]:
     ]
     if project_path and (project_path / "README.md").exists():
         files_to_inspect.append(str((project_path / "README.md").relative_to(WORKSPACE)))
+    elif not project_path and (PROJECTS_DIR / "p0-genai-starter-template").exists():
+        files_to_inspect.append("projects/p0-genai-starter-template")
+
+    project_step = (
+        f"Open the current project folder for `{project}` and review its README/tests."
+        if project_path
+        else f"Create the intended project folder `projects/{project}` using the closest existing template."
+    )
 
     return {
         "title": f"Continue Phase {phase.id}: {phase.title}",
@@ -143,7 +171,7 @@ def next_task(progress_path: Path = DEFAULT_PROGRESS_PATH) -> dict[str, Any]:
         "files_to_inspect": _dedupe(files_to_inspect),
         "steps": [
             f"Read the Phase {phase.id} section and confirm the expected project outcome.",
-            f"Open the current project folder for `{project}` and review its README/tests.",
+            project_step,
             "Run the existing checks before changing anything so you know the baseline.",
             "Implement the smallest missing behavior needed for this project milestone.",
             "Run the checks again and update notes/progress manually when done.",
@@ -180,11 +208,14 @@ def coach_next_task(
         )
         if not model_response["ok"]:
             raise RuntimeError(str(model_response.get("error", "local model call failed")))
+        coach_output = _clean_coach_output(model_response["output"])
+        if not _coach_output_matches_task(coach_output, deterministic_task):
+            raise RuntimeError("local model response drifted from roadmap facts")
         return {
             **deterministic_task,
             "coach_mode": "llm",
             "model": model_response["model"],
-            "coach_response": _clean_coach_output(model_response["output"]),
+            "coach_response": coach_output,
         }
     except Exception as exc:  # noqa: BLE001
         return {
@@ -353,11 +384,11 @@ def format_coach_task(task: dict[str, Any]) -> str:
         )
 
     lines = [
-        "# Local Model Unavailable",
+        "# Deterministic Fallback",
         "",
         f"Reason: {task.get('coach_error', 'unknown error')}",
         "",
-        "Falling back to deterministic roadmap plan:",
+        "Using the deterministic roadmap plan:",
         "",
         task["coach_response"],
     ]
@@ -378,12 +409,17 @@ def _select_phase(status: dict[str, Any], phases: list[Phase]) -> Phase:
             if phase.id == current_phase:
                 return phase
 
+    candidate = _next_unchecked_project()
+    if candidate:
+        phase = _phase_for_project_number(phases, candidate.number)
+        if phase:
+            return phase
+
     highest = _highest_project_prefix(status["detected_projects"])
     if highest is not None:
-        inferred_phase_id = 1 if highest <= 3 else highest
-        for phase in phases:
-            if phase.id == inferred_phase_id:
-                return phase
+        phase = _phase_for_project_number(phases, str(highest + 1))
+        if phase:
+            return phase
 
     return phases[0]
 
@@ -392,6 +428,10 @@ def _select_project(status: dict[str, Any], phase: Phase) -> str:
     current_project = status.get("current_project")
     if current_project:
         return str(current_project)
+
+    candidate = _next_unchecked_project()
+    if candidate and _phase_has_project_number(phase, candidate.number):
+        return candidate.slug
 
     detected = status["detected_projects"]
     highest_project = _highest_project_name(detected)
@@ -412,6 +452,46 @@ def _project_path(project: str, detected_projects: list[str]) -> Path | None:
         if name.lower() == lowered or lowered in name.lower() or name.lower() in lowered:
             return PROJECTS_DIR / name
     return None
+
+
+def _next_unchecked_project() -> ProjectCandidate | None:
+    text = ROADMAP_PATH.read_text(encoding="utf-8")
+    for match in re.finditer(
+        r"^- \[ \]\s+Project\s+(\d+[a-z]?):\s+(.+?)\s*$",
+        text,
+        re.MULTILINE,
+    ):
+        number = match.group(1)
+        title = match.group(2).strip()
+        return ProjectCandidate(
+            number=number,
+            title=title,
+            slug=f"p{number}-{_slugify(title)}",
+        )
+    return None
+
+
+def _phase_for_project_number(phases: list[Phase], project_number: str) -> Phase | None:
+    for phase in phases:
+        if _phase_has_project_number(phase, project_number):
+            return phase
+    return None
+
+
+def _phase_has_project_number(phase: Phase, project_number: str) -> bool:
+    return bool(
+        re.search(
+            rf"^#{{2,4}}\s+Project\s+{re.escape(project_number)}:",
+            phase.body,
+            re.MULTILINE,
+        )
+    )
+
+
+def _slugify(value: str) -> str:
+    lowered = value.lower().replace("&", "and")
+    slug = re.sub(r"[^a-z0-9]+", "-", lowered).strip("-")
+    return slug or "project"
 
 
 def _verification_commands(project_path: Path | None) -> list[str]:
@@ -497,6 +577,8 @@ def _coach_prompt(
         "Coach the next roadmap action from these local repo facts only.\n"
         "Do not reveal hidden reasoning, analysis, or a thinking process.\n"
         "Return exactly five short sections: Next Move, Why This Matters, Steps, Checks, Done When.\n"
+        f"The Next Move must be about `{task['current_project']}`; mention that project by name.\n"
+        "Do not suggest unrelated maintenance work unless it is explicitly part of that project.\n"
         "Keep it under 220 words.\n\n"
         f"Task: {task['title']}\n"
         f"Phase: {task['current_phase']} - {phase_details['title']}\n"
@@ -557,6 +639,32 @@ def _clean_coach_output(text: str) -> str:
             return _trim_coach_meta("\n".join(lines).strip())
 
     return _trim_coach_meta(cleaned)
+
+
+def _coach_output_matches_task(text: str, task: dict[str, Any]) -> bool:
+    lowered = text.lower()
+    project = str(task["current_project"]).lower()
+    project_terms = {
+        term
+        for term in re.split(r"[^a-z0-9]+", project)
+        if len(term) > 2 and not term.startswith("p")
+    }
+    mentions_project = project in lowered or (
+        bool(project_terms) and all(term in lowered for term in project_terms)
+    )
+    if not mentions_project:
+        return False
+
+    concrete_context = [
+        item
+        for item in task.get("files_to_inspect", [])
+        if isinstance(item, str) and item not in {"projects/", "genai-roadmap.md"}
+    ]
+    for item in concrete_context:
+        item_slug = Path(item).name.lower()
+        if item.lower() not in lowered and item_slug not in lowered:
+            return False
+    return True
 
 
 def _trim_coach_meta(text: str) -> str:
