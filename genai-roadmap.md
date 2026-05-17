@@ -144,9 +144,9 @@ Optimize for:
 > Last updated: 2026-05-16
 
 ## Current Focus
-**Phase:** Phase 2 — Python LLM App Development  
-**Working on:** Project 6 — Structured Data Extractor
-**Status:** 🟡 In Progress — build Phase 2 projects
+**Phase:** Phase 3 — Embeddings + Vector Search + RAG
+**Working on:** Project 8 — Semantic Search Prototype
+**Status:** 🟡 In Progress — start embeddings and retrieval projects
 
 ## ⚡ Next Action — Do This Now
 1. ✅ ~~Generative AI Foundations~~ — DONE
@@ -158,21 +158,24 @@ Optimize for:
 7. ✅ ~~P1: Prompt Playground~~ — DONE
 8. ✅ ~~P2: Summarizer~~ — DONE
 9. ✅ ~~P3: Rewriter~~ — DONE
-10. 🟡 **NOW → Phase 2: Python LLM App Development** ← *you are here*
+10. ✅ ~~Phase 2: Python LLM App Development~~ — DONE
     - ✅ ~~OpenAI for Developers~~ — DONE
     - ✅ ~~Generative AI for Developers~~ — DONE
     - ✅ ~~Generative AI Integration for Developers~~ — DONE
     - ✅ ~~Project 4 — CLI Chatbot~~ — DONE
     - ✅ ~~Project 5 — FastAPI GenAI Service~~ — DONE
-    - 🔨 **NOW → Build: Project 6 — Structured Data Extractor**
+    - ✅ ~~Project 6 — Structured Data Extractor~~ — DONE
+    - ✅ ~~Project 7 — Resume vs JD Analyzer~~ — DONE
+11. 🟡 **NOW → Phase 3: Embeddings + Vector Search + RAG** ← *you are here*
+    - 🔨 **NOW → Build: Project 8 — Semantic Search Prototype**
 
 ## Phase Summary
 | Phase | Name | Status |
 |-------|------|--------|
 | 0 | Software Baseline | ✅ Done |
 | 1 | Foundations | ✅ Done |
-| 2 | Python LLM App Development | 🟡 In Progress |
-| 3 | Embeddings + Vector Search + RAG | ⬜ Not Started |
+| 2 | Python LLM App Development | ✅ Done |
+| 3 | Embeddings + Vector Search + RAG | 🟡 In Progress |
 | 4 | Tool Calling + Workflow Automation | ⬜ Not Started |
 | 5 | Evals + Safety + Observability | ⬜ Not Started |
 | 6 | MCP + Agentic Orchestration | ⬜ Not Started |
@@ -182,7 +185,7 @@ Optimize for:
 | 10 | Certifications | ⬜ Not Started |
 | 11 | Capstone: Resume-Grade Projects | ⬜ Not Started |
 
-**Overall: 6 / 37 projects done**
+**Overall: 8 / 37 projects done**
 
 ## Project Checklist
 
@@ -197,8 +200,8 @@ Optimize for:
 ### Phase 2 — Python LLM App Development
 - [x] Project 4: CLI Chatbot
 - [x] Project 5: FastAPI GenAI Service
-- [ ] Project 6: Structured Data Extractor
-- [ ] Project 7: Resume vs JD Analyzer
+- [x] Project 6: Structured Data Extractor
+- [x] Project 7: Resume vs JD Analyzer
 
 ### Phase 3 — Embeddings + Vector Search + RAG
 - [ ] Project 8: Semantic Search Prototype
@@ -1639,7 +1642,7 @@ Work through these in exact order. Each step tells you what URL to open, what to
 
 ---
 
-- [ ] **Step 9 — Build Project 6: Structured Data Extractor** ← **DO THIS NOW**
+- [x] **Step 9 — Build Project 6: Structured Data Extractor** — ✅ DONE
   **Tell Copilot:** `generate repo scaffold for phase 2 project 6`
   🎯 Goal: Extract structured JSON reliably from messy real-world text.
 
@@ -1649,10 +1652,13 @@ Work through these in exact order. Each step tells you what URL to open, what to
   - Use OpenAI JSON mode / structured outputs
   - Test with 10+ examples of different messy inputs
   - **Reference:** https://platform.openai.com/docs/guides/structured-outputs
+  - ✅ Built at: `projects/p6-structured-data-extractor/`
+  - ✅ Verified with unit tests and local Ollama prompt-and-validate smoke test
+  - ✅ Includes prompt mode, Chat Completions schema mode, Responses API schema mode, and validation reports
 
 ---
 
-- [ ] **Step 10 — Build Project 7: Resume vs JD Analyzer**
+- [x] **Step 10 — Build Project 7: Resume vs JD Analyzer** — ✅ DONE
   **Tell Copilot:** `generate repo scaffold for phase 2 project 7`
   🎯 Goal: A real tool with structured multi-step prompting — great portfolio piece.
 
@@ -1661,10 +1667,13 @@ Work through these in exact order. Each step tells you what URL to open, what to
   - Output: `{ "fit_score": 82, "matching_skills": [...], "missing_skills": [...], "suggestions": [...] }`
   - Use structured output (JSON schema)
   - Add a CLI and/or FastAPI endpoint
+  - ✅ Built at: `projects/p7-resume-vs-jd-analyzer/`
+  - ✅ Verified with unit tests and local Ollama prompt-and-validate smoke test
+  - ✅ Includes multi-document prompting, structured outputs, deterministic score blending, evidence items, and token usage metadata
 
 ---
 
-- [ ] **Step 11 — Watch: Embeddings and RAG Courses** (~2h)
+- [ ] **Step 11 — Watch: Embeddings and RAG Courses** (~2h) ← **DO THIS NOW**
   🎯 Goal: Understand how embeddings work before touching a vector store.
 
   | Resource | Duration | URL |

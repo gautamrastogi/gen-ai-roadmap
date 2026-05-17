@@ -60,8 +60,8 @@ class RoadmapAgentTests(unittest.TestCase):
     def test_next_task_output_has_required_sections(self) -> None:
         task = core.next_task()
 
-        self.assertEqual(task["current_phase"], 2)
-        self.assertEqual(task["current_project"], "p6-structured-data-extractor")
+        self.assertEqual(task["current_phase"], 3)
+        self.assertEqual(task["current_project"], "p8-semantic-search-prototype")
         self.assertTrue(task["files_to_inspect"])
         self.assertGreaterEqual(len(task["steps"]), 3)
         self.assertTrue(task["verification_commands"])
@@ -101,7 +101,7 @@ class RoadmapAgentTests(unittest.TestCase):
 
         self.assertEqual(task["coach_mode"], "fallback")
         self.assertIn("drifted", task["coach_error"])
-        self.assertEqual(task["current_project"], "p6-structured-data-extractor")
+        self.assertEqual(task["current_project"], "p8-semantic-search-prototype")
 
     def test_clean_coach_output_prefers_final_answer(self) -> None:
         raw = """

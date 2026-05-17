@@ -1,0 +1,17 @@
+Invoice INV-2026-0142
+
+Vendor: Northwind Cloud Services
+Bill to: Contoso Retail Platform Team
+Invoice date: 2026-05-01
+Due date: 2026-05-31
+Currency: EUR
+
+Services:
+- Managed observability platform support, 12 hours at 95.00 each = 1140.00
+- Kafka alert routing configuration, 3 hours at 95.00 each = 285.00
+
+Subtotal: 1425.00
+VAT: 135.90
+Total due: 1560.90
+
+Payment terms: Net 30 by bank transfer.

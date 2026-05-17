@@ -151,7 +151,9 @@ gen-ai-roadmap/
 │   ├── p2-summarizer/          # Phase 1: FastAPI summarization service
 │   ├── p3-rewriter/            # Phase 1: Tone/style rewriter service
 │   ├── p4-cli-chatbot/         # Phase 2: Stateful CLI chatbot with personas
-│   └── p5-fastapi-genai-service/  # Phase 2: Multi-endpoint GenAI API service
+│   ├── p5-fastapi-genai-service/  # Phase 2: Multi-endpoint GenAI API service
+│   ├── p6-structured-data-extractor/  # Phase 2: Schema-first extraction tool
+│   └── p7-resume-vs-jd-analyzer/  # Phase 2: Resume/job-description fit analyzer
 ├── templates/                  # Copyable local config templates
 ├── genai-roadmap.md            # Full roadmap content (source of truth)
 ├── .env.example                # Root environment variable example
@@ -188,6 +190,8 @@ See `projects/local-agent/README.md` for setup instructions.
 - **Local-first** — run models on your own hardware before paying for APIs
 - **Agentic from day one** — tool-use, memory, and MCP show up early and throughout
 - **Production mindset** — evals, observability, workflow reliability, and security are first-class citizens
+
+Use the [project learning workflow](docs/project-learning-workflow.md) after each implementation so every finished project is also understood well enough to explain, debug, and reuse.
 
 ---
 
