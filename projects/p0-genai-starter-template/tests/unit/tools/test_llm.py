@@ -4,8 +4,8 @@ from unittest.mock import AsyncMock, MagicMock
 
 import openai
 import pytest
-from src.models import schemas
 
+from src.models import schemas
 from src.utils import errors
 from tests import mocks
 

@@ -17,35 +17,36 @@
 <style>
 :root {
   /* Backgrounds */
-  --bg:          #0b0b13;
-  --bg-sidebar:  rgba(15,16,26,0.96);
-  --bg-card:     rgba(255,255,255,0.035);
-  --bg-glass:    rgba(255,255,255,0.045);
-  --bg-hover:    rgba(208,188,255,0.08);
+  --bg:          #0b1014;
+  --bg-sidebar:  rgba(12,18,23,0.96);
+  --bg-card:     rgba(236,253,245,0.04);
+  --bg-glass:    rgba(236,253,245,0.05);
+  --bg-hover:    rgba(45,212,191,0.09);
 
-  /* Accent — single violet */
-  --accent:      #d0bcff;
-  --accent-dim:  #a078ff;
-  --accent-glow: rgba(208,188,255,0.18);
-  --accent-text: #d0bcff;
+  /* Accent */
+  --accent:      #5eead4;
+  --accent-dim:  #0f766e;
+  --accent-glow: rgba(45,212,191,0.18);
+  --accent-text: #5eead4;
+  --accent-warm: #f59e0b;
 
-  /* Gradient — monochrome violet/indigo */
-  --grad:        linear-gradient(135deg, #d0bcff 0%, #a078ff 100%);
+  /* Gradient */
+  --grad:        linear-gradient(135deg, #2dd4bf 0%, #f59e0b 100%);
 
   /* Text */
-  --text:        #e7e5ff;
-  --text-2:      #c4c4dc;
-  --text-3:      #a1a1bb;
+  --text:        #e6f3ef;
+  --text-2:      #b8c8c3;
+  --text-3:      #80928c;
 
   /* Borders */
   --border:      rgba(255,255,255,0.08);
   --border-s:    rgba(255,255,255,0.05);
-  --border-act:  rgba(208,188,255,0.24);
+  --border-act:  rgba(94,234,212,0.24);
 
   /* Status */
   --success:     #10b981;
   --warning:     #f59e0b;
-  --info:        #6366f1;
+  --info:        #38bdf8;
 
   /* Motion — out-expo for snappy, ease for subtle */
   --spring:      cubic-bezier(0.16,1,0.3,1);
@@ -59,20 +60,20 @@
   --radius-xs:   8px;
 }
 .light {
-  --bg:          #f7f6fb;
+  --bg:          #f5faf7;
   --bg-sidebar:  #ffffff;
   --bg-card:     rgba(15,23,42,0.035);
   --bg-glass:    rgba(15,23,42,0.045);
-  --bg-hover:    rgba(124,58,237,0.08);
+  --bg-hover:    rgba(13,148,136,0.08);
   --text:        #111827;
   --text-2:      #4b5563;
   --text-3:      #6b7280;
   --border:      rgba(15,23,42,0.08);
   --border-s:    rgba(15,23,42,0.05);
-  --border-act:  rgba(124,58,237,0.24);
-  --accent:      #7c3aed;
-  --accent-dim:  #5b21b6;
-  --accent-text: #7c3aed;
+  --border-act:  rgba(13,148,136,0.24);
+  --accent:      #0f766e;
+  --accent-dim:  #115e59;
+  --accent-text: #0f766e;
 }
 /* ─── Reset ─── */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -92,14 +93,14 @@ body::before{
   inset:0;
   z-index:-2;
   background:
-    radial-gradient(circle at top right, rgba(208,188,255,.18), transparent 24%),
-    radial-gradient(circle at 28% 18%, rgba(99,102,241,.12), transparent 18%);
+    linear-gradient(135deg, rgba(45,212,191,.11), transparent 34%),
+    linear-gradient(180deg, rgba(245,158,11,.05), transparent 46%);
   pointer-events:none;
 }
 .light body::before{
   background:
-    radial-gradient(circle at top right, rgba(124,58,237,.12), transparent 24%),
-    radial-gradient(circle at 28% 18%, rgba(59,130,246,.08), transparent 18%);
+    linear-gradient(135deg, rgba(13,148,136,.10), transparent 34%),
+    linear-gradient(180deg, rgba(245,158,11,.07), transparent 48%);
 }
 
 /* ─── Keyframes ─── */
@@ -109,25 +110,25 @@ body::before{
 @keyframes glowPulse{0%,100%{opacity:.3}50%{opacity:.6}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ─── Ambient glows ─── */
-.glow{position:fixed;border-radius:50%;pointer-events:none;z-index:-1}
+/* ─── Ambient layer placeholders ─── */
+.glow{display:none}
 .glow1{
   width:900px;height:900px;
-  background:radial-gradient(ellipse,rgba(139,92,246,.055) 0%,transparent 60%);
+  background:transparent;
   top:-300px;right:-300px;
   animation:glowPulse 8s ease-in-out infinite;
 }
 .glow2{
   width:600px;height:600px;
-  background:radial-gradient(ellipse,rgba(99,102,241,.035) 0%,transparent 65%);
+  background:transparent;
   bottom:-150px;left:-100px;
   animation:glowPulse 12s ease-in-out infinite reverse;
 }
 .light .glow1{
-  background:radial-gradient(ellipse,rgba(124,58,237,.08) 0%,transparent 60%);
+  background:transparent;
 }
 .light .glow2{
-  background:radial-gradient(ellipse,rgba(59,130,246,.07) 0%,transparent 65%);
+  background:transparent;
 }
 
 /* ─── Overlay ─── */
@@ -171,7 +172,7 @@ aside::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
   width:40px;height:40px;border-radius:14px;
   background:var(--grad);
   display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:.8rem;color:#1f0a79;
+  font-weight:800;font-size:.8rem;color:#062e2a;
   flex-shrink:0;letter-spacing:-.02em;
 }
 .brand-name{font-size:.875rem;font-weight:600;color:var(--text);letter-spacing:-.015em;line-height:1}
@@ -239,7 +240,7 @@ nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
   transition:height .2s var(--spring);
 }
 .nav-item:hover{background:var(--bg-hover)}
-.nav-item.active{background:rgba(208,188,255,.1)}
+.nav-item.active{background:rgba(94,234,212,.1)}
 .nav-item.active::before{height:70%}
 .nav-item-left{display:flex;align-items:center;gap:.5rem}
 .nav-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
@@ -281,14 +282,14 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
   border-bottom:1px solid var(--border-s);
   border:1px solid var(--border);
   border-radius:24px;
-  background:linear-gradient(180deg, rgba(17,18,34,.92), rgba(11,11,19,.98));
+  background:linear-gradient(180deg, rgba(14,24,28,.94), rgba(8,13,16,.98));
   box-shadow:0 30px 80px rgba(0,0,0,.18);
   display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;
   flex-wrap:wrap;
   animation:fadeUp .4s var(--spring) both;
 }
 .light .phase-header{
-  background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(246,244,255,.95));
+  background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(241,250,246,.95));
   box-shadow:0 20px 50px rgba(15,23,42,.08);
 }
 .phase-label{
@@ -318,13 +319,13 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 .btn:hover{border-color:var(--border-act);color:var(--text);background:var(--bg-hover)}
 .btn-primary,.btn-accent{
   background:var(--accent);border-color:var(--accent);
-  color:#fff;font-weight:600;
+  color:#052e2b;font-weight:600;
 }
 .btn-primary:hover,.btn-accent:hover{background:var(--accent-dim);border-color:var(--accent-dim);color:#fff}
 .btn-success{border-color:rgba(16,185,129,.2);color:var(--success)}
 .btn-success:hover{background:rgba(16,185,129,.06);border-color:var(--success)}
-.btn-info{border-color:rgba(99,102,241,.2);color:var(--info)}
-.btn-info:hover{background:rgba(99,102,241,.06);border-color:var(--info)}
+.btn-info{border-color:rgba(56,189,248,.2);color:var(--info)}
+.btn-info:hover{background:rgba(56,189,248,.06);border-color:var(--info)}
 .btn-current{border-color:var(--border-act);color:var(--accent-text)}
 
 /* ─── Export bar ─── */
@@ -380,12 +381,12 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 }
 .course-item:hover{background:var(--bg-hover)}
 .course-item.is-current{
-  background:rgba(139,92,246,.05);
+  background:rgba(45,212,191,.05);
   border-left:2px solid var(--accent);
   padding-left:calc(.9rem - 2px);
 }
 .light .course-item.is-current{
-  background:rgba(124,58,237,.12);
+  background:rgba(13,148,136,.12);
 }
 .course-check{
   width:15px;height:15px;border-radius:4px;
@@ -408,7 +409,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 }
 .tag.free{border-color:rgba(16,185,129,.2);color:var(--success)}
 .tag.paid{border-color:rgba(245,158,11,.2);color:var(--warning)}
-.tag.new{border-color:rgba(139,92,246,.2);color:var(--accent-text)}
+.tag.new{border-color:rgba(45,212,191,.2);color:var(--accent-text)}
 
 /* ─── Projects grid ─── */
 .projects-grid{
@@ -444,7 +445,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 .card:hover{
   border-color:var(--border-act);
   transform:translateY(-2px);
-  box-shadow:0 8px 30px rgba(0,0,0,.3),0 0 0 1px rgba(139,92,246,.08);
+  box-shadow:0 8px 30px rgba(0,0,0,.3),0 0 0 1px rgba(45,212,191,.08);
 }
 .card:hover::before{opacity:.6}
 .card.done{border-color:rgba(16,185,129,.18);background:rgba(16,185,129,.025)}
@@ -477,7 +478,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 .skills-chips{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.2rem}
 .skill-chip{
   font-size:.58rem;padding:.12rem .4rem;border-radius:99px;
-  background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.12);
+  background:rgba(45,212,191,.07);border:1px solid rgba(45,212,191,.12);
   color:var(--accent-text);font-weight:600;
 }
 .deliverable-box{
@@ -515,14 +516,14 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 /* Reading guide */
 .reading-guide{
   margin-top:.5rem;padding:.45rem .65rem;
-  background:rgba(99,102,241,.03);
-  border-left:2px solid rgba(99,102,241,.18);
+  background:rgba(56,189,248,.03);
+  border-left:2px solid rgba(56,189,248,.18);
   border-radius:0 var(--radius-xs) var(--radius-xs) 0;
   font-size:.68rem;color:var(--text-2);line-height:1.7;
 }
 .light .reading-guide{
-  background:rgba(59,130,246,.09);
-  border-left-color:rgba(59,130,246,.35);
+  background:rgba(14,165,233,.09);
+  border-left-color:rgba(14,165,233,.35);
 }
 .reading-guide-title{
   font-size:.56rem;font-weight:700;text-transform:uppercase;
@@ -535,7 +536,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 /* ─── Badges ─── */
 .card-level{font-size:.56rem;font-weight:700;padding:.1rem .4rem;border-radius:var(--radius-xs);text-transform:uppercase;letter-spacing:.05em;margin-right:.35rem}
 .level-beginner{background:rgba(16,185,129,.07);color:#6ee7b7;border:1px solid rgba(16,185,129,.12)}
-.level-intermediate{background:rgba(99,102,241,.07);color:#a5b4fc;border:1px solid rgba(99,102,241,.12)}
+.level-intermediate{background:rgba(56,189,248,.07);color:#67e8f9;border:1px solid rgba(56,189,248,.12)}
 .level-advanced{background:rgba(245,158,11,.07);color:#fcd34d;border:1px solid rgba(245,158,11,.12)}
 
 .phase-done-badge{
@@ -569,14 +570,14 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 .item-current-badge{
   display:inline-flex;align-items:center;gap:.175rem;
   font-size:.56rem;font-weight:700;
-  color:var(--accent-text);background:rgba(139,92,246,.08);
-  border:1px solid rgba(139,92,246,.15);border-radius:var(--radius-xs);
+  color:var(--accent-text);background:rgba(45,212,191,.08);
+  border:1px solid rgba(45,212,191,.15);border-radius:var(--radius-xs);
   padding:.06rem .3rem;margin-left:.3rem;vertical-align:middle;
   font-family:'JetBrains Mono',monospace;
 }
 .light .item-current-badge{
-  background:rgba(124,58,237,.16);
-  border-color:rgba(124,58,237,.28);
+  background:rgba(13,148,136,.16);
+  border-color:rgba(13,148,136,.28);
 }
 
 /* Share button */
@@ -620,14 +621,14 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 /* ─── Sidebar current focus ─── */
 #sidebar-current{margin-top:.875rem;padding-top:.875rem;border-top:1px solid var(--border-s);display:flex;flex-direction:column;gap:.35rem}
 .current-task-box{
-  background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.12);
+  background:rgba(45,212,191,.06);border:1px solid rgba(45,212,191,.12);
   border-radius:var(--radius-sm);padding:.6rem .7rem;
   cursor:pointer;transition:var(--tr);
 }
-.current-task-box:hover{border-color:var(--border-act);background:rgba(139,92,246,.1)}
+.current-task-box:hover{border-color:var(--border-act);background:rgba(45,212,191,.1)}
 .light .current-task-box{
-  background:rgba(124,58,237,.08);
-  border-color:rgba(124,58,237,.18);
+  background:rgba(13,148,136,.08);
+  border-color:rgba(13,148,136,.18);
 }
 
 /* ─── Gist sync panel ─── */
@@ -783,7 +784,7 @@ main{flex:1;min-height:100vh;overflow-y:auto;display:flex;flex-direction:column}
       2. Generate a token with <strong>only the <code>gist</code> scope</strong><br>
       3. Paste it below. It is stored in your browser only, never sent anywhere except GitHub's API.
     </div>
-    <div id="modal-status" style="font-size:.78rem;background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.15);border-radius:10px;padding:.65rem .85rem;margin-bottom:1rem;line-height:1.6">Not connected</div>
+    <div id="modal-status" style="font-size:.78rem;background:rgba(45,212,191,.07);border:1px solid rgba(45,212,191,.15);border-radius:10px;padding:.65rem .85rem;margin-bottom:1rem;line-height:1.6">Not connected</div>
     <label>GitHub Personal Access Token (gist scope)</label>
     <input type="password" id="pat-input" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off">
     <label>Gist ID <span style="font-weight:400;text-transform:none">(leave blank to auto-create on first save)</span></label>
@@ -824,7 +825,7 @@ const PHASES = [
    hrs:2,tags:['FastAPI','Pydantic','Docker']}
  ]
 },
-{id:'ph1',label:'Phase 1',name:'Foundations',color:'#8b5cf6',
+{id:'ph1',label:'Phase 1',name:'Foundations',color:'#14b8a6',
  icon:'💡',
  desc:'Mastering the core concepts of Generative AI, Prompt Engineering, and the landscape of Large Language Models.',
  courses:[
@@ -887,7 +888,7 @@ const PHASES = [
    hrs:3,tags:['FastAPI','OpenAI','NLP']}
  ]
 },
-{id:'ph2',label:'Phase 2',name:'Python LLM Apps',color:'#a855f7',
+{id:'ph2',label:'Phase 2',name:'Python LLM Apps',color:'#f59e0b',
  icon:'🚀',
  desc:'Moving from simple prompts to sophisticated Python applications with state, streaming, and structured data extraction.',
  courses:[
@@ -903,7 +904,7 @@ const PHASES = [
     {name:'LangChain for LLM Application Development',url:'https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/',dur:'1.5h',free:true,
      readSections:['Models, Prompts and Parsers','Memory','Chains','Question and Answer','Evaluation','Agents']}
   ]},
-  {platform:'LangChain Academy',pcolor:'#ec4899',items:[
+  {platform:'LangChain Academy',pcolor:'#f97316',items:[
     {name:'Introduction to LangChain (Python)',url:'https://academy.langchain.com/courses/foundation-introduction-to-langchain-python',dur:'~1.5h',free:true,badge:'NEW',
      readSections:['What is LangChain?','The Core Abstractions','Building your first Chain','Introduction to LangSmith']}
   ]},
@@ -955,84 +956,135 @@ const PHASES = [
    hrs:5,tags:['NLP','Classification','FastAPI']}
  ]
 },
-{id:'ph3',label:'Phase 3',name:'Advanced Prompting & Frameworks',color:'#8b5cf6',
- icon:'🧠',
- desc:'Leveling up your prompting techniques with Chain-of-Thought, ReAct, and exploring industry-leading orchestration frameworks.',
+{id:'ph3',label:'Phase 3',name:'Embeddings, Vector Search & RAG',color:'#0ea5e9',
+ icon:'🔎',
+ desc:'Build retrieval systems that search useful evidence, cite sources, and refuse unsupported answers.',
  courses:[
+  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
+    {name:'Vector Databases and Embeddings for Developers',url:'https://www.pluralsight.com/courses/developers-vector-databases-embeddings',dur:'43min',free:false,badge:'START HERE',
+     readSections:['Embeddings','Similarity search','Vector stores','RAG foundations']}
+  ]},
   {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'ChatGPT Prompt Engineering for Developers',url:'https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/',dur:'~1h',free:true,
-     readSections:['Guidelines','Iterative Prompt Development','Summarizing','Inferring','Transforming','Expanding']},
-    {name:'Building Systems with the ChatGPT API',url:'https://www.deeplearning.ai/short-courses/building-systems-with-chatgpt/',dur:'~1h',free:true,
-     readSections:['Language Models, the Chat Format and Tokens','Classification','Moderation','Chain of Thought Reasoning','Chaining Prompts','Check Outputs']}
+    {name:'Advanced Retrieval for AI with Chroma',url:'https://www.deeplearning.ai/short-courses/advanced-retrieval-for-ai/',dur:'52min',free:true,
+     readSections:['Query expansion','Cross-encoder reranking','Embedding adapters','Retrieval debugging']},
+    {name:'Building and Evaluating Advanced RAG',url:'https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/',dur:'1h',free:true,
+     readSections:['Sentence-window retrieval','Auto-merging retrieval','RAG triad evals','Grounded answers']}
   ]},
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'Prompt Engineering Guide (DAIR.AI)',url:'https://www.promptingguide.ai/',dur:'Reference',free:true,
-     readSections:['Introduction','Techniques','Applications','Models','Risks','Adversarial Prompting']},
-    {name:'LangChain: Expression Language (LCEL)',url:'https://python.langchain.com/docs/concepts/lcel/',dur:'Reference',free:true,
-     readSections:['Why use LCEL?','Basic Example','Streaming','Parallelism','Retries and Fallbacks']},
-    {name:'LlamaIndex: High-Level Concepts',url:'https://docs.llamaindex.ai/en/stable/getting_started/concepts.html',dur:'Reference',free:true,
-     readSections:['Data Connectors (LlamaHub)','Documents / Nodes','Index Structures','Query Engines','Chat Engines']}
+    {name:'OpenAI Embeddings Guide',url:'https://platform.openai.com/docs/guides/embeddings',dur:'15min',free:true,
+     readSections:['Embedding models','Cosine similarity','Chunk before embedding','Search examples']},
+    {name:'Chroma Quickstart',url:'https://docs.trychroma.com/',dur:'30min',free:true,
+     readSections:['Getting started','Creating collections','Querying']},
+    {name:'LangChain RAG Tutorial',url:'https://python.langchain.com/docs/tutorials/rag/',dur:'45min',free:true,
+     readSections:['Indexing','Retrieval and generation','Citations']}
   ]}
  ],
  projects:[
-  {id:'ph3-p8',name:'Advanced Prompting Workshop',
+  {id:'ph3-p8',name:'Semantic Search Prototype',
+   level:'Intermediate',
+   desc:'Index a small document collection, embed chunks, search by meaning, and inspect similarity scores.',
+   businessValue:'Creates the base retrieval skill needed for every useful enterprise knowledge assistant.',
+   guide:'Implementation: 1. Create a fake document corpus. 2. Chunk documents with metadata. 3. Generate embeddings with a local or hosted embedding model. 4. Store vectors in Chroma. 5. Build a CLI query flow that prints ranked hits, scores, and source metadata.',
+   tips:['Start tiny: 10-20 fake docs is enough.', 'Print scores and metadata so retrieval failures are visible.', 'Keep the model/provider swappable.'],
+   skills:['Embeddings','Chroma','Chunking','Similarity Search','Metadata'],
+   deliverable:'A CLI semantic search tool that returns ranked, cited document chunks.',
+   hrs:4,tags:['Embeddings','Search','Chroma']},
+  {id:'ph3-p9',name:'PDF Q&A Assistant',
+   level:'Intermediate',
+   desc:'Parse PDFs, chunk text, retrieve relevant passages, and answer with citations.',
+   businessValue:'Turns static documents into a cited assistant while preserving evidence and uncertainty.',
+   guide:'Implementation: 1. Load PDF text. 2. Chunk with overlap. 3. Embed chunks. 4. Retrieve top matches. 5. Generate an answer using only retrieved context. 6. Include source page/chunk citations.',
+   tips:['Reject unsupported answers.', 'Compare chunk sizes.', 'Show the retrieved context during debugging.'],
+   skills:['PDF Parsing','RAG','Citations','Grounded Generation'],
+   deliverable:'A PDF Q&A tool that answers with source-backed citations.',
+   hrs:5,tags:['RAG','PDF','Citations']},
+  {id:'ph3-p10',name:'Docs Knowledge Assistant',
+   level:'Intermediate',
+   desc:'Search markdown docs, READMEs, runbooks, policy notes, and troubleshooting pages.',
+   businessValue:'Models the kind of internal knowledge assistant teams actually need day to day.',
+   guide:'Implementation: 1. Create fake enterprise-style docs. 2. Index markdown sections with source paths. 3. Add metadata filters. 4. Answer questions with citations. 5. Refuse when docs do not support an answer.',
+   tips:['Use realistic fake docs only.', 'Keep source paths visible.', 'Test distractor docs.'],
+   skills:['Markdown Parsing','Metadata Filtering','Knowledge Retrieval','Refusal Handling'],
+   deliverable:'A docs assistant that searches and answers from markdown knowledge with citations.',
+   hrs:5,tags:['Docs','RAG','Knowledge']},
+  {id:'ph3-p11',name:'Enterprise Knowledge Bot',
    level:'Advanced',
-   desc:'Build a library of reusable, complex prompts for various business tasks using advanced techniques like CoT and Self-Correction.',
-   businessValue:'Creates a library of "High-Performing Prompts" that solve complex logical problems where basic prompting fails.',
-   guide:'Implementation: 1. Develop a "Prompt Runner" utility. 2. Implement a Chain-of-Thought (CoT) prompt for a logical reasoning task (e.g., scheduling). 3. Create a "Few-Shot" prompt for a complex classification task with 10 diverse examples. 4. Implement a "Self-Correction" loop: Model A generates, Model B critiques, Model A regenerates. 5. Document the "Accuracy Lift" gained from each technique. This project makes you a master of the "hidden logic" of prompts.',
-   tips:['Use the "Chain of Thought" strategy for math or logic tasks.', 'Implement "Self-Consistency" by running the prompt 3 times and picking the majority.', 'Try "Least-to-Most" prompting for very long, complex multi-step tasks.'],
-   skills:['Chain-of-Thought','Few-Shot Learning','Self-Reflection Loops','Prompt Benchmarking'],
-   deliverable:'A collection of 5+ "Gold Standard" prompts with a Python script that executes and verifies them against a test set.',
-   hrs:6,tags:['Prompting','Engineering','Advanced']},
-  {id:'ph3-p9',name:'Multi-Framework Orchestrator',
+   desc:'Answer workflow-style questions from internal-style knowledge only, with citations and safe next-step suggestions.',
+   businessValue:'Shows production judgment: evidence, uncertainty, safe recommendations, and no unsupported guessing.',
+   guide:'Implementation: 1. Build fake services, runbooks, ownership metadata, and case notes. 2. Retrieve and rerank evidence. 3. Return answer, citations, confidence, missing evidence, and do-not-act-without-approval notes.',
+   tips:['Add wrong/distractor ownership docs.', 'Cite every claim.', 'Make unsupported-answer behavior explicit.'],
+   skills:['Enterprise RAG','Reranking','Citations','Safety Boundaries'],
+   deliverable:'A portfolio-safe RAG bot for enterprise-style workflow knowledge.',
+   hrs:7,tags:['RAG','Workflow','Safety']},
+  {id:'ph3-p11a',name:'GraphRAG Document Explorer',
    level:'Advanced',
-   desc:'Compare LangChain, LlamaIndex, and PydanticAI by building the same complex task in all three frameworks.',
-   businessValue:'Informs critical architecture decisions by proving which AI framework (LangChain vs LlamaIndex) is best for specific company needs.',
-   guide:'Implementation: 1. Choose a task: "Extract structured data from a 50-page PDF." 2. Implement using LangChain\'s LCEL and PDF loaders. 3. Implement using LlamaIndex\'s VectorStoreIndex and QueryEngine. 4. Implement using PydanticAI\'s strictly typed agent. 5. Write a "Framework Report" comparing ease of use, debuggability, and performance. This project helps you choose the right tool for the right job.',
-   tips:['Focus on "Debuggability" — which framework makes it easier to see what went wrong?', 'Benchmark the "Init Time" of each framework.', 'Compare how each framework handles "Streaming" out of the box.'],
-   skills:['LangChain','LlamaIndex','PydanticAI','Framework Comparison','RAG Architectures'],
-   deliverable:'A multi-file repository showing identical functionality implemented via three distinct philosophies, with a detailed technical comparison.',
-   hrs:8,tags:['Orchestration','Frameworks','Comparison']}
+   desc:'Explore entity relationships and multi-hop questions over a complex fake enterprise corpus.',
+   businessValue:'Proves you understand when flat vector search is not enough.',
+   guide:'Implementation: 1. Extract entities from fake docs. 2. Build a lightweight relationship graph. 3. Combine graph traversal with retrieval. 4. Answer multi-hop questions with cited evidence.',
+   tips:['Keep the graph small in V1.', 'Compare graph-assisted answers against pure vector retrieval.', 'Document where GraphRAG helps.'],
+   skills:['GraphRAG','Entity Extraction','Multi-Hop Retrieval','Knowledge Graphs'],
+   deliverable:'A small GraphRAG explorer with example multi-hop queries and cited answers.',
+   hrs:6,tags:['GraphRAG','RAG','Knowledge Graph']}
  ]
 },
-{id:'ph4',label:'Phase 4',name:'Vector DBs & RAG',color:'#3b82f6',
- icon:'📂',
- desc:'Building Retrieval Augmented Generation (RAG) systems that can search across millions of documents with semantic precision.',
+{id:'ph4',label:'Phase 4',name:'Tool Calling & Workflow Automation',color:'#f59e0b',
+ icon:'🛠️',
+ desc:'Build assistants that call safe tools, retrieve evidence, and propose useful workflow actions without acting blindly.',
  courses:[
+  {platform:'Pluralsight',pcolor:'#f59e0b',items:[
+    {name:'Function Calling and Tool Use with OpenAI',url:'https://www.pluralsight.com/courses/function-calling-tool-use-openai',dur:'38min',free:false,badge:'MUST DO',
+     readSections:['Define functions','Handle tool calls','Parallel tool calling','Edge cases']},
+    {name:'OpenAI Responses API and Agents SDK',url:'https://www.pluralsight.com/courses/openai-responses-api-agents-sdk',dur:'45min',free:false,
+     readSections:['Responses API tools','Agents SDK basics','Tool orchestration']}
+  ]},
   {platform:'DeepLearning.AI',pcolor:'#10b981',items:[
-    {name:'Vector Databases: from Embeddings to Applications',url:'https://www.deeplearning.ai/short-courses/vector-databases-embeddings-applications/',dur:'~1h',free:true,
-     readSections:['What is a Vector Database?','How Embeddings Work','Similarity Search','Building a RAG application']},
-    {name:'Advanced Retrieval for AI with Chroma',url:'https://www.deeplearning.ai/short-courses/advanced-retrieval-for-ai/',dur:'~1h',free:true,
-     readSections:['Introduction to Retrieval','Query Expansion','Cross-Encoder Reranking','Embedding Adapters']}
+    {name:'Functions, Tools and Agents with LangChain',url:'https://www.deeplearning.ai/short-courses/functions-tools-agents-langchain/',dur:'1h44m',free:true,
+     readSections:['Function calling','LCEL','Tagging','Extraction','Tool routing']}
   ]},
   {platform:'Docs',pcolor:'#3b82f6',items:[
-    {name:'ChromaDB Official Docs',url:'https://docs.trychroma.com/',dur:'Reference',free:true,
-     readSections:['Getting Started','Core Concepts','API Reference','Deployment','Multi-modal support']},
-    {name:'Qdrant: Hybrid Search Guide',url:'https://qdrant.tech/documentation/concepts/hybrid-search/',dur:'Reference',free:true,
-     readSections:['Dense vs Sparse Vectors','Hybrid Search Implementation','Scoring and Ranking','Performance Tuning']},
-    {name:'Pinecone: RAG Best Practices',url:'https://www.pinecone.io/learn/rag-best-practices/',dur:'Reference',free:true,
-     readSections:['Chunking Strategies','Metadata Filtering','Reranking Results','Handling Large Datasets']}
+    {name:'OpenAI Function Calling Guide',url:'https://platform.openai.com/docs/guides/function-calling',dur:'30min',free:true,
+     readSections:['Supported models','Define functions','Handle tool calls','Parallel tool calling']},
+    {name:'OpenAI Tools Guide',url:'https://platform.openai.com/docs/guides/tools',dur:'20min',free:true,
+     readSections:['Built-in tools','Custom functions','Remote MCP']}
   ]}
  ],
  projects:[
-  {id:'ph4-p10',name:'Hybrid Search Engine (Local)',
+  {id:'ph4-p12',name:'Tool-Using Assistant',
+   level:'Intermediate',
+   desc:'Build an assistant that chooses and calls deterministic tools like calculator, docs search, notes, and mock workflow lookups.',
+   businessValue:'Moves beyond chat into useful, auditable assistant behavior.',
+   guide:'Implementation: 1. Define tool schemas. 2. Implement deterministic Python tool functions. 3. Let the model choose tools. 4. Validate arguments. 5. Return final answers with tool evidence.',
+   tips:['Keep tools narrow.', 'Log tool inputs/outputs.', 'Reject unsafe or unknown tools.'],
+   skills:['Function Calling','Tool Schemas','Validation','Tool Evidence'],
+   deliverable:'A CLI or API assistant with at least five safe tools.',
+   hrs:5,tags:['Tools','OpenAI','Workflow']},
+  {id:'ph4-p13',name:'Research Assistant',
+   level:'Intermediate',
+   desc:'Retrieve docs or web content, synthesize findings, cite sources, and say when unsure.',
+   businessValue:'Creates a reusable evidence-gathering pattern for analysis and knowledge work.',
+   guide:'Implementation: 1. Search or load sources. 2. Extract relevant passages. 3. Synthesize with citations. 4. Include uncertainty and missing-info notes.',
+   tips:['Avoid uncited claims.', 'Keep source snippets visible.', 'Prefer concise summaries.'],
+   skills:['Retrieval','Synthesis','Citations','Uncertainty'],
+   deliverable:'A research helper that returns cited summaries and open questions.',
+   hrs:5,tags:['Research','Tools','Citations']},
+  {id:'ph4-p14',name:'SQL / Reporting Assistant',
    level:'Advanced',
-   desc:'Build a document search system that combines semantic (Vector) and keyword (BM25) search for maximum retrieval accuracy.',
-   businessValue:'Combines the best of both worlds: finding "exact matches" for names/codes and "semantic matches" for meanings.',
-   guide:'Implementation: 1. Use ChromaDB for dense vector storage. 2. Use `rank_bm25` for sparse keyword search. 3. Implement Reciprocal Rank Fusion (RRF) to merge the results from both methods. 4. Build a CLI to index and search. 5. Test with queries that are conceptual (best for vectors) vs. keyword-specific (best for BM25). This project masters the "Hybrid Search" pattern used in production.',
-   tips:['Start with `all-MiniLM-L6-v2` for local, fast embeddings.', 'Use `rank_bm25` for the keyword layer.', 'Implement a "Score Threshold" to filter out irrelevant results.'],
-   skills:['Vector Search','BM25','RRF Algorithm','ChromaDB','Indexing Strategies'],
-   deliverable:'A local search engine that indexes your own documents and provides a "Hybrid" result that is more accurate than either method alone.',
-   hrs:8,tags:['VectorDB','RAG','Search']},
-	  {id:'ph4-p11',name:'Enterprise Knowledge RAG',
-	   level:'Advanced',
-	   desc:'Create a high-fidelity RAG pipeline over internal-style knowledge such as runbooks, support docs, API docs, policies, ownership metadata, and case notes.',
-	   businessValue:'Turns scattered enterprise knowledge into reliable, cited guidance for workflow decisions without inventing unsupported answers.',
-	   guide:'Implementation: 1. Stage 1 (Retrieval): Fetch top 20 knowledge chunks from a vector store. 2. Stage 2 (Reranking): Use a Cross-Encoder model (e.g., `BAAI/bge-reranker-v2-m3`) to re-score those chunks against the workflow item/question. 3. Stage 3 (Synthesis): Take only the top 3 reranked docs and pass them to the LLM. 4. Return citations, confidence, missing evidence, and "do not run without approval" notes. 5. Measure answer quality vs. retrieval latency. This project is generic enough for support, platform, docs, compliance, and observability workflows.',
-	   tips:['Use fake enterprise docs so the repo stays public-safe.', 'Add distractor docs to test whether reranking ignores wrong ownership or policy context.', 'Always show citations and a refusal when the docs do not support an answer.'],
-	   skills:['Cross-Encoders','Reranking','Enterprise RAG','Knowledge Management','Performance Profiling'],
-	   deliverable:'A RAG service that answers workflow questions with cited knowledge evidence and safe next-step suggestions.',
-	   hrs:10,tags:['RAG','Knowledge','Production']}
+   desc:'Generate read-only SQL safely from natural-language reporting requests.',
+   businessValue:'Demonstrates safe data access patterns where the model drafts queries but guardrails enforce limits.',
+   guide:'Implementation: 1. Define schema metadata. 2. Generate SELECT-only SQL. 3. Validate no writes/deletes. 4. Explain the query. 5. Run only against sample data.',
+   tips:['Whitelist tables.', 'Block dangerous keywords.', 'Show execution plan or row limits.'],
+   skills:['SQL Guardrails','Schema Context','Read-Only Execution','Validation'],
+   deliverable:'A safe reporting assistant over fake/sample data.',
+   hrs:5,tags:['SQL','Safety','Reporting']},
+  {id:'ph4-p15',name:'Workflow Triage Assistant',
+   level:'Advanced',
+   desc:'Classify, prioritize, route, and draft next steps for workflow items without taking automatic action.',
+   businessValue:'Connects your platform/observability background to GenAI workflow intelligence in a public-safe way.',
+   guide:'Implementation: 1. Ingest fake workflow items. 2. Retrieve related knowledge. 3. Recommend severity, owner, duplicates, and next action. 4. Draft response text. 5. Keep strict no-side-effect mode.',
+   tips:['Use fake data.', 'Separate recommendation from action.', 'Include evidence and uncertainty.'],
+   skills:['Workflow Triage','Classification','Routing','Safe Automation'],
+   deliverable:'A workflow triage assistant with evidence-backed recommendations and no automatic side effects.',
+   hrs:6,tags:['Workflow','Tools','Safety']}
  ]
 },
 {id:'ph5',label:'Phase 5',name:'Evals & Observability',color:'#ef4444',
@@ -1059,7 +1111,7 @@ const PHASES = [
     {name:'Generative AI Data Privacy and Safe Use',url:'https://www.pluralsight.com/courses/safe-use-developers-generative-ai-data-privacy',dur:'54min',free:false,
      readSections:['PII Detection','Anonymization Techniques','Legal and Regulatory Landscape']}
   ]},
-  {platform:'LangChain Academy',pcolor:'#ec4899',items:[
+  {platform:'LangChain Academy',pcolor:'#f97316',items:[
     {name:'LangSmith Essentials',url:'https://academy.langchain.com/courses/langsmith-essentials',dur:'~1h',free:true,
      readSections:['Tracing','Datasets','Evaluation','Testing and Monitoring']}
   ]},
@@ -1115,7 +1167,7 @@ const PHASES = [
     hrs:7,tags:['Security','Red Teaming','Guardrails']}
  ]
 },
-{id:'ph6',label:'Phase 6',name:'MCP & Agentic Orchestration',color:'#8b5cf6',
+{id:'ph6',label:'Phase 6',name:'MCP & Agentic Orchestration',color:'#14b8a6',
  icon:'🤖',
  desc:'The cutting edge: building autonomous agents that can use tools and standardizing tool-access via the Model Context Protocol (MCP).',
  courses:[
@@ -1131,7 +1183,7 @@ const PHASES = [
     {name:'Agent Skills with Anthropic',url:'https://www.deeplearning.ai/short-courses/agent-skills-with-anthropic/',dur:'45min',free:true,badge:'NEW',
      readSections:['Equipping Agents with Skills','Expert Knowledge Injection','Reliable Coding Agents','Research and Analysis Workflows']}
   ]},
-  {platform:'LangChain Academy',pcolor:'#ec4899',items:[
+  {platform:'LangChain Academy',pcolor:'#f97316',items:[
     {name:'Introduction to LangGraph (Python)',url:'https://academy.langchain.com/courses/intro-to-langgraph',dur:'6h',free:true,badge:'HIGHLY REC',
      readSections:['Module 1: Graphs','Module 2: State','Module 3: Persistence','Module 4: Multi-agent','Module 5: Human-in-the-loop']}
   ]},
@@ -1295,7 +1347,7 @@ const PHASES = [
     hrs:20,tags:['Azure','AWS','Certification']}
  ]
 },
-{id:'ph11',label:'Phase 11',name:'Structured Capstones',color:'#ec4899',
+{id:'ph11',label:'Phase 11',name:'Structured Capstones',color:'#f97316',
 	 icon:'🏆',
 	 desc:'The final challenge: building complex, production-minded GenAI systems for enterprise workflow intelligence and safe agentic automation.',
  courses:[
@@ -1375,7 +1427,7 @@ function checkCelebrate(id){
       particleCount: 150,
       spread: 70,
       origin: { y: 0.6 },
-      colors: [ph.color, '#8b5cf6', '#6366f1']
+      colors: [ph.color, '#14b8a6', '#38bdf8']
     });
   } else if(id.includes('-p')) {
     // Smaller celebration for individual projects
@@ -1455,7 +1507,7 @@ function updateSidebar(){
   const dm=totalDoneMins(), tm=totalEstMins();
   const timeEl=document.getElementById('stat-time');
   if(timeEl) timeEl.innerHTML=`${fmtHrs(dm)} done &bull; ${fmtHrs(tm-dm)} remaining`;
-  document.getElementById('export-info').textContent=`${dp} projects complete &bull; ${dc} courses complete &bull; Saved locally`;
+  document.getElementById('export-info').textContent=`${dp} projects complete • ${dc} courses complete • Saved locally`;
 }
 
 function buildNav(filter=''){
@@ -1529,7 +1581,7 @@ function renderPhase(ph){
     </div>
   </div>
 
-  <div id="current-focus-summary" style="padding:1rem 2.5rem; background:rgba(139,92,246,0.03); border-bottom:1px solid var(--border); ${!state._currentItem ? 'display:none' : 'display:flex'}; align-items:center; gap:1rem; flex-wrap:wrap">
+  <div id="current-focus-summary" style="padding:1rem 2.5rem; background:rgba(45,212,191,0.03); border-bottom:1px solid var(--border); ${!state._currentItem ? 'display:none' : 'display:flex'}; align-items:center; gap:1rem; flex-wrap:wrap">
     <div style="flex:1">
       <span style="font-size:.58rem; text-transform:uppercase; letter-spacing:.11em; color:var(--text-3); font-weight:700; font-family:'JetBrains Mono',monospace">Current Goal</span>
       <div id="current-focus-text" style="font-size:1rem; font-weight:700; color:var(--accent); margin-top:.2rem">

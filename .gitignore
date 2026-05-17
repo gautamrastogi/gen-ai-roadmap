@@ -116,3 +116,6 @@ artifacts/
 
 # Docker
 .docker/
+
+# LangSmith
+langchain-courses/
