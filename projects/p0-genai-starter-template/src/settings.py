@@ -42,7 +42,5 @@ class Settings(pydantic_settings.BaseSettings):
         :raises ValueError: If ``OPENAI_API_KEY`` is empty.
         """
         if not self.openai_api_key.get_secret_value():
-            raise ValueError(
-                "OPENAI_API_KEY is required. Add it to your .env file or environment."
-            )
+            raise ValueError("OPENAI_API_KEY is required. Add it to your .env file or environment.")
         return self

@@ -28,7 +28,6 @@ def print_results(task: str, results: dict[str, str]) -> None:
     :param task: The original task string (printed as header).
     :param results: Mapping of strategy name to response text.
     """
-    border = "═" * _WIDTH
     print(f"\n{'═' * _WIDTH}")
     print(f"  TASK: {task}")
     print(f"{'═' * _WIDTH}\n")

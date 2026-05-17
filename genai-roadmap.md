@@ -7,16 +7,16 @@
   to transition from Python Software Engineer to GenAI / Agentic Systems Engineer,
   with a portfolio angle around enterprise workflow intelligence, platform automation, observability, and safe agentic systems.
 
-  Owner:        YOUR_NAME
-  Hardware:     Apple M1 Max, 32 GB unified memory (strong local AI capability)
+  Owner:        gautamrastogi
+  Hardware:     Apple Silicon Mac, 32 GB-class unified memory recommended
   OS:           macOS (Apple Silicon)
-  Primary IDE:  VS Code + GitHub Copilot, Antigravity AI assistant
+  Primary IDE:  VS Code/Cursor-compatible AI coding workflow
   Python:       3.14.4 (global), 3.12 (ML/MLX workloads)
   Package mgr:  uv + pip inside project .venv
   Local models: LM Studio (GUI) + Ollama (API), both installed
   Cloud models: OpenAI (GPT-4o, o3), Anthropic (Claude Sonnet)
-  Repo:         https://github.com/YOUR_USERNAME/YOUR_REPO_NAME
-  Dashboard:    https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/
+  Repo:         https://github.com/gautamrastogi/gen-ai-roadmap
+  Dashboard:    https://gautamrastogi.github.io/gen-ai-roadmap/
 
   HOW TO READ THIS FILE
   ─────────────────────
@@ -26,7 +26,7 @@
   • "Learn" sections = theory to understand before building
   • Checklist (lines ~102–160) = quick progress tracker
   • Phase Summary table = high-level status at a glance
-  • Current focus is Phase 2 (Python LLM App Development)
+  • Current focus is Phase 3 (Embeddings, Vector Search, and RAG)
 
   TECH STACK CONVENTIONS
   ──────────────────────
@@ -56,7 +56,7 @@
   • Security is integrated (OWASP LLM Top 10), not bolted on later
 -->
 
-> **Last updated:** 2026-05-15 | **Current phase:** Phase 2 — Python LLM App Development
+> **Last updated:** 2026-05-17 | **Current phase:** Phase 3 — Embeddings + Vector Search + RAG
 >
 > Verified May 2026. Key changes: roadmap is now aligned to an AI backend/platform path for enterprise workflow intelligence, observability, and safe automation; inaccessible paid training was removed and replaced by Microsoft Learn free paths + DLAI; course lists trimmed to essentials only (build-first approach); every doc resource now has specific sections to read. Responses API is primary interface; Assistants API deprecated Aug 26, 2026.
 

@@ -15,7 +15,6 @@ All paths use the OpenAI SDK with an OpenAI-compatible endpoint.
 
 import ssl
 import time
-import typing
 
 import httpx
 import openai
@@ -72,7 +71,7 @@ def _make_client(settings: Settings) -> openai.OpenAI:
 
 def _call(
     client: openai.OpenAI, task: str, strategy_name: str, settings: Settings
-) -> tuple[str, typing.Optional[dict[str, int]]]:
+) -> tuple[str, dict[str, int] | None]:
     """Make a single API call for one strategy.
 
     Also captures HuggingFace rate-limit headers when available.
@@ -94,7 +93,7 @@ def _call(
     text = (response.choices[0].message.content or "").strip()
 
     # Extract quota from HF response headers
-    quota: typing.Optional[dict[str, int]] = None
+    quota: dict[str, int] | None = None
     try:
         h = dict(raw.headers)
         if "x-ratelimit-remaining" in h:
@@ -113,7 +112,7 @@ def _call(
 
 def run_one(
     task: str, strategy: str, settings: Settings
-) -> tuple[dict[str, str], typing.Optional[dict[str, int]]]:
+) -> tuple[dict[str, str], dict[str, int] | None]:
     """Call the API for a single strategy only (saves rate-limit quota).
 
     :param task: The task string to send to the model.
@@ -123,17 +122,13 @@ def run_one(
     :return: Tuple of (results dict, quota info from last call).
     """
     if strategy not in strats.STRATEGIES:
-        raise KeyError(
-            f"Unknown strategy {strategy!r}. Valid: {list(strats.STRATEGIES)}."
-        )
+        raise KeyError(f"Unknown strategy {strategy!r}. Valid: {list(strats.STRATEGIES)}.")
     client = _make_client(settings)
     text, quota = _call(client, task, strategy, settings)
     return {strategy: text}, quota
 
 
-def run_all(
-    task: str, settings: Settings
-) -> tuple[dict[str, str], typing.Optional[dict[str, int]]]:
+def run_all(task: str, settings: Settings) -> tuple[dict[str, str], dict[str, int] | None]:
     """Call the API once per strategy and return all responses.
 
     A :data:`_INTER_CALL_DELAY` second pause is inserted between calls to
@@ -145,7 +140,7 @@ def run_all(
     """
     client = _make_client(settings)
     results: dict[str, str] = {}
-    quota: typing.Optional[dict[str, int]] = None
+    quota: dict[str, int] | None = None
     names = list(strats.STRATEGIES)
     for i, name in enumerate(names):
         text, quota = _call(client, task, name, settings)

@@ -8,7 +8,6 @@ HuggingFace routes via ``router.huggingface.co`` — reachable on corporate netw
 
 import ssl
 import time
-import typing
 
 import httpx
 import openai
@@ -54,7 +53,7 @@ def _call(
     text: str,
     fmt: str,
     settings: Settings,
-) -> tuple[str, typing.Optional[dict[str, int]]]:
+) -> tuple[str, dict[str, int] | None]:
     """Make a single API call for one output format.
 
     :param client: Configured OpenAI-compatible client.
@@ -73,7 +72,7 @@ def _call(
     response = raw.parse()
     result = (response.choices[0].message.content or "").strip()
 
-    quota: typing.Optional[dict[str, int]] = None
+    quota: dict[str, int] | None = None
     try:
         h = dict(raw.headers)
         if "x-ratelimit-remaining" in h:
@@ -92,7 +91,7 @@ def _call(
 
 def run_one(
     text: str, fmt: str, settings: Settings
-) -> tuple[dict[str, str], typing.Optional[dict[str, int]]]:
+) -> tuple[dict[str, str], dict[str, int] | None]:
     """Run a single output format.
 
     :param text: Input text to summarise.
@@ -108,9 +107,7 @@ def run_one(
     return {fmt: result}, quota
 
 
-def run_all(
-    text: str, settings: Settings
-) -> tuple[dict[str, str], typing.Optional[dict[str, int]]]:
+def run_all(text: str, settings: Settings) -> tuple[dict[str, str], dict[str, int] | None]:
     """Run all three output formats with pacing between calls.
 
     :param text: Input text to summarise.
@@ -119,7 +116,7 @@ def run_all(
     """
     client = _make_client(settings)
     results: dict[str, str] = {}
-    quota: typing.Optional[dict[str, int]] = None
+    quota: dict[str, int] | None = None
     names = list(prompts.FORMATS)
     for i, fmt in enumerate(names):
         result, quota = _call(client, text, fmt, settings)

@@ -7,7 +7,9 @@
 
 ---
 
-## Prerequisites (Already Installed)
+## Reference Environment
+
+These versions describe the machine this roadmap was built on. Exact patch versions are not required.
 - ✅ Homebrew 5.1.7
 - ✅ pyenv (Python version manager)
 - ✅ Python 3.14.4 (global default)
@@ -37,6 +39,16 @@ pyenv versions
 ---
 
 ## Step 2: Project Virtual Environment
+
+Most roadmap projects use their own `pyproject.toml` and `uv.lock`. Prefer per-project installs:
+
+```bash
+cd projects/p7-resume-vs-jd-analyzer
+make install
+make ci
+```
+
+Use the root virtual environment only for lightweight repo-level tooling.
 
 ```bash
 cd ~/Documents/dev/gen\ ai\ roadmap

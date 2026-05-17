@@ -52,6 +52,7 @@ p0-genai-starter-template/
 │   └── Dockerfile               # Multi-stage build
 ├── .env.example                 # Copy to .env and fill in your key
 ├── pyproject.toml
+├── uv.lock
 ├── Makefile
 └── README.md
 ```

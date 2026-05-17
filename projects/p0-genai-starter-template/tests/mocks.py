@@ -18,7 +18,9 @@ import typing
 # ---------------------------------------------------------------------------
 
 COMPLETION_REQUEST: dict[str, typing.Any] = {
-    "prompt": "Summarise the following text in one sentence: FastAPI is a modern Python web framework.",
+    "prompt": (
+        "Summarise the following text in one sentence: FastAPI is a modern Python web framework."
+    ),
     "system": "You are a helpful assistant.",
     "max_tokens": 100,
     "temperature": 0.0,
@@ -39,7 +41,10 @@ OPENAI_CHAT_RESPONSE: dict[str, typing.Any] = {
     "choices": [
         {
             "index": 0,
-            "message": {"role": "assistant", "content": "FastAPI is a modern Python web framework."},
+            "message": {
+                "role": "assistant",
+                "content": "FastAPI is a modern Python web framework.",
+            },
             "finish_reason": "stop",
         }
     ],

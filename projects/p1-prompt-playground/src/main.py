@@ -13,7 +13,7 @@ Or via Makefile::
 import argparse
 import sys
 
-from src import runner, display
+from src import display, runner
 from src.settings import Settings
 
 
@@ -72,22 +72,16 @@ def main(argv: list[str] | None = None) -> None:
         settings = settings.model_copy(update={"temperature": args.temperature})
 
     if args.strategy:
-        print(
-            f"\nModel: {settings.openai_model}  |  Temperature: {settings.temperature}"
-        )
+        print(f"\nModel: {settings.openai_model}  |  Temperature: {settings.temperature}")
         print(f"Running strategy: {args.strategy}\n")
         results, quota = runner.run_one(args.task, args.strategy, settings)
     else:
-        print(
-            f"\nModel: {settings.openai_model}  |  Temperature: {settings.temperature}"
-        )
+        print(f"\nModel: {settings.openai_model}  |  Temperature: {settings.temperature}")
         print("Running 4 strategies... (1.5 s pause between calls)\n")
         results, quota = runner.run_all(args.task, settings)
     display.print_results(args.task, results)
     if quota and quota.get("remaining", -1) >= 0:
-        pct = (
-            int(quota["remaining"] / quota["limit"] * 100) if quota["limit"] > 0 else 0
-        )
+        pct = int(quota["remaining"] / quota["limit"] * 100) if quota["limit"] > 0 else 0
         tok_rem = quota["remaining_tokens"]
         tok_lim = quota["limit_tokens"]
         print(

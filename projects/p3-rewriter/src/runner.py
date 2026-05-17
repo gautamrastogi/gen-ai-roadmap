@@ -8,7 +8,6 @@ HuggingFace routes via ``router.huggingface.co`` — reachable on corporate netw
 
 import ssl
 import time
-import typing
 
 import httpx
 import openai
@@ -54,7 +53,7 @@ def _call(
     text: str,
     tone: str,
     settings: Settings,
-) -> tuple[str, typing.Optional[dict[str, int]]]:
+) -> tuple[str, dict[str, int] | None]:
     """Make a single API call for one rewrite tone.
 
     :param client: Configured OpenAI-compatible client.
@@ -73,7 +72,7 @@ def _call(
     response = raw.parse()
     result = (response.choices[0].message.content or "").strip()
 
-    quota: typing.Optional[dict[str, int]] = None
+    quota: dict[str, int] | None = None
     try:
         h = dict(raw.headers)
         if "x-ratelimit-remaining" in h:
@@ -82,9 +81,7 @@ def _call(
                 "requests_limit": int(h.get("x-ratelimit-limit", 0)),
                 "tokens_remaining": int(h.get("x-ratelimit-remaining-tokens", 0)),
                 "tokens_limit": int(h.get("x-ratelimit-limit-tokens", 0)),
-                "reset_seconds": int(
-                    float(h.get("x-ratelimit-reset-requests", "0").rstrip("s"))
-                ),
+                "reset_seconds": int(float(h.get("x-ratelimit-reset-requests", "0").rstrip("s"))),
             }
     except (ValueError, KeyError):
         pass
@@ -95,8 +92,8 @@ def _call(
 def run_one(
     text: str,
     tone: str,
-    settings: typing.Optional[Settings] = None,
-) -> tuple[dict[str, str], typing.Optional[dict[str, int]]]:
+    settings: Settings | None = None,
+) -> tuple[dict[str, str], dict[str, int] | None]:
     """Rewrite text in a single tone.
 
     :param text: Input text.
@@ -112,8 +109,8 @@ def run_one(
 
 def run_all(
     text: str,
-    settings: typing.Optional[Settings] = None,
-) -> tuple[dict[str, str], typing.Optional[dict[str, int]]]:
+    settings: Settings | None = None,
+) -> tuple[dict[str, str], dict[str, int] | None]:
     """Rewrite text in all four tones with rate-limit pacing.
 
     :param text: Input text.
@@ -123,7 +120,7 @@ def run_all(
     cfg = settings or Settings()
     client = _make_client(cfg)
     results: dict[str, str] = {}
-    last_quota: typing.Optional[dict[str, int]] = None
+    last_quota: dict[str, int] | None = None
 
     tones = list(prompts.TONES.keys())
     for i, tone in enumerate(tones):

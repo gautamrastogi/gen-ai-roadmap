@@ -20,7 +20,7 @@ def print_results(results: dict[str, str]) -> None:
         for line in text.splitlines():
             # Wrap long lines
             while len(line) > _WIDTH - 4:
-                print(f"│  {line[:_WIDTH - 4]}")
+                print(f"│  {line[: _WIDTH - 4]}")
                 line = line[_WIDTH - 4 :]
             print(f"│  {line}")
         print(f"└{'─' * (_WIDTH - 2)}┘")

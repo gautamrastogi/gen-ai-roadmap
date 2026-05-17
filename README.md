@@ -2,7 +2,7 @@
 
 > A structured, project-driven learning path for building production-grade Generative AI applications, with a portfolio angle around enterprise workflow intelligence, platform automation, observability, and agentic systems.
 
-[![GitHub Pages](https://img.shields.io/badge/Dashboard-Live-8b5cf6?style=flat-square&logo=github)](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/)
+[![GitHub Pages](https://img.shields.io/badge/Dashboard-Live-8b5cf6?style=flat-square&logo=github)](https://gautamrastogi.github.io/gen-ai-roadmap/)
 [![Phases](https://img.shields.io/badge/Phases-12-ec4899?style=flat-square)](#roadmap-structure)
 [![Projects](https://img.shields.io/badge/Projects-37-10b981?style=flat-square)](#roadmap-structure)
 [![Courses](https://img.shields.io/badge/Courses-60+-3b82f6?style=flat-square)](#roadmap-structure)
@@ -11,7 +11,7 @@
 
 ## 📊 Interactive Dashboard
 
-**[→ Open Dashboard](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/)**
+**[→ Open Dashboard](https://gautamrastogi.github.io/gen-ai-roadmap/)**
 
 The dashboard is a fully client-side web app (no backend, no login) that lets you:
 
@@ -86,18 +86,21 @@ The dashboard supports syncing your progress to a private GitHub Gist so it pers
 
 ## 🛠️ Setup
 
-First, configure the repository for your personal use:
+The repository is already configured for:
+
+- GitHub repo: `https://github.com/gautamrastogi/gen-ai-roadmap`
+- Dashboard: `https://gautamrastogi.github.io/gen-ai-roadmap/`
+
+If you fork it, run the setup script once to create local config files and rewrite repo-specific links:
 
 ```bash
-# Run the setup script to personalize URLs and create config files
 ./setup.sh
 ```
 
 This will:
-- Replace `YOUR_USERNAME` and `YOUR_REPO_NAME` placeholders with your GitHub details
 - Create `config.env` from `templates/config.env.template`
 - Create `.cursor/mcp.json` for Cursor MCP integration
-- Update all documentation with your information
+- Update documentation links for your fork when placeholders are present
 
 For the full environment guide, see `docs/setup.md`.
 
@@ -105,7 +108,7 @@ For the full environment guide, see `docs/setup.md`.
 
 ```bash
 # Clone
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+git clone https://github.com/gautamrastogi/gen-ai-roadmap.git
 cd gen-ai-roadmap
 
 # Serve locally (any static file server works)
@@ -143,6 +146,7 @@ This roadmap is optimized for Apple Silicon. Recommended local model setup:
 gen-ai-roadmap/
 ├── docs/
 │   ├── index.html              # Dashboard (single-file app, deployed to GitHub Pages)
+│   ├── project-learning-workflow.md  # Post-project review workflow and learning cards
 │   └── setup.md                # Local environment setup guide
 ├── projects/
 │   ├── local-agent/            # FastMCP local Python MCP server

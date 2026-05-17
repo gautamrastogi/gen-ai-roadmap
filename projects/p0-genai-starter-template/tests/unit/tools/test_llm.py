@@ -1,12 +1,11 @@
 """Unit tests for src.tools.llm.complete."""
 
-import typing
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 
 import openai
 import pytest
-
 from src.models import schemas
+
 from src.utils import errors
 from tests import mocks
 

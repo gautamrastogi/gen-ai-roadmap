@@ -10,8 +10,7 @@ from tests import mocks
 def _all_messages_have_role_and_content(messages: list[dict[str, str]]) -> bool:
     """Check every message has non-empty 'role' and 'content' keys."""
     return all(
-        isinstance(m.get("role"), str) and isinstance(m.get("content"), str)
-        for m in messages
+        isinstance(m.get("role"), str) and isinstance(m.get("content"), str) for m in messages
     )
 
 

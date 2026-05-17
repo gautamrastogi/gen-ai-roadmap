@@ -53,7 +53,8 @@ def main(argv: list[str] | None = None) -> None:
     # Read input text
     if args.file:
         try:
-            text = open(args.file, encoding="utf-8").read().strip()
+            with open(args.file, encoding="utf-8") as file:
+                text = file.read().strip()
         except OSError as exc:
             sys.stderr.write(f"[summarizer] Cannot read file: {exc}\n")
             sys.exit(1)

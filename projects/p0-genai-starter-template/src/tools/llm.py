@@ -12,7 +12,7 @@ import typing
 import openai
 
 from src.models import schemas
-from src.utils import constants, errors, logging_context
+from src.utils import errors, logging_context
 
 logger = logging_context.get_logger("genai_starter.tools.llm")
 

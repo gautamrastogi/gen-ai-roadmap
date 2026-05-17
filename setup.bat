@@ -61,9 +61,10 @@ echo ✅ Setup complete!
 echo.
 echo Next steps:
 echo 1. Edit config.env with your API keys
-echo 2. Run: python -m venv .venv && .venv\Scripts\activate && pip install -r requirements.txt
-echo 3. For local agent: cd projects\local-agent && scripts\start_local_agent.bat
-echo 4. Open dashboard: python -m http.server 8000 (then visit http://localhost:8000/docs/)
+echo 2. Optional root shell: python -m venv .venv ^&^& .venv\Scripts\activate ^&^& pip install -r requirements.txt
+echo 3. Project work: cd projects\PROJECT_NAME ^&^& make install ^&^& make ci
+echo 4. For local agent: cd projects\local-agent ^&^& scripts\start_local_agent.bat
+echo 5. Open dashboard: python -m http.server 8000 (then visit http://localhost:8000/docs/)
 echo.
 echo Repository is now configured for: https://%GITHUB_USERNAME%.github.io/%REPO_NAME%
 pause

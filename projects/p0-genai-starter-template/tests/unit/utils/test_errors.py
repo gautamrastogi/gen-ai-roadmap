@@ -1,7 +1,5 @@
 """Unit tests for src.utils.errors."""
 
-import pytest
-
 from src.utils import errors
 
 

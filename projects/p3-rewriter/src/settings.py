@@ -46,7 +46,6 @@ class Settings(pydantic_settings.BaseSettings):
         description="Sampling temperature — 0.4 balances creativity and coherence for rewriting.",
     )
 
-    @pydantic.computed_field  # type: ignore[misc]
     @property
     def use_hf(self) -> bool:
         """True when HF_TOKEN is set and should be used.
