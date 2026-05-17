@@ -22,15 +22,15 @@
   ─────────────────────
   • Phases 0–11 are sequential — do not skip ahead
   • Each phase has: Goal → Skills → Courses → Projects → Resources
-  • Projects are the primary deliverables — each one should be a public GitHub repo
+  • Projects are the primary deliverables — each one should be a polished public project folder in this repo
   • "Learn" sections = theory to understand before building
-  • Checklist (lines ~102–160) = quick progress tracker
+  • Project Checklist = quick progress tracker
   • Phase Summary table = high-level status at a glance
   • Current focus is Phase 3 (Embeddings, Vector Search, and RAG)
 
   TECH STACK CONVENTIONS
   ──────────────────────
-  • LLM SDK:         openai (Responses API — NOT Assistants API, deprecated Aug 2026)
+  • LLM SDK:         openai (Responses API + OpenAI-compatible Chat Completions — NOT Assistants API, deprecated Aug 2026)
   • Orchestration:   LangGraph (stateful graphs), PydanticAI (type-safe)
   • Evals:           DeepEval, LangSmith, Langfuse
   • Vector DB:       ChromaDB (local dev), Qdrant (production)
@@ -48,7 +48,7 @@
 
   KEY DECISIONS
   ─────────────
-  • Use OpenAI Responses API (not Chat Completions) for all new projects
+  • Use OpenAI Responses API for hosted OpenAI projects; keep OpenAI-compatible Chat Completions adapters for Ollama/LM Studio/local-first work
   • Assistants API is sunset Aug 26, 2026 — do NOT build on it
   • Prefer code-first/type-safe frameworks (PydanticAI) over black-box wrappers
   • MCP (Model Context Protocol) is the standard tool integration layer
@@ -141,7 +141,7 @@ Optimize for:
 ---
 
 # PROGRESS TRACKER
-> Last updated: 2026-05-16
+> Last updated: 2026-05-17
 
 ## Current Focus
 **Phase:** Phase 3 — Embeddings + Vector Search + RAG

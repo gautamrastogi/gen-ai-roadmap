@@ -2,8 +2,8 @@
 
 > A structured, project-driven learning path for building production-grade Generative AI applications, with a portfolio angle around enterprise workflow intelligence, platform automation, observability, and agentic systems.
 
-[![GitHub Pages](https://img.shields.io/badge/Dashboard-Live-8b5cf6?style=flat-square&logo=github)](https://gautamrastogi.github.io/gen-ai-roadmap/)
-[![Phases](https://img.shields.io/badge/Phases-12-ec4899?style=flat-square)](#roadmap-structure)
+[![GitHub Pages](https://img.shields.io/badge/Dashboard-Live-0f766e?style=flat-square&logo=github)](https://gautamrastogi.github.io/gen-ai-roadmap/)
+[![Phases](https://img.shields.io/badge/Phases-12-f59e0b?style=flat-square)](#roadmap-structure)
 [![Projects](https://img.shields.io/badge/Projects-37-10b981?style=flat-square)](#roadmap-structure)
 [![Courses](https://img.shields.io/badge/Courses-60+-3b82f6?style=flat-square)](#roadmap-structure)
 
