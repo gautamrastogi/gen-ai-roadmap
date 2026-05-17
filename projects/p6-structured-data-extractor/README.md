@@ -39,7 +39,7 @@ EXTRACTION_MODE=prompt python -m src.main --schema invoice --file examples/invoi
 EXTRACTION_MODE=chat_schema python -m src.main --schema invoice --file examples/invoice.txt
 
 # OpenAI Responses API structured output
-EXTRACTION_MODE=responses_schema OPENAI_BASE_URL= OPENAI_API_KEY=sk-... MODEL=gpt-4.1-mini \
+EXTRACTION_MODE=responses_schema OPENAI_BASE_URL= OPENAI_API_KEY=<openai-api-key> MODEL=gpt-4.1-mini \
   python -m src.main --schema invoice --file examples/invoice.txt
 ```
 

@@ -9,7 +9,7 @@ Compare four prompt strategies on any task — zero-shot, few-shot, system-role,
 ```bash
 # 1. Copy env file and add your HuggingFace token
 cp .env.example .env
-# edit .env: set HF_TOKEN=hf_...
+# edit .env: set HF_TOKEN or OPENAI_API_KEY
 # Get one free at: huggingface.co/settings/tokens (no scopes needed)
 
 # 2. Install dependencies

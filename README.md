@@ -102,6 +102,9 @@ This will:
 - Create `.cursor/mcp.json` for Cursor MCP integration
 - Update documentation links for your fork when placeholders are present
 
+`config.env`, `.cursor/`, `.env`, and other local runtime files are intentionally gitignored.
+See `templates/README.md` for what belongs in tracked templates vs private local config.
+
 For the full environment guide, see `docs/setup.md`.
 
 ## 🛠️ Local Development
@@ -159,6 +162,9 @@ gen-ai-roadmap/
 │   ├── p6-structured-data-extractor/  # Phase 2: Schema-first extraction tool
 │   └── p7-resume-vs-jd-analyzer/  # Phase 2: Resume/job-description fit analyzer
 ├── templates/                  # Copyable local config templates
+│   ├── README.md                # Template usage and public-safety notes
+│   ├── config.env.template      # Root local config example
+│   └── cursor-mcp.json.template # Cursor MCP config example
 ├── genai-roadmap.md            # Full roadmap content (source of truth)
 ├── .env.example                # Root environment variable example
 ├── .gitignore

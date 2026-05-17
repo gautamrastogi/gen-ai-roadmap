@@ -54,6 +54,7 @@ logs/
 
 # Test artifacts
 test_output.txt
+.deepeval/
 projects/local-agent/tmp/
 .ruff_cache/
 .pytest_cache/

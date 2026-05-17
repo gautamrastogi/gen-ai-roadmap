@@ -37,7 +37,7 @@ ANALYSIS_MODE=prompt python -m src.main --resume examples/resume.txt --jd exampl
 ANALYSIS_MODE=chat_schema python -m src.main --resume examples/resume.txt --jd examples/job-description.txt
 
 # OpenAI Responses API structured output
-ANALYSIS_MODE=responses_schema OPENAI_BASE_URL= OPENAI_API_KEY=sk-... MODEL=gpt-4.1-mini \
+ANALYSIS_MODE=responses_schema OPENAI_BASE_URL= OPENAI_API_KEY=<openai-api-key> MODEL=gpt-4.1-mini \
   python -m src.main --resume examples/resume.txt --jd examples/job-description.txt
 ```
 

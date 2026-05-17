@@ -159,28 +159,16 @@ Connect to Ollama: `http://host.docker.internal:11434`
 
 ---
 
-## Step 6: Create .env File
+## Step 6: Create Local Config Files
 
 ```bash
-cat > .env << 'EOF'
-# OpenAI
-OPENAI_API_KEY=sk-your-key-here
-OPENAI_ORG_ID=org-your-org-here
-
-# Anthropic (optional)
-ANTHROPIC_API_KEY=sk-ant-your-key
-
-# LangSmith (Phase 5)
-LANGCHAIN_TRACING_V2=true
-LANGCHAIN_API_KEY=lsv2_your-key
-LANGCHAIN_PROJECT=genai-roadmap
-
-# Local models (no key needed — just the URL)
-OLLAMA_BASE_URL=http://localhost:11434/v1
-EOF
+cp templates/config.env.template config.env
+cp .env.example .env
 ```
 
-> ⚠️ Add `.env` to `.gitignore` — never commit API keys!
+Then edit only your local copies. Keep real API keys out of tracked files.
+
+> `.env`, `config.env`, `.cursor/`, and project-level `.env` files are gitignored.
 
 ---
 
