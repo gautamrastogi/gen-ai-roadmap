@@ -40,4 +40,4 @@ run:
 
 ## run-ollama: Run against local Ollama using prompt-and-validate mode
 run-ollama:
-	OPENAI_BASE_URL=http://127.0.0.1:11434/v1 OPENAI_API_KEY=local-model MODEL=$${MODEL:-qwen2.5:1.5b} EXTRACTION_MODE=prompt $(UV) run python -m src.main --schema invoice --file examples/invoice.txt
+	OPENAI_BASE_URL=http://127.0.0.1:11434/v1 OPENAI_API_KEY=local-model MODEL=$${MODEL:-gemma4:latest} EXTRACTION_MODE=prompt $(UV) run python -m src.main --schema invoice --file examples/invoice.txt

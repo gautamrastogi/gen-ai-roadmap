@@ -31,7 +31,7 @@ class Settings(pydantic_settings.BaseSettings):
     hf_token: pydantic.SecretStr = pydantic.SecretStr("")
     github_token: pydantic.SecretStr = pydantic.SecretStr("")
     openai_model: str = pydantic.Field(
-        default="qwen2.5:1.5b",
+        default="gemma4:latest",
         validation_alias=pydantic.AliasChoices("MODEL", "OPENAI_MODEL"),
     )
     temperature: float = pydantic.Field(

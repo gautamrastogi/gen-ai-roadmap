@@ -16,7 +16,7 @@ This project is about the AI engineering layer behind structured extraction:
 make install
 
 # Local Ollama path
-ollama pull qwen2.5:1.5b
+ollama pull gemma4:latest
 make run-ollama
 ```
 
@@ -91,7 +91,7 @@ python -m src.main --list-schemas
     "total_tokens_actual": null
   },
   "metadata": {
-    "model": "qwen2.5:1.5b",
+    "model": "gemma4:latest",
     "provider": "ollama",
     "schema_name": "invoice",
     "mode": "prompt",

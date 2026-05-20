@@ -15,7 +15,7 @@ Every GenAI response includes lightweight token economics metadata: estimated to
 make install
 
 # Local Ollama path
-ollama pull qwen2.5:1.5b
+ollama pull gemma4:latest
 make run-ollama
 ```
 
@@ -88,7 +88,7 @@ curl -X POST http://localhost:8000/extract \
   },
   "metadata": {
     "operation": "summarize",
-    "model": "qwen2.5:1.5b",
+    "model": "gemma4:latest",
     "adapter": "chat",
     "provider": "ollama",
     "max_input_tokens": 6000,
@@ -128,7 +128,7 @@ OUTPUT_TOKEN_PRICE_PER_1M=0.60
 | `OPENAI_API_KEY` | empty | OpenAI key, or dummy key for local providers |
 | `HF_TOKEN` | empty | HuggingFace Router token |
 | `GITHUB_TOKEN` | empty | GitHub Models token |
-| `MODEL` | `qwen2.5:1.5b` | Model name |
+| `MODEL` | `gemma4:latest` | Model name |
 | `TEMPERATURE` | `0.2` | Sampling temperature |
 | `MAX_TOKENS` | `700` | Max output tokens |
 | `MAX_INPUT_TOKENS` | `6000` | Input token budget |
@@ -152,6 +152,6 @@ make docker-build
 docker run --rm -p 8000:8000 \
   -e OPENAI_BASE_URL=http://host.docker.internal:11434/v1 \
   -e OPENAI_API_KEY=local-model \
-  -e MODEL=qwen2.5:1.5b \
+  -e MODEL=gemma4:latest \
   p5-fastapi-genai-service
 ```

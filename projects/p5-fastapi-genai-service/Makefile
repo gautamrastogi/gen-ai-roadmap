@@ -40,7 +40,7 @@ run:
 
 ## run-ollama: Start service configured for local Ollama
 run-ollama:
-	OPENAI_BASE_URL=http://127.0.0.1:11434/v1 MODEL=$${MODEL:-qwen2.5:1.5b} $(UV) run uvicorn src.main:app --reload --port 8000
+	OPENAI_BASE_URL=http://127.0.0.1:11434/v1 MODEL=$${MODEL:-gemma4:latest} $(UV) run uvicorn src.main:app --reload --port 8000
 
 ## docker-build: Build production image
 docker-build:

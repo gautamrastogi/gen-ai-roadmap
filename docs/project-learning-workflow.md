@@ -167,7 +167,7 @@ Why: serves the FastAPI app locally.
 
 - Dummy value for local providers that do not need real auth.
 
-`MODEL=qwen2.5:1.5b`
+`MODEL=gemma4:latest`
 
 - Small local model for quick smoke tests.
 
@@ -210,7 +210,7 @@ Why: serves the FastAPI app locally.
 {
   "status": "ok",
   "app": "p5-fastapi-genai-service",
-  "model": "qwen2.5:1.5b",
+  "model": "gemma4:latest",
   "adapter": "chat",
   "provider": "ollama"
 }
@@ -228,7 +228,7 @@ GenAI endpoints should return:
   },
   "metadata": {
     "operation": "summarize",
-    "model": "qwen2.5:1.5b",
+    "model": "gemma4:latest",
     "adapter": "chat",
     "provider": "ollama",
     "budget_ok": true
@@ -278,7 +278,7 @@ For Ollama:
 ```env
 OPENAI_BASE_URL=http://127.0.0.1:11434/v1
 OPENAI_API_KEY=local-model
-MODEL=qwen2.5:1.5b
+MODEL=gemma4:latest
 ```
 
 The key idea:

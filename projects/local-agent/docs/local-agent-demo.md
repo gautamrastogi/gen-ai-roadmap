@@ -12,16 +12,16 @@ The model can run locally and still behave like an agent because your Python app
 
 ## Option 1: Ollama
 
-Start Ollama, then pull a tool-capable model:
+Start Ollama, then use the roadmap's default local generation model:
 
 ```bash
-ollama pull qwen3
+ollama pull gemma4:latest
 ```
 
 Run the demo:
 
 ```bash
-python3 demos/local_agent_demo.py --base-url http://127.0.0.1:11434/v1 --model qwen3
+python3 demos/local_agent_demo.py --base-url http://127.0.0.1:11434/v1 --model gemma4:latest
 ```
 
 ## Option 2: LM Studio

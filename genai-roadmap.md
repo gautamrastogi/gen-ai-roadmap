@@ -34,10 +34,10 @@
   • Orchestration:   LangGraph (stateful graphs), PydanticAI (type-safe)
   • Evals:           DeepEval, LangSmith, Langfuse
   • Vector DB:       ChromaDB (local dev), Qdrant (production)
-  • Embeddings:      text-embedding-3-small (OpenAI), or sentence-transformers (local)
+  • Embeddings:      text-embedding-3-small (OpenAI), nomic-embed-text-v2-moe (local)
   • Agents:          smolagents (code-first), LangGraph (stateful), OpenAI Agents SDK
   • Local inference: Ollama (API), LM Studio (GUI), MLX (peak Mac performance)
-  • Local models:    Qwen3-14B (everyday), Qwen3-30B-A3B MoE (reasoning sweet spot), DeepSeek-R1-14B (reasoning)
+  • Local models:    gemma4:latest (chat/vision), nomic-embed-text-v2-moe:latest (embeddings/RAG)
   • Inference server: SGLang / vLLM (production), Ollama (dev)
   • AI coding agents: Gemini CLI (open-source, terminal), Cursor, Aider
   • Prompt opt:      DSPy (compiled prompts, replaces hand-tuning)
@@ -56,7 +56,7 @@
   • Security is integrated (OWASP LLM Top 10), not bolted on later
 -->
 
-> **Last updated:** 2026-05-17 | **Current phase:** Phase 3 — Embeddings + Vector Search + RAG
+> **Last updated:** 2026-05-20 | **Current phase:** Phase 3 — Embeddings + Vector Search + RAG
 >
 > Verified May 2026. Key changes: roadmap is now aligned to an AI backend/platform path for enterprise workflow intelligence, observability, and safe automation; inaccessible paid training was removed and replaced by Microsoft Learn free paths + DLAI; course lists trimmed to essentials only (build-first approach); every doc resource now has specific sections to read. Responses API is primary interface; Assistants API deprecated Aug 26, 2026.
 
@@ -108,7 +108,7 @@ Portfolio theme:
 | **CI/CD for AI Apps** | Automated eval pipelines on every PR, LLM-as-a-Judge regression checks | Phase 5 |
 | **Multimodal** (Vision, Audio, Video) | GPT-4o vision, Whisper STT, TTS — first-class in capstone projects | Phase 8 |
 | **Local Models** (Ollama, LM Studio, llama.cpp) | Cost/privacy/air-gap — know when open-weights beats hosted | Phases 2, 7 |
-| **Qwen3 & Hybrid Reasoning** | New open-weights SOTA: switchable thinking/non-thinking modes per prompt, native MCP support, 128K context, Apache 2.0 — replaces Qwen2.5 as default local recommendation | Phases 2, 7 |
+| **Open-Weight Local Models** | Practical local models now cover chat, vision, embeddings, and agent/dev workflows — use them for privacy, cost control, and offline development, while keeping hosted models for final quality comparisons | Phases 2, 3, 7, 8 |
 | **Vibe Coding & Spec-Driven Dev** | Write clear specs / prompts → let coding agents (Gemini CLI, Cursor, Aider) generate and iterate — shift from line-by-line coding to intent-driven engineering | Phase 7 |
 | **Sandboxed Code Execution** (E2B) | Agents that safely write and run code in isolated cloud sandboxes — mandatory for any autonomous coding agent | Phase 6 |
 
@@ -464,48 +464,36 @@ You understand practical LLM behavior and failure modes.
 
 | Model Size | Examples | Q4 Memory | Speed |
 |-----------|----------|-----------|-------|
-| **7–8B** | Qwen3-8B, Llama 3.1 8B, Mistral 7B | ~5GB | ~60–80 tok/s — instant |
-| **14B** | Qwen3-14B, Phi-4, Gemma 3 12B | ~9GB | ~40–50 tok/s — very fast |
-| **27–30B** ⭐ Sweet spot | Qwen3-30B-A3B (MoE), Mistral Small 22B | ~18–22GB | ~20–30 tok/s — smooth |
+| **7–10B** ⭐ Daily driver | Gemma 4, Qwen/Gemma/Mistral compact models | ~6–11GB | Fast enough for daily local dev |
+| **14B** | Larger Qwen/Gemma/Mistral instruct models | ~9–14GB | Stronger, still comfortable |
+| **27–33B** | Qwen/Nemotron/Mistral larger models | ~18–28GB | Better quality, slower, use selectively |
 | **70B (quantized)** | Llama 3.3 70B Q4, DeepSeek-R1-Distill 70B | ~42GB | ~8–12 tok/s — usable |
 
 > ⚠️ **70B warning**: With 32GB, 70B Q4 models will exceed RAM and swap to SSD. Stick to 30B or less for a smooth experience. Use 70B only for experiments.
 
-### Recommended Models to Try First (2026)
+### Recommended Models to Try First (May 2026)
 
-> **Qwen3 is now the top recommendation.** Released April 2025, it features hybrid thinking/non-thinking modes (switchable per prompt), native MCP tool support, 128K context, and Apache 2.0 license. On M1 Max, Qwen3-14B is the best everyday model — fast, smart, and MCP-aware out of the box.
+> Keep the local setup small and roadmap-focused. Use one current generation/vision model plus one embedding model. Add heavier models only when a project needs a direct comparison.
 
 ```bash
 # Install Ollama first: https://ollama.com
 brew install ollama
 
-# ⭐ Best everyday model — fast + smart (Qwen3, hybrid thinking)
-ollama run qwen3:14b
+# Primary local chat/generation/vision model
+ollama pull gemma4:latest
 
-# ⭐ Best reasoning/coding sweet spot (MoE — only 3B active params!)
-ollama run qwen3:30b-a3b
-
-# Best dedicated coding model
-ollama run qwen2.5-coder:14b
-
-# Reasoning model (like a local o1) — transparent CoT
-ollama pull deepseek-r1:14b
-
-# Tiny but surprisingly capable
-ollama run qwen3:4b
-
-# Vision model (multimodal)
-ollama run llava:13b
+# Local embedding model for Phase 3 semantic search and RAG
+ollama pull nomic-embed-text-v2-moe:latest
 ```
 
-> **Qwen3 hybrid thinking tip:** By default, Qwen3 thinks step-by-step. Add `/no_think` to your prompt for instant responses, or `/think` to force deep reasoning. This eliminates the need for a separate reasoning model in most cases.
+> **Rule:** Use `gemma4:latest` for local smoke tests, local chat, JSON prompting, and image reasoning. Use `nomic-embed-text-v2-moe:latest` only for embeddings.
 
 ### MLX Setup (Fastest for Mac)
 ```bash
 pip install mlx-lm
 
-# Run Qwen3 14B via MLX (faster than Ollama)
-python -m mlx_lm.chat --model mlx-community/Qwen2.5-14B-Instruct-4bit
+# Run a current 7B-14B instruct model via MLX when you want maximum Mac speed
+python -m mlx_lm.chat --model <mlx-community-model-id>
 
 # Fine-tune locally (Phase 8 skill)
 python -m mlx_lm.lora --train --model mlx-community/Llama-3.2-3B-Instruct-4bit \
@@ -525,7 +513,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="qwen3:14b",
+    model="gemma4:latest",
     messages=[{"role": "user", "content": "Explain embeddings in 2 sentences."}]
 )
 print(response.choices[0].message.content)
@@ -537,7 +525,7 @@ print(response.choices[0].message.content)
 - **Context window**: Most 7–14B models support 8k–128k tokens. Larger context = more RAM needed for the KV cache.
 - **Memory pressure**: Watch Activity Monitor → Memory tab. If "Memory Pressure" is red, your model is too big.
 - **Model vs Instruct variants**: Always use the `-Instruct` or `-Chat` variant for conversations. Base models need special prompting.
-- **MoE (Mixture of Experts)**: Models like Qwen3-30B-A3B activate only a subset of parameters per token — smaller memory footprint at big-model quality.
+- **MoE (Mixture of Experts)**: Some larger models activate only a subset of parameters per token — useful for big-model quality experiments, but not required for the core roadmap.
 
 ### Resources
 - Ollama model library: https://ollama.com/library
@@ -1623,7 +1611,7 @@ Work through these in exact order. Each step tells you what URL to open, what to
   - Switch persona via `--persona` flag (e.g. `--persona senior-engineer`)
   - Slash commands for save/export/stats/undo/clear
   - ✅ Built at: `projects/p4-cli-chatbot/`
-  - ✅ Verified with local Ollama model: `qwen2.5:1.5b`
+  - ✅ Verified with local Ollama model: `gemma4:latest`
 
 ---
 

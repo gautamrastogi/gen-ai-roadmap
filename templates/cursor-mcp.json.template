@@ -10,7 +10,7 @@
         "WORKSPACE_ROOT": "${workspaceFolder}",
         "LOCAL_MODEL_PROVIDER": "ollama",
         "LOCAL_MODEL_BASE_URL": "http://127.0.0.1:11434",
-        "LOCAL_MODEL_NAME": "qwen2.5:1.5b",
+        "LOCAL_MODEL_NAME": "gemma4:latest",
         "OLLAMA_BASE_URL": "http://127.0.0.1:11434/v1",
         "LM_STUDIO_BASE_URL": "http://127.0.0.1:1234"
       }

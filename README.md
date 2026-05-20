@@ -134,12 +134,11 @@ This roadmap is optimized for Apple Silicon. Recommended local model setup:
 | [Ollama](https://ollama.com/) | CLI-driven local model server |
 | [MLX](https://github.com/ml-explore/mlx-examples) | Apple Silicon optimized fine-tuning |
 
-**Recommended local models (runs well on M1 Max — updated April 2026):**
-- `qwen3:14b` — ⭐ best everyday model: fast, smart, hybrid thinking/non-thinking modes, native MCP support
-- `qwen3:30b-a3b` — ⭐ reasoning sweet spot: MoE architecture (only 3B active params), best quality/speed on 32GB
-- `qwen2.5-coder:14b` — best dedicated coding model
-- `deepseek-r1:14b` — reasoning model with transparent chain-of-thought logs
-- `llava:13b` — vision/multimodal tasks
+**Recommended local models (M1 Max 32GB — updated May 2026):**
+- `gemma4:latest` — primary local chat/generation/vision model for roadmap projects
+- `nomic-embed-text-v2-moe:latest` — local embeddings for semantic search and RAG
+
+Keep the local setup intentionally small. Add heavier models only for specific experiments after the roadmap project needs them.
 
 ---
 

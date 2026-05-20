@@ -118,24 +118,21 @@ pip install datasets                  # HF datasets for fine-tuning data
 
 ---
 
-## Step 4: Set Up Ollama (Already Installed, No Models)
+## Step 4: Set Up Ollama Models
 
 ```bash
 # Start Ollama server
 ollama serve
 
-# Pull models (choose based on task)
-ollama pull qwen3:14b           # ⭐ Best everyday model — hybrid thinking/non-thinking, MCP native (~9GB)
-ollama pull qwen3:30b-a3b       # ⭐ Best reasoning sweet spot — MoE, 3B active params (~18GB)
-ollama pull qwen2.5-coder:14b   # Best for dedicated coding tasks (~9GB)
-ollama pull deepseek-r1:14b     # Reasoning / transparent chain-of-thought (~9GB)
-ollama pull llava:13b           # Vision + language (~8GB)
+# Pull the two roadmap models
+ollama pull gemma4:latest
+ollama pull nomic-embed-text-v2-moe:latest
 
 # List pulled models
 ollama list
 
 # Test it
-ollama run qwen3:14b "What is RAG in AI?"
+ollama run gemma4:latest "What is RAG in AI?"
 ```
 
 ---
@@ -203,12 +200,10 @@ curl http://localhost:3000       # Should return HTML
 
 | Task | Best Model | Command |
 |------|-----------|---------|
-| Everyday chat | Qwen3 14B | `ollama run qwen3:14b` |
-| Coding | Qwen2.5-Coder 14B | `ollama run qwen2.5-coder:14b` |
-| Reasoning | DeepSeek-R1 14B | `ollama run deepseek-r1:14b` |
-| Vision | LLaVA 13B | `ollama run llava:13b` |
-| Max quality (slow) | Qwen3 30B | `ollama run qwen3:30b` |
-| Smallest/fastest | Phi-4 Mini | `ollama run phi4-mini:latest` |
+| Chat, coding help, summaries, JSON prompting | Gemma 4 | `ollama run gemma4:latest` |
+| Vision/image reasoning | Gemma 4 | `ollama run gemma4:latest` |
+| Embeddings, semantic search, RAG retrieval | Nomic Embed Text v2 MoE | `ollama pull nomic-embed-text-v2-moe:latest` |
+| Bigger experiments only | Check Ollama library first | https://ollama.com/library |
 
 ---
 
@@ -224,7 +219,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="qwen3:14b",
+    model="gemma4:latest",
     messages=[{"role": "user", "content": "Hello!"}]
 )
 print(response.choices[0].message.content)

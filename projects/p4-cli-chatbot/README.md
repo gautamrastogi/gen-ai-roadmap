@@ -17,7 +17,7 @@ make install
 make test
 
 # Easiest local path
-ollama pull qwen2.5:1.5b
+ollama pull gemma4:latest
 make run-ollama
 ```
 
@@ -38,7 +38,7 @@ make run
 python -m src.main
 python -m src.main --persona senior-engineer
 python -m src.main --session sessions/roadmap.json
-python -m src.main --base-url http://127.0.0.1:11434/v1 --model qwen2.5:1.5b
+python -m src.main --base-url http://127.0.0.1:11434/v1 --model gemma4:latest
 python -m src.main --base-url http://127.0.0.1:1234/v1 --model local-model
 python -m src.main --temperature 0.4 --max-tokens 500
 ```

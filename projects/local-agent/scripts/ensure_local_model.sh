@@ -8,7 +8,7 @@ case "$PROVIDER" in
     exec "$(dirname "$0")/ensure_lm_studio.sh"
     ;;
   ollama)
-    MODEL="${LOCAL_MODEL_NAME:-qwen2.5:1.5b}"
+    MODEL="${LOCAL_MODEL_NAME:-gemma4:latest}"
     BASE_URL="${LOCAL_MODEL_BASE_URL:-http://127.0.0.1:11434}"
     BASE_URL="${BASE_URL%/}"
     BASE_URL="${BASE_URL%/v1}"

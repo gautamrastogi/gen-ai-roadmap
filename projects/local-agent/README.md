@@ -157,8 +157,8 @@ Supported first-class local providers:
 
 | Provider | Base URL | Example model |
 |---|---|---|
-| Ollama | `http://127.0.0.1:11434` | `qwen2.5:1.5b` |
-| LM Studio | `http://127.0.0.1:1234` | `qwen/qwen3.5-9b` |
+| Ollama | `http://127.0.0.1:11434` | `gemma4:latest` |
+| LM Studio | `http://127.0.0.1:1234` | model name shown in LM Studio |
 
 Use the generic helper:
 
@@ -171,11 +171,11 @@ Configure the provider with OpenAI-compatible environment variables:
 
 ```bash
 export LOCAL_MODEL_BASE_URL="http://127.0.0.1:11434" # Ollama
-export LOCAL_MODEL_NAME="qwen2.5:1.5b"
+export LOCAL_MODEL_NAME="gemma4:latest"
 
 # or LM Studio
 export LOCAL_MODEL_BASE_URL="http://127.0.0.1:1234"
-export LOCAL_MODEL_NAME="qwen/qwen3.5-9b"
+export LOCAL_MODEL_NAME="your-loaded-model-name"
 
 projects/local-agent/scripts/start_local_agent.sh
 ```

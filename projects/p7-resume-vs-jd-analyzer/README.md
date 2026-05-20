@@ -16,7 +16,7 @@ This project teaches multi-document GenAI analysis:
 make install
 
 # Local Ollama path
-ollama pull qwen2.5:1.5b
+ollama pull gemma4:latest
 make run-ollama
 ```
 
