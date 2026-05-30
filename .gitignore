@@ -64,6 +64,10 @@ coverage.xml
 
 # Local planning notes
 2026-focus-private.md
+
+# Private interview prep notes
+docs/*interview-prep*.md
+private-notes/
 projects/local-agent/roadmap-progress.local.json
 projects/p4-cli-chatbot/sessions/
 
