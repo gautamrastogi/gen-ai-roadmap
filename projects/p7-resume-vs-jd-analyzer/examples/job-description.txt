@@ -1,0 +1,18 @@
+Senior Backend / GenAI Platform Engineer
+
+We are looking for a Python engineer to build AI-enabled workflow automation tools for internal platform teams.
+
+Requirements:
+- Strong Python backend development with FastAPI or Django.
+- Experience building REST APIs and event-driven microservices.
+- Kafka, Redis, PostgreSQL, Docker, Kubernetes or OpenShift.
+- Cloud experience with AWS and infrastructure automation.
+- Observability experience with logs, metrics, tracing, or alerting.
+- Ability to build LLM-powered applications using OpenAI-compatible APIs, structured outputs, and RAG.
+- CI/CD experience with GitHub Actions or Azure DevOps.
+- Comfortable operating production systems and participating in support rotations.
+
+Nice to have:
+- Terraform.
+- LangGraph or agentic workflow experience.
+- Security-aware development for enterprise systems.

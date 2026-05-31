@@ -1,0 +1,7 @@
+2026-05-16T08:42:11Z prod payment-api app01 ERROR RedisTimeout after 3000ms
+2026-05-16T08:42:14Z prod payment-api app02 ERROR RedisTimeout after 3000ms
+2026-05-16T08:42:20Z prod payment-api alert=checkout_latency_p95 severity=critical value=4200ms
+
+Symptoms: checkout latency spike, Redis timeout errors, elevated 5xx rate.
+Suspected cause: Redis cluster saturation or network path instability.
+Next steps: check Redis CPU/memory, inspect network errors, compare app01/app02 traces.

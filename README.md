@@ -1,0 +1,233 @@
+# 🚀 GenAI Developer Roadmap 2026
+
+> A structured, project-driven learning path for building production-grade Generative AI applications, with a portfolio angle around enterprise workflow intelligence, platform automation, observability, and agentic systems.
+
+[![GitHub Pages](https://img.shields.io/badge/Dashboard-Live-0f766e?style=flat-square&logo=github)](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/)
+[![Phases](https://img.shields.io/badge/Phases-12-f59e0b?style=flat-square)](#roadmap-structure)
+[![Projects](https://img.shields.io/badge/Projects-37-10b981?style=flat-square)](#roadmap-structure)
+[![Courses](https://img.shields.io/badge/Courses-60+-3b82f6?style=flat-square)](#roadmap-structure)
+
+---
+
+## 📊 Interactive Dashboard
+
+**[→ Open Dashboard](https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/)**
+
+The dashboard is a fully client-side web app (no backend, no login) that lets you:
+
+- ✅ Track progress per project and per course resource
+- ⏱️ See estimated time remaining per phase and overall
+- 📈 Watch your mastery percentage grow as you complete items
+- ☁️ Sync progress across devices via a private GitHub Gist
+- 🌙 Switch between dark and light themes
+- 📤 Export / import progress as JSON backup
+
+> **Tech stack:** Pure HTML + CSS + Vanilla JS — zero dependencies, zero build step.  
+> **Data layer:** `localStorage` (primary) + GitHub Gist API (cloud sync, optional).
+
+---
+
+## 🗺️ Roadmap Structure
+
+| Phase | Name | Projects | Est. Time |
+|-------|------|----------|-----------|
+| 0 | Software Baseline | 1 | ~2h |
+| 1 | Foundations | 3 | ~15h |
+| 2 | Python LLM Apps | 4 | ~20h |
+| 3 | Embeddings & RAG | 5 | ~15h |
+| 4 | Tool Calling & Workflows | 4 | ~12h |
+| 5 | Evals & Observability | 5 | ~10h |
+| 6 | MCP & Agentic Orchestration | 7 | ~20h |
+| 7 | AI-Native Dev Productivity | 2 | ~6h |
+| 8 | Multimodal, Real-Time & SLMs | 3 | ~12h |
+| 9 | Portfolio & Project Showcase | Portfolio polish | ~8h |
+| 10 | Certification | Exam prep | ~15h |
+| 11 | Capstone Projects | 3 | ~30h |
+
+**Total: ~165 hours of structured learning + 37 roadmap projects**
+
+---
+
+## 🎯 Learning Objective
+
+This roadmap is designed for engineers who want to master production-grade Generative AI engineering and backend platform integration.
+
+The projects show how to build AI systems that search internal knowledge, triage workflow items, summarize evidence, integrate safely with tools through MCP/function calling, and run with production habits like evals, traces, snapshots, CI gates, and human approvals.
+
+---
+
+## 📚 Learning Resources
+
+Curated resources from:
+- **Pluralsight** — Structured video courses (paid)
+- **DeepLearning.AI** — Short courses on cutting-edge topics (mostly free)
+- **Microsoft Learn** — Free official Azure AI learning paths and certification prep
+- **LangChain Academy** — Free LangChain/LangGraph courses
+- **Official Docs** — OpenAI, LangChain, LangGraph, MCP, Hugging Face, Anthropic
+
+---
+
+## ☁️ Cross-Device Sync Setup
+
+The dashboard supports syncing your progress to a private GitHub Gist so it persists across browsers and devices.
+
+**One-time setup:**
+1. Go to [github.com/settings/tokens](https://github.com/settings/tokens) → **Tokens (classic)**
+2. Generate a new token with only the **`gist`** scope → copy it
+3. Open the dashboard → click **☁ Gist Sync** → paste the token
+4. Leave Gist ID blank on first device (it auto-creates) — paste the returned ID on subsequent devices
+5. Click **Save & Sync**
+
+> The token is stored only in your browser's `localStorage`. It is never committed to this repository or sent anywhere other than the GitHub API.
+
+---
+
+## 🛠️ Setup
+
+The repository is already configured for:
+
+- GitHub repo: `https://github.com/YOUR_USERNAME/YOUR_REPO_NAME`
+- Dashboard: `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/`
+
+If you fork it, run the setup script once to create local config files and rewrite repo-specific links:
+
+```bash
+./setup.sh
+```
+
+This will:
+- Create `config.env` from `templates/config.env.template`
+- Create `.cursor/mcp.json` for Cursor MCP integration
+- Update documentation links for your fork when placeholders are present
+
+`config.env`, `.cursor/`, `.env`, and other local runtime files are intentionally gitignored.
+See `templates/README.md` for what belongs in tracked templates vs private local config.
+
+For the full environment guide, see `docs/setup.md`.
+
+## 🛠️ Local Development
+
+```bash
+# Clone
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+cd gen-ai-roadmap
+
+# Serve locally (any static file server works)
+npx serve docs/
+# or
+python3 -m http.server 8080 --directory docs/
+```
+
+Then open `http://localhost:8080`.
+
+---
+
+## 🤖 Local AI Setup
+
+This roadmap is designed for local development. Recommended local model setup:
+
+| Tool | Purpose |
+|------|---------|
+| [LM Studio](https://lmstudio.ai/) | GUI for running local LLMs (Llama, Mistral, Phi) |
+| [Ollama](https://ollama.com/) | CLI-driven local model server |
+| [MLX](https://github.com/ml-explore/mlx-examples) | Apple Silicon optimized fine-tuning (optional) |
+
+**Recommended local models (updated May 2026):**
+- `gemma4:latest` — primary local chat/generation/vision model for roadmap projects
+- `nomic-embed-text-v2-moe:latest` — local embeddings for semantic search and RAG
+
+Keep the local setup intentionally small. Add heavier models only for specific experiments after the roadmap project needs them.
+
+---
+
+## 📁 Repository Structure
+
+```
+gen-ai-roadmap/
+├── docs/
+│   ├── index.html              # Dashboard (single-file app, deployed to GitHub Pages)
+│   ├── project-learning-workflow.md  # Post-project review workflow and learning cards
+│   └── setup.md                # Local environment setup guide
+├── projects/
+│   ├── local-agent/            # FastMCP local Python MCP server
+│   ├── p0-genai-starter-template/  # Phase 0: FastAPI + Pydantic starter template
+│   ├── p1-prompt-playground/   # Phase 1: Prompt strategy comparison app
+│   ├── p2-summarizer/          # Phase 1: FastAPI summarization service
+│   ├── p3-rewriter/            # Phase 1: Tone/style rewriter service
+│   ├── p4-cli-chatbot/         # Phase 2: Stateful CLI chatbot with personas
+│   ├── p5-fastapi-genai-service/  # Phase 2: Multi-endpoint GenAI API service
+│   ├── p6-structured-data-extractor/  # Phase 2: Schema-first extraction tool
+│   └── p7-resume-vs-jd-analyzer/  # Phase 2: Resume/job-description analysis tool
+├── templates/                  # Copyable local config templates
+│   ├── README.md                # Template usage and public-safety notes
+│   ├── config.env.template      # Root local config example
+│   └── cursor-mcp.json.template # Cursor MCP config example
+├── genai-roadmap.md            # Full roadmap content (source of truth)
+├── .env.example                # Root environment variable example
+├── .gitignore
+├── setup.sh / setup.bat        # Repo personalization scripts
+└── README.md
+```
+
+---
+
+## 🔧 MCP Local Agent
+
+The `projects/local-agent/` folder contains a **FastMCP Python server** that runs locally and provides deterministic execution tools to cloud AI assistants (Cursor, GitHub Copilot, Antigravity).
+
+### Available Tools
+
+| Tool | Description |
+|------|-------------|
+| `run_command` | Run allowlisted shell commands with output capture |
+| `read_file` / `write_file` | Safe file I/O |
+| `git_status_and_diff` | Inspect git status and a bounded diff preview |
+| `roadmap_status` / `roadmap_next_task` / `roadmap_phase_details` | Read-only roadmap coach helpers |
+| `call_local_model` | Route prompts to LM Studio or Ollama via an OpenAI-compatible API |
+| `web_search` | DuckDuckGo search without API key |
+| `health_check` / `list_tool_capabilities` | Diagnostics and capability map |
+
+See `projects/local-agent/README.md` for setup instructions.
+
+---
+
+## 🎯 Philosophy
+
+- **Build first, learn second** — every phase culminates in a real, deployable project
+- **Local-first** — run models on your own hardware before paying for APIs
+- **Agentic from day one** — tool-use, memory, and MCP show up early and throughout
+- **Production mindset** — evals, observability, workflow reliability, and security are first-class citizens
+
+Use the [project learning workflow](docs/project-learning-workflow.md) after each implementation so every finished project is also understood well enough to explain, debug, and reuse.
+
+---
+
+## Cross-Device Usage
+
+This roadmap supports seamless development across multiple devices:
+
+### Progress Sync (GitHub Gist)
+- Dashboard progress automatically syncs via private GitHub Gist
+- Works across Mac, Windows, Linux devices
+- No manual export/import needed
+
+### Environment Setup
+- **macOS/Linux**: Use `./setup.sh` and standard Python venv
+- **Windows**: Use `setup.bat` and `python -m venv .venv`
+- All scripts are designed to work on both Unix and Windows
+
+### Local Agent Compatibility
+- MCP server runs on all platforms (Python 3.8+)
+- LM Studio available for macOS, Windows, Linux
+- Cursor IDE supports MCP on all platforms
+
+### Configuration
+- `config.env` contains all environment-specific settings
+- `.cursor/mcp.json` configures Cursor MCP integration
+- Both are gitignored for personal customization
+
+---
+
+## 📝 License
+
+MIT — use this roadmap however you like. If you find it useful, ⭐ the repo!

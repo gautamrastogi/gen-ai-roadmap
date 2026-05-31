@@ -1,0 +1,10 @@
+Ticket INC-48291
+
+Requester: platform-team@example.invalid
+Title: Customers cannot complete card payments
+
+Since 09:15 UTC, checkout requests in production are intermittently failing.
+The payment-api service shows elevated latency and Redis timeouts.
+This blocks customer purchases during peak traffic.
+
+Please triage as an incident, identify the failing dependency, and provide an ETA.

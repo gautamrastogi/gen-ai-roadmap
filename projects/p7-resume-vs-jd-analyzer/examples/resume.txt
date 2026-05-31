@@ -1,0 +1,17 @@
+Sample Candidate
+Backend Platform Engineer
+
+Experience:
+- 4 years building Python backend and platform applications for internal engineering teams.
+- Built and maintained Django and FastAPI services for workflow automation and operational reporting.
+- Worked with event-driven microservices, Kafka, Redis, PostgreSQL, Docker, OpenShift, Linux VMs, ELK, Vector, GitHub Actions, and Azure DevOps.
+- Led development of an internal notification routing service that tracks events and triggers automated remediation workflows.
+- Built a maintenance scheduling portal that helps service owners coordinate planned infrastructure work.
+- Participated in production support rotations for business-critical services.
+
+Certifications:
+- AWS associate-level cloud certification
+- Internal secure software development training
+
+Projects:
+- Local GenAI roadmap projects using Python, FastAPI, OpenAI-compatible APIs, Ollama, structured JSON extraction, and token usage metadata.
